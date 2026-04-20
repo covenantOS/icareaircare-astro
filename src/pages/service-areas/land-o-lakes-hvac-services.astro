@@ -2,40 +2,80 @@
 import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
 
 const faqs = [
-  {
-    "q": "How fast can you reach Land O' Lakes?",
-    "a": "Typically 10–20 minutes from our Wesley Chapel base — one of our quickest response areas."
-  },
-  {
-    "q": "Do you service Connerton and Bexley?",
-    "a": "Yes — we service every major Land O' Lakes community including Connerton, Bexley, Dupree Lakes and Lake Padgett."
-  },
-  {
-    "q": "What does AC repair cost in Land O' Lakes?",
-    "a": "Flat-rate, typically $150–$600 depending on the issue. Quoted before any work begins."
-  },
-  {
-    "q": "Can you handle new-construction humidity problems?",
-    "a": "Yes — this is a common call-out in Land O' Lakes newer builds. Usually a thermostat & return-sizing fix."
-  }
+  { q: 'How fast can you get to a home in Land O\' Lakes?', a: 'We\'re 10 minutes north in Wesley Chapel. Most Land O\' Lakes calls are on-site within 30–60 minutes — Bexley, Connerton, Oakstead, Stagecoach Village and Lake Padgett are some of our fastest responses in all of Pasco.' },
+  { q: 'Do you handle HVAC in Bexley and Connerton new-construction homes?', a: 'Yes — extensively. These master-planned communities were built with minimum-size builder-grade equipment that often underperforms in year 2–3. We handle warranty-window tune-ups, zone/damper add-ons, smart thermostat installs, and full replacements when the original equipment fails early.' },
+  { q: 'Will an HOA in Land O\' Lakes let you install a new condenser?', a: 'Yes — we\'ve done hundreds of approved installs in Connerton, Bexley, Lake Padgett Estates, Asturia, Suncoast Meadows and Ballantrae. We bring the HOA approval template, document pre-install site conditions, and verify sound/clearance specs match the community\'s covenants.' },
+  { q: 'What does AC replacement cost in Land O\' Lakes?', a: 'Most 2–4 ton residential replacements run $6,500–$12,500, including Manual-J load calc, Pasco County permit, and 2026-ready R-454B equipment. Variable-speed, 2-stage, and zoned systems run higher. Every quote is flat-rate in writing with three tiers.' },
+  { q: 'Do you service waterfront and lake-side homes specifically?', a: 'Yes — Lake Padgett, Lake Parker, East Lake, Thomas Lake. Lake homes need different specs: elevated condenser pads where applicable, stainless hardware for the higher ambient humidity, and oversized latent-load (humidity-removal) capacity. We factor all of that into our Land O\' Lakes proposals.' },
+  { q: 'Are you available 24/7 in Land O\' Lakes?', a: 'Yes. 24/7 emergency dispatch, with priority for Land O\' Lakes since we\'re 10 minutes away. Heat waves with small children, elderly residents, or medical equipment get triaged first.' },
+  { q: 'Can I get a maintenance plan for my Land O\' Lakes home?', a: 'Yes. Our annual plans include two 21-point tune-ups (spring + fall), priority dispatch, 15% repair discounts, and no-cost diagnostics. Single-family, rental, and multi-family properties all supported.' },
+];
+
+const reviews = [
+  { name: 'Jennifer A.', neighborhood: 'Bexley', body: 'New-construction in Bexley, our builder\'s HVAC was making a rattling noise during the warranty period. Builder\'s sub-contractor took three weeks to even return the call. Tim\'s crew came out same-day, found a loose blower wheel, fixed it. Charged us nothing since we weren\'t even the original customer. That\'s how you win a repeat customer.', rating: 5 },
+  { name: 'Rick J.', neighborhood: 'Connerton', body: 'Replaced the whole 4-ton system after year-5 compressor failure. Got three quotes. Tim\'s was middle-of-the-pack on price but the only one who actually measured the duct static pressure and found our returns were undersized. Fixed that with the install. The upstairs is finally comfortable.', rating: 5 },
+  { name: 'Dana K.', neighborhood: 'Lake Padgett', body: 'Our lakefront house runs more humid than most — we had persistent musty smell even with the AC running. Tim walked through, diagnosed low airflow + oversized system + no dehumidification stage. Replaced with a 2-stage variable-speed. The house is dry again. Worth every penny.', rating: 5 },
 ];
 ---
 <ServiceAreaLayout
   slug="land-o-lakes-hvac-services"
-  title="Land O’ Lakes HVAC Services | I Care Air Care"
-  description="Land O’ Lakes HVAC contractor — AC repair, installation, maintenance, duct cleaning. 4.9★ local team. Serving Connerton, Bexley, Dupree Lakes. Call (813) 395-2324."
-  h1="Land O’ Lakes HVAC Services"
-  eyebrow="Land O’ Lakes, FL"
-  subtitle={"Your Wesley Chapel neighbors — 10 minutes away. Serving Connerton, Bexley, Dupree Lakes, Lake Padgett & all of Land O' Lakes."}
-  heroImage="/images/ICAC%20Team%281%29.webp"
-  cityName="Land O’ Lakes"
+  title="Land O' Lakes HVAC Services | AC Repair & Installation | I Care Air Care"
+  description="Land O' Lakes' 4.9★ HVAC contractor — 10 minutes from Wesley Chapel. Serving Bexley, Connerton, Oakstead, Lake Padgett, Ballantrae, Asturia. Licensed CAC1816515. Call (813) 395-2324."
+  h1="Land O' Lakes HVAC Services"
+  eyebrow="Land O' Lakes, FL · 34637 · 34638 · 34639"
+  subtitle="Your neighbors in Wesley Chapel — just 10 minutes north. Same-day AC repair, permitted installs, and 24/7 emergency service across Bexley, Connerton, Lake Padgett, Oakstead, Asturia, Ballantrae and Stagecoach Village."
+  heroImage="/images/ICAC%20Team%283%29.webp"
+  cityName="Land O' Lakes"
   faqs={faqs}
-  neighborhoods={["Connerton","Bexley","Dupree Lakes","Lake Padgett","Ballantrae","Stonegate","Oak Grove","Sunset Lakes","Wilderness Lake Preserve"]}
+  reviews={reviews}
+  responseWindow="30–60 minutes"
+  driveTime="10–15 minutes from HQ"
+  zipCodes={['34637','34638','34639']}
+  geo={{ lat: 28.219, lng: -82.461 }}
+  neighborhoods={['Bexley', 'Connerton', 'Oakstead', 'Lake Padgett', 'Lake Padgett Estates', 'Stagecoach Village', 'Ballantrae', 'Asturia', 'Suncoast Meadows', 'Angeline', 'Valencia Del Sol', 'Wilderness Lake Preserve', 'Del Webb Bexley', 'Concord Station']}
+  landmarks={[
+    { name: 'Tampa Premium Outlets', note: 'Retail tenant HVAC + surrounding neighborhoods' },
+    { name: 'Land O\u2019 Lakes High School', note: 'Residential service across Bexley &amp; Lake Padgett feeders' },
+    { name: 'Sunlake High School', note: 'SW Land O\u2019 Lakes residential service' },
+    { name: 'Connerton Preserve', note: 'Master-planned Connerton residents' },
+    { name: 'Lake Padgett', note: 'Lakefront HVAC w/ humidity-specific specs' },
+    { name: 'Pasco Government Center', note: 'Light-commercial service on Land O\u2019 Lakes Blvd' },
+  ]}
+  climateNote={`Land O\u2019 Lakes sits in the heart of Pasco\u2019s lake country — <strong>Lake Padgett, Thomas Lake, Lake Parker</strong> and a dozen other spring-fed lakes mean the local ambient humidity runs consistently higher than surrounding inland communities. That\u2019s why we routinely spec 2-stage or variable-speed systems with dedicated dehumidification modes here: single-stage systems are famously unable to handle Land O\u2019 Lakes\u2019 latent load without over-cooling the space. Lakefront homes also get corrosion-resistant hardware and, where applicable, elevated condenser pads to handle seasonal water-table fluctuations.`}
+  schoolsOrHoas={['Pasco County Schools','Land O\u2019 Lakes High School','Connerton HOA','Bexley CDD','Lake Padgett Estates HOA','Asturia CDD']}
+  relatedAreas={[
+    { slug: 'wesley-chapel-ac-repair', name: 'Wesley Chapel', note: '10 min north · our HQ' },
+    { slug: 'lutz-home-air-conditioning-service', name: 'Lutz', note: '8 min south' },
+    { slug: 'odessa-emergency-ac-repair', name: 'Odessa', note: '15 min SW' },
+    { slug: 'new-tampa-heating-and-cooling', name: 'New Tampa', note: '15 min south' },
+  ]}
 >
-<h2>Land O' Lakes HVAC — from our Wesley Chapel base, 10 minutes away</h2>
-<p>Land O' Lakes is one of our fastest-response areas — under 15 minutes from our Wesley Chapel headquarters to most neighborhoods. That means when your AC quits on a 95° July afternoon in <strong>Connerton, Bexley, Dupree Lakes</strong> or <strong>Lake Padgett</strong>, we're often the first truck in your driveway.</p>
-<h2>Services across Land O' Lakes</h2>
-<p>Every HVAC service we offer is available throughout Land O' Lakes, from emergency <a href="/services/ac-repair-tampa/">AC repair</a> and <a href="/services/ac-maintenance-tampa/">preventive tune-ups</a> to <a href="/services/hvac-installation-tampa/">full system replacements</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a> and <a href="/services/thermostat-installation-tampa/">smart thermostat installation</a>. We handle the permits, pull the inspections, and give you a written quote before any work begins.</p>
-<h2>Why homeowners in Connerton and Bexley choose us</h2>
-<p>Newer Land O' Lakes communities like Connerton and Bexley have builder-grade systems that often under-perform in Florida humidity. We're regulars in both communities, specializing in supplemental upgrades: humidity-aware smart thermostats, variable-speed blower upgrades, and resized returns that fix the cold-bedroom / warm-living-room problem.</p>
+  <span class="not-prose inline-flex items-center rounded-full bg-accent-50 text-accent-600 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">10 min from HQ</span>
+  <h2>The Land O\u2019 Lakes HVAC team you can actually reach in 30 minutes</h2>
+  <p>We dispatch from Wesley Chapel — 10 minutes up SR-54 from most of Land O\u2019 Lakes. That means <strong>Bexley, Connerton, Oakstead, Lake Padgett, Ballantrae, Asturia</strong> and surrounding Land O\u2019 Lakes communities routinely see a truck on-site within 30–60 minutes of calling. No out-of-state call center. No franchise dispatcher. A real local answers.</p>
+  <p>Florida license <strong>CAC1816515</strong>, 700+ verified Google reviews (many from Land O\u2019 Lakes homeowners), and 15+ years working this exact corridor. We\u2019ve installed, serviced, and warrantied HVAC across every major Land O\u2019 Lakes master-planned community.</p>
+
+  <h2>HVAC services we provide throughout Land O\u2019 Lakes</h2>
+  <ul>
+    <li><a href="/services/ac-repair-tampa/"><strong>AC repair</strong></a> — residential &amp; light-commercial, all brands, all of 34637 / 34638 / 34639.</li>
+    <li><a href="/services/emergency-ac-repair-tampa/"><strong>Emergency AC repair</strong></a> — 24/7 dispatch, priority for Land O\u2019 Lakes.</li>
+    <li><a href="/services/hvac-installation-tampa/"><strong>HVAC installation</strong></a> — Manual-J sized, Pasco County permits, R-454B (A2L) 2026-ready.</li>
+    <li><a href="/services/ac-maintenance-tampa/"><strong>AC maintenance &amp; tune-ups</strong></a> — 21-point seasonal service + priority-dispatch plans.</li>
+    <li><a href="/services/air-duct-cleaning-tampa/"><strong>Air duct cleaning</strong></a> — essential after Bexley or Connerton new-construction drywall dust.</li>
+    <li><a href="/services/heating-services-tampa/"><strong>Heating services</strong></a> — heat-pump repair, auxiliary heat strips, occasional gas furnace in older Land O\u2019 Lakes homes.</li>
+    <li><a href="/services/thermostat-installation-tampa/"><strong>Smart thermostat installation</strong></a> — Ecobee, Nest, Honeywell, with lakefront-specific humidity setpoints.</li>
+    <li><a href="/services/refrigeration-repair-tampa/"><strong>Commercial refrigeration</strong></a> — Land O\u2019 Lakes restaurants &amp; small business tenants along SR-54.</li>
+  </ul>
+
+  <h2>Bexley, Connerton &amp; the new-construction wave</h2>
+  <p><strong>Bexley</strong> and <strong>Connerton</strong> are two of the fastest-growing master-planned communities in Pasco County. Both were built out with builder-grade minimum-sized HVAC equipment that often underperforms in the homeowner\u2019s second or third summer. The classic pattern: year-1 everything\u2019s fine under warranty; year-2 the upstairs runs 6°F hotter than downstairs; year-3 the blower motor fails in August. We see it weekly. Our fix: zone control add-ons, duct static-pressure corrections, return-air resizing, and 2-stage or variable-speed replacements when the builder equipment throws in the towel. Most issues we catch under warranty before they become your problem.</p>
+
+  <h2>Lake Padgett, Wilderness Lake &amp; lakefront-specific installs</h2>
+  <p>Lake homes around <strong>Lake Padgett, Thomas Lake, Lake Parker</strong> and <strong>Wilderness Lake Preserve</strong> have unique HVAC needs most installers don\u2019t think through. Higher ambient humidity, higher latent cooling loads, saltier (well-water) condensate, and periodic water-table issues around outdoor condenser pads. Our lakefront proposals include variable-speed or 2-stage condensers for better humidity control, stainless-steel hardware, elevated pad specs where needed, and dedicated whole-home dehumidifiers when the latent load exceeds what the AC alone can handle.</p>
+
+  <h2>Stagecoach Village, Oakstead, Asturia &amp; Ballantrae: established community service</h2>
+  <p>These are the Land O\u2019 Lakes neighborhoods where original equipment is hitting end-of-life. A lot of 2003–2010 13 SEER single-stage systems we service here are ideal candidates for 17+ SEER2 replacements — typically $700–$1,100/year in bill savings and real humidity improvement. We handle the Pasco County permit, HOA approval paperwork, and equipment swap in a single day for most homes.</p>
+
+  <h2>Ready to book Land O\u2019 Lakes service?</h2>
+  <p>Call <a href="tel:+18133952324">(813) 395-2324</a> — a real person answers, often Tim himself. Tell us your community and the issue; we\u2019ll give you a tight arrival window and a phone quote. Or <a href="https://book.housecallpro.com/book/I-Care-Air-Care/cb3eaa8c" target="_blank" rel="noopener">book online</a> 24/7.</p>
 </ServiceAreaLayout>

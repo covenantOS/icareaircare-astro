@@ -2,38 +2,83 @@
 import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
 
 const faqs = [
-  {
-    "q": "Do you service Lakeland and Plant City?",
-    "a": "Yes — both are regular stops on our Polk County service route."
-  },
-  {
-    "q": "Are rates different for Polk County?",
-    "a": "No — our flat-rate pricing is county-independent."
-  },
-  {
-    "q": "Do you pull Polk County permits?",
-    "a": "Yes. Florida license CAC1816515 covers all Polk County installs."
-  },
-  {
-    "q": "Do you handle Davenport area new-construction?",
-    "a": "Yes — we work with several Davenport new-construction homeowners on system upgrades and supplemental installs."
-  }
+  { q: 'Which Polk County cities do you cover?', a: 'Lakeland, Winter Haven, Bartow, Auburndale, Haines City, Davenport, Dundee, Lake Wales, Poinciana, Mulberry and Lakeland Highlands. We dispatch from Wesley Chapel, which puts Davenport, Poinciana and NW Polk within a 45–60 minute drive and the Lakeland–Bartow core within roughly 70–90 minutes.' },
+  { q: 'Do you pull permits in Polk County?', a: 'Yes. Every Polk County HVAC installation, duct modification, and electrical-panel subpanel change requiring a permit goes through Polk County Building Services — or the City of Lakeland\'s Building Inspection division for homes inside Lakeland limits. Florida license CAC1816515. We submit drawings, coordinate rough and final inspections, and deliver you a closed-permit PDF.' },
+  { q: 'Does it really get hot enough in Polk to size systems differently?', a: 'Yes. Polk sits inland on the Lake Wales Ridge — summer design-day highs routinely hit 96–98°F with dense humidity. A system sized for coastal Tampa is undersized here. Our Manual-J load calculations use Polk-specific design temps, not a generic Tampa Bay number.' },
+  { q: 'Can you handle heat-pump freeze protection for Polk\'s cold snaps?', a: 'Yes. Polk gets 2–5 freeze events a year, especially in the citrus belt near Bartow, Haines City and Dundee. We configure electric auxiliary heat strips, lock-out temperatures, and defrost-board settings correctly — many local installs we inspect were left on factory defaults that cost homeowners hundreds in winter power bills.' },
+  { q: 'Do you work with mobile, manufactured, and park-model homes?', a: 'Yes. Polk has significant mobile-home and park-model inventory — Cypress Lakes, Foxwood, Saddlebag Lake and many others. We install mobile-home-rated downflow package units, retrofit mini-splits for bedroom additions, and coordinate with community office permitting.' },
+  { q: 'What\'s the typical cost of AC repair or replacement in Polk?', a: 'Repairs: capacitor $180–$260, contactor $180–$300, fan motor $400–$650, refrigerant recharge $350–$750, compressor $1,800–$3,200. Full system replacement $6,500–$14,500 depending on tonnage, SEER2 rating, duct work and permitting. Every quote is flat-rate, in writing, and explained line by line before work starts.' },
+  { q: 'Do you service Davenport and Poinciana? A lot of Tampa contractors won\'t.', a: 'We do — and at the same rates as our Wesley Chapel calls. Davenport\'s Champions Gate, Solterra, Providence, Four Corners, and Poinciana\'s Solivita, Crescent Lakes and Lake Marion Golf communities get regular service from us. About 45–55 minutes drive, no extra trip charge.' },
+];
+
+const reviews = [
+  { name: 'Linda B.', neighborhood: 'Lakeland (Oakbridge)', body: 'Three Lakeland companies told me I needed a full system replacement. I Care Air Care drove up from Wesley Chapel, spent 45 minutes on the diagnostic, and found a bad TXV valve. Fixed it for $480. Saved me $10,000. Honest people are worth the drive.', rating: 5 },
+  { name: 'Marcus W.', neighborhood: 'Winter Haven (Lake Region)', body: 'Full 4-ton Trane install on our Winter Haven lake house. They pulled the Polk permit, passed inspection first try, left the garage cleaner than they found it. Two summers running, not a hiccup.', rating: 5 },
+  { name: 'Theresa P.', neighborhood: 'Davenport (ChampionsGate)', body: 'Vacation-rental unit in ChampionsGate, had guests in the house and the AC quit on a Saturday. They made the drive, had it running in two hours, invoiced me direct so I didn\'t have to deal with it. Real pros.', rating: 5 },
 ];
 ---
 <ServiceAreaLayout
   slug="polk-county-residential-ac-repair"
-  title="Polk County Residential AC Repair | I Care Air Care"
-  description="Polk County residential AC repair and HVAC services — Lakeland, Plant City, Davenport, Auburndale. 4.9★ · 700+ reviews. Call (813) 395-2324."
-  h1="Polk County Residential AC Repair"
-  eyebrow="Polk County, FL"
-  subtitle={"Serving the western Polk County corridor — Lakeland, Plant City, Davenport, Auburndale — with fast, honest residential HVAC service."}
-  heroImage="/images/ICAC%20Team%281%29.webp"
+  title="Polk County Residential AC Repair & HVAC | I Care Air Care"
+  description="Polk County's trusted 4.9★ HVAC contractor. Serving Lakeland, Winter Haven, Bartow, Auburndale, Haines City, Davenport, Poinciana. Licensed CAC1816515. 700+ reviews. (813) 395-2324."
+  h1="Polk County Residential AC Repair & HVAC"
+  eyebrow="All of Polk County, FL"
+  subtitle="From Davenport and Poinciana out to Lakeland, Winter Haven, Bartow and the Lake Wales Ridge — same-day AC repair, permitted installs, and Polk-specific equipment sizing from a Wesley Chapel team that actually drives out here."
+  heroImage="/images/ICAC%20Team%282%29.webp"
   cityName="Polk County"
   faqs={faqs}
-  neighborhoods={["Lakeland","Plant City","Davenport","Auburndale","Mulberry","Bartow","Lake Alfred","Haines City"]}
+  reviews={reviews}
+  responseWindow="2–4 hours"
+  driveTime="45–90 minutes from HQ"
+  zipCodes={['33801','33803','33805','33809','33810','33811','33812','33813','33815','33823','33827','33830','33834','33837','33838','33839','33841','33843','33844','33849','33850','33853','33855','33859','33860','33867','33868','33880','33881','33884','33896','33897','33898']}
+  geo={{ lat: 28.04, lng: -81.95 }}
+  neighborhoods={['Lakeland (Oakbridge)', 'Lakeland (Grasslands)', 'Lakeland (Lake Hollingsworth)', 'Lakeland (Cleveland Heights)', 'Lakeland (Christina)', 'Lakeland Highlands', 'Winter Haven (Lake Region)', 'Winter Haven (Lake Elbert)', 'Auburndale', 'Bartow', 'Mulberry', 'Haines City (Randa Ridge)', 'Haines City (Southern Dunes)', 'Davenport (ChampionsGate)', 'Davenport (Solterra)', 'Davenport (Providence)', 'Poinciana (Solivita)', 'Poinciana (Crescent Lakes)', 'Lake Wales', 'Dundee']}
+  landmarks={[
+    { name: 'Publix Super Markets HQ (Lakeland)', note: 'Light-commercial tenant HVAC' },
+    { name: 'Florida Polytechnic University', note: 'Lakeland faculty + rental service' },
+    { name: 'LEGOLAND Florida (Winter Haven)', note: 'Resort-area rentals & vendor homes' },
+    { name: 'Bok Tower Gardens (Lake Wales)', note: 'Historic Lake Wales Ridge residences' },
+    { name: 'ChampionsGate / Four Corners', note: 'Short-term-rental HVAC specialists' },
+    { name: 'Watson Clinic (Lakeland)', note: 'Medical-staff residential service' },
+  ]}
+  climateNote={`Polk County sits on the <strong>Lake Wales Ridge</strong> — the highest, hottest, and driest slice of central Florida. Summer design days routinely touch <strong>96–98°F</strong>, several degrees hotter than coastal Tampa. Winter is the flip side: 2–5 hard freezes a year in the citrus belt around Bartow, Dundee and Haines City, with overnight lows into the 20s. Systems specced for coastal Tampa Bay are <em>undersized on summer design day and under-heated in January</em>. Our Polk installs size against Polk's ASHRAE design temps, configure heat-pump lock-out temps and aux-heat strips correctly, and use corrosion-resistant electrical components to handle citrus-belt fog and freeze cycles.`}
+  schoolsOrHoas={['Polk County Public Schools','Florida Polytechnic University','Solivita HOA','ChampionsGate CDD','Providence HOA']}
+  relatedAreas={[
+    { slug: 'pasco-county-ac-repair', name: 'Pasco County', note: 'North of Polk' },
+    { slug: 'hillsborough-county-hvac-company', name: 'Hillsborough County', note: 'West of Polk' },
+    { slug: 'air-conditioning-repair-zephyrhills-fl-i-care-air-care', name: 'Zephyrhills', note: 'NW border of Polk' },
+    { slug: 'wesley-chapel-ac-repair', name: 'Wesley Chapel', note: 'Our dispatch HQ' },
+  ]}
 >
-<h2>Polk County residential HVAC — western corridor specialists</h2>
-<p>Western Polk County — Lakeland, Plant City, Davenport, Auburndale — has exploded with new residential growth, and we've been right there alongside that growth. From our Wesley Chapel base we run a regular service loop into the I-4 corridor covering routine repairs, system replacements, and maintenance plans for homeowners who want a local family contractor rather than a big-box chain.</p>
-<h2>Polk County HVAC services</h2>
-<p>We offer the full residential HVAC service line across Polk: <a href="/services/ac-repair-tampa/">AC repair</a>, <a href="/services/emergency-ac-repair-tampa/">24/7 emergency dispatch</a>, <a href="/services/ac-maintenance-tampa/">seasonal tune-ups</a>, <a href="/services/hvac-installation-tampa/">new system installation</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a>, <a href="/services/heating-services-tampa/">heating</a>, and <a href="/services/thermostat-installation-tampa/">smart thermostat installation</a>. Every install is Manual-J sized and permit-pulled. Every repair is flat-rate quoted and backed by a 1-year warranty.</p>
+  <span class="not-prose inline-flex items-center rounded-full bg-accent-50 text-accent-600 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Countywide · 30+ ZIPs</span>
+  <h2>The Polk County HVAC company that will actually drive out to Lakeland, Winter Haven &amp; Lake Wales</h2>
+  <p>Most of the big Tampa HVAC companies won\u2019t cross the Hillsborough–Polk line. We do. I Care Air Care has been driving from our Wesley Chapel HQ into Polk County for more than fifteen years — Lakeland, Winter Haven, Bartow, Auburndale, Haines City, Davenport, Poinciana, Lake Wales — and charging the same flat rates we charge in our own backyard.</p>
+  <p>Polk is a different HVAC environment from coastal Tampa. Higher summer design temps, real winter freezes, more rural service calls, more mobile and manufactured homes, a booming short-term-rental market in the <strong>Four Corners / ChampionsGate</strong> corridor, and a citrus-belt microclimate with fog and freeze cycles that punish electrical components. We build our service specs around those realities, not a generic Tampa Bay template.</p>
+
+  <h2>HVAC services we provide in Polk County</h2>
+  <ul>
+    <li><a href="/services/ac-repair-tampa/"><strong>AC repair</strong></a> — capacitor, contactor, blower motor, fan motor, refrigerant, thermostat and compressor diagnostics across every Polk ZIP.</li>
+    <li><a href="/services/emergency-ac-repair-tampa/"><strong>Emergency AC repair</strong></a> — 24/7 dispatch with priority for Polk vacation rentals, 55+ communities, and medical-needs households.</li>
+    <li><a href="/services/hvac-installation-tampa/"><strong>HVAC installation</strong></a> — Manual-J sized to Polk design temps, Polk County (or City of Lakeland) permit handling, R-454B (A2L) 2026-compliant equipment.</li>
+    <li><a href="/services/ac-maintenance-tampa/"><strong>AC maintenance &amp; tune-ups</strong></a> — 21-point seasonal service with Polk-specific freeze-protection configuration each fall.</li>
+    <li><a href="/services/air-duct-cleaning-tampa/"><strong>Air duct cleaning</strong></a> — HEPA-based rotary brush + antimicrobial. Heavy pollen belts around Lake Wales and Bartow citrus groves make this routine here.</li>
+    <li><a href="/services/heating-services-tampa/"><strong>Heating services</strong></a> — heat-pump repair, auxiliary heat strips, and gas furnace service in older Lakeland and Bartow homes.</li>
+    <li><a href="/services/thermostat-installation-tampa/"><strong>Smart thermostat installation</strong></a> — Ecobee, Nest, Honeywell, with heat-pump-specific programming Polk winters actually need.</li>
+    <li><a href="/services/refrigeration-repair-tampa/"><strong>Commercial refrigeration</strong></a> — Lakeland restaurants, Winter Haven cafes, and vacation-rental-area convenience stores.</li>
+  </ul>
+
+  <h2>Short-term rentals: Davenport, ChampionsGate &amp; the Four Corners corridor</h2>
+  <p>The US-27 corridor through Davenport, ChampionsGate, Solterra and Four Corners is one of the heaviest short-term-rental markets in the country. That means HVAC systems that never rest, absentee owners, and emergency calls that hit the property manager at 9pm. We handle a large slate of rental-property service contracts here: after-hours dispatch, direct invoicing to the owner or management company, photo-documented repairs, and access via smart-lock or lockbox code. If your rental is losing a star on every guest review because of AC issues, call us — that\u2019s a solvable problem.</p>
+
+  <h2>Lakeland, Winter Haven &amp; Bartow core: older housing stock, heavier sizing</h2>
+  <p>The historic core of Polk — <strong>Lakeland\u2019s Dixieland, Cleveland Heights, Lake Hollingsworth; Winter Haven\u2019s Lake Region and Lake Elbert; Bartow\u2019s downtown historic district</strong> — is mostly 1940s–1970s construction with ducts in unconditioned attics running at 140°F on a summer afternoon. Replacing the condenser on one of these homes without sealing the ducts is the most common waste of money we see. Our replacement proposals include duct inspection, sealing, and often partial replacement in older Polk homes.</p>
+
+  <h2>55+ communities: Solivita, Crescent Lakes &amp; Lake Ashton</h2>
+  <p>Polk has some of the largest 55+ communities in Florida — <strong>Solivita (Poinciana), Lake Ashton (Winter Haven / Lake Wales), Lakeside Estates, Lake Region Village</strong>. We do a lot of service in these communities and we approach it differently: we explain what we find in plain language, we don\u2019t upsell, we leave written quotes family members can review, and we coordinate service with community office hours or gate access codes. Tim\u2019s personal cell goes in the service record for any resident who asks.</p>
+
+  <h2>Polk-specific freeze protection for heat pumps</h2>
+  <p>Polk\u2019s 2–5 freeze events per winter are real, and they damage heat-pump systems installed with factory-default lock-out temps. We manually configure lock-out temperatures (typically 32–35°F), verify defrost-cycle behavior, and size supplemental electric heat strips to your home\u2019s heat-loss calc — so you don\u2019t wake up to a 58°F house during a January cold snap. This is a 15-minute adjustment most contractors skip; we do it on every Polk install and as part of any fall tune-up.</p>
+
+  <h2>Ready to book Polk County service?</h2>
+  <p>Call <a href="tel:+18133952324">(813) 395-2324</a> — a real person answers. Tell us your city and the issue and we\u2019ll give you a clear arrival window and a flat-rate phone quote. Or <a href="https://book.housecallpro.com/book/I-Care-Air-Care/cb3eaa8c" target="_blank" rel="noopener">book online</a> 24/7 — we dispatch to Polk every weekday.</p>
 </ServiceAreaLayout>

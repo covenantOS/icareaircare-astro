@@ -78,16 +78,21 @@ scripts/        - utility scripts
 - [x] `/service-areas/wesley-chapel-ac-repair/` rebuilt with hyper-local content
 - [x] `/service-areas/pasco-county-ac-repair/` rebuilt
 - [x] `/service-areas/hillsborough-county-hvac-company/` rebuilt
+- [x] `/service-areas/polk-county-residential-ac-repair/` rebuilt
+- [x] `/service-areas/land-o-lakes-hvac-services/` rebuilt
+- [x] `/service-areas/lutz-home-air-conditioning-service/` rebuilt
 
 ### Left to do (Phase 3 + Phase 4)
-- [ ] Rebuild remaining 6 service-area pages with same hyper-local depth:
-  - [ ] `/service-areas/polk-county-residential-ac-repair/`
-  - [ ] `/service-areas/land-o-lakes-hvac-services/`
-  - [ ] `/service-areas/lutz-home-air-conditioning-service/`
-  - [ ] `/service-areas/new-tampa-heating-and-cooling/`
-  - [ ] `/service-areas/odessa-emergency-ac-repair/`
-  - [ ] `/service-areas/air-conditioning-repair-zephyrhills-fl-i-care-air-care/`
+- [x] `/service-areas/polk-county-residential-ac-repair/` — full hyper-local rewrite (Lakeland/Winter Haven/Bartow/Davenford + Lake Wales Ridge climate + freeze protection)
+- [x] `/service-areas/land-o-lakes-hvac-services/` — full rewrite (Bexley/Connerton/Lake Padgett + lakefront latent-load specs)
+- [x] `/service-areas/lutz-home-air-conditioning-service/` — full rewrite (Avila/Cheval + Pasco/Hillsborough permit split + older unincorporated Lutz)
+- [ ] Rebuild remaining 3 service-area pages with same hyper-local depth:
+  - [ ] `/service-areas/new-tampa-heating-and-cooling/` (Tampa Palms, Cross Creek, Cory Lake Isles, Hunter's Green, Heritage Isles, Live Oak Preserve, K-Bar Ranch, USF, Moffitt)
+  - [ ] `/service-areas/odessa-emergency-ac-repair/` (Keystone, Starkey Ranch, Eagle Ridge, Crescent Lake, rural upscale NW Hillsborough)
+  - [ ] `/service-areas/air-conditioning-repair-zephyrhills-fl-i-care-air-care/` (Silverado, Betmar Acres 55+, Colony Hills, AdventHealth Zephyrhills, Skydive City, east Pasco design days)
 - [ ] Rebuild `/service-areas/` index hub page (grid of 9 cities, map, intro, schema)
+- [x] Replaced default Astro starter README.md with comprehensive handoff-ready README
+- [x] Added "Local team + vans" band to home page between Hero and BrandBand (1024x604 `-Local-Team-and-Service-AC.webp`). NOTE: the `-Local-Team-and-Service-Vans.webp` file is only 341x201 — need higher-res original to swap in.
 - [ ] Strengthen supporting pages: `/contact/`, `/reviews/`, `/financing/`, `/services/` hub, `/careers/`, `/404.astro`
 - [ ] Blog index stub at `/blogs/` (design for future posts, no posts yet)
 - [ ] SEO pass:

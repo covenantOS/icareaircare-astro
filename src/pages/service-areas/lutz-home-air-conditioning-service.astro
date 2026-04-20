@@ -2,38 +2,80 @@
 import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
 
 const faqs = [
-  {
-    "q": "How quickly can you reach Lutz?",
-    "a": "Usually 15–25 minutes. We service Lutz every day."
-  },
-  {
-    "q": "Do you service Cheval and Cordoba Ranch?",
-    "a": "Yes — regularly. We know the access protocols at the gated communities."
-  },
-  {
-    "q": "Is there a travel fee for Lutz?",
-    "a": "No — flat-rate pricing county-wide."
-  },
-  {
-    "q": "Do you handle both Hillsborough and Pasco sides of Lutz?",
-    "a": "Yes — we pull permits in both counties under Florida license CAC1816515."
-  }
+  { q: 'Which Lutz neighborhoods do you service?', a: 'All of 33548, 33549, 33558 and 33559 — Cheval, Villarosa, Calusa Trace, Lake Fern, Sunlake, Ladera, Avila (the gated estate community), Lutz Lake Fern corridor, Willow Bend, and the older original-Lutz homes along US-41 and Livingston Ave.' },
+  { q: 'Do you work in Avila and other gated Lutz communities?', a: 'Yes — we\'ve been the preferred HVAC contractor for multiple Avila homeowners for years. Gated communities have specific insurance, noise-ordinance, and after-hours access rules and we handle all of that directly with the gate security office.' },
+  { q: 'Can you service the older Lutz homes that aren\'t in a development?', a: 'Absolutely. Lutz has a lot of 1950s–1980s single-family and hobby-farm homes along Livingston, Lutz Lake Fern, and the US-41 corridor. We service every vintage — and we\'re honest when a system is beyond a reasonable repair vs. a smart replacement.' },
+  { q: 'Are Lutz permits pulled through Pasco or Hillsborough?', a: 'Depends on your address. The Pasco/Hillsborough line cuts right through Lutz — 33549 is mostly Hillsborough, 33558 is split, 33548 is primarily Pasco. We pull the correct permit based on your parcel and coordinate with whichever building department applies. We do this daily in Lutz.' },
+  { q: 'What HVAC brands do you install?', a: 'Carrier, Trane, Lennox, Rheem, American Standard, Goodman, Bryant, and Mitsubishi mini-splits. All R-454B (A2L) 2026-compliant. We match brand to budget and warranty goals — not commission.' },
+  { q: 'How fast is your response time to Lutz?', a: '15–25 minutes from our Wesley Chapel HQ for most Lutz addresses. Cheval, Lake Fern and Sunlake are among the closest; the Avila and Villarosa ends are 20–25 minutes depending on traffic on Dale Mabry or SR-54.' },
+  { q: 'What\'s the typical Lutz AC repair cost?', a: 'Capacitor $180–$260, contactor $180–$300, fan motor $400–$650, refrigerant recharge $350–$750, compressor $1,800–$3,200. Full residential AC replacement $6,500–$13,500 depending on size, brand, duct work and permit jurisdiction.' },
+];
+
+const reviews = [
+  { name: 'Eric H.', neighborhood: 'Cheval', body: 'Had a compressor failure in our Cheval home during a heat wave. I Care Air Care got us a loaner portable unit in the master bedroom the same afternoon and had the full replacement done in two days. Over-delivered on everything.', rating: 5 },
+  { name: 'Tamara B.', neighborhood: 'Lutz Lake Fern', body: 'We have a 1970s hobby farm off Lutz Lake Fern with original ductwork in an unconditioned attic. They walked me through exactly what to fix vs. what to leave alone. Ended up sealing the ducts for half the price of a full replacement and it made a huge difference.', rating: 5 },
+  { name: 'Dev P.', neighborhood: 'Calusa Trace', body: 'Replaced a 16-year-old system with a Trane variable-speed. Pulled the Hillsborough permit since we\'re on that side of Lutz, passed inspection first try. Clean work, polite crew, written warranty. What more can you ask for.', rating: 5 },
 ];
 ---
 <ServiceAreaLayout
   slug="lutz-home-air-conditioning-service"
-  title="Lutz Home Air Conditioning Service | I Care Air Care"
-  description="Lutz, FL AC repair, tune-ups, and installation. Local Wesley Chapel-based HVAC team. 4.9★ · 700+ reviews. Call (813) 395-2324 for same-day service."
+  title="Lutz Home Air Conditioning Service | HVAC Contractor | I Care Air Care"
+  description="Lutz's 4.9★ HVAC contractor — 15 minutes from Wesley Chapel. Serving Cheval, Villarosa, Avila, Lake Fern, Calusa Trace, Sunlake. Pasco + Hillsborough permits. Licensed CAC1816515. Call (813) 395-2324."
   h1="Lutz Home Air Conditioning Service"
-  eyebrow="Lutz, FL"
-  subtitle={"Serving Cheval, Cordoba Ranch, Lake Fern, Van Dyke & all Lutz homes with fast, honest AC repair and HVAC service."}
-  heroImage="/images/ICAC%20Team%281%29.webp"
+  eyebrow="Lutz, FL · 33548 · 33549 · 33558 · 33559"
+  subtitle="Serving Cheval, Villarosa, Avila, Lake Fern, Calusa Trace, Sunlake and all of Lutz — Wesley Chapel-based, 15 minutes away, and fluent in both Pasco and Hillsborough permitting."
+  heroImage="/images/ICAC%20Team.webp"
   cityName="Lutz"
   faqs={faqs}
-  neighborhoods={["Cheval","Cordoba Ranch","Lake Fern","Van Dyke","Steinbrenner","Lutz Lake Fern","Sunlake"]}
+  reviews={reviews}
+  responseWindow="30–60 minutes"
+  driveTime="15–25 minutes from HQ"
+  zipCodes={['33548','33549','33558','33559']}
+  geo={{ lat: 28.150, lng: -82.466 }}
+  neighborhoods={['Cheval', 'Villarosa', 'Avila', 'Calusa Trace', 'Sunlake', 'Ladera', 'Lutz Lake Fern corridor', 'Willow Bend', 'Heritage Harbor', 'The Preserve at Cypress Creek', 'Stonebrier', 'Tarramor', 'Lake Fern', 'North Lakes']}
+  landmarks={[
+    { name: 'Steinbrenner High School', note: 'Residential service across feeder neighborhoods' },
+    { name: 'Cypress Creek Preserve', note: 'Homes we service weekly' },
+    { name: 'Avila Golf &amp; Country Club', note: 'Gated-community estate HVAC' },
+    { name: 'Cheval Golf &amp; Country Club', note: 'Cheval-community residential service' },
+    { name: 'Bearss Grove', note: 'SE Lutz residential service' },
+    { name: 'Lake Fern Park', note: 'Lake Fern-area neighborhoods' },
+  ]}
+  climateNote={`Lutz straddles the Pasco/Hillsborough line and includes two very different microclimates. <strong>Western Lutz</strong> (Cheval, Lake Fern, Sunlake) runs more humid from proximity to the lake chain. <strong>Eastern Lutz</strong> (Avila, Villarosa, US-41 corridor) trends drier but hotter with less canopy shade. We spec differently for each — humidity-controlling 2-stage equipment for the lakeside, slightly oversized condensers and sun-loaded attic-duct sealing for the east. Homes in older unincorporated Lutz off Livingston and Lutz Lake Fern often have 1970s ductwork that\u2019s the real thermal weak-link, not the equipment.`}
+  schoolsOrHoas={['Steinbrenner High School','Cheval HOA','Villarosa HOA','Avila HOA','Heritage Harbor HOA']}
+  relatedAreas={[
+    { slug: 'land-o-lakes-hvac-services', name: 'Land O\u2019 Lakes', note: '8 min north' },
+    { slug: 'wesley-chapel-ac-repair', name: 'Wesley Chapel', note: '18 min NE · our HQ' },
+    { slug: 'odessa-emergency-ac-repair', name: 'Odessa', note: '12 min west' },
+    { slug: 'new-tampa-heating-and-cooling', name: 'New Tampa', note: '12 min east' },
+  ]}
 >
-<h2>Lutz HVAC service — local team, fast response</h2>
-<p>Lutz sits right between our Wesley Chapel base and central Tampa, putting us within a 20-minute response for almost every neighborhood. From the gated communities around <strong>Cheval</strong> and <strong>Cordoba Ranch</strong> to the older homes along <strong>Lake Fern Road</strong> and <strong>Van Dyke</strong>, our team has worked on thousands of Lutz HVAC systems.</p>
-<h2>Lutz HVAC services we provide</h2>
-<p>The full line: <a href="/services/ac-repair-tampa/">AC repair</a>, <a href="/services/emergency-ac-repair-tampa/">emergency service</a>, <a href="/services/ac-maintenance-tampa/">21-point tune-ups</a>, <a href="/services/hvac-installation-tampa/">new system installation</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a>, <a href="/services/heating-services-tampa/">heating repair</a>, <a href="/services/thermostat-installation-tampa/">smart thermostats</a>, and <a href="/services/refrigeration-repair-tampa/">commercial refrigeration</a> for Lutz small businesses.</p>
+  <span class="not-prose inline-flex items-center rounded-full bg-accent-50 text-accent-600 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">15 min from HQ</span>
+  <h2>Lutz\u2019s local HVAC team — fluent in both Pasco and Hillsborough permitting</h2>
+  <p>Lutz is one of the more unusual service areas we cover. The <strong>Pasco / Hillsborough county line</strong> cuts right through it, which means the permitting jurisdiction for your HVAC replacement depends on which side of your street you live on. We handle this every week and we know exactly which department your parcel goes through — Pasco County Building Services for 33548 and most of 33558, or Hillsborough County / City of Tampa for 33549 and parts of 33558. One less thing for you to figure out.</p>
+  <p>Florida license <strong>CAC1816515</strong>, 700+ verified Google reviews (many from Cheval, Lake Fern, Avila and the Lutz Lake Fern corridor), and we\u2019ve been driving into Lutz from our Wesley Chapel HQ for 15+ years.</p>
+
+  <h2>HVAC services we provide throughout Lutz</h2>
+  <ul>
+    <li><a href="/services/ac-repair-tampa/"><strong>AC repair</strong></a> — every brand, every vintage, every Lutz ZIP.</li>
+    <li><a href="/services/emergency-ac-repair-tampa/"><strong>Emergency AC repair</strong></a> — 24/7 dispatch with priority for Lutz.</li>
+    <li><a href="/services/hvac-installation-tampa/"><strong>HVAC installation</strong></a> — Manual-J sized, Pasco or Hillsborough permit coordination, R-454B 2026-ready.</li>
+    <li><a href="/services/ac-maintenance-tampa/"><strong>AC maintenance &amp; tune-ups</strong></a> — 21-point seasonal service.</li>
+    <li><a href="/services/air-duct-cleaning-tampa/"><strong>Air duct cleaning</strong></a> — critical for older Lutz homes with 1970s flex running through unconditioned attics.</li>
+    <li><a href="/services/heating-services-tampa/"><strong>Heating services</strong></a> — heat-pump service, heat-strip replacement, gas furnaces where present.</li>
+    <li><a href="/services/thermostat-installation-tampa/"><strong>Smart thermostat installation</strong></a> — Ecobee, Nest, Honeywell.</li>
+    <li><a href="/services/refrigeration-repair-tampa/"><strong>Commercial refrigeration</strong></a> — Lutz restaurants, small offices, medical tenants.</li>
+  </ul>
+
+  <h2>Avila, Cheval &amp; Villarosa: gated-community service</h2>
+  <p>Gated Lutz communities (<strong>Avila, Cheval, Villarosa, Heritage Harbor</strong>) have specific access, noise, and HOA rules we navigate every week. We coordinate directly with gate security, bring the required insurance certificates, schedule installs outside noise-ordinance hours, and complete any required HOA condenser-placement approval forms. Most estate-grade systems we install here are 2-stage or variable-speed 17–21 SEER2 with dedicated humidity control — the comfort difference in a 5,000+ sq. ft. Avila home is substantial.</p>
+
+  <h2>Lutz Lake Fern corridor &amp; unincorporated older Lutz</h2>
+  <p>The Lutz Lake Fern, Livingston, Bearss, and US-41 corridors have a lot of 1950s–1980s single-family and hobby-farm homes with original ductwork in unconditioned attics. On these homes, replacing the condenser without addressing the ducts wastes money. Our proposal for this vintage always includes a duct inspection and honest advice on what\u2019s worth sealing, what\u2019s worth replacing, and what should just be left alone — you\u2019d be surprised how often \u201Cjust seal the takeoffs\u201D fixes a comfort complaint more cheaply than a new condenser.</p>
+
+  <h2>Calusa Trace, Sunlake &amp; Heritage Harbor: established community replacements</h2>
+  <p>These 1990s–early-2000s communities are hitting the peak of their HVAC-replacement wave. Most original 10–13 SEER single-stage condensers are 18–22 years old and past economic repair. We handle these same-week: Manual-J load calc, three-tier written proposal, HOA approval form, permit submittal, day-of-install, and inspection coordination. Financing available through Synchrony for qualified Lutz homeowners.</p>
+
+  <h2>Ready to book Lutz service?</h2>
+  <p>Call <a href="tel:+18133952324">(813) 395-2324</a> — a real person answers, often Tim. Tell us your street and we\u2019ll tell you which county pulls your permit. Or <a href="https://book.housecallpro.com/book/I-Care-Air-Care/cb3eaa8c" target="_blank" rel="noopener">book online</a> 24/7.</p>
 </ServiceAreaLayout>
