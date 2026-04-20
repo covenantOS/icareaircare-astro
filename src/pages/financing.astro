@@ -1,18 +1,63 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import CTABand from '../components/CTABand.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import ContactFormSection from '../components/ContactFormSection.astro';
+import FAQ from '../components/FAQ.astro';
+import { SITE } from '../lib/site';
+const faqs = [
+  { q: 'Who finances through I Care Air Care?', a: 'We partner with <strong>Synchrony Bank</strong>, the same financing provider trusted by most major home-service companies nationally. Applications are quick, and approvals are usually instant.' },
+  { q: 'What credit score do I need?', a: 'Synchrony approves a wide range of credit profiles. Most homeowners with a 650+ score qualify for promotional rates. Even lower scores often get approved — just at different terms.' },
+  { q: 'Does applying hurt my credit?', a: 'A pre-qualification check uses a soft pull that doesn\u2019t affect your score. A full application is a hard pull.' },
+  { q: 'Can I finance repairs, or only new installs?', a: 'Both — financing is typically available for purchases of $1,000 or more, which covers most repairs and all installations.' },
+  { q: 'Are there 0% promotional options?', a: 'Yes — 0% and reduced-interest promos are offered periodically. Ask when booking for current offers.' },
+  { q: 'What\u2019s the longest term available?', a: 'Up to 120 months on qualifying installations.' },
+];
 ---
 <BaseLayout
-  title="Financing | I Care Air Care"
-  description="Flexible HVAC financing options with approved credit."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Financing","url":"https://www.icareaircare.com/financing/"}]}
+  title="HVAC Financing in Wesley Chapel & Tampa | I Care Air Care"
+  description="Synchrony HVAC financing for Wesley Chapel & Tampa homeowners. 0% intro options, up to 120-month terms. Apply online and get approved in minutes."
+  breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'Financing',url:'https://www.icareaircare.com/financing/'}]}
 >
-  <Hero title="Financing" subtitle="Flexible HVAC financing options with approved credit." ctaLabel="Call Us" />
+  <Hero
+    eyebrow="Financing"
+    title="HVAC Financing That Fits Your Budget"
+    subtitle="Replacing or repairing your HVAC shouldn\u2019t break the bank. Our Synchrony partnership offers fast approvals, flexible terms, and 0% promotional options for qualified buyers."
+    image="/images/Financing-Your-Home-with-I-Care-Air-Care-%E2%80%93-Affordable-HVAC-Payments.webp"
+    ctaLabel="Call to Apply"
+    ctaHref={SITE.phoneHref}
+  />
   <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 4 will rewrite this page with full content and schema.]</p>
+    <div class="container-site max-w-4xl grid md:grid-cols-2 gap-10 items-start">
+      <div class="prose-icac">
+        <h2>Why finance with Synchrony?</h2>
+        <p>We chose Synchrony because their home-project financing is flexible, fast, and written specifically for homeowners making substantial investments in their homes. That means:</p>
+        <ul>
+          <li><strong>0% introductory rates</strong> for qualifying promotional periods</li>
+          <li><strong>Terms up to 120 months</strong> on qualifying installations</li>
+          <li><strong>Fast approvals</strong> — usually in minutes</li>
+          <li><strong>Soft-pull pre-qualification</strong> that doesn\u2019t touch your credit score</li>
+          <li><strong>No prepayment penalties</strong> — pay it off early with no extra cost</li>
+        </ul>
+        <h3>How to apply</h3>
+        <ol>
+          <li>Call us at <a href="tel:+18133952324">(813) 395-2324</a> or book an in-home consultation</li>
+          <li>We\u2019ll provide a written quote for your repair or installation</li>
+          <li>You apply with Synchrony — we\u2019ll walk you through the online application</li>
+          <li>Approval comes back in minutes; you sign and we schedule the work</li>
+        </ol>
+      </div>
+      <aside class="rounded-2xl bg-surface ring-1 ring-slate-200 p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <img src="/images/Synchrony-Financing-Partner-%E2%80%93-I-Care-Air-Care.webp" alt="Synchrony Financial logo" class="h-10 w-auto" />
+        </div>
+        <h3 class="font-bold text-navy-700 text-lg">Ready to apply?</h3>
+        <p class="mt-2 text-slate-600 text-sm">Call us and we\u2019ll get you the latest promotional offer available at the time of your project.</p>
+        <a href={SITE.phoneHref} class="mt-4 inline-flex w-full justify-center items-center gap-2 rounded-md bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-3">Call {SITE.phone}</a>
+      </aside>
     </div>
   </section>
-  <CTABand />
+  <FAQ title="Financing FAQs" items={faqs} />
+  <FinalCTA />
+  <ContactFormSection />
 </BaseLayout>

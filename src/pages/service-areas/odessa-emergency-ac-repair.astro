@@ -1,18 +1,39 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import CTABand from '../../components/CTABand.astro';
+import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
+
+const faqs = [
+  {
+    "q": "What's your Odessa emergency response time?",
+    "a": "Typically 60–90 minutes from call to on-site. Faster for Starkey Ranch and Gunn Highway neighborhoods."
+  },
+  {
+    "q": "Are after-hours rates much higher?",
+    "a": "A modest dispatch fee — still flat-rate, still quoted before any work."
+  },
+  {
+    "q": "Do you service Starkey Ranch?",
+    "a": "Yes. Starkey Ranch is a regular service community for us."
+  },
+  {
+    "q": "Keystone properties often have larger HVAC systems — can you handle those?",
+    "a": "Absolutely — multi-zone, high-tonnage residential systems are our specialty."
+  }
+];
 ---
-<BaseLayout
+<ServiceAreaLayout
+  slug="odessa-emergency-ac-repair"
   title="Odessa Emergency AC Repair | I Care Air Care"
-  description="Local HVAC & AC repair in Odessa, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Service Areas","url":"https://www.icareaircare.com/service-areas/"},{"name":"Odessa","url":"https://www.icareaircare.com/service-areas/odessa-emergency-ac-repair/"}]}
+  description="Odessa, FL 24/7 emergency AC repair and HVAC services. Fast response across Keystone, Lake Keystone, Starkey Ranch. Call (813) 395-2324."
+  h1="Odessa Emergency AC Repair"
+  eyebrow="Odessa, FL"
+  subtitle={"24/7 emergency AC repair and HVAC service in Odessa, Keystone & the Starkey Ranch corridor."}
+  heroImage="/images/ICAC%20Team%281%29.webp"
+  cityName="Odessa"
+  faqs={faqs}
+  neighborhoods={["Keystone","Lake Keystone","Starkey Ranch","Gunn Highway","Citrus Park","Westchase border"]}
 >
-  <Hero eyebrow="Odessa, FL" title="Odessa Emergency AC Repair" subtitle="Local HVAC & AC repair in Odessa, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324." ctaLabel="Schedule Service" />
-  <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
-    </div>
-  </section>
-  <CTABand />
-</BaseLayout>
+<h2>Odessa &amp; Keystone — fast emergency HVAC response</h2>
+<p>Odessa and Keystone sit between our Wesley Chapel base and the Hillsborough line. When AC fails in Odessa during a July heat wave, our emergency dispatch can usually have a technician on site within 90 minutes — often sooner for <strong>Starkey Ranch</strong>, <strong>Keystone</strong>, and the <strong>Gunn Highway corridor</strong>.</p>
+<h2>Every HVAC service, 24/7 when needed</h2>
+<p>We handle emergency <a href="/services/emergency-ac-repair-tampa/">AC repair</a>, routine <a href="/services/ac-maintenance-tampa/">maintenance</a>, <a href="/services/hvac-installation-tampa/">new system installation</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a>, <a href="/services/heating-services-tampa/">heating</a>, and <a href="/services/thermostat-installation-tampa/">smart thermostats</a> across Odessa. Flat-rate pricing, 1-year warranty, Florida-licensed (CAC1816515).</p>
+</ServiceAreaLayout>

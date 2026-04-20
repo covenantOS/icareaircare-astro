@@ -1,18 +1,39 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import CTABand from '../../components/CTABand.astro';
+import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
+
+const faqs = [
+  {
+    "q": "Do you service Lakeland and Plant City?",
+    "a": "Yes — both are regular stops on our Polk County service route."
+  },
+  {
+    "q": "Are rates different for Polk County?",
+    "a": "No — our flat-rate pricing is county-independent."
+  },
+  {
+    "q": "Do you pull Polk County permits?",
+    "a": "Yes. Florida license CAC1816515 covers all Polk County installs."
+  },
+  {
+    "q": "Do you handle Davenport area new-construction?",
+    "a": "Yes — we work with several Davenport new-construction homeowners on system upgrades and supplemental installs."
+  }
+];
 ---
-<BaseLayout
+<ServiceAreaLayout
+  slug="polk-county-residential-ac-repair"
   title="Polk County Residential AC Repair | I Care Air Care"
-  description="Local HVAC & AC repair in Polk County, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Service Areas","url":"https://www.icareaircare.com/service-areas/"},{"name":"Polk County","url":"https://www.icareaircare.com/service-areas/polk-county-residential-ac-repair/"}]}
+  description="Polk County residential AC repair and HVAC services — Lakeland, Plant City, Davenport, Auburndale. 4.9★ · 700+ reviews. Call (813) 395-2324."
+  h1="Polk County Residential AC Repair"
+  eyebrow="Polk County, FL"
+  subtitle={"Serving the western Polk County corridor — Lakeland, Plant City, Davenport, Auburndale — with fast, honest residential HVAC service."}
+  heroImage="/images/ICAC%20Team%281%29.webp"
+  cityName="Polk County"
+  faqs={faqs}
+  neighborhoods={["Lakeland","Plant City","Davenport","Auburndale","Mulberry","Bartow","Lake Alfred","Haines City"]}
 >
-  <Hero eyebrow="Polk County, FL" title="Polk County Residential AC Repair" subtitle="Local HVAC & AC repair in Polk County, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324." ctaLabel="Schedule Service" />
-  <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
-    </div>
-  </section>
-  <CTABand />
-</BaseLayout>
+<h2>Polk County residential HVAC — western corridor specialists</h2>
+<p>Western Polk County — Lakeland, Plant City, Davenport, Auburndale — has exploded with new residential growth, and we've been right there alongside that growth. From our Wesley Chapel base we run a regular service loop into the I-4 corridor covering routine repairs, system replacements, and maintenance plans for homeowners who want a local family contractor rather than a big-box chain.</p>
+<h2>Polk County HVAC services</h2>
+<p>We offer the full residential HVAC service line across Polk: <a href="/services/ac-repair-tampa/">AC repair</a>, <a href="/services/emergency-ac-repair-tampa/">24/7 emergency dispatch</a>, <a href="/services/ac-maintenance-tampa/">seasonal tune-ups</a>, <a href="/services/hvac-installation-tampa/">new system installation</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a>, <a href="/services/heating-services-tampa/">heating</a>, and <a href="/services/thermostat-installation-tampa/">smart thermostat installation</a>. Every install is Manual-J sized and permit-pulled. Every repair is flat-rate quoted and backed by a 1-year warranty.</p>
+</ServiceAreaLayout>

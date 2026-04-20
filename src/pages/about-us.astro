@@ -1,18 +1,54 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import CTABand from '../components/CTABand.astro';
+import WhyChooseUs from '../components/WhyChooseUs.astro';
+import ReviewStrip from '../components/ReviewStrip.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import ContactFormSection from '../components/ContactFormSection.astro';
 ---
 <BaseLayout
-  title="About Us | I Care Air Care"
-  description="Family-run Tampa Bay HVAC contractor with 30+ years of experience."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"About Us","url":"https://www.icareaircare.com/about-us/"}]}
+  title="About I Care Air Care | Wesley Chapel HVAC Family Business"
+  description="Meet the family-run HVAC team behind Wesley Chapel's most-reviewed AC contractor. 15+ years, 700+ reviews, Florida CAC1816515. Learn our story."
+  breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'About Us',url:'https://www.icareaircare.com/about-us/'}]}
 >
-  <Hero title="About Us" subtitle="Family-run Tampa Bay HVAC contractor with 30+ years of experience." ctaLabel="Call Us" />
+  <Hero
+    eyebrow="Our Story"
+    title="About I Care Air Care"
+    subtitle="A family-run Wesley Chapel HVAC contractor building a five-star reputation one neighbor at a time — since 2010."
+    image="/images/ICAC%20Team%281%29.webp"
+    ctaLabel="Meet The Team"
+    ctaHref="/our-team/"
+  />
   <section class="py-16">
     <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 4 will rewrite this page with full content and schema.]</p>
+      <h2>Why we started I Care Air Care</h2>
+      <p>Tim Hawk has been turning wrenches on HVAC systems across Tampa Bay for over three decades. After years watching big-brand contractors push commission-driven sales and leave homeowners with bloated bills, he opened I Care Air Care in 2010 with a simple promise: <strong>treat every customer the way we'd want our own family treated</strong>.</p>
+      <p>Fifteen years and 700+ five-star Google reviews later, we've grown from a single truck in a Wesley Chapel driveway to a fully licensed (Florida CAC1816515), bonded and insured HVAC company serving Pasco, Hillsborough and Polk counties — without ever losing the family-run feel that started it.</p>
+
+      <h2>What we believe</h2>
+      <ul>
+        <li><strong>Honesty beats upselling.</strong> We'll tell you when a $20 capacitor is all you need, even when a replacement system would pay our mortgage that month.</li>
+        <li><strong>Flat-rate, written quotes.</strong> You see the number before the work starts. Every time.</li>
+        <li><strong>Licensed, trained, background-checked technicians.</strong> The person in your home will be someone we'd send to our own grandmother's house.</li>
+        <li><strong>Warranty-backed work.</strong> Every repair carries a 1-year parts-and-labor warranty on top of the manufacturer's coverage.</li>
+        <li><strong>Answer the phone.</strong> When you call (813) 395-2324, a human answers — often Tim himself.</li>
+      </ul>
+
+      <h2>Our service area</h2>
+      <p>We're headquartered at <strong>27022 Foamflower Blvd in Wesley Chapel</strong>, which means Wesley Chapel, Land O' Lakes, New Tampa, Lutz and Odessa homeowners get the fastest response times in the area. We also service all of Pasco, Hillsborough, and Polk counties — including Tampa, Carrollwood, Brandon, Zephyrhills, Dade City, Lakeland, Plant City and Davenport.</p>
+
+      <h2>Licensing &amp; credentials</h2>
+      <ul>
+        <li>Florida HVAC contractor license: <strong>CAC1816515</strong></li>
+        <li>Fully bonded and insured</li>
+        <li>EPA 608 Universal certified technicians</li>
+        <li>A2L / R-454B certified installers (required for 2026 equipment)</li>
+        <li>Factory-trained on Carrier, Trane, Lennox, Rheem, Goodman, American Standard, Bryant, and Mitsubishi</li>
+      </ul>
     </div>
   </section>
-  <CTABand />
+  <WhyChooseUs />
+  <ReviewStrip />
+  <FinalCTA />
+  <ContactFormSection />
 </BaseLayout>

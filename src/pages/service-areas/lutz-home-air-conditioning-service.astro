@@ -1,18 +1,39 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import CTABand from '../../components/CTABand.astro';
+import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
+
+const faqs = [
+  {
+    "q": "How quickly can you reach Lutz?",
+    "a": "Usually 15–25 minutes. We service Lutz every day."
+  },
+  {
+    "q": "Do you service Cheval and Cordoba Ranch?",
+    "a": "Yes — regularly. We know the access protocols at the gated communities."
+  },
+  {
+    "q": "Is there a travel fee for Lutz?",
+    "a": "No — flat-rate pricing county-wide."
+  },
+  {
+    "q": "Do you handle both Hillsborough and Pasco sides of Lutz?",
+    "a": "Yes — we pull permits in both counties under Florida license CAC1816515."
+  }
+];
 ---
-<BaseLayout
+<ServiceAreaLayout
+  slug="lutz-home-air-conditioning-service"
   title="Lutz Home Air Conditioning Service | I Care Air Care"
-  description="Local HVAC & AC repair in Lutz, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Service Areas","url":"https://www.icareaircare.com/service-areas/"},{"name":"Lutz","url":"https://www.icareaircare.com/service-areas/lutz-home-air-conditioning-service/"}]}
+  description="Lutz, FL AC repair, tune-ups, and installation. Local Wesley Chapel-based HVAC team. 4.9★ · 700+ reviews. Call (813) 395-2324 for same-day service."
+  h1="Lutz Home Air Conditioning Service"
+  eyebrow="Lutz, FL"
+  subtitle={"Serving Cheval, Cordoba Ranch, Lake Fern, Van Dyke & all Lutz homes with fast, honest AC repair and HVAC service."}
+  heroImage="/images/ICAC%20Team%281%29.webp"
+  cityName="Lutz"
+  faqs={faqs}
+  neighborhoods={["Cheval","Cordoba Ranch","Lake Fern","Van Dyke","Steinbrenner","Lutz Lake Fern","Sunlake"]}
 >
-  <Hero eyebrow="Lutz, FL" title="Lutz Home Air Conditioning Service" subtitle="Local HVAC & AC repair in Lutz, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324." ctaLabel="Schedule Service" />
-  <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
-    </div>
-  </section>
-  <CTABand />
-</BaseLayout>
+<h2>Lutz HVAC service — local team, fast response</h2>
+<p>Lutz sits right between our Wesley Chapel base and central Tampa, putting us within a 20-minute response for almost every neighborhood. From the gated communities around <strong>Cheval</strong> and <strong>Cordoba Ranch</strong> to the older homes along <strong>Lake Fern Road</strong> and <strong>Van Dyke</strong>, our team has worked on thousands of Lutz HVAC systems.</p>
+<h2>Lutz HVAC services we provide</h2>
+<p>The full line: <a href="/services/ac-repair-tampa/">AC repair</a>, <a href="/services/emergency-ac-repair-tampa/">emergency service</a>, <a href="/services/ac-maintenance-tampa/">21-point tune-ups</a>, <a href="/services/hvac-installation-tampa/">new system installation</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a>, <a href="/services/heating-services-tampa/">heating repair</a>, <a href="/services/thermostat-installation-tampa/">smart thermostats</a>, and <a href="/services/refrigeration-repair-tampa/">commercial refrigeration</a> for Lutz small businesses.</p>
+</ServiceAreaLayout>

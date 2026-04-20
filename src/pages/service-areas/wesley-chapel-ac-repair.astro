@@ -1,18 +1,46 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import CTABand from '../../components/CTABand.astro';
+import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
+
+const faqs = [
+  { q: 'How fast can you get to Wesley Chapel?', a: 'We\'re based right here on Foamflower Blvd in Wesley Chapel — most calls we\'re on-site within an hour, often the same call. Seven Oaks, Meadow Pointe, Wiregrass and Epperson are usually our fastest responses.' },
+  { q: 'Do you service new-construction homes in Wesley Chapel?', a: 'Yes — we work extensively with new-construction homeowners in Epperson, Mirada, Watergrass and Union Park. See our <a class="underline" href="/new-construction-hvac-guide-for-epperson-mirada-homeowners/">new-construction HVAC guide</a>.' },
+  { q: 'What does AC repair cost in Wesley Chapel?', a: 'Most Wesley Chapel repairs run $150–$600 depending on the part. We quote flat-rate before any work begins.' },
+  { q: 'Do you offer emergency service in Wesley Chapel?', a: 'Yes — 24/7 emergency dispatch. Wesley Chapel residents often get the fastest response times since we\'re local.' },
+  { q: 'Can you service rental properties or HOA communities?', a: 'Yes — we work with several Wesley Chapel property managers and HOA boards, and can bill directly where arrangements exist.' },
+  { q: 'Are you licensed to pull permits in Pasco County?', a: 'Yes. Florida license CAC1816515. We handle all Pasco County HVAC permits and inspections.' },
+];
 ---
-<BaseLayout
+<ServiceAreaLayout
+  slug="wesley-chapel-ac-repair"
   title="Wesley Chapel AC Repair & HVAC Services | I Care Air Care"
-  description="Local HVAC & AC repair in Wesley Chapel, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Service Areas","url":"https://www.icareaircare.com/service-areas/"},{"name":"Wesley Chapel","url":"https://www.icareaircare.com/service-areas/wesley-chapel-ac-repair/"}]}
+  description="Wesley Chapel's 4.9★ local HVAC contractor. AC repair, installation, maintenance, duct cleaning. Based on Foamflower Blvd — fastest response times in WC. Call (813) 395-2324."
+  h1="Wesley Chapel AC Repair & HVAC Services"
+  eyebrow="Wesley Chapel, FL"
+  subtitle={`Your neighbors on Foamflower Blvd. 4.9★ Google rated, 700+ reviews, 15+ years serving Wesley Chapel, Seven Oaks, Meadow Pointe, Epperson & Mirada.`}
+  heroImage="/images/ICAC%20Team%281%29.webp"
+  cityName="Wesley Chapel"
+  faqs={faqs}
+  neighborhoods={['Seven Oaks', 'Meadow Pointe', 'Wiregrass Ranch', 'Epperson Ranch', 'Mirada', 'Watergrass', 'Union Park', 'Saddlebrook', 'Lexington Oaks', 'Quail Hollow', 'New River', 'Country Walk']}
 >
-  <Hero eyebrow="Wesley Chapel, FL" title="Wesley Chapel AC Repair & HVAC Services" subtitle="Local HVAC & AC repair in Wesley Chapel, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324." ctaLabel="Schedule Service" />
-  <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
-    </div>
-  </section>
-  <CTABand />
-</BaseLayout>
+  <h2>The Wesley Chapel HVAC contractor your neighbors actually recommend</h2>
+  <p>I Care Air Care has operated from <strong>27022 Foamflower Blvd</strong> in Wesley Chapel for more than fifteen years. That means every service truck you see in a Wesley Chapel driveway — whether it's a quick capacitor swap in <strong>Seven Oaks</strong>, a full system replacement in <strong>Meadow Pointe</strong>, or an emergency call-out to new construction in <strong>Epperson</strong> or <strong>Mirada</strong> — is our team driving minutes from home.</p>
+  <p>That proximity is why we consistently have the fastest response times in the area, and why 700+ local homeowners have left us verified 5-star Google reviews. We're not a franchise. We don't have call-center dispatchers an hour away. When you call (813) 395-2324, you're reaching Tim and the team directly.</p>
+
+  <h2>HVAC services we provide throughout Wesley Chapel</h2>
+  <ul>
+    <li><a href="/services/ac-repair-tampa/"><strong>AC repair</strong></a> — same-day capacitor, contactor, fan motor, thermostat, refrigerant & compressor repairs</li>
+    <li><a href="/services/emergency-ac-repair-tampa/"><strong>Emergency AC repair</strong></a> — 24/7 dispatch, priority response for Wesley Chapel</li>
+    <li><a href="/services/ac-maintenance-tampa/"><strong>AC maintenance & tune-ups</strong></a> — 21-point seasonal visits, maintenance plans with priority dispatch</li>
+    <li><a href="/services/hvac-installation-tampa/"><strong>HVAC installation</strong></a> — Manual-J sized replacements & new-construction installs (R-454B ready)</li>
+    <li><a href="/services/air-duct-cleaning-tampa/"><strong>Air duct cleaning</strong></a> — 7-step HEPA + antimicrobial process</li>
+    <li><a href="/services/heating-services-tampa/"><strong>Heating services</strong></a> — heat pump repair, heat strips, the occasional gas furnace</li>
+    <li><a href="/services/thermostat-installation-tampa/"><strong>Smart thermostat installation</strong></a> — Ecobee, Nest, Honeywell with heat-pump configuration</li>
+    <li><a href="/services/refrigeration-repair-tampa/"><strong>Commercial refrigeration</strong></a> — walk-ins, reach-ins, ice machines for Wesley Chapel restaurants & retailers</li>
+  </ul>
+
+  <h2>New-construction HVAC in Epperson & Mirada</h2>
+  <p>The explosive growth of Wesley Chapel's new-construction communities — Epperson, Mirada, Watergrass, Persimmon Park, Union Park — has put enormous demand on HVAC systems that are often sized to the minimum. We specialize in <a href="/new-construction-hvac-guide-for-epperson-mirada-homeowners/">supplementing builder-grade installs</a>: adding smart thermostats with humidity control, resizing undersized systems, fixing duct issues, and upgrading to zoned variable-speed equipment for two-story layouts.</p>
+
+  <h2>Why Wesley Chapel HOAs & property managers work with us</h2>
+  <p>We handle service contracts for multiple Wesley Chapel multi-family properties, HOA clubhouses and light-commercial buildings. We can invoice centrally, coordinate access via lockbox/code, and provide documented service histories for warranty and inspection purposes. Call Tim to discuss your property's needs.</p>
+</ServiceAreaLayout>

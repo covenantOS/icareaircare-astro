@@ -1,18 +1,32 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import CTABand from '../components/CTABand.astro';
+import ReviewStrip from '../components/ReviewStrip.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import ContactFormSection from '../components/ContactFormSection.astro';
+import { SITE } from '../lib/site';
 ---
 <BaseLayout
-  title="Reviews | I Care Air Care"
-  description="Read 120+ verified 5-star Google reviews from Tampa Bay homeowners."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Reviews","url":"https://www.icareaircare.com/reviews/"}]}
+  title="Reviews | I Care Air Care Wesley Chapel HVAC 4.9★"
+  description="Read 700+ verified five-star Google reviews from Wesley Chapel, Tampa, Land O' Lakes & Pasco County homeowners who trust I Care Air Care for AC repair and HVAC service."
+  breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'Reviews',url:'https://www.icareaircare.com/reviews/'}]}
 >
-  <Hero title="Reviews" subtitle="Read 120+ verified 5-star Google reviews from Tampa Bay homeowners." ctaLabel="Call Us" />
+  <Hero
+    eyebrow={`${SITE.rating.value}\u2605 \u00b7 ${SITE.rating.count}+ Reviews`}
+    title="What Wesley Chapel Homeowners Say About Us"
+    subtitle={`700+ verified five-star Google reviews and counting. See why Wesley Chapel, Tampa, Land O' Lakes and Pasco County homeowners choose I Care Air Care.`}
+    image="/images/ICAC%20Team.webp"
+    ctaLabel="Leave a Review"
+    ctaHref={SITE.socials.google}
+  />
+  <ReviewStrip />
   <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 4 will rewrite this page with full content and schema.]</p>
+    <div class="container-site max-w-4xl text-center prose-icac">
+      <h2>700+ verified five-star reviews</h2>
+      <p>Every review on our Google Business Profile comes from a real customer — a Wesley Chapel homeowner whose AC we repaired, a Land O' Lakes family we installed a new heat pump for, a Tampa restaurant whose walk-in cooler we got back online. We don't incentivize reviews, we don't filter them, and we don't hide behind a third-party aggregator.</p>
+      <p><a href={SITE.socials.google} target="_blank" rel="noopener">Read all reviews on Google →</a></p>
     </div>
   </section>
-  <CTABand />
+  <FinalCTA />
+  <ContactFormSection />
 </BaseLayout>

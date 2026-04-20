@@ -1,0 +1,101 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import WhyChooseUs from '../components/WhyChooseUs.astro';
+import ReviewStrip from '../components/ReviewStrip.astro';
+import ThreeStep from '../components/ThreeStep.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import ContactFormSection from '../components/ContactFormSection.astro';
+import FAQ from '../components/FAQ.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import Schema from '../components/Schema.astro';
+import { SITE } from '../lib/site';
+
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  h1: string;
+  eyebrow?: string;
+  subtitle?: string;
+  cityName: string;
+  heroImage?: string;
+  faqs: { q: string; a: string }[];
+  neighborhoods?: string[];
+  distance?: string;
+}
+const {
+  slug, title, description, h1, eyebrow, subtitle, cityName, heroImage,
+  faqs, neighborhoods = [], distance,
+} = Astro.props;
+
+const breadcrumbs = [
+  { name: 'Home', url: `${SITE.url}/` },
+  { name: 'Service Areas', url: `${SITE.url}/service-areas/` },
+  { name: cityName, url: `${SITE.url}/service-areas/${slug}/` },
+];
+---
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs}>
+  <Hero
+    eyebrow={eyebrow || `${cityName}, FL`}
+    title={h1}
+    subtitle={subtitle || description}
+    image={heroImage}
+    showForm={true}
+    ctaLabel="Book This Area"
+  />
+
+  <section class="py-14 md:py-20">
+    <div class="container-site grid lg:grid-cols-12 gap-10">
+      <article class="lg:col-span-8 prose-icac">
+        <slot />
+      </article>
+      <aside class="lg:col-span-4 space-y-6">
+        <div class="rounded-xl bg-brand-500 text-white p-6 shadow-[var(--shadow-soft)]">
+          <h3 class="text-white font-bold text-lg">Same-day service in {cityName}</h3>
+          <p class="mt-2 text-blue-50 text-sm leading-relaxed">Call our Wesley Chapel dispatch — most {cityName} calls are reached within 60–90 minutes.</p>
+          <a href={SITE.phoneHref} class="mt-4 inline-flex w-full justify-center items-center gap-2 rounded-md bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-3">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+            {SITE.phone}
+          </a>
+          <a href={SITE.bookUrl} target="_blank" rel="noopener" class="mt-2 inline-flex w-full justify-center items-center gap-2 rounded-md bg-white/10 border border-white/30 hover:bg-white/20 text-white font-semibold px-4 py-3">Book Online</a>
+          <ul class="mt-5 space-y-2 text-sm text-blue-50">
+            <li>✓ Licensed · CAC1816515</li>
+            <li>✓ 1-year repair warranty</li>
+            <li>✓ Upfront flat-rate pricing</li>
+            <li>✓ 4.9★ · {SITE.rating.count}+ reviews</li>
+          </ul>
+        </div>
+
+        {neighborhoods.length > 0 && (
+          <div class="rounded-xl bg-surface ring-1 ring-slate-200 p-6">
+            <h3 class="font-bold text-navy-700 text-lg">Neighborhoods we serve in {cityName}</h3>
+            <ul class="mt-3 grid grid-cols-2 gap-1 text-[14.5px]">
+              {neighborhoods.map(n => <li class="text-slate-600">✓ {n}</li>)}
+            </ul>
+          </div>
+        )}
+
+        <div class="rounded-xl bg-surface ring-1 ring-slate-200 p-6">
+          <h3 class="font-bold text-navy-700 text-lg">All HVAC services in {cityName}</h3>
+          <ul class="mt-3 space-y-2 text-[15px]">
+            {SITE.services.map(s => (
+              <li><a class="text-brand-600 hover:text-brand-700 underline underline-offset-2" href={`/services/${s.slug}/`}>{s.name}</a></li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <ServiceGrid />
+  <WhyChooseUs />
+  <ThreeStep />
+  <ReviewStrip />
+  <FAQ title={`${cityName} HVAC FAQs`} items={faqs} />
+  <FinalCTA />
+  <ContactFormSection />
+
+  <Schema type="Service" data={{ name: `HVAC Services in ${cityName}, FL`, serviceType: 'HVAC Service', areaServed: { '@type': 'City', name: cityName, containedInPlace: { '@type': 'State', name: 'Florida' } }, description, url: `${SITE.url}/service-areas/${slug}/` }} />
+  <Schema type="FAQPage" faqs={faqs.map(f => ({ q: f.q, a: f.a.replace(/<[^>]*>/g,'') }))} />
+</BaseLayout>

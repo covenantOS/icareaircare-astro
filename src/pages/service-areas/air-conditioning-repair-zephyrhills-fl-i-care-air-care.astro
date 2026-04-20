@@ -1,18 +1,40 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import CTABand from '../../components/CTABand.astro';
+import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
+
+const faqs = [
+  {
+    "q": "How fast can you reach Zephyrhills?",
+    "a": "Typically 30–45 minutes from our Wesley Chapel base."
+  },
+  {
+    "q": "Do you service Betmar Acres and manufactured homes?",
+    "a": "Yes — frequently. We know the specific HVAC and ductwork considerations for these homes."
+  },
+  {
+    "q": "Do you service new construction in Silverado and Abbott Park?",
+    "a": "Yes — supplementing builder-grade systems with smart thermostats, better returns, and humidity control is a common call."
+  },
+  {
+    "q": "Are rates the same for Zephyrhills service?",
+    "a": "Yes — county-wide flat-rate pricing."
+  }
+];
 ---
-<BaseLayout
-  title="Zephyrhills Air Conditioning Repair | I Care Air Care"
-  description="Local HVAC & AC repair in Zephyrhills, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Service Areas","url":"https://www.icareaircare.com/service-areas/"},{"name":"Zephyrhills","url":"https://www.icareaircare.com/service-areas/air-conditioning-repair-zephyrhills-fl-i-care-air-care/"}]}
+<ServiceAreaLayout
+  slug="air-conditioning-repair-zephyrhills-fl-i-care-air-care"
+  title="AC Repair in Zephyrhills, FL | I Care Air Care"
+  description="Zephyrhills AC repair and HVAC services — Silverado, Abbott Park, Link's Landing. Fast local response, 4.9★ · 700+ reviews. Call (813) 395-2324."
+  h1="Air Conditioning Repair in Zephyrhills, FL"
+  eyebrow="Zephyrhills, FL"
+  subtitle={"Serving Silverado, Abbott Park, Link's Landing & every Zephyrhills neighborhood from our Wesley Chapel base."}
+  heroImage="/images/ICAC%20Team%281%29.webp"
+  cityName="Zephyrhills"
+  faqs={faqs}
+  neighborhoods={["Silverado","Abbott Park","Link’s Landing","Hidden River","Betmar Acres","Zephyr Lakes"]}
 >
-  <Hero eyebrow="Zephyrhills, FL" title="Zephyrhills Air Conditioning Repair" subtitle="Local HVAC & AC repair in Zephyrhills, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324." ctaLabel="Schedule Service" />
-  <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
-    </div>
-  </section>
-  <CTABand />
-</BaseLayout>
+<h2>Zephyrhills AC repair &amp; HVAC — the local contractor your neighbors trust</h2>
+<p>Zephyrhills has seen a major wave of new construction along the east side — <strong>Silverado, Abbott Park, Link's Landing</strong> — while the established communities (<strong>Betmar Acres, Hidden River</strong>, the original Zephyrhills core) continue to need reliable HVAC service for aging equipment. We handle both.</p>
+<p>From our Wesley Chapel base, Zephyrhills is a short, regular drive on Highway 54. Most service calls we're on-site the same business day.</p>
+<h2>Zephyrhills HVAC services</h2>
+<p>Complete residential HVAC line: <a href="/services/ac-repair-tampa/">AC repair</a>, <a href="/services/emergency-ac-repair-tampa/">emergency dispatch</a>, <a href="/services/ac-maintenance-tampa/">tune-ups &amp; maintenance plans</a>, <a href="/services/hvac-installation-tampa/">new system installation</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a>, <a href="/services/heating-services-tampa/">heating</a>, and <a href="/services/thermostat-installation-tampa/">smart thermostat installation</a>. We also handle manufactured-home HVAC common to Zephyrhills, and commercial refrigeration for local restaurants and markets.</p>
+</ServiceAreaLayout>

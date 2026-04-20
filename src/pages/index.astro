@@ -4,6 +4,8 @@ import Hero from '../components/Hero.astro';
 import ServiceGrid from '../components/ServiceGrid.astro';
 import WhyChooseUs from '../components/WhyChooseUs.astro';
 import AreaGrid from '../components/AreaGrid.astro';
+import IntroBand from '../components/IntroBand.astro';
+import BrandBand from '../components/BrandBand.astro';
 import ThreeStep from '../components/ThreeStep.astro';
 import ReviewStrip from '../components/ReviewStrip.astro';
 import BlogStrip from '../components/BlogStrip.astro';
@@ -35,11 +37,13 @@ const faqs = [
     variant="home"
     showForm={true}
     eyebrow="15+ Years of Service"
-    title={`Tampa's #1 Air<br/>Conditioning Contractor`}
-    subtitle={`Trusted local <span class="text-accent-400 font-semibold">AC repair</span> experts serving <span class="text-accent-400 font-semibold">Wesley Chapel</span> &amp; Tampa Bay for 15 years with fast, reliable <span class="text-accent-400 font-semibold">HVAC service</span> plus heating, cooling &amp; <span class="text-accent-400 font-semibold">air duct cleaning</span>.`}
-    image="/images/I-Care-Air-Care-HVAC-Installation-%E2%80%93-Local-Team-and-Service-Vans.webp"
+    title={`Wesley Chapel's #1<br/>HVAC Contractor`}
+    subtitle={`Trusted local <span class="text-accent-400 font-semibold">AC repair</span> experts serving <span class="text-accent-400 font-semibold">Wesley Chapel</span>, New Tampa, Land O' Lakes &amp; all of Tampa Bay for 15 years with fast, reliable <span class="text-accent-400 font-semibold">HVAC service</span> plus heating, cooling &amp; <span class="text-accent-400 font-semibold">air duct cleaning</span>.`}
+    image="/images/ICAC%20Team%281%29.webp"
   />
+  <BrandBand />
   <ServiceGrid />
+  <IntroBand />
   <AreaGrid />
   <WhyChooseUs />
   <ReviewStrip />

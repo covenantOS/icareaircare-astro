@@ -16,12 +16,12 @@ const {
   eyebrow = `${SITE.yearsInBusiness}+ Years of Service`,
   title = "Tampa's #1 Air Conditioning Contractor",
   subtitle,
-  image = '/images/I-Care-Air-Care-HVAC-Installation-%E2%80%93-Local-Team-and-Service-Vans.webp',
+  image = '/images/ICAC%20Team%281%29.webp',
   imageAlt = 'I Care Air Care team in Wesley Chapel, FL with service vans',
   showForm = false,
   variant = 'page',
   ctaLabel = 'Book Now',
-  ctaHref = '/contact/',
+  ctaHref,
 } = Astro.props;
 ---
 <section class="relative overflow-hidden">
@@ -44,7 +44,7 @@ const {
       {subtitle && <p class="mt-5 text-lg text-blue-50 max-w-xl leading-relaxed drop-shadow-[0_1px_6px_rgba(15,26,41,0.35)]" set:html={subtitle} />}
 
       <div class="mt-7 flex flex-wrap gap-3">
-        <a href={ctaHref} class="btn-primary btn-lg">
+        <a href={ctaHref || SITE.bookUrl} target={ctaHref ? undefined : '_blank'} rel={ctaHref ? undefined : 'noopener'} class="btn-primary btn-lg">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           {ctaLabel}
         </a>

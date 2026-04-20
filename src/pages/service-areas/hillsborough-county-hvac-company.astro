@@ -1,18 +1,41 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import CTABand from '../../components/CTABand.astro';
+import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
+
+const faqs = [
+  {
+    "q": "Do you pull Hillsborough County permits?",
+    "a": "Yes. All our Hillsborough installs are permitted and inspected to code."
+  },
+  {
+    "q": "How fast can you reach Brandon or Riverview?",
+    "a": "Typically 60–90 minutes from our Wesley Chapel base. Central Tampa and New Tampa are often faster."
+  },
+  {
+    "q": "Do you service older homes in South Tampa?",
+    "a": "Yes — we handle the duct work, electrical and space constraints common to older Tampa neighborhoods."
+  },
+  {
+    "q": "Are rates the same across Hillsborough?",
+    "a": "Yes, flat-rate pricing regardless of where in the county you are."
+  }
+];
 ---
-<BaseLayout
+<ServiceAreaLayout
+  slug="hillsborough-county-hvac-company"
   title="Hillsborough County HVAC Company | I Care Air Care"
-  description="Local HVAC & AC repair in Hillsborough County, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Service Areas","url":"https://www.icareaircare.com/service-areas/"},{"name":"Hillsborough County","url":"https://www.icareaircare.com/service-areas/hillsborough-county-hvac-company/"}]}
+  description="Hillsborough County HVAC — Tampa, New Tampa, Lutz, Carrollwood, Brandon. 4.9★ with 700+ reviews. AC repair, installation, duct cleaning. Call (813) 395-2324."
+  h1="Hillsborough County HVAC Company"
+  eyebrow="Hillsborough County, FL"
+  subtitle={"Serving Tampa, New Tampa, Lutz, Carrollwood, Brandon, Riverview, Valrico, Seffner & every Hillsborough community."}
+  heroImage="/images/ICAC%20Team%281%29.webp"
+  cityName="Hillsborough County"
+  faqs={faqs}
+  neighborhoods={["Tampa","New Tampa","Lutz","Carrollwood","Brandon","Riverview","Valrico","Seffner","Temple Terrace","Westchase","Town ’N Country","Thonotosassa"]}
 >
-  <Hero eyebrow="Hillsborough County, FL" title="Hillsborough County HVAC Company" subtitle="Local HVAC & AC repair in Hillsborough County, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324." ctaLabel="Schedule Service" />
-  <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
-    </div>
-  </section>
-  <CTABand />
-</BaseLayout>
+<h2>Hillsborough County HVAC — based next door in Wesley Chapel</h2>
+<p>We're headquartered just north of the Hillsborough line in Wesley Chapel, which puts us within easy reach of every major Hillsborough community. Whether it's a same-day AC repair in New Tampa, a new system installation in Carrollwood, or duct cleaning in Brandon, our technicians are already in the area.</p>
+<h2>Communities we serve in Hillsborough</h2>
+<p>North Hillsborough is our strongest coverage — <strong>New Tampa, Tampa Palms, Hunter's Green, Tampa</strong>, <strong>Carrollwood, Westchase, Lutz</strong> and <strong>Temple Terrace</strong> are all short drives from our Wesley Chapel base. We also service <strong>Brandon, Riverview, Valrico, Seffner and Thonotosassa</strong> on the east side, and can reach <strong>South Tampa, Town 'N Country and MacDill</strong> for larger projects.</p>
+<h2>The full HVAC service line for Hillsborough homes</h2>
+<p>Every service we offer is available throughout Hillsborough: <a href="/services/ac-repair-tampa/">AC repair</a>, <a href="/services/emergency-ac-repair-tampa/">emergency dispatch</a>, <a href="/services/ac-maintenance-tampa/">maintenance plans</a>, <a href="/services/hvac-installation-tampa/">high-efficiency installations</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a>, <a href="/services/heating-services-tampa/">heating services</a>, <a href="/services/thermostat-installation-tampa/">smart thermostats</a>, and <a href="/services/refrigeration-repair-tampa/">commercial refrigeration</a>. All backed by our 1-year repair warranty and 700+ verified 5-star reviews.</p>
+</ServiceAreaLayout>

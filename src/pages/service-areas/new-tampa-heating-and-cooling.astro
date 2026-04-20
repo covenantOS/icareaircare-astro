@@ -1,18 +1,40 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import CTABand from '../../components/CTABand.astro';
+import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
+
+const faqs = [
+  {
+    "q": "How fast can you reach New Tampa?",
+    "a": "Typically 15–25 minutes. Often faster than most Tampa-based contractors."
+  },
+  {
+    "q": "Do you service Tampa Palms and K-Bar Ranch?",
+    "a": "Yes — frequent service area. We know the common HVAC issues for homes of that vintage."
+  },
+  {
+    "q": "Is New Tampa equipment reaching replacement age?",
+    "a": "Many systems from the 2000s build boom are hitting 18–22 years — past the economic repair point. We'll give you honest replace-vs-repair math."
+  },
+  {
+    "q": "Do you offer New Tampa emergency dispatch?",
+    "a": "Yes — 24/7. Most emergency calls in New Tampa reached within 60–90 minutes."
+  }
+];
 ---
-<BaseLayout
-  title="New Tampa Heating and Cooling | I Care Air Care"
-  description="Local HVAC & AC repair in New Tampa, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Service Areas","url":"https://www.icareaircare.com/service-areas/"},{"name":"New Tampa","url":"https://www.icareaircare.com/service-areas/new-tampa-heating-and-cooling/"}]}
+<ServiceAreaLayout
+  slug="new-tampa-heating-and-cooling"
+  title="New Tampa Heating & Cooling | I Care Air Care"
+  description="New Tampa HVAC services — AC repair, heating, installation, duct cleaning. Serving Tampa Palms, Hunter's Green, K-Bar Ranch, Cory Lake. Call (813) 395-2324."
+  h1="New Tampa Heating & Cooling"
+  eyebrow="New Tampa, FL"
+  subtitle={"Serving Tampa Palms, Hunter's Green, K-Bar Ranch, Cory Lake Isles, Cross Creek & every New Tampa community."}
+  heroImage="/images/ICAC%20Team%281%29.webp"
+  cityName="New Tampa"
+  faqs={faqs}
+  neighborhoods={["Tampa Palms","Hunter’s Green","K-Bar Ranch","Cory Lake Isles","Cross Creek","Easton Park","Live Oak Preserve","Richmond Place","Pebble Creek"]}
 >
-  <Hero eyebrow="New Tampa, FL" title="New Tampa Heating and Cooling" subtitle="Local HVAC & AC repair in New Tampa, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324." ctaLabel="Schedule Service" />
-  <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
-    </div>
-  </section>
-  <CTABand />
-</BaseLayout>
+<h2>New Tampa HVAC — the same-day specialists for Pebble Creek to K-Bar Ranch</h2>
+<p>New Tampa's explosive growth through the early 2000s means thousands of homes here are hitting the 20-year mark all at once — which is exactly when HVAC systems start to fail. We've seen the pattern in every New Tampa community: <strong>Tampa Palms, Hunter's Green, Pebble Creek</strong> and <strong>Cross Creek</strong> all have concentrated clusters of replacement-age equipment.</p>
+<p>From our Wesley Chapel base we can be anywhere in New Tampa in under 20 minutes. That proximity, combined with 15+ years of hands-on experience in these exact neighborhoods, is why we're the local go-to for honest diagnosis and no-pressure quotes.</p>
+<h2>Heating &amp; cooling services for New Tampa homes</h2>
+<p><a href="/services/ac-repair-tampa/">AC repair</a>, <a href="/services/emergency-ac-repair-tampa/">emergency dispatch</a>, <a href="/services/ac-maintenance-tampa/">tune-ups</a>, <a href="/services/hvac-installation-tampa/">high-efficiency installation</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a>, <a href="/services/heating-services-tampa/">heat pump & heat strip service</a>, <a href="/services/thermostat-installation-tampa/">smart thermostats</a>, and <a href="/services/refrigeration-repair-tampa/">commercial refrigeration</a>. All backed by our 1-year warranty and 700+ verified Google reviews.</p>
+</ServiceAreaLayout>

@@ -1,18 +1,41 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import CTABand from '../../components/CTABand.astro';
+import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
+
+const faqs = [
+  {
+    "q": "How far will you drive in Pasco County?",
+    "a": "Anywhere. From New Port Richey to Dade City, Zephyrhills to Land O' Lakes — we service the entire county from our Wesley Chapel base."
+  },
+  {
+    "q": "Do you pull Pasco County HVAC permits?",
+    "a": "Yes, we handle all Pasco County permitting and scheduling of inspections under Florida license CAC1816515."
+  },
+  {
+    "q": "Is there an extra charge for west-side Pasco service?",
+    "a": "No. Flat-rate pricing county-wide."
+  },
+  {
+    "q": "Do you service manufactured/mobile homes?",
+    "a": "Yes — we regularly service manufactured homes in Zephyrhills, Dade City and elsewhere in Pasco County."
+  }
+];
 ---
-<BaseLayout
-  title="Pasco County AC Repair | I Care Air Care"
-  description="Local HVAC & AC repair in Pasco County, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Service Areas","url":"https://www.icareaircare.com/service-areas/"},{"name":"Pasco County","url":"https://www.icareaircare.com/service-areas/pasco-county-ac-repair/"}]}
+<ServiceAreaLayout
+  slug="pasco-county-ac-repair"
+  title="Pasco County AC Repair & HVAC | I Care Air Care"
+  description="Pasco County's 4.9★ HVAC contractor. Based in Wesley Chapel — serving Wesley Chapel, New Port Richey, Port Richey, Hudson, Dade City. Call (813) 395-2324."
+  h1="Pasco County AC Repair & HVAC Services"
+  eyebrow="Pasco County, FL"
+  subtitle={"Serving Wesley Chapel, New Port Richey, Port Richey, Hudson, Dade City, Zephyrhills, San Antonio & every Pasco County community."}
+  heroImage="/images/ICAC%20Team%281%29.webp"
+  cityName="Pasco County"
+  faqs={faqs}
+  neighborhoods={["Wesley Chapel","New Port Richey","Port Richey","Hudson","Dade City","Zephyrhills","Land O’ Lakes","Lutz","San Antonio","Spring Hill","Trinity","Odessa"]}
 >
-  <Hero eyebrow="Pasco County, FL" title="Pasco County AC Repair" subtitle="Local HVAC & AC repair in Pasco County, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324." ctaLabel="Schedule Service" />
-  <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
-    </div>
-  </section>
-  <CTABand />
-</BaseLayout>
+<h2>Pasco County's trusted local HVAC contractor</h2>
+<p>Pasco County has grown faster than almost any county in Florida — and with that growth comes a flood of HVAC contractors trying to cash in. We've been here the whole time. I Care Air Care has served Pasco County since 2010 from our base in Wesley Chapel, building a reputation (700+ five-star Google reviews) on one thing: treating every homeowner like a neighbor.</p>
+<h2>Where we work in Pasco County</h2>
+<p>From the east side's new-construction communities (Wesley Chapel's Epperson and Mirada, Zephyrhills' Silverado and Abbott Park) to the established west-side neighborhoods of New Port Richey, Port Richey and Hudson, our technicians cover the entire county. Dade City, San Antonio, Trinity, Odessa and Land O' Lakes are all on our regular service map.</p>
+<h2>Pasco County HVAC services</h2>
+<p>Every core HVAC service we offer is available county-wide — <a href="/services/ac-repair-tampa/">AC repair</a>, <a href="/services/emergency-ac-repair-tampa/">emergency service</a>, <a href="/services/ac-maintenance-tampa/">tune-ups and maintenance plans</a>, <a href="/services/hvac-installation-tampa/">new system installation</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a>, <a href="/services/heating-services-tampa/">heating</a>, <a href="/services/thermostat-installation-tampa/">smart thermostats</a>, and <a href="/services/refrigeration-repair-tampa/">commercial refrigeration</a>. We're licensed to pull Pasco County permits (CAC1816515) and handle all permitting and inspection logistics.</p>
+</ServiceAreaLayout>

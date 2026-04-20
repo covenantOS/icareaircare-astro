@@ -1,18 +1,41 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import CTABand from '../../components/CTABand.astro';
+import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
+
+const faqs = [
+  {
+    "q": "How fast can you reach Land O' Lakes?",
+    "a": "Typically 10–20 minutes from our Wesley Chapel base — one of our quickest response areas."
+  },
+  {
+    "q": "Do you service Connerton and Bexley?",
+    "a": "Yes — we service every major Land O' Lakes community including Connerton, Bexley, Dupree Lakes and Lake Padgett."
+  },
+  {
+    "q": "What does AC repair cost in Land O' Lakes?",
+    "a": "Flat-rate, typically $150–$600 depending on the issue. Quoted before any work begins."
+  },
+  {
+    "q": "Can you handle new-construction humidity problems?",
+    "a": "Yes — this is a common call-out in Land O' Lakes newer builds. Usually a thermostat & return-sizing fix."
+  }
+];
 ---
-<BaseLayout
+<ServiceAreaLayout
+  slug="land-o-lakes-hvac-services"
   title="Land O’ Lakes HVAC Services | I Care Air Care"
-  description="Local HVAC & AC repair in Land O’ Lakes, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Service Areas","url":"https://www.icareaircare.com/service-areas/"},{"name":"Land O’ Lakes","url":"https://www.icareaircare.com/service-areas/land-o-lakes-hvac-services/"}]}
+  description="Land O’ Lakes HVAC contractor — AC repair, installation, maintenance, duct cleaning. 4.9★ local team. Serving Connerton, Bexley, Dupree Lakes. Call (813) 395-2324."
+  h1="Land O’ Lakes HVAC Services"
+  eyebrow="Land O’ Lakes, FL"
+  subtitle={"Your Wesley Chapel neighbors — 10 minutes away. Serving Connerton, Bexley, Dupree Lakes, Lake Padgett & all of Land O' Lakes."}
+  heroImage="/images/ICAC%20Team%281%29.webp"
+  cityName="Land O’ Lakes"
+  faqs={faqs}
+  neighborhoods={["Connerton","Bexley","Dupree Lakes","Lake Padgett","Ballantrae","Stonegate","Oak Grove","Sunset Lakes","Wilderness Lake Preserve"]}
 >
-  <Hero eyebrow="Land O’ Lakes, FL" title="Land O’ Lakes HVAC Services" subtitle="Local HVAC & AC repair in Land O’ Lakes, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324." ctaLabel="Schedule Service" />
-  <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
-    </div>
-  </section>
-  <CTABand />
-</BaseLayout>
+<h2>Land O' Lakes HVAC — from our Wesley Chapel base, 10 minutes away</h2>
+<p>Land O' Lakes is one of our fastest-response areas — under 15 minutes from our Wesley Chapel headquarters to most neighborhoods. That means when your AC quits on a 95° July afternoon in <strong>Connerton, Bexley, Dupree Lakes</strong> or <strong>Lake Padgett</strong>, we're often the first truck in your driveway.</p>
+<h2>Services across Land O' Lakes</h2>
+<p>Every HVAC service we offer is available throughout Land O' Lakes, from emergency <a href="/services/ac-repair-tampa/">AC repair</a> and <a href="/services/ac-maintenance-tampa/">preventive tune-ups</a> to <a href="/services/hvac-installation-tampa/">full system replacements</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a> and <a href="/services/thermostat-installation-tampa/">smart thermostat installation</a>. We handle the permits, pull the inspections, and give you a written quote before any work begins.</p>
+<h2>Why homeowners in Connerton and Bexley choose us</h2>
+<p>Newer Land O' Lakes communities like Connerton and Bexley have builder-grade systems that often under-perform in Florida humidity. We're regulars in both communities, specializing in supplemental upgrades: humidity-aware smart thermostats, variable-speed blower upgrades, and resized returns that fix the cold-bedroom / warm-living-room problem.</p>
+</ServiceAreaLayout>

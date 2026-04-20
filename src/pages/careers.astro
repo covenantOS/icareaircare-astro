@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import ContactFormSection from '../components/ContactFormSection.astro';
+---
+<BaseLayout
+  title="Careers at I Care Air Care | Wesley Chapel HVAC Jobs"
+  description="Join a Wesley Chapel, FL HVAC team that treats technicians like family. Competitive pay, benefits, growth. Now hiring licensed and apprentice HVAC techs."
+  breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'Careers',url:'https://www.icareaircare.com/careers/'}]}
+>
+  <Hero
+    eyebrow="Now Hiring"
+    title="Join the I Care Air Care Team"
+    subtitle="Wesley Chapel's most-reviewed HVAC company is always looking for honest, talented technicians who want to do right by customers and grow with a family-run team."
+    image="/images/I-Care-Air-Care-HVAC-Installation-%E2%80%93-Local-Team-and-Service-AC.webp"
+    ctaLabel="Apply Now"
+    ctaHref="mailto:tim@icareaircare.com?subject=HVAC%20Career%20Inquiry"
+  />
+  <section class="py-16">
+    <div class="container-site max-w-4xl prose-icac">
+      <h2>Why technicians stay with I Care Air Care</h2>
+      <p>We're not a big corporate chain. We're a Wesley Chapel-based, family-run HVAC contractor where every technician matters, every route is reasonable, and every paycheck reflects the care you put into the work.</p>
+      <h3>Open positions</h3>
+      <ul>
+        <li><strong>Lead HVAC Service Technician</strong> — 5+ years residential experience, EPA 608 certified</li>
+        <li><strong>HVAC Installer</strong> — Experience with residential AC &amp; heat pump installation</li>
+        <li><strong>HVAC Apprentice</strong> — Entry level, we'll train the right person</li>
+        <li><strong>Commercial Refrigeration Tech</strong> — EPA Universal, commercial experience preferred</li>
+      </ul>
+      <h3>What we offer</h3>
+      <ul>
+        <li>Competitive hourly + commission structure</li>
+        <li>Company vehicle, fuel card, tools, uniforms</li>
+        <li>Health, dental &amp; vision insurance</li>
+        <li>Paid time off &amp; holidays</li>
+        <li>Ongoing paid training and certifications</li>
+        <li>Family-owned culture — no corporate BS</li>
+      </ul>
+      <p>Interested? Email <a href="mailto:tim@icareaircare.com">tim@icareaircare.com</a> with your resume, or call <a href="tel:+18133952324">(813) 395-2324</a> to chat with Tim directly.</p>
+    </div>
+  </section>
+  <FinalCTA />
+  <ContactFormSection />
+</BaseLayout>

@@ -50,13 +50,15 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5 {
-  font-family: var(--font-display);
-  letter-spacing: -0.015em;
-  color: var(--color-navy-700);
-  font-weight: 700;
+@layer base {
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+    color: var(--color-navy-700);
+    font-weight: 700;
+  }
+  h2 { line-height: 1.15; }
 }
-h2 { line-height: 1.15; }
 
 .container-site { @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8; }
 
