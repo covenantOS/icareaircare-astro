@@ -1,0 +1,13 @@
+---
+import LeadForm from './LeadForm.astro';
+---
+<section class="relative py-16 md:py-20 overflow-hidden" id="quote">
+  <div class="absolute inset-0 bg-brand-500"></div>
+  <img src="/images/I-Care-Air-Care-%E2%80%93-Blue-Background-Banner-lines.webp" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-30" />
+  <div class="relative container-site max-w-2xl text-center text-white">
+    <h2 class="text-white text-3xl md:text-4xl title-accent">Contact Us for a Free Quote</h2>
+    <div class="mt-8 text-left">
+      <LeadForm title="" compact={true} />
+    </div>
+  </div>
+</section>

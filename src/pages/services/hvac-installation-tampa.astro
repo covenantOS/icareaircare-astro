@@ -1,18 +1,70 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import CTABand from '../../components/CTABand.astro';
+import ServiceLayout from '../../layouts/ServiceLayout.astro';
+
+const faqs = [
+  { q: 'How much does HVAC installation cost in Tampa?', a: 'A complete residential HVAC install in Tampa Bay typically ranges $6,500–$14,000 depending on tonnage, SEER2 rating, ductwork condition, and whether a heat pump, straight-cool + electric heat, or full variable-speed system is used. Financing brings that to monthly payments often lower than the efficiency savings.' },
+  { q: 'What\'s the best HVAC brand for Florida?', a: 'We install Carrier, Trane, Lennox, Rheem, Goodman, and American Standard — all reliable in the Florida climate when sized and installed correctly. "Best brand" matters less than correct Manual-J sizing, sealed ductwork, and proper refrigerant charge. A Carrier installed wrong will underperform a Goodman installed right.' },
+  { q: 'What SEER2 rating should I get?', a: 'The 2026 Florida minimum is 15.2 SEER2. The sweet spot for most Tampa homes is 16–18 SEER2 — the ROI beyond that gets diminishing. Variable-speed (20 SEER2+) systems make sense for larger homes, allergy-sensitive families, or anyone who\'ll live in the home 10+ years.' },
+  { q: 'Do you handle permits and inspections?', a: 'Yes — we pull every permit and schedule the county inspection. You never have to deal with Pasco, Hillsborough or Polk permitting directly.' },
+  { q: 'How long does a new HVAC install take?', a: 'A standard same-tonnage changeout is usually one day. Ductwork replacement, line-set upgrades, or new-construction work can add 1–2 days.' },
+  { q: 'What refrigerant comes in new systems in 2026?', a: 'All new residential equipment sold in 2026 uses R-454B (or R-32 from some manufacturers) — the EPA-approved low-GWP replacements for R-410A. These refrigerants run at slightly different pressures and require technicians trained on the new systems. All our installers are certified on R-454B.' },
+  { q: 'Do you offer financing for HVAC installation?', a: 'Yes — through our Synchrony partnership with approved credit. Many customers qualify for 0% introductory rates or 10+ year fixed-rate terms. See our financing page for current offers.' },
+];
+
+const related = [
+  { href: '/services/ac-repair-tampa/', label: 'AC Repair' },
+  { href: '/services/ac-maintenance-tampa/', label: 'Maintenance Plans for New Systems' },
+  { href: '/services/thermostat-installation-tampa/', label: 'Smart Thermostat Add-On' },
+  { href: '/services/air-duct-cleaning-tampa/', label: 'Duct Cleaning Before Install' },
+  { href: '/financing/', label: 'HVAC Financing Options' },
+];
 ---
-<BaseLayout
-  title="HVAC Installation in Tampa | I Care Air Care"
-  description="High-efficiency HVAC installations done right the first time — sized, permitted and guaranteed."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Services","url":"https://www.icareaircare.com/services/"},{"name":"HVAC Installation in Tampa","url":"https://www.icareaircare.com/services/hvac-installation-tampa/"}]}
+<ServiceLayout
+  slug="hvac-installation-tampa"
+  title="HVAC Installation in Tampa, FL | New AC & Heat Pumps | I Care Air Care"
+  description="Tampa Bay HVAC installation done right: Manual-J sized, permitted, and guaranteed. Carrier, Trane, Lennox, Rheem & Goodman. Financing available. Call (813) 395-2324."
+  h1="HVAC Installation in Tampa Bay — High-Efficiency Systems, Installed Right"
+  eyebrow="New System Installation"
+  subtitle={`A new HVAC system is one of the largest home investments you'll make in the Tampa climate. We size it right with a full Manual-J load calc, install it to <strong class="text-white">manufacturer spec</strong>, and stand behind the work.`}
+  heroImage="/images/HVAC-Installation-Tampa-Bay-%E2%80%93-New-Outdoor-Condenser-Installation.webp"
+  serviceName="HVAC Installation in Tampa"
+  faqs={faqs}
+  related={related}
 >
-  <Hero eyebrow="HVAC Service" title="HVAC Installation in Tampa" subtitle="High-efficiency HVAC installations done right the first time — sized, permitted and guaranteed." ctaLabel="Schedule Service" />
-  <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
-    </div>
-  </section>
-  <CTABand />
-</BaseLayout>
+  <h2>Why installation quality matters more than brand</h2>
+  <p>Industry data is consistent: <strong>70% of new HVAC systems in the U.S. are installed incorrectly</strong> — wrong size, wrong refrigerant charge, or leaky ductwork. The result is a homeowner paying for a high-SEER2 system but running at closer to mid-teens efficiency, with shorter equipment life and bigger repair bills. The brand on the outside is the smallest part of the equation.</p>
+
+  <p>Every I Care Air Care installation starts with a <strong>Manual-J heat load calculation</strong> — room by room, accounting for Florida sun orientation, window area, ceiling height, insulation level, and infiltration rate. We don't sell you a 4-ton because "that's what you had before." Many Tampa homes were originally oversized, and rightsizing the new system alone improves humidity control dramatically.</p>
+
+  <h2>Our installation process — 10 days from quote to comfort</h2>
+  <ol class="list-decimal pl-5 space-y-2 text-slate-700 mt-4">
+    <li><strong>In-home consultation and Manual-J load calculation</strong> (about 90 minutes, no obligation)</li>
+    <li><strong>Written proposal</strong> with 3 equipment tiers (good/better/best) — SEER2, warranty, monthly finance option all in one view</li>
+    <li><strong>Permitting</strong> with the correct county (Pasco, Hillsborough or Polk)</li>
+    <li><strong>Removal and disposal</strong> of your old system — refrigerant recovered per EPA rules</li>
+    <li><strong>Ductwork inspection</strong> and any necessary re-sealing (often the cheapest efficiency gain)</li>
+    <li><strong>New equipment installation</strong>: pad or rooftop mount, new line set or flush of existing, fresh disconnect, surge protector</li>
+    <li><strong>Refrigerant evacuation</strong> to 500 microns and precise charge to manufacturer subcool spec</li>
+    <li><strong>Electrical and thermostat commissioning</strong></li>
+    <li><strong>Start-up, static pressure verification, temperature split test</strong></li>
+    <li><strong>Homeowner walk-through</strong>, warranty registration, county inspection scheduled</li>
+  </ol>
+
+  <h2>What's changing in 2026: R-454B refrigerant</h2>
+  <p>As of January 1, 2025, every new residential AC or heat pump system sold in the U.S. uses low-GWP refrigerant — most commonly R-454B (some brands use R-32). This rule is now fully in effect for 2026 installations. Two things for homeowners to know:</p>
+  <ul>
+    <li>R-454B systems run at higher pressures than R-410A and require <strong>A2L-rated tools, leak detection, and installer certification</strong>. Ask any contractor for proof of A2L training before signing a contract. Every I Care Air Care installer is certified.</li>
+    <li>R-410A isn't illegal to repair or recharge — but it is increasingly expensive. If your R-410A system needs a major repair past 12 years old, the replacement math almost always wins.</li>
+  </ul>
+
+  <h2>Equipment we install in Tampa</h2>
+  <p>We're factory-trained on the major brands Florida homeowners recognize: <strong>Carrier, Trane, Lennox, Rheem, Goodman, American Standard, Bryant, and Mitsubishi Electric</strong> for ductless mini-splits. Every install includes the manufacturer's base warranty — usually 10 years on parts, and 10 or 12 years on compressors on the premium lines — plus our own <strong>10-year labor warranty</strong> when paired with a maintenance plan.</p>
+
+  <h2>Ductless mini-splits for additions and problem rooms</h2>
+  <p>Adding a room above the garage, converting a Florida room, or dealing with a bedroom that never gets cool? Ductless mini-splits are often the right answer — no ductwork, high efficiency (22+ SEER2), independent zoning, and quiet operation. We install and service Mitsubishi, LG, and Fujitsu ductless systems.</p>
+
+  <h2>Financing that makes sense</h2>
+  <p>Replacing a system is a big decision. We partner with Synchrony to offer <a href="/financing/">HVAC financing options</a> including 0% promotional rates, 10+ year fixed terms, and instant soft-credit pre-approval. Many customers find their monthly payment is less than the monthly savings on their electric bill from a high-efficiency system.</p>
+
+  <p>Ready for a free in-home estimate? <a href="/contact/">Book a consultation</a> or call <a href="tel:+18133952324">(813) 395-2324</a>.</p>
+</ServiceLayout>

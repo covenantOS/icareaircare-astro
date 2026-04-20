@@ -1,18 +1,61 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import CTABand from '../../components/CTABand.astro';
+import ServiceLayout from '../../layouts/ServiceLayout.astro';
+
+const faqs = [
+  { q: 'Do Tampa homes even need reliable heating?', a: 'Yes — Tampa sees 5–15 nights per year below 40°F and has had hard freezes in January that dropped homes below 30°F inside when heating failed. Most Tampa homes run a heat pump or a heat-strip air handler, and both need annual service to stay reliable on the few nights they actually matter.' },
+  { q: 'What\'s the difference between a heat pump and a furnace?', a: 'A heat pump uses the same refrigerant cycle as your AC — just reversed — to move warmth into the home, very efficiently down to about 35°F ambient. Below that, most Tampa heat pumps switch on electric-resistance heat strips as backup. Furnaces (gas or propane) are rare in Florida and only used in some northern-Tampa Bay new-construction areas.' },
+  { q: 'Why is my heat pump running but blowing cool air?', a: 'Most often: reversing valve stuck, low refrigerant charge, defrost cycle triggered, or the heat strips didn\'t engage as backup. A quick diagnostic separates which of those is happening — don\'t run the system in emergency heat for more than a day or your electric bill will jump sharply.' },
+  { q: 'How often should I service my heat pump in Florida?', a: 'Twice yearly — cooling prep in spring and heating prep in fall. The fall visit catches reversing valve issues, heat strip element failures, and defrost control problems before the first cold snap.' },
+  { q: 'Can you replace my electric strips with something more efficient?', a: 'If you\'re on an older single-stage heat pump, upgrading to a modern variable-speed heat pump with a properly sized backup strip can cut winter heating costs 30–50%. We\'ll size and quote options when you\'re ready.' },
+  { q: 'What about heating for my Florida room or garage?', a: 'Ductless mini-splits are the best solution — they heat and cool independently of your main system, run 22+ SEER2, and handle Tampa\'s mild winters easily.' },
+];
+
+const related = [
+  { href: '/services/ac-repair-tampa/', label: 'AC Repair' },
+  { href: '/services/hvac-installation-tampa/', label: 'New Heat Pump Installation' },
+  { href: '/services/ac-maintenance-tampa/', label: 'Dual-Season Maintenance' },
+  { href: '/services/thermostat-installation-tampa/', label: 'Smart Thermostat with Heat Mode' },
+];
 ---
-<BaseLayout
-  title="Heating Services in Tampa | I Care Air Care"
-  description="Heat pump and furnace repair, tune-ups and replacements across Tampa Bay."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Services","url":"https://www.icareaircare.com/services/"},{"name":"Heating Services in Tampa","url":"https://www.icareaircare.com/services/heating-services-tampa/"}]}
+<ServiceLayout
+  slug="heating-services-tampa"
+  title="Heating Repair, Heat Pump & Furnace Services in Tampa, FL | I Care Air Care"
+  description="Tampa heating services: heat pump repair, furnace tune-ups, heat strip replacement, and new installations. 24/7 emergency heating service. Call (813) 395-2324."
+  h1="Heating Services in Tampa, FL — Heat Pumps, Heat Strips & Furnaces"
+  eyebrow="Heating Services"
+  subtitle={`Tampa winters are short — but cold nights below 40°F are when heating failures show up. We service <strong class="text-white">every major heating system type</strong> used in Florida homes, from heat pumps to heat-strip air handlers to the occasional gas furnace.`}
+  heroImage="/images/Heating-Services-ICAC.webp"
+  serviceName="Heating Services in Tampa"
+  faqs={faqs}
+  related={related}
 >
-  <Hero eyebrow="HVAC Service" title="Heating Services in Tampa" subtitle="Heat pump and furnace repair, tune-ups and replacements across Tampa Bay." ctaLabel="Schedule Service" />
-  <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
-    </div>
-  </section>
-  <CTABand />
-</BaseLayout>
+  <h2>Tampa heating: mostly heat pumps, rarely furnaces</h2>
+  <p>About 85% of Tampa Bay residential heating is delivered by <strong>heat pumps</strong> — the same outdoor unit that cools you in summer reversing its refrigerant flow to pull heat into the home in winter. The remaining 15% is split between <strong>electric-resistance heat strips</strong> (the coil-shaped heaters inside the air handler) and, less commonly, <strong>natural gas or propane furnaces</strong> in newer upscale developments.</p>
+
+  <p>Each system type has its own failure modes, maintenance needs, and repair parts. Our Wesley Chapel technicians are trained on all three, and our trucks carry parts for every configuration.</p>
+
+  <h2>Heat pump services we provide</h2>
+  <ul>
+    <li><strong>Heat pump repair.</strong> Reversing valve failures, defrost control board issues, refrigerant charge problems, compressor lockouts, and auxiliary heat failures.</li>
+    <li><strong>Heat pump tune-ups.</strong> Our fall maintenance visit specifically tests reversing valve operation, defrost sensor, heat strip sequencer, emergency heat mode, and outdoor coil performance in heat mode.</li>
+    <li><strong>Heat pump replacement.</strong> Variable-speed heat pumps from Carrier, Trane, Lennox and Rheem give Tampa homeowners 22+ SEER2 cooling and up to 10 HSPF2 heating — with single-digit-degree cold-weather performance.</li>
+  </ul>
+
+  <h2>Heat strip & air handler heating</h2>
+  <p>When temperatures drop below about 35°F, heat pumps lose efficiency fast, and most systems switch on an electric-resistance <strong>heat strip</strong> inside the air handler as supplemental or emergency heat. These strips are essentially large toaster elements — simple, reliable, and expensive to run. Common issues we repair:</p>
+  <ul>
+    <li>Heat strip sequencer failure (strips stuck off or stuck on)</li>
+    <li>Element burn-out (one or more coils open)</li>
+    <li>High-limit switch trip from blower failure or dirty filter</li>
+    <li>Control wire issues at the thermostat</li>
+  </ul>
+  <p>Running on emergency heat for more than a day or two will spike your electric bill significantly. Call us — there's almost always a fix for the underlying heat pump issue.</p>
+
+  <h2>Gas furnaces (rare but we service them)</h2>
+  <p>If your home has a gas or propane furnace — typically in newer New Tampa, Wesley Chapel, or Land O' Lakes communities — we handle tune-ups, ignitor replacement, flame sensor cleaning, gas valve service, blower motor repair, and heat exchanger inspection. A CO check is included on every furnace visit.</p>
+
+  <h2>Preparing for winter in Tampa</h2>
+  <p>The single most valuable thing you can do each fall: run your heater for 15 minutes in October. If you smell something burning (usually just dust on the heat strips), that's normal. If you get cool air, a burnt smell that lingers, tripped breakers, or no airflow — <strong>call us now, not during the first cold snap</strong> when our schedule is packed. A $99 fall tune-up in October is vastly cheaper than an emergency call the night the temperature hits 32°F.</p>
+
+  <p>Ready to winterize your system? <a href="/contact/">Schedule a heating tune-up</a> or call <a href="tel:+18133952324">(813) 395-2324</a>.</p>
+</ServiceLayout>

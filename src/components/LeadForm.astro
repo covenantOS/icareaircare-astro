@@ -1,0 +1,51 @@
+---
+import { SITE } from '../lib/site';
+interface Props { compact?: boolean; title?: string; }
+const { compact = false, title = 'Request your free quote' } = Astro.props;
+---
+<form
+  class={`${compact ? 'p-5 md:p-6' : 'p-6 md:p-7'} rounded-xl bg-white shadow-[var(--shadow-soft)] ring-1 ring-slate-200`}
+  action="https://formsubmit.co/tim@icareaircare.com"
+  method="POST"
+>
+  <input type="hidden" name="_subject" value="New lead from icareaircare.com" />
+  <input type="hidden" name="_next" value="https://www.icareaircare.com/contact/#thanks" />
+  <input type="hidden" name="_captcha" value="true" />
+  <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" />
+
+  {!compact && <h3 class="text-navy-700 font-bold text-lg mb-4">{title}</h3>}
+
+  <div class="grid grid-cols-2 gap-3">
+    <label class="col-span-1">
+      <span class="sr-only">First Name</span>
+      <input name="first_name" type="text" placeholder="First Name" required class="w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400" />
+    </label>
+    <label class="col-span-1">
+      <span class="sr-only">Last Name</span>
+      <input name="last_name" type="text" placeholder="Last Name" required class="w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400" />
+    </label>
+    <label class="col-span-2">
+      <span class="sr-only">Email</span>
+      <input name="email" type="email" placeholder="Email Address" required class="w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400" />
+    </label>
+    <label class="col-span-2">
+      <span class="sr-only">Phone</span>
+      <input name="phone" type="tel" placeholder="Phone Number *" required class="w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400" />
+    </label>
+    <label class="col-span-2">
+      <span class="sr-only">Address</span>
+      <input name="address" type="text" placeholder="Service Address" class="w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400" />
+    </label>
+    <label class="col-span-1">
+      <span class="sr-only">City</span>
+      <input name="city" type="text" placeholder="City" class="w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400" />
+    </label>
+    <label class="col-span-1">
+      <span class="sr-only">Zip</span>
+      <input name="zip" type="text" placeholder="Zip Code" class="w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400" />
+    </label>
+  </div>
+
+  <button type="submit" class="mt-4 w-full btn-primary btn-lg">Get My Free Quote</button>
+  <p class="mt-3 text-[11px] text-slate-500 text-center">We'll never sell your info. Reply STOP anytime.</p>
+</form>

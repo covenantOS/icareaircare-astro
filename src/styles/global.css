@@ -1,32 +1,45 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand — I Care Air Care */
-  --color-brand-50:  #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-200: #bfdbfe;
-  --color-brand-300: #93c5fd;
-  --color-brand-400: #60a5fa;
-  --color-brand-500: #2563eb;
-  --color-brand-600: #1d4ed8;
-  --color-brand-700: #1e3a8a;
-  --color-brand-800: #172554;
-  --color-brand-900: #0f1e47;
+  /* I Care Air Care brand — teal + orange + navy, matched to existing site */
+  --color-brand-50:  #f0f7fa;
+  --color-brand-100: #dbecf1;
+  --color-brand-200: #b7d8e1;
+  --color-brand-300: #8dbccb;
+  --color-brand-400: #6faec1;
+  --color-brand-500: #5da5b8;
+  --color-brand-600: #4892a6;
+  --color-brand-700: #397d90;
+  --color-brand-800: #2a5e6d;
+  --color-brand-900: #1b3e48;
 
-  --color-accent-500: #f59e0b;
-  --color-accent-600: #d97706;
+  --color-navy-50:  #eef2f7;
+  --color-navy-500: #2b4766;
+  --color-navy-600: #213a56;
+  --color-navy-700: #1a2e45;
+  --color-navy-800: #152338;
+  --color-navy-900: #0f1a29;
 
-  --color-ink:      #0b1220;
-  --color-ink-soft: #334155;
+  --color-accent-50:  #fef5ea;
+  --color-accent-100: #fce5c8;
+  --color-accent-400: #f3a35a;
+  --color-accent-500: #e88a38;
+  --color-accent-600: #d0761f;
+  --color-accent-700: #a65c18;
+
+  --color-ink:      #1a2e45;
+  --color-ink-soft: #3f5672;
   --color-muted:    #64748b;
-  --color-line:     #e2e8f0;
-  --color-surface:  #f8fafc;
+  --color-line:     #d7e3ea;
+  --color-surface:  #f0f5f8;
+  --color-surface-2:#e6eff3;
 
   --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-body:    "Inter", ui-sans-serif, system-ui, sans-serif;
 
   --radius-lg: 14px;
-  --shadow-soft: 0 10px 30px -12px rgb(15 30 71 / 0.18);
+  --shadow-soft: 0 12px 32px -12px rgb(21 35 56 / 0.18);
+  --shadow-card: 0 4px 14px -4px rgb(21 35 56 / 0.12);
 }
 
 html { scroll-behavior: smooth; }
@@ -40,18 +53,55 @@ body {
 h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
   letter-spacing: -0.015em;
-  color: var(--color-brand-800);
+  color: var(--color-navy-700);
+  font-weight: 700;
 }
+h2 { line-height: 1.15; }
 
 .container-site { @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8; }
 
+/* Subtle wave/paper texture used across the original site */
+.bg-wave {
+  background-color: var(--color-surface);
+  background-image:
+    radial-gradient(1200px 300px at 50% 0%, rgba(93,165,184,0.10), transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='60' viewBox='0 0 140 60'%3E%3Cpath d='M0 30 Q35 10 70 30 T140 30' fill='none' stroke='%23bcd7df' stroke-width='1' opacity='.35'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+.bg-paper {
+  background-color: #fafcfd;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23d7e3ea' stroke-width='.5' opacity='.35'%3E%3Cpath d='M0 60 Q60 30 120 60 T240 60'/%3E%3Cpath d='M0 120 Q60 90 120 120 T240 120'/%3E%3Cpath d='M0 180 Q60 150 120 180 T240 180'/%3E%3C/g%3E%3C/svg%3E");
+}
+
 .prose-icac p { @apply text-slate-700 leading-relaxed; }
-.prose-icac h2 { @apply text-3xl md:text-4xl font-bold mt-12 mb-4; }
-.prose-icac h3 { @apply text-xl md:text-2xl font-semibold mt-8 mb-3; }
+.prose-icac h2 { @apply text-3xl md:text-4xl mt-12 mb-4; }
+.prose-icac h3 { @apply text-xl md:text-2xl mt-8 mb-3; font-weight: 600; }
 .prose-icac ul { @apply list-disc pl-5 space-y-2 text-slate-700; }
 .prose-icac a { @apply text-brand-600 underline underline-offset-2 hover:text-brand-700; }
+.prose-icac strong { @apply text-navy-700; }
 
-/* Skip link for a11y */
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-md bg-accent-500 hover:bg-accent-600 text-white font-semibold px-6 py-3 shadow-sm transition;
+}
+.btn-outline {
+  @apply inline-flex items-center justify-center gap-2 rounded-md bg-white/10 border border-white/40 hover:bg-white/20 text-white font-semibold px-6 py-3 transition;
+}
+.btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 rounded-md border border-brand-600 text-brand-700 hover:bg-brand-50 font-semibold px-6 py-3 transition;
+}
+.btn-lg { @apply px-7 py-3.5 text-base; }
+
 .skip-link {
   @apply sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:rounded focus:shadow;
+}
+
+/* Underline mark for section titles */
+.title-accent::after {
+  content: "";
+  display: block;
+  width: 96px;
+  height: 3px;
+  background: var(--color-accent-500);
+  margin: 14px auto 0;
+  border-radius: 3px;
 }

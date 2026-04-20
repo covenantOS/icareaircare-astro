@@ -1,18 +1,70 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import CTABand from '../../components/CTABand.astro';
+import ServiceLayout from '../../layouts/ServiceLayout.astro';
+
+const faqs = [
+  { q: 'How much does smart thermostat installation cost in Tampa?', a: 'Installation-only service (you provide the thermostat) is typically $149–$199. A complete supply-and-install of an Ecobee, Nest, or Honeywell T9 runs $300–$500 depending on model and any C-wire adapter work needed.' },
+  { q: 'What\'s the best smart thermostat for a Florida home?', a: 'Ecobee Premium and Honeywell T10 lead our recommendation list for multi-stage heat pumps (the most common Tampa setup). Google Nest Learning works beautifully for single-stage systems. Every model we install supports humidity control — critical in Tampa.' },
+  { q: 'My system doesn\'t have a C-wire — can I still upgrade?', a: 'Almost always yes. We install a C-wire adapter (PEK or similar) at the air handler or run a new thermostat cable if the wall cavity allows. About 70% of Tampa homes we retrofit need some form of C-wire solution.' },
+  { q: 'Can a smart thermostat actually save me money?', a: 'Ecobee and Google both publish independent third-party verified data showing 23% average cooling savings vs. manual thermostats. Real Tampa homes often see $15–$40/month summer savings once humidity-aware scheduling is dialed in.' },
+  { q: 'Will it work with my heat pump and heat strips?', a: 'Yes — but it needs to be wired and configured correctly. A misconfigured smart thermostat will run your heat strips unnecessarily and spike winter bills. We configure the stages, lockouts, and dehumidifier control as part of the install.' },
+  { q: 'Do you install commercial thermostats too?', a: 'Yes — Ecobee SmartBuildings, Honeywell commercial, and BACnet-capable systems for small commercial HVAC.' },
+];
+
+const related = [
+  { href: '/services/hvac-installation-tampa/', label: 'New HVAC Installation' },
+  { href: '/services/ac-maintenance-tampa/', label: 'AC Maintenance' },
+  { href: '/services/heating-services-tampa/', label: 'Heating Services' },
+];
 ---
-<BaseLayout
-  title="Thermostat Installation in Tampa | I Care Air Care"
-  description="Smart thermostat installation, wiring and setup — compatible with all major HVAC brands."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Services","url":"https://www.icareaircare.com/services/"},{"name":"Thermostat Installation in Tampa","url":"https://www.icareaircare.com/services/thermostat-installation-tampa/"}]}
+<ServiceLayout
+  slug="thermostat-installation-tampa"
+  title="Smart Thermostat Installation in Tampa, FL | Ecobee, Nest, Honeywell | I Care Air Care"
+  description="Professional smart thermostat installation in Tampa & Wesley Chapel. Ecobee, Nest, Honeywell. C-wire solutions, heat-pump configuration, humidity control. Call (813) 395-2324."
+  h1="Smart Thermostat Installation in Tampa, FL"
+  eyebrow="Thermostat Installation"
+  subtitle={`A smart thermostat is only smart if it's wired and configured right for <strong class="text-white">your heat pump, your heat strips, and Tampa's humidity</strong>. We handle the install and the commissioning — not just the wall mount.`}
+  heroImage="/images/Presentation-t-14.webp"
+  serviceName="Thermostat Installation in Tampa"
+  faqs={faqs}
+  related={related}
 >
-  <Hero eyebrow="HVAC Service" title="Thermostat Installation in Tampa" subtitle="Smart thermostat installation, wiring and setup — compatible with all major HVAC brands." ctaLabel="Schedule Service" />
-  <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
-    </div>
-  </section>
-  <CTABand />
-</BaseLayout>
+  <h2>Why DIY thermostat installs go wrong in Florida</h2>
+  <p>Online tutorials make a smart thermostat install look like a 15-minute job. For a single-stage gas furnace in Illinois, maybe. For a typical Tampa heat pump with electric-strip backup, humidity-critical setpoints, and often a missing C-wire? We see the aftermath every month: systems stuck in emergency heat, strips running in 75° weather, dehumidifier mode disabled, compressor short-cycling, and one memorable case where a homeowner shorted R to 24V common and fried the air handler's control board.</p>
+
+  <p>The install itself isn't the hard part — it's the <strong>configuration</strong>. Setting the stage count, outdoor lockout temps for the heat strips, the dehumidify-to-humidistat control, fan circulation mode, and compressor-protection minimum run times. Done right, you'll see the savings. Done wrong, your bills go up.</p>
+
+  <h2>Thermostats we install and support</h2>
+  <ul>
+    <li><strong>Ecobee Premium</strong> — best overall for multi-stage heat pumps. Built-in air-quality monitor and humidity sensing.</li>
+    <li><strong>Google Nest Learning (4th gen)</strong> — best design and learning algorithm. Ideal for single-stage systems.</li>
+    <li><strong>Honeywell T9 / T10</strong> — best multi-zone and wired-sensor support. Pro-grade reliability.</li>
+    <li><strong>Mysa</strong> — for ductless mini-split and line-voltage heating applications.</li>
+    <li><strong>Commercial</strong> — Honeywell commercial, Ecobee SmartBuildings, BACnet-capable controls for light-commercial HVAC.</li>
+  </ul>
+
+  <h2>The C-wire problem (and our solution)</h2>
+  <p>Most modern smart thermostats need a constant 24V power supply — the <strong>C-wire</strong> (common). About 70% of Tampa homes older than 15 years don't have one run to the thermostat location. When that's the case, we have three solid options:</p>
+  <ol class="list-decimal pl-5 space-y-2 text-slate-700 mt-4">
+    <li><strong>PEK or equivalent adapter</strong> at the air handler — the cleanest solution when the existing thermostat cable has an unused wire.</li>
+    <li><strong>24V transformer + adapter</strong> for older 4-wire systems.</li>
+    <li><strong>Fresh thermostat cable pull</strong> when the wall cavity is accessible — ideal if you're also updating.</li>
+  </ol>
+
+  <h2>Our smart thermostat install process</h2>
+  <ol class="list-decimal pl-5 space-y-2 text-slate-700 mt-4">
+    <li>Inspect the existing wiring, air handler, and equipment specs</li>
+    <li>Recommend the right model for your system and household</li>
+    <li>Safe power-down and removal of old thermostat</li>
+    <li>C-wire installation if needed</li>
+    <li>Mount and wire new thermostat</li>
+    <li>Full configuration: stage count, strip lockouts, humidity setpoints, fan mode, equipment protection timers</li>
+    <li>Wi-Fi connection and app pairing</li>
+    <li>Test every mode — cooling, heating, emergency heat, dehumidify</li>
+    <li>Walk-through with the homeowner and setup of first schedule</li>
+  </ol>
+
+  <h2>Pair with an HVAC tune-up</h2>
+  <p>A new thermostat is the perfect time to do a full <a href="/services/ac-maintenance-tampa/">AC tune-up</a>. We offer a bundle price when installing a thermostat at the same visit — you get the benefit of the new controls running on a fully dialed-in system.</p>
+
+  <p>Ready for a real smart home upgrade? <a href="/contact/">Book your install</a> or call <a href="tel:+18133952324">(813) 395-2324</a>.</p>
+</ServiceLayout>

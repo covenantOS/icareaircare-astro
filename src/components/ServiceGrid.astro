@@ -1,42 +1,51 @@
 ---
 import { SITE } from '../lib/site';
+
+const cards = [
+  { slug: 'ac-repair-tampa', name: 'AC Repair', img: '/images/HVAC-Services-in-Tampa-FL-%E2%80%93-Outdoor-AC-Unit-Repair-Man.webp' },
+  { slug: 'ac-maintenance-tampa', name: 'AC Maintenance', img: '/images/HVAC-Services-in-Tampa-FL-%E2%80%93-AC-Refrigerant-Pressure-Testing.webp' },
+  { slug: 'hvac-installation-tampa', name: 'HVAC Installation', img: '/images/HVAC-Installation-Tampa-Bay-%E2%80%93-New-Outdoor-Condenser-Installation.webp' },
+  { slug: 'air-duct-cleaning-tampa', name: 'Air Duct Cleaning', img: '/images/air-duct-cleaning-wesley-chapel-metal-ductwork-supply-vent-register.webp' },
+  { slug: 'refrigeration-repair-tampa', name: 'Refrigeration Services', img: '/images/HVAC-Services-in-Tampa-FL-%E2%80%93-Commercial-AC-Condenser-Systems.webp' },
+  { slug: 'heating-services-tampa', name: 'Heating Services', img: '/images/Heating-Services-ICAC.webp' },
+  { slug: 'thermostat-installation-tampa', name: 'Thermostat Installation', img: '/images/Presentation-t-14.webp' },
+  { slug: 'emergency-ac-repair-tampa', name: 'Emergency HVAC', img: '/images/Outdoor-AC-Condenser-Installation-HVAC-Contractor-Near-Me.webp' },
+];
+
 const icons: Record<string, string> = {
-  'ac-repair-tampa': '❄️',
-  'emergency-ac-repair-tampa': '🚨',
-  'ac-maintenance-tampa': '🔧',
-  'hvac-installation-tampa': '🏠',
-  'air-duct-cleaning-tampa': '🌬️',
-  'heating-services-tampa': '🔥',
-  'refrigeration-repair-tampa': '🧊',
-  'thermostat-installation-tampa': '🌡️',
-};
-const blurbs: Record<string, string> = {
-  'ac-repair-tampa': 'Same-day diagnosis and repair for homes across Tampa Bay.',
-  'emergency-ac-repair-tampa': '24/7 fast response when your AC fails in the Florida heat.',
-  'ac-maintenance-tampa': 'Tune-ups that extend equipment life and cut energy bills.',
-  'hvac-installation-tampa': 'High-efficiency systems installed right the first time.',
-  'air-duct-cleaning-tampa': 'Cleaner indoor air — less dust, allergens, and odors.',
-  'heating-services-tampa': 'Heat pump & furnace repair, tune-ups and replacements.',
-  'refrigeration-repair-tampa': 'Commercial refrigeration service for local businesses.',
-  'thermostat-installation-tampa': 'Smart thermostats wired, configured, and tested.',
+  'ac-repair-tampa': 'M9 3v2H7v14h2v2h6v-2h2V5h-2V3H9zm0 4h6v10H9V7z',
+  'ac-maintenance-tampa': 'M22 9l-3-3 1.5-1.5L22 6l2.5-2.5L26 5l-4 4zM3 13l4 4H3v-4zm9-7a5 5 0 00-5 5v1h10v-1a5 5 0 00-5-5z',
+  'hvac-installation-tampa': 'M3 7h18v10H3V7zm2 2v6h14V9H5z',
+  'air-duct-cleaning-tampa': 'M4 4h16v4H4V4zm0 6h16v4H4v-4zm0 6h16v4H4v-4z',
+  'refrigeration-repair-tampa': 'M6 2h12v20H6V2zm2 2v7h8V4H8zm0 9v7h8v-7H8z',
+  'heating-services-tampa': 'M12 2c-1 4 3 4 3 8s-4 4-3 8c-3-4 1-8 0-12-2 0-3-2-3-4h3z',
+  'thermostat-installation-tampa': 'M12 2a6 6 0 00-3 11.17V18a3 3 0 006 0v-4.83A6 6 0 0012 2zm0 14a1 1 0 110-2 1 1 0 010 2z',
+  'emergency-ac-repair-tampa': 'M12 2L1 21h22L12 2zm0 6l7 12H5l7-12zm-1 4h2v4h-2v-4zm0 5h2v2h-2v-2z',
 };
 ---
-<section class="py-16 md:py-20">
+<section class="py-14 md:py-20 bg-wave">
   <div class="container-site">
-    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
-      <div>
-        <p class="text-xs font-bold uppercase tracking-[0.18em] text-brand-600">Our services</p>
-        <h2 class="mt-2 text-3xl md:text-4xl font-bold">Full-service HVAC for Tampa Bay homes</h2>
-      </div>
-      <a href="/services/" class="text-brand-700 font-semibold hover:text-brand-800">View all services →</a>
+    <div class="text-center mb-10 md:mb-14">
+      <h2 class="text-3xl md:text-4xl title-accent">Our Expert HVAC Services</h2>
+      <p class="mt-6 max-w-2xl mx-auto text-slate-600 leading-relaxed">
+        From emergency <a href="/services/ac-repair-tampa/" class="text-brand-600 hover:text-brand-700 underline underline-offset-2">AC repair</a> to full system replacements, our licensed technicians cover every HVAC need across Wesley Chapel and the greater Tampa Bay area.
+      </p>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      {SITE.services.map(s => (
-        <a href={`/services/${s.slug}/`} class="group block rounded-2xl border border-slate-200 bg-white p-6 hover:border-brand-500 hover:shadow-[var(--shadow-soft)] transition">
-          <div class="text-3xl">{icons[s.slug] ?? '•'}</div>
-          <h3 class="mt-4 text-lg font-semibold text-brand-800 group-hover:text-brand-600">{s.name}</h3>
-          <p class="mt-2 text-sm text-slate-600 leading-relaxed">{blurbs[s.slug]}</p>
-          <span class="mt-4 inline-block text-sm font-semibold text-brand-600">Learn more →</span>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+      {cards.map(c => (
+        <a href={`/services/${c.slug}/`} class="group relative block overflow-hidden rounded-xl aspect-[4/5] shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-soft)] transition">
+          <img src={c.img} alt={c.name} class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" width="400" height="500" />
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-800/85 via-navy-800/35 to-navy-800/10"></div>
+          <div class="absolute top-3 left-3 inline-flex items-center justify-center w-10 h-10 rounded-md bg-brand-500/90 text-white">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d={icons[c.slug]} /></svg>
+          </div>
+          <div class="absolute bottom-0 inset-x-0 p-4 md:p-5">
+            <h3 class="text-white font-bold text-lg md:text-xl leading-snug">{c.name}</h3>
+            <span class="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-accent-400">
+              Learn more
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </div>
         </a>
       ))}
     </div>

@@ -1,18 +1,62 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import CTABand from '../../components/CTABand.astro';
+import ServiceLayout from '../../layouts/ServiceLayout.astro';
+
+const faqs = [
+  { q: 'Are you really available 24/7 for emergency AC repair?', a: 'Yes — we run a true after-hours dispatch line. Call (813) 395-2324 any time day or night. During heat waves our technicians often work past midnight to clear the queue.' },
+  { q: 'How fast can you get to my house?', a: 'From Wesley Chapel we can typically reach anywhere in Pasco, Hillsborough and Polk counties within 60–90 minutes of the call. Central Tampa, New Tampa and Land O\' Lakes are often faster.' },
+  { q: 'What counts as an AC emergency?', a: 'No cooling during summer heat (especially with infants, elderly residents, or pets), water leaks actively damaging flooring or drywall, electrical smells or smoke from the air handler, or a completely dead system in a storm-damaged home.' },
+  { q: 'How much does emergency AC repair cost after hours?', a: 'Emergency service carries a modest after-hours dispatch fee on top of the flat-rate repair price. We quote the full number before any work — no meter-running hourly billing.' },
+  { q: 'What if it\'s just the thermostat or a tripped breaker?', a: 'We check the simple stuff first and never charge for a 10-minute courtesy fix if that\'s all it takes. Honest diagnosis is how we\'ve built 700+ 5-star reviews.' },
+  { q: 'Do you service both AC and heating emergencies?', a: 'Yes — we handle heat pump failures, furnace lockouts, and air handler problems year-round. Cold snaps in January are almost as busy for us as July heat.' },
+];
+
+const related = [
+  { href: '/services/ac-repair-tampa/', label: 'Standard AC Repair' },
+  { href: '/services/ac-maintenance-tampa/', label: 'AC Maintenance (Prevent the Emergency)' },
+  { href: '/services/heating-services-tampa/', label: 'Heating Emergency Service' },
+  { href: '/service-areas/wesley-chapel-ac-repair/', label: 'Wesley Chapel Emergency' },
+];
 ---
-<BaseLayout
-  title="Emergency AC Repair in Tampa | I Care Air Care"
-  description="24/7 emergency AC repair when your system fails. Dispatched from Wesley Chapel across the Tampa Bay area."
-  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Services","url":"https://www.icareaircare.com/services/"},{"name":"Emergency AC Repair in Tampa","url":"https://www.icareaircare.com/services/emergency-ac-repair-tampa/"}]}
+<ServiceLayout
+  slug="emergency-ac-repair-tampa"
+  title="24/7 Emergency AC Repair in Tampa, FL | I Care Air Care"
+  description="Tampa AC broken? Licensed 24/7 emergency HVAC contractor in Wesley Chapel. Same-hour response, flat-rate pricing, 1-year warranty. Call (813) 395-2324 now."
+  h1="24/7 Emergency AC Repair in Tampa, FL"
+  eyebrow="Emergency Service"
+  subtitle={`When the Florida heat turns dangerous and your air conditioning quits, every hour matters. Our <strong class="text-white">Wesley Chapel emergency dispatch</strong> is staffed around the clock with fully stocked trucks.`}
+  heroImage="/images/Outdoor-AC-Condenser-Installation-HVAC-Contractor-Near-Me.webp"
+  serviceName="Emergency AC Repair in Tampa"
+  faqs={faqs}
+  related={related}
 >
-  <Hero eyebrow="HVAC Service" title="Emergency AC Repair in Tampa" subtitle="24/7 emergency AC repair when your system fails. Dispatched from Wesley Chapel across the Tampa Bay area." ctaLabel="Schedule Service" />
-  <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
-    </div>
-  </section>
-  <CTABand />
-</BaseLayout>
+  <h2>Don't wait it out — call now</h2>
+  <p>Indoor temperatures in Tampa homes can climb from comfortable to unsafe in under two hours once the air conditioning stops. Infants, the elderly, anyone with respiratory conditions, and pets are at real risk. The first and most important thing to do: call <a href="tel:+18133952324">(813) 395-2324</a>. We'll get a licensed technician rolling while you handle the simple safety steps below.</p>
+
+  <h3>Before our tech arrives — three things to check</h3>
+  <ol class="list-decimal pl-5 space-y-2 text-slate-700 mt-4">
+    <li><strong>Thermostat.</strong> Make sure it's set to COOL and the setpoint is below the indoor temperature. Fresh batteries solve a surprising number of "emergencies."</li>
+    <li><strong>Breaker panel.</strong> Look for a tripped air-handler or condenser breaker. Reset once — if it trips again immediately, stop and wait for us. That means a short.</li>
+    <li><strong>Indoor air filter.</strong> A completely choked filter can freeze the coil and mimic an AC failure. If it's gray and fuzzy, replace it and switch the thermostat to fan-only for 1–2 hours to thaw the coil.</li>
+  </ol>
+
+  <h2>What we bring on every emergency call</h2>
+  <p>Our emergency service vans leave Wesley Chapel already loaded with the parts and tools that solve 95% of Tampa Bay breakdowns on the first visit:</p>
+  <ul>
+    <li>Capacitors (single and dual run) from 5 to 80 μF</li>
+    <li>Contactors (24V coil, 30–50A)</li>
+    <li>Condenser and blower fan motors across the common ECM and PSC sizes</li>
+    <li>Universal thermostats (programmable and smart-compatible)</li>
+    <li>R-410A and R-454B refrigerant (the 2026 low-GWP replacement now required on new equipment)</li>
+    <li>Condensate pumps, float switches, and drain-line flushing equipment</li>
+    <li>Full digital manifold set, combustion analyzer, and thermal imager for rapid diagnosis</li>
+  </ul>
+
+  <h2>Storm damage & hurricane season emergencies</h2>
+  <p>Tampa Bay's hurricane season runs June through November, and we respond to a wave of wind-damaged condensers and lightning-struck control boards every year. If your outdoor unit is bent, flooded, or was struck during a storm, <strong>do not try to restart it</strong> — water in the compressor or a damaged capacitor can turn into a fire hazard. Flip the disconnect at the unit, flip the breaker, and call us.</p>
+
+  <h2>Prevent the next emergency with a maintenance plan</h2>
+  <p>Over 70% of the emergency calls we run could have been caught in a 45-minute <a href="/services/ac-maintenance-tampa/">spring or fall tune-up</a>. We offer preventive maintenance plans starting at modest monthly pricing that include priority dispatch during heat waves — if you're on a plan, you move to the front of the line.</p>
+
+  <h2>Real response times across Tampa Bay</h2>
+  <p>From our Wesley Chapel base we typically reach most emergencies within 60–90 minutes. Central neighborhoods like <a href="/service-areas/new-tampa-heating-and-cooling/">New Tampa</a>, <a href="/service-areas/land-o-lakes-hvac-services/">Land O' Lakes</a>, <a href="/service-areas/lutz-home-air-conditioning-service/">Lutz</a>, and <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a> are often faster. Call now — we'll give you an honest ETA before dispatching.</p>
+</ServiceLayout>

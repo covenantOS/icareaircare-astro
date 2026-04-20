@@ -1,20 +1,38 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
 import ServiceGrid from '../../components/ServiceGrid.astro';
-import CTABand from '../../components/CTABand.astro';
+import WhyChooseUs from '../../components/WhyChooseUs.astro';
+import ReviewStrip from '../../components/ReviewStrip.astro';
+import AreaGrid from '../../components/AreaGrid.astro';
+import FinalCTA from '../../components/FinalCTA.astro';
+import ContactFormSection from '../../components/ContactFormSection.astro';
+import FAQ from '../../components/FAQ.astro';
+
+const faqs = [
+  { q: 'What HVAC services do you provide in Tampa?', a: 'AC repair, emergency AC repair, AC maintenance & tune-ups, new HVAC installation, air duct cleaning, heating services (heat pumps, heat strips, furnaces), thermostat installation, and commercial refrigeration repair.' },
+  { q: 'Are you licensed and insured in Florida?', a: 'Yes — Florida CAC1816515, fully bonded and insured. Every technician is background-checked and certified.' },
+  { q: 'Do you offer same-day service?', a: 'Most standard service calls are handled same-day. Emergency calls during business hours are prioritized ahead of routine maintenance.' },
+  { q: 'What areas do you serve?', a: 'All of Pasco, Hillsborough, and Polk counties — including Wesley Chapel, Tampa, New Tampa, Land O\' Lakes, Lutz, Odessa, and Zephyrhills.' },
+];
 ---
 <BaseLayout
   title="HVAC Services in Tampa Bay | I Care Air Care"
-  description="Full HVAC services in Tampa Bay: AC repair, installation, maintenance, air duct cleaning, heating and smart thermostats. Call (813) 395-2324."
+  description="Complete HVAC services in Tampa & Wesley Chapel: AC repair, installation, maintenance, air duct cleaning, heating, thermostats, refrigeration. 4.9★ with 700+ reviews."
   breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'Services',url:'https://www.icareaircare.com/services/'}]}
 >
-  <section class="bg-brand-800 text-white py-14">
-    <div class="container-site">
-      <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-200">Services</p>
-      <h1 class="mt-2 text-4xl md:text-5xl font-bold text-white">HVAC services for Tampa Bay homes</h1>
-      <p class="mt-4 max-w-2xl text-blue-100">Eight core services, one local team — from quick repairs to full system replacements.</p>
-    </div>
-  </section>
+  <Hero
+    eyebrow="Our Services"
+    title="Full-Service HVAC for Tampa Bay Homes & Businesses"
+    subtitle={`Eight core services, one licensed local team based in Wesley Chapel. From same-day AC repair to complete system replacements, air duct cleaning to commercial refrigeration — we do it all, and we do it right.`}
+    image="/images/I-Care-Air-Care-HVAC-Installation-%E2%80%93-Local-Team-and-Service-Vans.webp"
+    ctaLabel="Request a Quote"
+  />
   <ServiceGrid />
-  <CTABand />
+  <WhyChooseUs />
+  <ReviewStrip />
+  <AreaGrid />
+  <FAQ items={faqs} />
+  <FinalCTA />
+  <ContactFormSection />
 </BaseLayout>

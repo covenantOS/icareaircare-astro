@@ -2,30 +2,52 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import ServiceGrid from '../components/ServiceGrid.astro';
-import ReviewStrip from '../components/ReviewStrip.astro';
+import WhyChooseUs from '../components/WhyChooseUs.astro';
 import AreaGrid from '../components/AreaGrid.astro';
-import CTABand from '../components/CTABand.astro';
+import ThreeStep from '../components/ThreeStep.astro';
+import ReviewStrip from '../components/ReviewStrip.astro';
+import BlogStrip from '../components/BlogStrip.astro';
 import FAQ from '../components/FAQ.astro';
+import ContactFormSection from '../components/ContactFormSection.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import Schema from '../components/Schema.astro';
 
 const faqs = [
-  { q: 'Do you offer 24/7 emergency AC repair?', a: 'Yes — we dispatch technicians around the clock across Wesley Chapel, Tampa, Land O\u2019 Lakes and the surrounding Tampa Bay area.' },
-  { q: 'Are your technicians licensed and insured?', a: 'Every I Care Air Care technician is licensed in Florida, background-checked and fully insured. We pull permits on every install.' },
-  { q: 'Do you offer financing for new HVAC systems?', a: 'Yes. Flexible financing is available with approved credit — see our financing page for current terms and monthly-payment estimates.' },
-  { q: 'How quickly can you come out?', a: 'Most service calls are handled same-day. During peak heat we prioritize homes without working AC, seniors, and families with small children.' },
+  { q: 'How do I schedule a consultation?', a: 'You can book <strong>AC repair</strong> or any HVAC service online or call us directly. We confirm your appointment fast — same-day availability often possible.' },
+  { q: 'How do I choose the best HVAC contractor in Tampa?', a: 'Look for a Florida-licensed contractor (ours is CAC1816515), 5-star Google reviews, upfront written estimates, and warranty-backed work. We meet all four criteria with 700+ reviews and a 1-year repair warranty.' },
+  { q: 'What areas do you serve?', a: 'We serve Wesley Chapel, New Tampa, Land O\u2019 Lakes, Lutz, Odessa, Zephyrhills, and all of Pasco, Hillsborough and Polk counties. <a class="underline" href="/service-areas/">See the full service-area map</a>.' },
+  { q: 'Do Tampa HVAC contractors offer emergency repair services?', a: 'Yes — I Care Air Care dispatches <a class="underline" href="/services/emergency-ac-repair-tampa/">emergency AC repair</a> around the clock. During heat waves we prioritize homes without working cooling.' },
+  { q: 'How quickly can you come out for service?', a: 'Most service calls are handled same-day. Call (813) 395-2324 and we\u2019ll give you an exact arrival window.' },
+  { q: 'How much does HVAC repair cost in Tampa?', a: 'Typical AC repair in Tampa runs $150–$600 depending on the part. Full diagnostic-only visits are quoted upfront — no surprise fees. Complex issues like compressor replacement or refrigerant leaks are priced separately with written estimates.' },
+  { q: 'Are you licensed and insured?', a: 'Yes. I Care Air Care is fully licensed (Florida CAC1816515), bonded and insured. Every technician is background-checked and certified.' },
+  { q: 'When should I call an AC contractor for repair in Tampa?', a: 'Call when you notice warm air, weak airflow, strange noises, water leaks, ice on the coil, or rising energy bills. Early diagnosis usually prevents a larger repair.' },
+  { q: 'Do you provide financing or special offers?', a: 'We offer flexible financing through Synchrony for qualified homeowners — see our <a class="underline" href="/financing/">financing page</a> for current terms and monthly-payment estimates.' },
+  { q: 'What is included in an AC tune-up in Wesley Chapel?', a: 'Our <a class="underline" href="/services/ac-maintenance-tampa/">AC tune-up</a> includes coil cleaning, refrigerant check, electrical inspection, thermostat calibration, blower motor test, condensate drain flush, and a full written system report.' },
+  { q: 'What does an AC contractor in Tampa do?', a: 'We diagnose and repair air conditioning systems, install new high-efficiency equipment, clean air ducts, maintain existing systems, and service commercial refrigeration — all from one licensed local team.' },
+  { q: 'Do you offer refrigeration repair in Tampa?', a: 'Yes. We service walk-in coolers, reach-in freezers, and light-commercial refrigeration for restaurants and small businesses across Tampa Bay.' },
 ];
 ---
 <BaseLayout
-  title="HVAC & AC Repair in Wesley Chapel, FL | I Care Air Care"
-  description="Trusted HVAC contractor in Wesley Chapel & Tampa Bay. 4.9★ rated, 30+ years experience. Same-day AC repair, installation, maintenance and air duct cleaning."
+  title="Tampa's #1 HVAC Contractor | AC Repair & Installation | I Care Air Care"
+  description="Trusted Tampa HVAC contractor in Wesley Chapel, FL. 4.9★ with 700+ reviews, 16+ years of service. Same-day AC repair, installation, maintenance & duct cleaning. Call (813) 395-2324."
 >
   <Hero
-    eyebrow="Wesley Chapel • Tampa Bay"
-    title="Honest HVAC service, done right the first time."
-    subtitle="Same-day AC repair, high-efficiency installations and straightforward pricing from a family-run team your neighbors already trust."
+    variant="home"
+    showForm={true}
+    eyebrow="16+ Years of Service"
+    title={`Tampa's #1 Air<br/>Conditioning Contractor`}
+    subtitle={`Trusted local <strong class="text-white">AC repair</strong> experts serving Tampa &amp; Wesley Chapel for 16 years with fast, reliable <strong class="text-white">HVAC service</strong> plus heating, cooling &amp; <strong class="text-white">air duct cleaning</strong>.`}
+    image="/images/ICAC%20Team.webp"
   />
   <ServiceGrid />
   <AreaGrid />
+  <WhyChooseUs />
   <ReviewStrip />
-  <FAQ items={faqs} />
-  <CTABand />
+  <ThreeStep />
+  <FinalCTA />
+  <BlogStrip />
+  <FAQ title="Frequently Asked Questions — AC Repair & HVAC Services in Tampa" items={faqs} />
+  <ContactFormSection />
+
+  <Schema type="FAQPage" faqs={faqs.map(f => ({ q: f.q, a: f.a.replace(/<[^>]*>/g,'') }))} />
 </BaseLayout>
