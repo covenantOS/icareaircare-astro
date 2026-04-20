@@ -2,45 +2,86 @@
 import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
 
 const faqs = [
-  { q: 'How fast can you get to Wesley Chapel?', a: 'We\'re based right here on Foamflower Blvd in Wesley Chapel — most calls we\'re on-site within an hour, often the same call. Seven Oaks, Meadow Pointe, Wiregrass and Epperson are usually our fastest responses.' },
-  { q: 'Do you service new-construction homes in Wesley Chapel?', a: 'Yes — we work extensively with new-construction homeowners in Epperson, Mirada, Watergrass and Union Park. See our <a class="underline" href="/new-construction-hvac-guide-for-epperson-mirada-homeowners/">new-construction HVAC guide</a>.' },
-  { q: 'What does AC repair cost in Wesley Chapel?', a: 'Most Wesley Chapel repairs run $150–$600 depending on the part. We quote flat-rate before any work begins.' },
-  { q: 'Do you offer emergency service in Wesley Chapel?', a: 'Yes — 24/7 emergency dispatch. Wesley Chapel residents often get the fastest response times since we\'re local.' },
-  { q: 'Can you service rental properties or HOA communities?', a: 'Yes — we work with several Wesley Chapel property managers and HOA boards, and can bill directly where arrangements exist.' },
-  { q: 'Are you licensed to pull permits in Pasco County?', a: 'Yes. Florida license CAC1816515. We handle all Pasco County HVAC permits and inspections.' },
+  { q: 'How fast can you get to a home in Wesley Chapel?', a: 'We\'re headquartered right here on Foamflower Blvd in Wesley Chapel — most calls we\'re on-site within 30–60 minutes. Seven Oaks, Meadow Pointe, Wiregrass and Epperson are usually our fastest responses since they\'re a few minutes from our bay.' },
+  { q: 'Do you service new-construction homes in Wesley Chapel?', a: 'Yes — we work extensively with new-construction homeowners in Epperson, Mirada, Watergrass, Persimmon Park and Union Park. These homes are typically built with builder-grade minimum-sized equipment, and we regularly supplement with smart thermostats, duct-sealing, and properly sized replacement systems.' },
+  { q: 'What does AC repair cost in Wesley Chapel?', a: 'Most residential Wesley Chapel repairs run $150–$600 depending on the part — capacitor $180–$260, contactor $180–$300, fan motor $400–$650, refrigerant recharge $350–$750 with leak check. We quote flat-rate in writing before any work begins.' },
+  { q: 'Do you offer 24/7 emergency service in Wesley Chapel?', a: 'Yes — 24/7 emergency dispatch, priority for Wesley Chapel since we\'re local. During summer heat waves we triage homes with small children, elderly residents or medical equipment first.' },
+  { q: 'Can you service rental properties or HOA communities?', a: 'Yes — we handle service contracts for multiple Wesley Chapel HOAs (Meadow Pointe, Seven Oaks, Lexington Oaks, Saddlebrook), property-management companies, and light-commercial buildings. Centralized billing and lockbox access available.' },
+  { q: 'Are you licensed to pull permits in Pasco County?', a: 'Yes. Florida license CAC1816515. We handle all Pasco County mechanical permits, inspections and final sign-offs — including anything required by the Epperson, Mirada or Persimmon Park master HOAs.' },
+  { q: 'Do you work on old homes in the original Wesley Chapel area too?', a: 'Absolutely. We service every era of home in 33543/33544/33545 — from 1970s ranches near Wesley Chapel Blvd. to 2024 new builds in Mirada. Older homes often need duct upgrades and electrical work to support modern variable-speed equipment, and we can do it all under one permit.' },
+  { q: 'What HVAC brands do you install in Wesley Chapel?', a: 'Carrier, Trane, Lennox, Rheem, Goodman, American Standard, Bryant and Mitsubishi mini-splits. All 2026-compliant R-454B (A2L) equipment. We match the brand to your budget, duct layout and warranty goals — not commission.' },
+];
+
+const reviews = [
+  { name: 'Sarah M.', neighborhood: 'Seven Oaks', body: 'Our AC died at 11pm on a Friday. Tim had someone at our house in Seven Oaks before 8am Saturday. Diagnosed a bad contactor, had the part on the truck, fixed in 30 minutes. Charged exactly what the phone quote said.', rating: 5 },
+  { name: 'Dennis R.', neighborhood: 'Meadow Pointe', body: 'Got three quotes for a full system replacement in Meadow Pointe. I Care Air Care wasn\'t the cheapest, but they were the only ones who actually did a Manual-J load calculation and explained why our old system was oversized. Year in — the bills are noticeably lower.', rating: 5 },
+  { name: 'Priya K.', neighborhood: 'Epperson Ranch', body: 'New build in Epperson, our builder\'s HVAC was making a weird humming sound during warranty. Builder was slow to respond so I called I Care Air Care. They came out, figured out a loose mounting, fixed it free while they were here doing our duct-cleaning. Real people, real service.', rating: 5 },
 ];
 ---
 <ServiceAreaLayout
   slug="wesley-chapel-ac-repair"
   title="Wesley Chapel AC Repair & HVAC Services | I Care Air Care"
-  description="Wesley Chapel's 4.9★ local HVAC contractor. AC repair, installation, maintenance, duct cleaning. Based on Foamflower Blvd — fastest response times in WC. Call (813) 395-2324."
+  description="Wesley Chapel's 4.9★ local HVAC contractor — based on Foamflower Blvd. 30-minute response to Seven Oaks, Meadow Pointe, Wiregrass, Epperson & Mirada. Licensed CAC1816515. Call (813) 395-2324."
   h1="Wesley Chapel AC Repair & HVAC Services"
-  eyebrow="Wesley Chapel, FL"
-  subtitle={`Your neighbors on Foamflower Blvd. 4.9★ Google rated, 700+ reviews, 15+ years serving Wesley Chapel, Seven Oaks, Meadow Pointe, Epperson & Mirada.`}
+  eyebrow="Wesley Chapel, FL · 33543 · 33544 · 33545"
+  subtitle={`Your neighbors on Foamflower Blvd. 4.9★ Google rated, 700+ reviews, 15+ years serving Wesley Chapel, Seven Oaks, Meadow Pointe, Wiregrass, Epperson & Mirada.`}
   heroImage="/images/ICAC%20Team%281%29.webp"
   cityName="Wesley Chapel"
   faqs={faqs}
-  neighborhoods={['Seven Oaks', 'Meadow Pointe', 'Wiregrass Ranch', 'Epperson Ranch', 'Mirada', 'Watergrass', 'Union Park', 'Saddlebrook', 'Lexington Oaks', 'Quail Hollow', 'New River', 'Country Walk']}
+  reviews={reviews}
+  responseWindow="30–60 minutes"
+  driveTime="In-town"
+  zipCodes={['33543','33544','33545']}
+  geo={{ lat: 28.2426914, lng: -82.3726776 }}
+  neighborhoods={['Seven Oaks', 'Meadow Pointe I–IV', 'Wiregrass Ranch', 'Epperson Ranch', 'Mirada', 'Watergrass', 'Union Park', 'Persimmon Park', 'Saddlebrook', 'Lexington Oaks', 'Quail Hollow', 'New River', 'Country Walk', 'Estancia', 'Chapel Pines']}
+  landmarks={[
+    { name: 'The Shops at Wiregrass', note: 'Light-commercial HVAC + retail tenant service' },
+    { name: 'AdventHealth Wesley Chapel', note: 'Residential service for staff across 33544' },
+    { name: 'Pasco-Hernando State College – Porter Campus', note: 'Local installs for faculty & families' },
+    { name: 'Epperson Crystal Lagoon', note: 'New-construction HVAC across Epperson Ranch' },
+    { name: 'Wiregrass Ranch Sports Campus', note: 'Communities we pass every day' },
+    { name: 'Mirada Lagoon', note: 'Brand-new builds needing system tune-ups' },
+  ]}
+  climateNote={`Wesley Chapel's microclimate sits between inland Pasco heat and Gulf humidity, meaning outdoor condensers here routinely run 18–22°F hotter than rated design temps in July–September. Combine that with the dense landscaping in Seven Oaks and Meadow Pointe that blocks airflow around condenser units, and you get premature capacitor failure and coil fouling. Our standard Wesley Chapel tune-up includes coil wash, condenser clearance check, and a humidity-ramp test most contractors skip.`}
+  schoolsOrHoas={['Meadow Pointe HOA','Seven Oaks CDD','Epperson Ranch Master HOA','Lexington Oaks HOA']}
+  relatedAreas={[
+    { slug: 'land-o-lakes-hvac-services', name: 'Land O\u2019 Lakes', note: '10 min south' },
+    { slug: 'new-tampa-heating-and-cooling', name: 'New Tampa', note: '15 min south' },
+    { slug: 'lutz-home-air-conditioning-service', name: 'Lutz', note: '18 min southwest' },
+    { slug: 'air-conditioning-repair-zephyrhills-fl-i-care-air-care', name: 'Zephyrhills', note: '12 min east' },
+  ]}
 >
-  <h2>The Wesley Chapel HVAC contractor your neighbors actually recommend</h2>
-  <p>I Care Air Care has operated from <strong>27022 Foamflower Blvd</strong> in Wesley Chapel for more than fifteen years. That means every service truck you see in a Wesley Chapel driveway — whether it's a quick capacitor swap in <strong>Seven Oaks</strong>, a full system replacement in <strong>Meadow Pointe</strong>, or an emergency call-out to new construction in <strong>Epperson</strong> or <strong>Mirada</strong> — is our team driving minutes from home.</p>
-  <p>That proximity is why we consistently have the fastest response times in the area, and why 700+ local homeowners have left us verified 5-star Google reviews. We're not a franchise. We don't have call-center dispatchers an hour away. When you call (813) 395-2324, you're reaching Tim and the team directly.</p>
+  <span class="not-prose inline-flex items-center rounded-full bg-accent-50 text-accent-600 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Local · Foamflower Blvd.</span>
+  <h2>The Wesley Chapel HVAC contractor your neighbors actually recommend by name</h2>
+  <p>I Care Air Care has operated out of <strong>27022 Foamflower Blvd.</strong> for more than fifteen years. Every service truck you see in a Wesley Chapel driveway — whether it\u2019s a capacitor swap in <strong>Seven Oaks</strong>, a full system replacement in <strong>Meadow Pointe</strong>, or an emergency call-out to new construction in <strong>Epperson</strong> or <strong>Mirada</strong> — is our team driving minutes from home.</p>
+  <p>That proximity is why we consistently post the fastest response times in 33543 / 33544 / 33545, and why 700+ local homeowners have left us verified five-star Google reviews. We\u2019re not a franchise. We don\u2019t have call-center dispatchers in another state. When you call <a href="tel:+18133952324">(813) 395-2324</a>, you\u2019re reaching Tim and the team directly.</p>
 
   <h2>HVAC services we provide throughout Wesley Chapel</h2>
   <ul>
-    <li><a href="/services/ac-repair-tampa/"><strong>AC repair</strong></a> — same-day capacitor, contactor, fan motor, thermostat, refrigerant & compressor repairs</li>
-    <li><a href="/services/emergency-ac-repair-tampa/"><strong>Emergency AC repair</strong></a> — 24/7 dispatch, priority response for Wesley Chapel</li>
-    <li><a href="/services/ac-maintenance-tampa/"><strong>AC maintenance & tune-ups</strong></a> — 21-point seasonal visits, maintenance plans with priority dispatch</li>
-    <li><a href="/services/hvac-installation-tampa/"><strong>HVAC installation</strong></a> — Manual-J sized replacements & new-construction installs (R-454B ready)</li>
-    <li><a href="/services/air-duct-cleaning-tampa/"><strong>Air duct cleaning</strong></a> — 7-step HEPA + antimicrobial process</li>
-    <li><a href="/services/heating-services-tampa/"><strong>Heating services</strong></a> — heat pump repair, heat strips, the occasional gas furnace</li>
-    <li><a href="/services/thermostat-installation-tampa/"><strong>Smart thermostat installation</strong></a> — Ecobee, Nest, Honeywell with heat-pump configuration</li>
-    <li><a href="/services/refrigeration-repair-tampa/"><strong>Commercial refrigeration</strong></a> — walk-ins, reach-ins, ice machines for Wesley Chapel restaurants & retailers</li>
+    <li><a href="/services/ac-repair-tampa/"><strong>AC repair</strong></a> — same-day capacitor, contactor, fan motor, thermostat, refrigerant &amp; compressor repairs across all Wesley Chapel ZIPs.</li>
+    <li><a href="/services/emergency-ac-repair-tampa/"><strong>Emergency AC repair</strong></a> — 24/7 dispatch, priority response for Wesley Chapel homes with infants, elderly residents, or medical equipment.</li>
+    <li><a href="/services/ac-maintenance-tampa/"><strong>AC maintenance &amp; tune-ups</strong></a> — 21-point seasonal visits plus Wesley Chapel maintenance plans with priority dispatch and 15% repair discounts.</li>
+    <li><a href="/services/hvac-installation-tampa/"><strong>HVAC installation</strong></a> — Manual-J sized replacements &amp; new-construction installs, all R-454B (A2L) ready for 2026 compliance.</li>
+    <li><a href="/services/air-duct-cleaning-tampa/"><strong>Air duct cleaning</strong></a> — 7-step HEPA + antimicrobial process, essential after Wesley Chapel new-build drywall dust or attic renovations.</li>
+    <li><a href="/services/heating-services-tampa/"><strong>Heating services</strong></a> — heat pump repair, auxiliary heat strip replacement, and the occasional gas furnace for older 33544 homes.</li>
+    <li><a href="/services/thermostat-installation-tampa/"><strong>Smart thermostat installation</strong></a> — Ecobee, Nest, Honeywell with Wesley Chapel\u2019s heat-pump-specific configuration and humidity setpoints.</li>
+    <li><a href="/services/refrigeration-repair-tampa/"><strong>Commercial refrigeration</strong></a> — walk-ins, reach-ins, ice machines for Wesley Chapel restaurants, Wiregrass retailers &amp; medical offices.</li>
   </ul>
 
-  <h2>New-construction HVAC in Epperson & Mirada</h2>
-  <p>The explosive growth of Wesley Chapel's new-construction communities — Epperson, Mirada, Watergrass, Persimmon Park, Union Park — has put enormous demand on HVAC systems that are often sized to the minimum. We specialize in <a href="/new-construction-hvac-guide-for-epperson-mirada-homeowners/">supplementing builder-grade installs</a>: adding smart thermostats with humidity control, resizing undersized systems, fixing duct issues, and upgrading to zoned variable-speed equipment for two-story layouts.</p>
+  <h2>New-construction HVAC in Epperson, Mirada & Persimmon Park</h2>
+  <p>The explosive growth of Wesley Chapel\u2019s new-construction communities — <strong>Epperson Ranch, Mirada, Watergrass, Persimmon Park, Union Park</strong> — has put enormous demand on HVAC systems that builders size to the minimum of the Manual-J curve. Homeowners in these neighborhoods routinely call us in year two with complaints about uneven cooling upstairs, high humidity, or systems that can\u2019t hold 74°F on a July afternoon.</p>
+  <p>We specialize in supplementing builder-grade installs: adding smart thermostats with humidity control, resizing undersized systems, sealing attic plenums, fixing disconnected duct boots (we find these on <em>every second</em> new-construction inspection), and upgrading to zoned variable-speed equipment for two-story layouts. Most work qualifies for Pasco County energy-efficiency rebates — we handle the paperwork.</p>
 
-  <h2>Why Wesley Chapel HOAs & property managers work with us</h2>
-  <p>We handle service contracts for multiple Wesley Chapel multi-family properties, HOA clubhouses and light-commercial buildings. We can invoice centrally, coordinate access via lockbox/code, and provide documented service histories for warranty and inspection purposes. Call Tim to discuss your property's needs.</p>
+  <h2>Why Wesley Chapel HOAs &amp; property managers work with us</h2>
+  <p>We handle service contracts for multiple Wesley Chapel multi-family properties, <strong>Meadow Pointe, Seven Oaks, Lexington Oaks</strong> and <strong>Saddlebrook</strong> HOA clubhouses and light-commercial buildings along SR-54 and Wiregrass. We can invoice centrally, coordinate access via lockbox or community code, and provide documented service histories for warranty and resale purposes. Call Tim to discuss your property\u2019s needs — we\u2019ll quote site-specific SLAs rather than cookie-cutter contracts.</p>
+
+  <h2>Neighborhood-by-neighborhood Wesley Chapel service notes</h2>
+  <p><strong>Seven Oaks &amp; Meadow Pointe:</strong> These 20-year-old master-planned communities have mostly original-equipment systems approaching replacement age. We see a lot of Rheem and Goodman 10 SEER units here nearing end-of-life — great candidates for 17+ SEER2 R-454B upgrades with Pasco rebates.</p>
+  <p><strong>Wiregrass Ranch &amp; Estancia:</strong> Newer construction, often with two-story layouts that the builder sized as a single zone. We add dampers and zoning controls to fix the upstairs/downstairs temperature fight.</p>
+  <p><strong>Epperson Ranch &amp; Mirada:</strong> The lagoon-community boom. Brand-new equipment, but builder-grade duct install routinely has crushed flex, loose takeoffs, and undersized return air. First-year tune-ups here catch 80% of those issues under warranty.</p>
+  <p><strong>Watergrass, Union Park, Persimmon Park:</strong> Newer than 2018, usually single-stage condensers. Great candidates for variable-speed or 2-stage upgrades when the builder warranty expires.</p>
+  <p><strong>Saddlebrook, Lexington Oaks, Quail Hollow, Country Walk:</strong> Older construction, often duct systems in unconditioned attics running at 140°F. We inspect and seal before recommending equipment replacement — saves thousands in unnecessary upsizing.</p>
+
+  <h2>Ready to book your Wesley Chapel service?</h2>
+  <p>Call <a href="tel:+18133952324">(813) 395-2324</a> and a real person will answer. Tell us your neighborhood and the issue — we\u2019ll quote flat-rate over the phone and give you a tight arrival window. Or <a href="https://book.housecallpro.com/book/I-Care-Air-Care/cb3eaa8c" target="_blank" rel="noopener">book online</a> 24/7.</p>
 </ServiceAreaLayout>

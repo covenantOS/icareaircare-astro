@@ -16,9 +16,9 @@ const featuredAreas = [
 const moreServices = SITE.services.filter(s => !featuredServices.find(f => f.slug === s.slug));
 const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug === a.slug));
 ---
-<header id="site-header" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm transition-all duration-300" data-scrolled="false">
+<header id="site-header" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm transition-[box-shadow,background-color] duration-200" data-scrolled="false">
   <!-- Slim top trust strip (hides on scroll) -->
-  <div id="trust-strip" class="bg-brand-700 text-white text-[12.5px] leading-none transition-[max-height,opacity] duration-300 overflow-hidden max-h-10">
+  <div id="trust-strip" class="bg-brand-700 text-white text-[12.5px] leading-none overflow-hidden will-change-[max-height,opacity]" style="transition:max-height 320ms cubic-bezier(.4,0,.2,1),opacity 220ms ease-out;max-height:36px;opacity:1;">
     <div class="container-site h-9 flex items-center justify-between gap-4">
       <div class="flex items-center gap-5 min-w-0">
         <span class="inline-flex items-center gap-1.5 shrink-0">
@@ -40,9 +40,9 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
 
   <!-- Main bar -->
   <div class="relative">
-    <div id="main-bar" class="container-site flex items-center justify-between gap-6 transition-all duration-300 h-20">
+    <div id="main-bar" class="container-site flex items-center justify-between gap-6" style="transition:height 260ms cubic-bezier(.4,0,.2,1);height:80px;">
       <a href="/" class="flex items-center shrink-0" aria-label={`${SITE.name} home`}>
-        <img src="/images/ICAC%20Full%20Logo.webp" alt={SITE.name} id="logo-img" class="h-12 w-auto transition-all duration-300" width="200" height="56" loading="eager" />
+        <img src="/images/ICAC%20Full%20Logo.webp" alt={SITE.name} id="logo-img" class="w-auto" style="transition:height 260ms cubic-bezier(.4,0,.2,1);height:48px;" width="200" height="56" loading="eager" />
       </a>
 
       <!-- Desktop nav -->
@@ -122,8 +122,8 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
           </button>
           <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 focus-within:visible focus-within:opacity-100 absolute right-0 top-full pt-2 w-64 z-50 transition-all">
             <div class="rounded-xl bg-white ring-1 ring-slate-200 shadow-[0_24px_60px_-16px_rgba(15,26,41,0.3)] p-2">
-              <a href="/about-us/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-brand-600 hover:bg-surface">Our Story</a>
-              <a href="/our-team/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-brand-600 hover:bg-surface">Our Team</a>
+              <a href="/about-us/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-brand-600 hover:bg-surface">About Us / Our Story</a>
+              <a href="/about-us/#team" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-brand-600 hover:bg-surface">Meet the Team</a>
               <a href="/reviews/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-brand-600 hover:bg-surface">Reviews</a>
               <a href="/financing/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-brand-600 hover:bg-surface">Financing</a>
               <a href="/blogs/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-brand-600 hover:bg-surface">Blog & HVAC Tips</a>
@@ -183,8 +183,8 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
         <details class="rounded-md bg-surface">
           <summary class="flex items-center justify-between cursor-pointer px-3 py-3 list-none"><span>About Us</span><span class="text-brand-600">+</span></summary>
           <div class="px-3 pb-3 space-y-0.5 text-[14.5px] font-normal">
-            <a href="/about-us/" class="block py-1.5 text-slate-600 hover:text-brand-600">Our Story</a>
-            <a href="/our-team/" class="block py-1.5 text-slate-600 hover:text-brand-600">Our Team</a>
+            <a href="/about-us/" class="block py-1.5 text-slate-600 hover:text-brand-600">About Us / Our Story</a>
+            <a href="/about-us/#team" class="block py-1.5 text-slate-600 hover:text-brand-600">Meet the Team</a>
             <a href="/reviews/" class="block py-1.5 text-slate-600 hover:text-brand-600">Reviews</a>
             <a href="/financing/" class="block py-1.5 text-slate-600 hover:text-brand-600">Financing</a>
             <a href="/blogs/" class="block py-1.5 text-slate-600 hover:text-brand-600">Blog & HVAC Tips</a>
@@ -205,29 +205,41 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
     const trust = document.getElementById('trust-strip');
     const bar = document.getElementById('main-bar');
     const logo = document.getElementById('logo-img');
+    // Hysteresis thresholds — scrolled=true at >= HI, false at <= LO.
+    // The 60px gap prevents flicker at the layout-shift boundary.
+    const HI = 80;
+    const LO = 20;
     let scrolled = false;
-    function onScroll() {
-      const s = window.scrollY > 40;
+    let ticking = false;
+    function apply(s) {
       if (s === scrolled) return;
       scrolled = s;
       header.dataset.scrolled = String(s);
       if (s) {
         trust.style.maxHeight = '0px';
         trust.style.opacity = '0';
-        bar.classList.remove('h-20');
-        bar.classList.add('h-16');
-        logo.classList.remove('h-12');
-        logo.classList.add('h-10');
+        bar.style.height = '64px';
+        logo.style.height = '40px';
       } else {
-        trust.style.maxHeight = '40px';
+        trust.style.maxHeight = '36px';
         trust.style.opacity = '1';
-        bar.classList.remove('h-16');
-        bar.classList.add('h-20');
-        logo.classList.remove('h-10');
-        logo.classList.add('h-12');
+        bar.style.height = '80px';
+        logo.style.height = '48px';
       }
     }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (!scrolled && y >= HI) apply(true);
+        else if (scrolled && y <= LO) apply(false);
+        ticking = false;
+      });
+    }
     window.addEventListener('scroll', onScroll, { passive: true });
+    // Set initial state based on current scroll position (e.g. reloads mid-page)
+    if (window.scrollY >= HI) apply(true);
 
     const openBtn = document.getElementById('mobile-menu-toggle');
     const closeBtn = document.getElementById('mobile-menu-close');
