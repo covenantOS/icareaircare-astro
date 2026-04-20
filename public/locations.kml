@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>I Care Air Care Service Areas</name>
+    <description>HVAC service areas for I Care Air Care in Wesley Chapel, Pasco County, Hillsborough County, and Polk County.</description>
+    <Placemark>
+      <name>I Care Air Care Headquarters</name>
+      <description>27022 Foamflower Blvd, Wesley Chapel, FL 33544</description>
+      <Point><coordinates>-82.3726776,28.2426914,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>Wesley Chapel AC Repair</name>
+      <description>AC repair, HVAC installation, maintenance, duct cleaning, and urgent no-cool scheduling in Wesley Chapel.</description>
+      <Point><coordinates>-82.3726776,28.2426914,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>Land O' Lakes HVAC Services</name>
+      <description>Heating and cooling service for Bexley, Connerton, Lake Padgett, Oakstead, and nearby Land O' Lakes communities.</description>
+      <Point><coordinates>-82.461,28.219,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>Lutz Home Air Conditioning Service</name>
+      <description>AC repair, installation, and maintenance for Lutz homes across Pasco and Hillsborough permitting areas.</description>
+      <Point><coordinates>-82.466,28.150,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>New Tampa Heating and Cooling</name>
+      <description>HVAC service for Tampa Palms, Hunter's Green, K-Bar Ranch, Cory Lake Isles, Cross Creek, and nearby New Tampa neighborhoods.</description>
+      <Point><coordinates>-82.350,28.130,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>Zephyrhills AC Repair</name>
+      <description>Air conditioning repair and HVAC services in Zephyrhills, Silverado, Abbott Park, Link's Landing, and Betmar Acres.</description>
+      <Point><coordinates>-82.181,28.233,0</coordinates></Point>
+    </Placemark>
+  </Document>
+</kml>

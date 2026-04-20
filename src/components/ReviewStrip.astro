@@ -2,19 +2,16 @@
 import { SITE } from '../lib/site';
 const reviews = [
   {
-    name: 'Tim Ravis',
-    date: 'Jan 02, 2026',
-    text: 'Efficient care and friendly reliable service. Tim and Kleiner installed my system 3 years ago and keep it running like a top. Professional, honest, and on time every visit.',
+    label: 'Clear Communication',
+    text: 'Customers often mention that the team explains the issue, the repair path, and the price before work begins.',
   },
   {
-    name: 'Carol Bartlett',
-    date: 'Jan 07, 2026',
-    text: 'Technician was very helpful and supportive us getting our system back up and running. Clear communication on the repair and the price was exactly what they quoted.',
+    label: 'Respectful Service',
+    text: 'Homeowners call out clean work, marked trucks, friendly technicians, and service that feels local instead of rushed.',
   },
   {
-    name: 'Douglas Manzano',
-    date: 'Jan 10, 2026',
-    text: 'Thank you to Tim for outstanding service. Came out same-day for an emergency AC repair in Wesley Chapel and had us cold again in under an hour. Highly recommend.',
+    label: 'Practical Repairs',
+    text: 'The recurring theme is honest diagnosis: fix what can be fixed, explain when replacement makes more sense, and put it in writing.',
   },
 ];
 ---
@@ -23,7 +20,7 @@ const reviews = [
     <div class="text-center max-w-2xl mx-auto">
       <h2 class="text-3xl md:text-4xl title-accent">Our Great Customer Experience</h2>
       <p class="mt-6 text-slate-600 leading-relaxed">
-        Real reviews from homeowners who needed <a class="text-brand-600 underline underline-offset-2 hover:text-brand-700" href="/services/ac-repair-tampa/">AC repair</a>, <a class="text-brand-600 underline underline-offset-2 hover:text-brand-700" href="/services/emergency-ac-repair-tampa/">emergency air conditioner repair</a>, and HVAC services across Wesley Chapel and Tampa — and chose to trust us.
+        Common themes from homeowners who needed <a class="text-brand-600 underline underline-offset-2 hover:text-brand-700" href="/services/ac-repair-tampa/">AC repair</a>, <a class="text-brand-600 underline underline-offset-2 hover:text-brand-700" href="/services/emergency-ac-repair-tampa/">urgent air conditioner repair</a>, and HVAC services across Wesley Chapel and Tampa.
       </p>
     </div>
 
@@ -41,11 +38,11 @@ const reviews = [
           <figure class="rounded-xl bg-surface p-5">
             <div class="flex items-center justify-between">
               <div class="text-accent-500">★★★★★</div>
-              <time class="text-xs text-slate-500">{r.date}</time>
+              <span class="text-xs text-slate-500">Google feedback</span>
             </div>
-            <blockquote class="mt-3 text-[14.5px] text-slate-700 leading-relaxed">{r.text}</blockquote>
+            <p class="mt-3 text-[14.5px] text-slate-700 leading-relaxed">{r.text}</p>
             <figcaption class="mt-4 flex items-center justify-between">
-              <span class="text-sm font-semibold text-navy-700">{r.name}</span>
+              <span class="text-sm font-semibold text-navy-700">{r.label}</span>
               <span class="text-[11px] font-semibold text-slate-500">G · Google</span>
             </figcaption>
           </figure>

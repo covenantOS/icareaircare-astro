@@ -12,7 +12,7 @@ This is the working repo. `main` is the source of truth.
 - **I Care Air Care** — HVAC contractor, Wesley Chapel, FL
 - Owner: **Tim Hawk**
 - License: **CAC1816515** (Florida)
-- Rating: **4.9★** · **700+** Google reviews
+- Rating: **4.9★** · **600+** Google reviews
 - Years in business: **15+**
 - HQ: **27022 Foamflower Blvd, Wesley Chapel, FL 33544**
 - Phone: **(813) 395-2324** (`tel:+18133952324`)

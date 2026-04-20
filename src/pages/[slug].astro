@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import ContactFormSection from '../components/ContactFormSection.astro';
+import Schema from '../components/Schema.astro';
+import { BLOG_POSTS, type BlogPost } from '../lib/blog';
+import { SITE } from '../lib/site';
+
+export function getStaticPaths() {
+  return BLOG_POSTS.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props as { post: BlogPost };
+const url = `${SITE.url}/${post.slug}/`;
+const breadcrumbs = [
+  { name: 'Home', url: `${SITE.url}/` },
+  { name: 'Blog', url: `${SITE.url}/blogs/` },
+  { name: post.title, url },
+];
+const articleSchema = {
+  headline: post.title,
+  description: post.description,
+  image: `${SITE.url}${post.image}`,
+  datePublished: new Date(post.date).toISOString(),
+  dateModified: new Date(post.date).toISOString(),
+  author: { '@type': 'Organization', name: SITE.name },
+  publisher: {
+    '@type': 'Organization',
+    name: SITE.name,
+    logo: { '@type': 'ImageObject', url: `${SITE.url}/images/ICAC%20Full%20Logo.webp` },
+  },
+  mainEntityOfPage: url,
+};
+---
+<BaseLayout title={`${post.title} | I Care Air Care`} description={post.description} breadcrumbs={breadcrumbs}>
+  <Hero
+    eyebrow={`${post.tag} · ${post.location}`}
+    title={post.title}
+    subtitle={post.description}
+    image={post.image}
+    ctaLabel={`Schedule ${post.primaryService.label}`}
+    ctaHref={post.primaryService.href}
+  />
+
+  <section class="py-14 md:py-20 bg-white">
+    <div class="container-site grid lg:grid-cols-12 gap-10 items-start">
+      <article class="lg:col-span-8 prose-icac">
+        <div class="not-prose flex flex-wrap items-center gap-3 text-sm text-slate-500 mb-6">
+          <span class="inline-flex rounded-md bg-brand-50 text-brand-700 text-xs font-semibold px-2.5 py-1">{post.tag}</span>
+          <span>{post.date}</span>
+          <span>•</span>
+          <span>{post.read} read</span>
+        </div>
+
+        <h2>Quick Answer</h2>
+        <p>{post.description}</p>
+
+        <div class="not-prose my-8 rounded-xl bg-surface ring-1 ring-slate-200 p-5">
+          <h3 class="text-lg font-bold text-navy-700">Start here before you book service</h3>
+          <ul class="mt-4 grid gap-3 text-[15px] text-slate-700">
+            {post.checklist.map((item) => (
+              <li class="flex gap-3">
+                <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white text-xs">✓</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <h2>What this usually means in {post.location}</h2>
+        <p>Florida HVAC problems tend to stack together: long runtime, humidity, clogged drains, dusty returns, and outdoor condenser heat all show up at the same time. That is why the best first step is a measured diagnosis instead of guessing from one symptom.</p>
+        <p>If the issue connects to cooling performance, airflow, maintenance, or replacement planning, the service path usually starts with <a href={post.primaryService.href}>{post.primaryService.label}</a>. From there, a technician can separate the simple fixes from the repairs that need parts, gauges, electrical testing, or a written replacement proposal.</p>
+
+        <h2>When to call I Care Air Care</h2>
+        <p>Call when the system is not keeping up, the air feels warm, water is near the air handler, the outdoor unit is not running, the breaker trips repeatedly, or the repair decision is no longer obvious. We will explain the next step, give you the earliest available appointment window, and quote work before it begins.</p>
+
+        <h2>Related local help</h2>
+        <p>These pages connect this guide to the services and local areas homeowners usually need next:</p>
+        <ul>
+          {[post.primaryService, ...post.related].map((link) => (
+            <li><a href={link.href}>{link.label}</a></li>
+          ))}
+        </ul>
+      </article>
+
+      <aside class="lg:col-span-4 space-y-5">
+        <div class="rounded-xl bg-brand-500 text-white p-6 shadow-[var(--shadow-soft)]">
+          <h2 class="text-white text-xl font-bold">Need help with this?</h2>
+          <p class="mt-3 text-blue-50 text-sm leading-relaxed">Talk with the Wesley Chapel team and get the right next step for your home.</p>
+          <a href={SITE.phoneHref} class="mt-5 inline-flex w-full justify-center rounded-md bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-3">{SITE.phone}</a>
+          <a href={SITE.bookUrl} target="_blank" rel="noopener" class="mt-2 inline-flex w-full justify-center rounded-md bg-white/10 border border-white/30 hover:bg-white/20 text-white font-semibold px-4 py-3">Book Online</a>
+        </div>
+        <div class="rounded-xl bg-surface ring-1 ring-slate-200 p-6">
+          <h2 class="text-lg font-bold text-navy-700">Popular next steps</h2>
+          <ul class="mt-3 space-y-2 text-[15px]">
+            {post.related.map((link) => (
+              <li><a class="text-brand-600 hover:text-brand-700 underline underline-offset-2" href={link.href}>{link.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <FinalCTA />
+  <ContactFormSection />
+  <Schema type="Article" data={articleSchema} />
+</BaseLayout>

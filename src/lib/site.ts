@@ -16,12 +16,12 @@ export const SITE = {
     country: 'US',
   },
   geo: { latitude: 28.2426914, longitude: -82.3726776 },
-  hours: '24/7 emergency service • Office: Mon–Fri 8a–6p, Sat 10a–4p',
+  hours: 'Office: Mon-Fri 8a-6p, Sat 10a-4p • Call for urgent no-cool help',
   hoursStructured: [
     { days: 'Mon–Fri', open: '8:00am', close: '6:00pm' },
     { days: 'Sat', open: '10:00am', close: '4:00pm' },
   ],
-  rating: { value: 4.9, count: 700 },
+  rating: { value: 4.9, count: 600 },
   yearsInBusiness: 15,
   owner: 'Tim Hawk',
   socials: {
@@ -32,7 +32,7 @@ export const SITE = {
     { slug: 'pasco-county-ac-repair', name: 'Pasco County' },
     { slug: 'hillsborough-county-hvac-company', name: 'Hillsborough County' },
     { slug: 'polk-county-residential-ac-repair', name: 'Polk County' },
-    { slug: 'land-o-lakes-hvac-services', name: 'Land O\u2019 Lakes' },
+    { slug: 'land-o-lakes-hvac-services', name: "Land O' Lakes" },
     { slug: 'lutz-home-air-conditioning-service', name: 'Lutz' },
     { slug: 'new-tampa-heating-and-cooling', name: 'New Tampa' },
     { slug: 'odessa-emergency-ac-repair', name: 'Odessa' },

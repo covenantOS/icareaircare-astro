@@ -3,14 +3,14 @@ import { SITE } from '../lib/site';
 
 const featuredServices = [
   { slug: 'ac-repair-tampa', name: 'AC Repair', blurb: 'Same-day diagnosis & repair' },
-  { slug: 'emergency-ac-repair-tampa', name: 'Emergency AC Repair', blurb: '24/7 urgent dispatch' },
+  { slug: 'emergency-ac-repair-tampa', name: 'Urgent AC Repair', blurb: 'Priority no-cool scheduling' },
   { slug: 'hvac-installation-tampa', name: 'HVAC Installation', blurb: 'High-efficiency new systems' },
   { slug: 'ac-maintenance-tampa', name: 'AC Maintenance', blurb: '21-point tune-ups' },
 ];
 const featuredAreas = [
   { slug: 'wesley-chapel-ac-repair', name: 'Wesley Chapel' },
   { slug: 'new-tampa-heating-and-cooling', name: 'New Tampa' },
-  { slug: 'land-o-lakes-hvac-services', name: 'Land O\u2019 Lakes' },
+  { slug: 'land-o-lakes-hvac-services', name: "Land O' Lakes" },
   { slug: 'pasco-county-ac-repair', name: 'Pasco County' },
 ];
 const moreServices = SITE.services.filter(s => !featuredServices.find(f => f.slug === s.slug));
@@ -31,7 +31,7 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
         </span>
         <span class="hidden lg:inline-flex items-center gap-1.5 shrink-0">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400"><path d="M11.5 1a8.5 8.5 0 108.5 8.5A8.51 8.51 0 0011.5 1zm0 15A6.5 6.5 0 1118 9.5 6.5 6.5 0 0111.5 16zm3-6.5a3 3 0 11-3-3 3 3 0 013 3z"/></svg>
-          24/7 Emergency Service
+          Urgent No-Cool Help
         </span>
       </div>
       <a href={SITE.phoneHref} class="font-semibold hover:text-accent-200 shrink-0">{SITE.phone}</a>

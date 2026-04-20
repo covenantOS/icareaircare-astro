@@ -4,18 +4,7 @@ import Hero from '../components/Hero.astro';
 import BlogStrip from '../components/BlogStrip.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
-
-const allPosts = [
-  { href: '/air-conditioning-not-cooling-in-tampa-fl-heres-how-to-fix-it-fast/', title: 'AC Not Cooling in Tampa? How to Fix It Fast', tag: 'AC Repair', date: 'Apr 12', read: '11 min' },
-  { href: '/ac-blowing-warm-air-in-tampa-heres-how-to-fix-it-fast/', title: 'AC Blowing Warm Air in Tampa? 8 Common Causes', tag: 'AC Repair', date: 'Apr 10', read: '8 min' },
-  { href: '/new-construction-hvac-guide-for-epperson-mirada-homeowners/', title: 'New Construction HVAC Guide for Epperson & Mirada', tag: 'Installation', date: 'Mar 28', read: '8 min' },
-  { href: '/ac-not-cooling-wesley-chapel/', title: 'AC Not Cooling in Wesley Chapel? Troubleshooting', tag: 'AC Repair', date: 'Mar 23', read: '12 min' },
-  { href: '/air-duct-cleaning-wesley-chapel/', title: 'Air Duct Cleaning in Wesley Chapel — What You Need', tag: 'IAQ', date: 'Mar 20', read: '10 min' },
-  { href: '/ac-maintenance-wesley-chapel/', title: 'AC Maintenance in Wesley Chapel', tag: 'Maintenance', date: 'Mar 15', read: '9 min' },
-  { href: '/air-conditioning-installation-wesley-chapel/', title: 'Air Conditioning Installation in Wesley Chapel', tag: 'Installation', date: 'Mar 10', read: '11 min' },
-  { href: '/emergency-ac-repair-wesley-chapel/', title: 'Emergency AC Repair in Wesley Chapel', tag: 'Emergency', date: 'Mar 5', read: '7 min' },
-  { href: '/hvac-installation-in-tampa-bay-complete-guide-for-homeowners/', title: 'HVAC Installation in Tampa Bay — Complete Guide', tag: 'Installation', date: 'Feb 28', read: '14 min' },
-];
+import { BLOG_POSTS as allPosts } from '../lib/blog';
 ---
 <BaseLayout
   title="HVAC Blog | I Care Air Care Wesley Chapel"
@@ -32,9 +21,10 @@ const allPosts = [
     <div class="container-site">
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {allPosts.map(p => (
-          <a href={p.href} class="group block rounded-2xl bg-white ring-1 ring-slate-100 shadow-[var(--shadow-card)] p-6 hover:shadow-[var(--shadow-soft)] hover:-translate-y-0.5 transition">
+          <a href={`/${p.slug}/`} class="group block rounded-2xl bg-white ring-1 ring-slate-100 shadow-[var(--shadow-card)] p-6 hover:shadow-[var(--shadow-soft)] hover:-translate-y-0.5 transition">
             <div class="inline-flex rounded-md bg-brand-50 text-brand-700 text-xs font-semibold px-2.5 py-1">{p.tag}</div>
             <h3 class="mt-3 text-lg font-bold text-navy-700 group-hover:text-brand-600 leading-snug">{p.title}</h3>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">{p.description}</p>
             <div class="mt-3 text-xs text-slate-500 flex items-center gap-3">
               <span>{p.date}</span>
               <span>•</span>
