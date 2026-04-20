@@ -21,7 +21,7 @@ export const SITE = {
     { days: 'Sat', open: '10:00am', close: '4:00pm' },
   ],
   rating: { value: 4.9, count: 700 },
-  yearsInBusiness: 16,
+  yearsInBusiness: 15,
   owner: 'Tim Hawk',
   socials: {
     google: 'https://maps.app.goo.gl/2iCjuu1yf3GAbvSS8',

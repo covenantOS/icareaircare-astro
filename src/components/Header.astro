@@ -2,25 +2,31 @@
 import { SITE } from '../lib/site';
 ---
 <header class="relative z-40">
-  <!-- Top utility bar -->
-  <div class="bg-white border-b border-slate-100">
-    <div class="container-site flex items-center justify-between h-16 md:h-20 gap-4">
+  <!-- Top utility bar with faint polygonal texture -->
+  <div class="relative bg-white border-b border-slate-100 overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none opacity-[0.35]"
+         style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='160' viewBox='0 0 320 160'%3E%3Cg fill='none' stroke='%23c9dde4' stroke-width='.6'%3E%3Cpolygon points='0,0 80,30 40,90 0,80'/%3E%3Cpolygon points='80,30 160,0 180,60 120,80'/%3E%3Cpolygon points='160,0 240,20 240,80 180,60'/%3E%3Cpolygon points='240,20 320,0 320,90 240,80'/%3E%3Cpolygon points='0,80 40,90 20,160 0,160'/%3E%3Cpolygon points='40,90 120,80 140,140 60,160'/%3E%3Cpolygon points='120,80 180,60 220,130 140,140'/%3E%3Cpolygon points='180,60 240,80 260,140 220,130'/%3E%3Cpolygon points='240,80 320,90 320,160 260,140'/%3E%3C/g%3E%3C/svg%3E&quot;); background-size: 320px 160px;"></div>
+    <div class="container-site relative flex items-center justify-between h-20 md:h-24 gap-4">
       <a href="/" class="flex items-center" aria-label={`${SITE.name} home`}>
-        <img src="/images/ICAC%20Full%20Logo.webp" alt={SITE.name} class="h-10 md:h-12 w-auto" width="200" height="48" loading="eager" />
+        <img src="/images/ICAC%20Full%20Logo.webp" alt={SITE.name} class="h-14 md:h-16 w-auto" width="240" height="64" loading="eager" />
       </a>
       <a href="/financing/" class="hidden md:inline-flex items-center gap-3 group">
-        <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-accent-500 text-white">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 10.9 13 11.5 13 13h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26A2 2 0 1010 7H8a4 4 0 117.07 2.25z"/></svg>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent-500 text-white shadow-sm">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 10.9 13 11.5 13 13h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26A2 2 0 1010 7H8a4 4 0 117.07 2.25z"/></svg>
         </span>
-        <span class="font-semibold text-navy-700 group-hover:text-accent-600">CHECK OUR NEW DEALS!</span>
+        <span class="font-bold text-navy-700 group-hover:text-accent-600 uppercase tracking-wide text-[15px]">CHECK OUR NEW DEALS!</span>
       </a>
       <div class="flex items-center gap-3">
-        <div class="hidden md:flex flex-col items-end">
-          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-navy-700">Call for a Free Quote</span>
-          <a href={SITE.phoneHref} class="text-accent-500 font-bold text-xl md:text-2xl hover:text-accent-600 flex items-center gap-2">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-accent-500"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
-            {SITE.phone}
-          </a>
+        <div class="hidden md:flex items-center gap-3">
+          <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent-500 text-white shadow-sm">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+          </span>
+          <div class="flex flex-col">
+            <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-navy-700">Call for a Free Quote</span>
+            <a href={SITE.phoneHref} class="text-accent-500 font-bold text-xl md:text-2xl hover:text-accent-600 leading-none">
+              {SITE.phone}
+            </a>
+          </div>
         </div>
         <a href={SITE.phoneHref} class="md:hidden inline-flex items-center rounded-md bg-accent-500 hover:bg-accent-600 text-white text-sm font-semibold px-3.5 py-2">
           Call Now
@@ -29,13 +35,13 @@ import { SITE } from '../lib/site';
     </div>
   </div>
 
-  <!-- Primary nav bar (teal) -->
-  <div class="bg-brand-500 text-white shadow-sm">
-    <div class="container-site flex items-center justify-between h-14">
+  <!-- Primary nav bar (teal) with wave bottom -->
+  <div class="relative bg-brand-500 text-white">
+    <div class="container-site flex items-center justify-between h-16">
       <a href="/" class="flex items-center" aria-label={`${SITE.name} home`}>
-        <img src="/images/ICAC%20Logo.png" alt="" aria-hidden="true" class="h-9 w-auto" width="40" height="40" />
+        <img src="/images/ICAC%20Full%20Logo.webp" alt="" aria-hidden="true" class="h-11 w-auto brightness-[1.15]" width="180" height="44" />
       </a>
-      <nav class="hidden lg:flex items-center gap-7 text-[15px] font-medium" aria-label="Primary">
+      <nav class="hidden lg:flex items-center gap-7 text-[15px] font-semibold" aria-label="Primary">
         <a href="/services/" class="hover:text-accent-100">Services</a>
         <a href="/service-areas/" class="hover:text-accent-100">Areas Served</a>
         <a href="/blogs/" class="hover:text-accent-100">Blogs</a>
@@ -46,17 +52,16 @@ import { SITE } from '../lib/site';
       </nav>
       <a href={SITE.phoneHref} class="hidden md:inline-flex items-center gap-3 font-semibold">
         <span class="text-sm">Call Us Now →</span>
-        <span class="inline-flex items-center gap-2 bg-white/15 rounded-md px-3 py-1.5 hover:bg-white/25">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+        <span class="inline-flex items-center gap-2 rounded-md px-3 py-1.5 hover:bg-white/10 text-lg">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
           {SITE.phone}
         </span>
       </a>
-      <!-- Mobile menu toggle -->
       <details class="lg:hidden relative">
         <summary class="list-none cursor-pointer p-2 -mr-2" aria-label="Open menu">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </summary>
-        <div class="absolute right-0 top-full mt-2 w-64 rounded-lg bg-white text-navy-700 shadow-lg ring-1 ring-slate-200 p-2">
+        <div class="absolute right-0 top-full mt-2 w-64 rounded-lg bg-white text-navy-700 shadow-lg ring-1 ring-slate-200 p-2 z-50">
           <a href="/services/" class="block rounded-md px-3 py-2 hover:bg-surface">Services</a>
           <a href="/service-areas/" class="block rounded-md px-3 py-2 hover:bg-surface">Areas Served</a>
           <a href="/blogs/" class="block rounded-md px-3 py-2 hover:bg-surface">Blogs</a>
@@ -67,5 +72,7 @@ import { SITE } from '../lib/site';
         </div>
       </details>
     </div>
+    <!-- Wave edge into hero -->
+    <svg aria-hidden="true" viewBox="0 0 1440 24" preserveAspectRatio="none" class="block w-full h-4 text-brand-500"><path fill="currentColor" d="M0 0 C240 24 480 0 720 12 C960 24 1200 0 1440 12 L1440 24 L0 24 Z"/></svg>
   </div>
 </header>
