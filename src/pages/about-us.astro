@@ -5,50 +5,259 @@ import WhyChooseUs from '../components/WhyChooseUs.astro';
 import ReviewStrip from '../components/ReviewStrip.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
+import Schema from '../components/Schema.astro';
+import { SITE } from '../lib/site';
+
+const team = [
+  {
+    name: 'Tim Hawk',
+    title: 'Owner & Master HVAC Technician',
+    img: '/images/Tim%20Hawk%20(ICAC%20Owner).webp',
+    bio: 'Tim founded I Care Air Care in 2010 after more than three decades in the Tampa Bay HVAC trade. Florida-licensed master contractor (CAC1816515), EPA Universal certified, and the voice most Wesley Chapel homeowners hear when they call (813) 395-2324.',
+    creds: ['Florida Master HVAC License CAC1816515', 'EPA Section 608 Universal', 'A2L / R-454B certified', '30+ years in the trade'],
+  },
+  {
+    name: 'The Install Crew',
+    title: 'Licensed HVAC Installers',
+    img: '/images/ICAC%20Team%282%29.webp',
+    bio: 'Factory-trained on Carrier, Trane, Lennox, Rheem, Goodman, American Standard, Bryant and Mitsubishi. Every install is Manual-J sized, permitted with Pasco / Hillsborough / Polk County, and photo-documented start to finish.',
+    creds: ['Factory-trained (8 brands)', 'A2L / R-454B certified', 'Manual-J load calculations', 'County-permitted installs'],
+  },
+  {
+    name: 'The Service Team',
+    title: 'Repair & Maintenance Technicians',
+    img: '/images/ICAC%20Team%283%29.webp',
+    bio: 'EPA 608 certified, background-checked, drug-tested and uniformed. The crew that shows up in the marked white-and-blue truck for every repair, tune-up and emergency call — any time of day.',
+    creds: ['EPA 608 certified', 'Background-checked', 'Drug-tested quarterly', '24/7 on-call rotation'],
+  },
+  {
+    name: 'Office & Dispatch',
+    title: 'Customer Experience',
+    img: '/images/ICAC%20Team%284%29.webp',
+    bio: 'The voices behind the phone. They confirm your appointment, text you the technician\u2019s name and photo before arrival, and follow up after the visit so nothing falls through the cracks.',
+    creds: ['Live-answer dispatch', 'Technician ETA texting', 'Same-day scheduling', 'Spanish & English'],
+  },
+];
+
+const milestones = [
+  { year: '2010', title: 'Founded in Wesley Chapel', body: 'Tim parks the first van at Foamflower Blvd. with a simple pledge — no commission-driven upsells, ever.' },
+  { year: '2014', title: '100th five-star review', body: 'Service area grows from Wesley Chapel to all of Pasco County. First full-time install crew joins.' },
+  { year: '2018', title: 'Hillsborough + Polk expansion', body: 'Licensed and insured across three counties. 24/7 emergency rotation launches.' },
+  { year: '2022', title: '500+ reviews · 4.9★ sustained', body: 'Named one of the top-reviewed HVAC companies in the Tampa Bay region.' },
+  { year: '2025', title: 'A2L / R-454B ready', body: 'Entire install crew certified on the new refrigerant required for all 2026 equipment — ahead of the federal deadline.' },
+  { year: '2026', title: '700+ reviews · still family-run', body: 'Same owner, same Wesley Chapel address, same promise. Growing only as fast as we can hire people we\u2019d send to our own grandmothers\u2019 homes.' },
+];
+
+const values = [
+  { icon: 'honesty', title: 'Honesty beats upselling', body: 'We\u2019ll tell you when a $20 capacitor is all you need — even when a full replacement would pay our mortgage that month.' },
+  { icon: 'quote', title: 'Flat-rate, written quotes', body: 'You see the number before work starts. Always. No diagnostic-fee bait and switch.' },
+  { icon: 'shield', title: 'Licensed, trained, background-checked', body: 'Florida CAC1816515. Every technician is someone we\u2019d send to our own family\u2019s home.' },
+  { icon: 'warranty', title: 'Warranty-backed work', body: '1-year parts-and-labor warranty on every repair — stacked on top of the manufacturer\u2019s coverage.' },
+  { icon: 'phone', title: 'A human answers the phone', body: 'Call (813) 395-2324 and you\u2019ll reach dispatch — often Tim himself. No call-center, no phone tree.' },
+  { icon: 'heart', title: 'Built for our neighbors', body: 'Based at 27022 Foamflower Blvd. Wesley Chapel is home — you\u2019re not a ticket number, you\u2019re down the street.' },
+];
+
+const icon = (k: string) => ({
+  honesty:  '<path d="M12 2L4 6v6c0 5 3.4 9.6 8 10 4.6-.4 8-5 8-10V6l-8-4zm-1 14l-4-4 1.4-1.4L11 13.2l5.6-5.6L18 9l-7 7z"/>',
+  quote:    '<path d="M3 5h18v14H3z" fill="none"/><path d="M4 6h16v12H4zM6 9h12v1.5H6zM6 12h12v1.5H6zM6 15h8v1.5H6z"/>',
+  shield:   '<path d="M12 2l8 3v6c0 5-3.4 9.6-8 11-4.6-1.4-8-6-8-11V5l8-3z"/>',
+  warranty: '<path d="M12 2l2.4 4.8L20 8l-4 3.9.9 5.5L12 14.8 7.1 17.4 8 11.9 4 8l5.6-1.2z"/>',
+  phone:    '<path d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2a1 1 0 011.1-.2 11 11 0 003.6.6 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11 11 0 00.6 3.6 1 1 0 01-.2 1.1l-2.3 2.1z"/>',
+  heart:    '<path d="M12 21s-7-4.3-9.2-9.2C1.1 8.2 3.2 5 6.5 5c1.8 0 3.5.9 4.5 2.3C12 5.9 13.7 5 15.5 5 18.8 5 20.9 8.2 19.2 11.8 17 16.7 12 21 12 21z"/>',
+}[k] || '');
 ---
 <BaseLayout
-  title="About I Care Air Care | Wesley Chapel HVAC Family Business"
-  description="Meet the family-run HVAC team behind Wesley Chapel's most-reviewed AC contractor. 15+ years, 700+ reviews, Florida CAC1816515. Learn our story."
+  title="About I Care Air Care | Wesley Chapel's Family-Run HVAC Contractor"
+  description="Meet the licensed, family-run team behind Wesley Chapel's most-reviewed HVAC contractor. 15+ years, 700+ five-star reviews, Florida CAC1816515. Our story, our team, our promise."
   breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'About Us',url:'https://www.icareaircare.com/about-us/'}]}
 >
   <Hero
-    eyebrow="Our Story"
-    title="About I Care Air Care"
-    subtitle="A family-run Wesley Chapel HVAC contractor building a five-star reputation one neighbor at a time — since 2010."
-    image="/images/ICAC%20Team%281%29.webp"
+    eyebrow="Our Story · Our Team"
+    title="Family-run HVAC, built on Foamflower Blvd."
+    subtitle={`Fifteen years, 700+ five-star reviews, and a single promise: treat every Wesley Chapel neighbor the way we'd want our own family treated.`}
+    image="/images/ICAC%20Team.webp"
+    imageAlt="I Care Air Care family team and service vans in Wesley Chapel, FL"
     ctaLabel="Meet The Team"
-    ctaHref="/our-team/"
+    ctaHref="#team"
   />
-  <section class="py-16">
-    <div class="container-site max-w-3xl prose-icac">
-      <h2>Why we started I Care Air Care</h2>
-      <p>Tim Hawk has been turning wrenches on HVAC systems across Tampa Bay for over three decades. After years watching big-brand contractors push commission-driven sales and leave homeowners with bloated bills, he opened I Care Air Care in 2010 with a simple promise: <strong>treat every customer the way we'd want our own family treated</strong>.</p>
-      <p>Fifteen years and 700+ five-star Google reviews later, we've grown from a single truck in a Wesley Chapel driveway to a fully licensed (Florida CAC1816515), bonded and insured HVAC company serving Pasco, Hillsborough and Polk counties — without ever losing the family-run feel that started it.</p>
 
-      <h2>What we believe</h2>
-      <ul>
-        <li><strong>Honesty beats upselling.</strong> We'll tell you when a $20 capacitor is all you need, even when a replacement system would pay our mortgage that month.</li>
-        <li><strong>Flat-rate, written quotes.</strong> You see the number before the work starts. Every time.</li>
-        <li><strong>Licensed, trained, background-checked technicians.</strong> The person in your home will be someone we'd send to our own grandmother's house.</li>
-        <li><strong>Warranty-backed work.</strong> Every repair carries a 1-year parts-and-labor warranty on top of the manufacturer's coverage.</li>
-        <li><strong>Answer the phone.</strong> When you call (813) 395-2324, a human answers — often Tim himself.</li>
-      </ul>
-
-      <h2>Our service area</h2>
-      <p>We're headquartered at <strong>27022 Foamflower Blvd in Wesley Chapel</strong>, which means Wesley Chapel, Land O' Lakes, New Tampa, Lutz and Odessa homeowners get the fastest response times in the area. We also service all of Pasco, Hillsborough, and Polk counties — including Tampa, Carrollwood, Brandon, Zephyrhills, Dade City, Lakeland, Plant City and Davenport.</p>
-
-      <h2>Licensing &amp; credentials</h2>
-      <ul>
-        <li>Florida HVAC contractor license: <strong>CAC1816515</strong></li>
-        <li>Fully bonded and insured</li>
-        <li>EPA 608 Universal certified technicians</li>
-        <li>A2L / R-454B certified installers (required for 2026 equipment)</li>
-        <li>Factory-trained on Carrier, Trane, Lennox, Rheem, Goodman, American Standard, Bryant, and Mitsubishi</li>
-      </ul>
+  <!-- Intro band -->
+  <section class="py-16 md:py-20 bg-white">
+    <div class="container-site grid lg:grid-cols-12 gap-10 items-start">
+      <div class="lg:col-span-7 prose-icac">
+        <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Our Story</span>
+        <h2 class="mt-3">Why we started I Care Air Care</h2>
+        <p>Tim Hawk had been turning wrenches on Tampa Bay HVAC systems for more than three decades before he opened I Care Air Care in <strong>2010</strong>. The last straw was watching one too many big-brand contractors push commission-driven sales on elderly homeowners who just needed a $40 capacitor. He walked out, parked his own truck in a Wesley Chapel driveway, and wrote down a single pledge: <strong>treat every customer the way you\u2019d want your own family treated.</strong></p>
+        <p>Fifteen years later, that pledge still runs the company. We\u2019ve grown from one truck in a Wesley Chapel garage to a fully-licensed (Florida <strong>CAC1816515</strong>), bonded and insured HVAC contractor with <strong>700+ verified five-star Google reviews</strong> and a service radius that covers Pasco, Hillsborough and Polk counties — but we\u2019ve kept the family feel, the Foamflower Blvd. headquarters, and the live-answer phone line.</p>
+        <p>We\u2019re not trying to be the biggest HVAC company in Tampa Bay. We\u2019re trying to be the one your neighbors actually recommend — by name, at the mailbox, unprompted.</p>
+      </div>
+      <aside class="lg:col-span-5">
+        <div class="rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 text-white p-6 md:p-7 shadow-[var(--shadow-soft)]">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-white/15 ring-1 ring-white/30 flex items-center justify-center">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.4L12 16.9l-6.3 4.3L8 13.8 2 9.4h7.6z"/></svg>
+            </div>
+            <div>
+              <div class="text-[11px] uppercase tracking-[0.16em] text-blue-100">Verified on Google</div>
+              <div class="text-xl font-bold">4.9 / 5 · {SITE.rating.count}+ reviews</div>
+            </div>
+          </div>
+          <dl class="mt-6 grid grid-cols-2 gap-4 text-sm">
+            <div><dt class="text-blue-100 uppercase tracking-wider text-[11px]">Years in business</dt><dd class="text-2xl font-bold mt-1">15+</dd></div>
+            <div><dt class="text-blue-100 uppercase tracking-wider text-[11px]">FL license</dt><dd class="text-base font-bold mt-1">CAC1816515</dd></div>
+            <div><dt class="text-blue-100 uppercase tracking-wider text-[11px]">Counties served</dt><dd class="text-2xl font-bold mt-1">3</dd></div>
+            <div><dt class="text-blue-100 uppercase tracking-wider text-[11px]">Repair warranty</dt><dd class="text-base font-bold mt-1">1 year parts + labor</dd></div>
+          </dl>
+          <div class="mt-6 pt-6 border-t border-white/20 flex items-center gap-3">
+            <img src="/images/Tim%20Hawk%20(ICAC%20Owner).webp" alt="Tim Hawk, Owner of I Care Air Care" class="w-14 h-14 rounded-full ring-2 ring-white/40 object-cover" width="56" height="56" loading="lazy" />
+            <div>
+              <div class="font-bold">Tim Hawk — Owner</div>
+              <div class="text-blue-100 text-sm">\u201CWhen you call, you\u2019re calling my team. Often me.\u201D</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 rounded-xl bg-surface ring-1 ring-slate-200 p-5 text-sm">
+          <div class="flex items-start gap-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-brand-600 mt-0.5 shrink-0"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 10a3 3 0 110-6 3 3 0 010 6z"/></svg>
+            <div>
+              <div class="font-bold text-navy-700">Headquartered in Wesley Chapel</div>
+              <div class="text-slate-600 mt-1">27022 Foamflower Blvd, Wesley Chapel, FL 33544</div>
+              <a href="https://maps.app.goo.gl/2iCjuu1yf3GAbvSS8" target="_blank" rel="noopener" class="mt-2 inline-flex items-center gap-1 text-brand-600 font-semibold">Get directions →</a>
+            </div>
+          </div>
+        </div>
+      </aside>
     </div>
   </section>
+
+  <!-- Values -->
+  <section class="py-16 md:py-20 bg-surface">
+    <div class="container-site">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center rounded-full bg-white text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] ring-1 ring-slate-200">What we believe</span>
+        <h2 class="mt-3 text-3xl md:text-4xl">The six promises every technician makes</h2>
+        <p class="mt-3 text-slate-600 text-[17px]">Print these on the back of our business cards — because every customer deserves to hold us to them.</p>
+      </div>
+      <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {values.map(v => (
+          <div class="rounded-2xl bg-white ring-1 ring-slate-200 p-6 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-soft)] transition">
+            <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" set:html={icon(v.icon)} />
+            </div>
+            <h3 class="mt-4 text-lg font-bold text-navy-700">{v.title}</h3>
+            <p class="mt-2 text-slate-600 text-[15px] leading-relaxed">{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="py-16 md:py-20 bg-white">
+    <div class="container-site">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center rounded-full bg-accent-50 text-accent-600 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Our journey</span>
+        <h2 class="mt-3 text-3xl md:text-4xl">From one Wesley Chapel driveway to three counties</h2>
+        <p class="mt-3 text-slate-600 text-[17px]">Fifteen years. Same owner. Same address. Same pledge.</p>
+      </div>
+      <div class="mt-12 relative">
+        <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-500 via-brand-400 to-accent-400"></div>
+        <ol class="space-y-10">
+          {milestones.map((m, i) => (
+            <li class={`relative md:grid md:grid-cols-2 md:gap-10 ${i % 2 === 0 ? '' : 'md:[&>div:first-child]:order-2'}`}>
+              <div class="pl-12 md:pl-0 md:pr-10 md:text-right">
+                <div class="hidden md:inline-flex absolute left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-white ring-4 ring-brand-500 text-brand-600 font-bold items-center justify-center text-xs">{m.year.slice(-2)}</div>
+                <div class="md:hidden absolute left-0 top-1 w-9 h-9 rounded-full bg-white ring-4 ring-brand-500 text-brand-600 font-bold flex items-center justify-center text-xs">{m.year.slice(-2)}</div>
+                <div class="text-brand-600 font-bold tracking-wider text-sm">{m.year}</div>
+                <h3 class="mt-1 text-xl font-bold text-navy-700">{m.title}</h3>
+                <p class="mt-2 text-slate-600 text-[15px] leading-relaxed">{m.body}</p>
+              </div>
+              <div></div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team section -->
+  <section id="team" class="py-16 md:py-20 bg-gradient-to-b from-surface to-white scroll-mt-24">
+    <div class="container-site">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Our Team</span>
+        <h2 class="mt-3 text-3xl md:text-4xl">The people behind your service call</h2>
+        <p class="mt-3 text-slate-600 text-[17px]">Licensed. Background-checked. Uniformed. Friendly. Every technician on our team is someone we\u2019d send to our own grandmother\u2019s house.</p>
+      </div>
+      <div class="mt-12 grid md:grid-cols-2 gap-6 lg:gap-8">
+        {team.map(m => (
+          <div class="group rounded-2xl bg-white ring-1 ring-slate-200 shadow-[var(--shadow-card)] overflow-hidden hover:shadow-[var(--shadow-soft)] transition">
+            <div class="relative aspect-[5/3] overflow-hidden bg-slate-100">
+              <img src={m.img} alt={`${m.name} — ${m.title} at I Care Air Care`} class="w-full h-full object-cover group-hover:scale-[1.02] transition duration-500" width="800" height="480" loading="lazy" decoding="async" />
+              <div class="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-navy-900/10 to-transparent"></div>
+              <div class="absolute bottom-4 left-5 right-5 text-white">
+                <div class="text-[11px] uppercase tracking-[0.14em] text-accent-300">{m.title}</div>
+                <div class="text-2xl font-bold mt-0.5">{m.name}</div>
+              </div>
+            </div>
+            <div class="p-6">
+              <p class="text-slate-600 leading-relaxed text-[15px]">{m.bio}</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                {m.creds.map(c => (
+                  <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-xs font-semibold">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+                    {c}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Credentials strip -->
+      <div class="mt-12 rounded-2xl bg-navy-700 text-white p-6 md:p-8 shadow-[var(--shadow-soft)]">
+        <div class="grid md:grid-cols-4 gap-6 items-center">
+          <div class="md:col-span-1">
+            <div class="text-[11px] uppercase tracking-[0.14em] text-blue-200">Credentials</div>
+            <h3 class="mt-1 text-white text-xl font-bold">Fully credentialed across every major brand & refrigerant</h3>
+          </div>
+          <ul class="md:col-span-3 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+            <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Florida HVAC License CAC1816515</li>
+            <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Fully bonded and insured</li>
+            <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> EPA 608 Universal certified</li>
+            <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> A2L / R-454B installer certified (2026-ready)</li>
+            <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Factory-trained: Carrier, Trane, Lennox, Rheem</li>
+            <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Factory-trained: Goodman, American Standard, Bryant, Mitsubishi</li>
+            <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Pasco / Hillsborough / Polk county permits</li>
+            <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Drug-tested, background-checked field staff</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service area narrative -->
+  <section class="py-16 md:py-20 bg-white">
+    <div class="container-site grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-7 prose-icac">
+        <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Service area</span>
+        <h2 class="mt-3">Where we go on a normal Tuesday</h2>
+        <p>Our trucks roll out of Wesley Chapel every morning toward every corner of Tampa Bay. Because we\u2019re based at 27022 Foamflower Blvd, the closest communities — <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>, <a href="/service-areas/land-o-lakes-hvac-services/">Land O\u2019 Lakes</a>, <a href="/service-areas/lutz-home-air-conditioning-service/">Lutz</a>, <a href="/service-areas/new-tampa-heating-and-cooling/">New Tampa</a>, <a href="/service-areas/odessa-emergency-ac-repair/">Odessa</a> — get our fastest response times, often under an hour.</p>
+        <p>We also regularly service all of <a href="/service-areas/pasco-county-ac-repair/">Pasco County</a> (including <a href="/service-areas/air-conditioning-repair-zephyrhills-fl-i-care-air-care/">Zephyrhills</a> and Dade City), <a href="/service-areas/hillsborough-county-hvac-company/">Hillsborough County</a> (Tampa, Carrollwood, Brandon, Plant City), and <a href="/service-areas/polk-county-residential-ac-repair/">Polk County</a> (Lakeland, Davenport).</p>
+        <p>Not sure if you\u2019re in range? Call <a href={SITE.phoneHref}>{SITE.phone}</a> and ask for Tim. If we can\u2019t get there, we\u2019ll tell you who can.</p>
+      </div>
+      <div class="lg:col-span-5">
+        <div class="rounded-2xl overflow-hidden ring-1 ring-slate-200 shadow-[var(--shadow-soft)] aspect-[4/3] bg-surface">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d224988!2d-82.37!3d28.24!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zSSBDYXJlIEFpciBDYXJl!5e0!3m2!1sen!2sus!4v1713600000000" width="100%" height="100%" style="border:0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="I Care Air Care service area map"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <WhyChooseUs />
   <ReviewStrip />
   <FinalCTA />
   <ContactFormSection />
+
+  <Schema type="LocalBusiness" />
 </BaseLayout>
