@@ -36,6 +36,7 @@ const icons: Record<string, string> = {
         <a href={`/services/${c.slug}/`} class="group relative block overflow-hidden rounded-xl aspect-[4/5] shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-soft)] transition">
           <img src={c.img} alt={c.name} class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" width="400" height="500" />
           <div class="absolute inset-0 bg-gradient-to-t from-navy-800/85 via-navy-800/35 to-navy-800/10"></div>
+          <div class="absolute inset-0 bg-navy-900/0 group-hover:bg-navy-900/30 transition-colors duration-500"></div>
           <div class="absolute top-3 left-3 inline-flex items-center justify-center w-10 h-10 rounded-md bg-brand-500/90 text-white">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d={icons[c.slug]} /></svg>
           </div>

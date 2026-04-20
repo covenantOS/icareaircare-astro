@@ -17,39 +17,54 @@ const moreServices = SITE.services.filter(s => !featuredServices.find(f => f.slu
 const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug === a.slug));
 ---
 <header id="site-header" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm transition-[box-shadow,background-color] duration-200" data-scrolled="false">
-  <!-- Slim top trust strip (hides on scroll) -->
-  <div id="trust-strip" class="bg-brand-700 text-white text-[12.5px] leading-none overflow-hidden will-change-[max-height,opacity]" style="transition:max-height 320ms cubic-bezier(.4,0,.2,1),opacity 220ms ease-out;max-height:36px;opacity:1;">
-    <div class="container-site h-9 flex items-center justify-between gap-4">
-      <div class="flex items-center gap-5 min-w-0">
-        <span class="inline-flex items-center gap-1.5 shrink-0">
+
+  <!-- Top trust strip (hides on scroll) -->
+  <div id="trust-strip" class="bg-navy-800 text-white text-[12px] leading-none overflow-hidden will-change-[max-height,opacity]" style="transition:max-height 320ms cubic-bezier(.4,0,.2,1),opacity 220ms ease-out;max-height:36px;opacity:1;">
+    <div class="container-site h-9 flex items-center justify-between gap-3">
+      <!-- Left: address → phone → reviews -->
+      <div class="flex items-center gap-4 min-w-0">
+        <span class="hidden md:inline-flex items-center gap-1.5 shrink-0 text-slate-200">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400 shrink-0" aria-hidden="true"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 10a3 3 0 110-6 3 3 0 010 6z"/></svg>
+          {SITE.address.street}, {SITE.address.city}, {SITE.address.region}
+        </span>
+        <a href={SITE.phoneHref} class="inline-flex items-center gap-1.5 shrink-0 text-white font-semibold hover:text-accent-200 transition">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400 shrink-0" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+          {SITE.phone}
+        </a>
+        <span class="hidden sm:inline-flex items-center gap-1.5 shrink-0 text-slate-200">
           <span class="text-accent-400">★★★★★</span>
-          <span class="font-semibold">4.9 · {SITE.rating.count}+ Google Reviews</span>
-        </span>
-        <span class="hidden md:inline-flex items-center gap-1.5 shrink-0">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
-          Licensed & Insured · CAC1816515
-        </span>
-        <span class="hidden lg:inline-flex items-center gap-1.5 shrink-0">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400"><path d="M11.5 1a8.5 8.5 0 108.5 8.5A8.51 8.51 0 0011.5 1zm0 15A6.5 6.5 0 1118 9.5 6.5 6.5 0 0111.5 16zm3-6.5a3 3 0 11-3-3 3 3 0 013 3z"/></svg>
-          Urgent No-Cool Help
+          {SITE.rating.count}+ 5-Star Reviews
         </span>
       </div>
-      <a href={SITE.phoneHref} class="font-semibold hover:text-accent-200 shrink-0">{SITE.phone}</a>
+      <!-- Right: license + emergency service -->
+      <div class="hidden lg:flex items-center gap-4 text-slate-300 shrink-0 text-[11.5px]">
+        <span class="inline-flex items-center gap-1.5">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400" aria-hidden="true"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+          Licensed {SITE.license}
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+          24/7 Emergency Service
+        </span>
+      </div>
     </div>
   </div>
 
   <!-- Main bar -->
   <div class="relative">
     <div id="main-bar" class="container-site flex items-center justify-between gap-6" style="transition:height 260ms cubic-bezier(.4,0,.2,1);height:80px;">
+
+      <!-- Logo -->
       <a href="/" class="flex items-center shrink-0" aria-label={`${SITE.name} home`}>
-        <img src="/images/ICAC%20Full%20Logo.webp" alt={SITE.name} id="logo-img" class="w-auto" style="transition:height 260ms cubic-bezier(.4,0,.2,1);height:48px;" width="200" height="56" loading="eager" />
+        <img src="/images/ICAC%20Full%20Logo.webp" alt={SITE.name} id="logo-img" class="w-auto" style="transition:height 260ms cubic-bezier(.4,0,.2,1);height:58px;" width="200" height="56" loading="eager" />
       </a>
 
       <!-- Desktop nav -->
       <nav class="hidden lg:flex items-center gap-1 text-[15px] font-semibold text-navy-700" aria-label="Primary">
+
         <!-- Services mega menu -->
         <div class="group relative">
-          <button class="nav-link inline-flex items-center gap-1 px-3.5 py-2 rounded-md hover:text-brand-600" aria-haspopup="true">
+          <button class="nav-link inline-flex items-center gap-1 px-3.5 py-2 rounded-md hover:text-accent-500 transition-colors" aria-haspopup="true">
             Services
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="opacity-70 group-hover:opacity-100 transition"><path d="M7 10l5 5 5-5z"/></svg>
           </button>
@@ -63,7 +78,7 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.2L19.5 8 12 11.8 4.5 8 12 4.2zM4 9.8l7 3.5v6.8l-7-3.5V9.8zm9 10.3v-6.8l7-3.5v6.8l-7 3.5z"/></svg>
                     </span>
                     <div>
-                      <div class="text-navy-700 font-semibold group-hover/card:text-brand-600">{s.name}</div>
+                      <div class="text-navy-700 font-semibold group-hover/card:text-accent-500 transition-colors">{s.name}</div>
                       <div class="text-xs text-slate-500 mt-0.5">{s.blurb}</div>
                     </div>
                   </a>
@@ -75,7 +90,7 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
               </div>
               <div class="mt-3 grid grid-cols-2 gap-1 text-sm">
                 {moreServices.map(s => (
-                  <a href={`/services/${s.slug}/`} class="rounded-md px-2.5 py-1.5 text-slate-600 hover:text-brand-600 hover:bg-surface transition">{s.name}</a>
+                  <a href={`/services/${s.slug}/`} class="rounded-md px-2.5 py-1.5 text-slate-600 hover:text-accent-500 hover:bg-surface transition">{s.name}</a>
                 ))}
               </div>
             </div>
@@ -84,7 +99,7 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
 
         <!-- Areas mega menu -->
         <div class="group relative">
-          <button class="nav-link inline-flex items-center gap-1 px-3.5 py-2 rounded-md hover:text-brand-600" aria-haspopup="true">
+          <button class="nav-link inline-flex items-center gap-1 px-3.5 py-2 rounded-md hover:text-accent-500 transition-colors" aria-haspopup="true">
             Areas Served
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="opacity-70 group-hover:opacity-100 transition"><path d="M7 10l5 5 5-5z"/></svg>
           </button>
@@ -97,7 +112,7 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
                     <span class="shrink-0 w-9 h-9 rounded-md bg-brand-50 text-brand-600 flex items-center justify-center group-hover/card:bg-brand-500 group-hover/card:text-white transition">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 10a3 3 0 110-6 3 3 0 010 6z"/></svg>
                     </span>
-                    <div class="text-navy-700 font-semibold group-hover/card:text-brand-600">{a.name}</div>
+                    <div class="text-navy-700 font-semibold group-hover/card:text-accent-500 transition-colors">{a.name}</div>
                   </a>
                 ))}
               </div>
@@ -107,7 +122,7 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
               </div>
               <div class="mt-3 grid grid-cols-2 gap-1 text-sm">
                 {moreAreas.map(a => (
-                  <a href={`/service-areas/${a.slug}/`} class="rounded-md px-2.5 py-1.5 text-slate-600 hover:text-brand-600 hover:bg-surface transition">{a.name}</a>
+                  <a href={`/service-areas/${a.slug}/`} class="rounded-md px-2.5 py-1.5 text-slate-600 hover:text-accent-500 hover:bg-surface transition">{a.name}</a>
                 ))}
               </div>
             </div>
@@ -116,40 +131,40 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
 
         <!-- About dropdown -->
         <div class="group relative">
-          <button class="nav-link inline-flex items-center gap-1 px-3.5 py-2 rounded-md hover:text-brand-600" aria-haspopup="true">
+          <button class="nav-link inline-flex items-center gap-1 px-3.5 py-2 rounded-md hover:text-accent-500 transition-colors" aria-haspopup="true">
             About Us
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="opacity-70 group-hover:opacity-100 transition"><path d="M7 10l5 5 5-5z"/></svg>
           </button>
           <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 focus-within:visible focus-within:opacity-100 absolute right-0 top-full pt-2 w-64 z-50 transition-all">
             <div class="rounded-xl bg-white ring-1 ring-slate-200 shadow-[0_24px_60px_-16px_rgba(15,26,41,0.3)] p-2">
-              <a href="/about-us/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-brand-600 hover:bg-surface">About Us / Our Story</a>
-              <a href="/about-us/#team" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-brand-600 hover:bg-surface">Meet the Team</a>
-              <a href="/reviews/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-brand-600 hover:bg-surface">Reviews</a>
-              <a href="/financing/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-brand-600 hover:bg-surface">Financing</a>
-              <a href="/blogs/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-brand-600 hover:bg-surface">Blog & HVAC Tips</a>
-              <a href="/careers/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-brand-600 hover:bg-surface">Careers</a>
+              <a href="/about-us/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-accent-500 hover:bg-surface transition-colors">About Us / Our Story</a>
+              <a href="/about-us/#team" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-accent-500 hover:bg-surface transition-colors">Meet the Team</a>
+              <a href="/reviews/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-accent-500 hover:bg-surface transition-colors">Reviews</a>
+              <a href="/financing/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-accent-500 hover:bg-surface transition-colors">Financing</a>
+              <a href="/blogs/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-accent-500 hover:bg-surface transition-colors">Blog & HVAC Tips</a>
+              <a href="/careers/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-accent-500 hover:bg-surface transition-colors">Careers</a>
             </div>
           </div>
         </div>
 
-        <a href="/contact/" class="nav-link px-3.5 py-2 rounded-md hover:text-brand-600">Contact</a>
+        <a href="/contact/" class="nav-link px-3.5 py-2 rounded-md hover:text-accent-500 transition-colors">Contact</a>
       </nav>
 
       <!-- Right-side CTAs -->
       <div class="flex items-center gap-2 shrink-0">
-        <a href={SITE.phoneHref} class="hidden md:inline-flex items-center gap-2 text-navy-700 font-bold hover:text-accent-500">
-          <span class="inline-flex w-9 h-9 rounded-full bg-accent-500 text-white items-center justify-center">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
-          </span>
-          <span class="hidden xl:inline text-[17px]">{SITE.phone}</span>
+        <!-- Primary: Call phone (prominent rounded pill) -->
+        <a href={SITE.phoneHref} class="hidden md:inline-flex items-center gap-2 rounded-full bg-accent-500 hover:bg-accent-600 text-white font-bold px-5 py-2.5 shadow-sm transition text-[14px] leading-none">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+          <span class="hidden xl:inline">CALL WESLEY CHAPEL&nbsp;</span>{SITE.phone}
         </a>
-        <a href={SITE.bookUrl} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-md bg-accent-500 hover:bg-accent-600 text-white text-sm font-bold px-4 py-2.5 shadow-sm transition">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <!-- Secondary: Book Now (outline) -->
+        <a href={SITE.bookUrl} target="_blank" rel="noopener" class="hidden lg:inline-flex items-center gap-1.5 rounded-full border-2 border-slate-300 text-navy-700 hover:border-brand-500 hover:text-brand-600 text-sm font-bold px-4 py-2 transition">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           Book Now
         </a>
-        <!-- Mobile menu toggle -->
+        <!-- Mobile menu toggle (larger icon) -->
         <button id="mobile-menu-toggle" class="lg:hidden p-2 -mr-2 text-navy-700" aria-label="Open menu" aria-controls="mobile-drawer" aria-expanded="false">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
       </div>
     </div>
@@ -162,38 +177,40 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
       <div class="flex items-center justify-between p-4 border-b border-slate-200">
         <img src="/images/ICAC%20Full%20Logo.webp" alt="" aria-hidden="true" class="h-10 w-auto" />
         <button id="mobile-menu-close" class="p-2 -mr-2 text-navy-700" aria-label="Close menu">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
       <div class="p-4 space-y-1 text-navy-700 font-semibold">
         <details class="rounded-md bg-surface">
           <summary class="flex items-center justify-between cursor-pointer px-3 py-3 list-none"><span>Services</span><span class="text-brand-600">+</span></summary>
           <div class="px-3 pb-3 space-y-0.5 text-[14.5px] font-normal">
-            {SITE.services.map(s => <a href={`/services/${s.slug}/`} class="block py-1.5 text-slate-600 hover:text-brand-600">{s.name}</a>)}
+            {SITE.services.map(s => <a href={`/services/${s.slug}/`} class="block py-1.5 text-slate-600 hover:text-accent-500">{s.name}</a>)}
             <a href="/services/" class="block py-1.5 text-accent-500 font-semibold">See all →</a>
           </div>
         </details>
         <details class="rounded-md bg-surface">
           <summary class="flex items-center justify-between cursor-pointer px-3 py-3 list-none"><span>Areas Served</span><span class="text-brand-600">+</span></summary>
           <div class="px-3 pb-3 space-y-0.5 text-[14.5px] font-normal">
-            {SITE.serviceAreas.map(a => <a href={`/service-areas/${a.slug}/`} class="block py-1.5 text-slate-600 hover:text-brand-600">{a.name}</a>)}
+            {SITE.serviceAreas.map(a => <a href={`/service-areas/${a.slug}/`} class="block py-1.5 text-slate-600 hover:text-accent-500">{a.name}</a>)}
             <a href="/service-areas/" class="block py-1.5 text-accent-500 font-semibold">See all →</a>
           </div>
         </details>
         <details class="rounded-md bg-surface">
           <summary class="flex items-center justify-between cursor-pointer px-3 py-3 list-none"><span>About Us</span><span class="text-brand-600">+</span></summary>
           <div class="px-3 pb-3 space-y-0.5 text-[14.5px] font-normal">
-            <a href="/about-us/" class="block py-1.5 text-slate-600 hover:text-brand-600">About Us / Our Story</a>
-            <a href="/about-us/#team" class="block py-1.5 text-slate-600 hover:text-brand-600">Meet the Team</a>
-            <a href="/reviews/" class="block py-1.5 text-slate-600 hover:text-brand-600">Reviews</a>
-            <a href="/financing/" class="block py-1.5 text-slate-600 hover:text-brand-600">Financing</a>
-            <a href="/blogs/" class="block py-1.5 text-slate-600 hover:text-brand-600">Blog & HVAC Tips</a>
-            <a href="/careers/" class="block py-1.5 text-slate-600 hover:text-brand-600">Careers</a>
+            <a href="/about-us/" class="block py-1.5 text-slate-600 hover:text-accent-500">About Us / Our Story</a>
+            <a href="/about-us/#team" class="block py-1.5 text-slate-600 hover:text-accent-500">Meet the Team</a>
+            <a href="/reviews/" class="block py-1.5 text-slate-600 hover:text-accent-500">Reviews</a>
+            <a href="/financing/" class="block py-1.5 text-slate-600 hover:text-accent-500">Financing</a>
+            <a href="/blogs/" class="block py-1.5 text-slate-600 hover:text-accent-500">Blog & HVAC Tips</a>
+            <a href="/careers/" class="block py-1.5 text-slate-600 hover:text-accent-500">Careers</a>
           </div>
         </details>
         <a href="/contact/" class="block rounded-md px-3 py-3 bg-surface">Contact</a>
-        <a href={SITE.bookUrl} target="_blank" rel="noopener" class="mt-3 block rounded-md bg-accent-500 hover:bg-accent-600 text-white text-center font-bold px-4 py-3">Book Now</a>
-        <a href={SITE.phoneHref} class="mt-2 block rounded-md border-2 border-brand-500 text-brand-700 text-center font-bold px-4 py-3">Call {SITE.phone}</a>
+        <a href={SITE.phoneHref} class="mt-3 block rounded-full bg-accent-500 hover:bg-accent-600 text-white text-center font-bold px-4 py-3 transition">
+          Call {SITE.phone}
+        </a>
+        <a href={SITE.bookUrl} target="_blank" rel="noopener" class="mt-2 block rounded-full border-2 border-slate-300 text-navy-700 text-center font-bold px-4 py-3 transition">Book Now</a>
       </div>
     </div>
   </div>
@@ -201,55 +218,47 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
 
 <script is:inline>
   (function() {
-    const header = document.getElementById('site-header');
-    const trust = document.getElementById('trust-strip');
-    const bar = document.getElementById('main-bar');
-    const logo = document.getElementById('logo-img');
-    // Hysteresis thresholds — scrolled=true at >= HI, false at <= LO.
-    // The 60px gap prevents flicker at the layout-shift boundary.
-    const HI = 80;
-    const LO = 20;
-    let scrolled = false;
-    let ticking = false;
+    var header = document.getElementById('site-header');
+    var trust = document.getElementById('trust-strip');
+    var bar = document.getElementById('main-bar');
+    var logo = document.getElementById('logo-img');
+    // Hysteresis: collapse at >= HI px, expand at <= LO px
+    var HI = 80, LO = 20;
+    var scrolled = false, ticking = false;
     function apply(s) {
       if (s === scrolled) return;
       scrolled = s;
       header.dataset.scrolled = String(s);
       if (s) {
-        trust.style.maxHeight = '0px';
-        trust.style.opacity = '0';
-        bar.style.height = '64px';
-        logo.style.height = '40px';
+        trust.style.maxHeight = '0px'; trust.style.opacity = '0';
+        bar.style.height = '64px'; logo.style.height = '40px';
       } else {
-        trust.style.maxHeight = '36px';
-        trust.style.opacity = '1';
-        bar.style.height = '80px';
-        logo.style.height = '48px';
+        trust.style.maxHeight = '36px'; trust.style.opacity = '1';
+        bar.style.height = '80px'; logo.style.height = '58px';
       }
     }
     function onScroll() {
       if (ticking) return;
       ticking = true;
-      requestAnimationFrame(() => {
-        const y = window.scrollY;
+      requestAnimationFrame(function() {
+        var y = window.scrollY;
         if (!scrolled && y >= HI) apply(true);
         else if (scrolled && y <= LO) apply(false);
         ticking = false;
       });
     }
     window.addEventListener('scroll', onScroll, { passive: true });
-    // Set initial state based on current scroll position (e.g. reloads mid-page)
     if (window.scrollY >= HI) apply(true);
 
-    const openBtn = document.getElementById('mobile-menu-toggle');
-    const closeBtn = document.getElementById('mobile-menu-close');
-    const drawer = document.getElementById('mobile-drawer');
-    const backdrop = document.getElementById('mobile-backdrop');
-    function openDrawer() { drawer.classList.remove('hidden'); drawer.setAttribute('aria-hidden', 'false'); openBtn.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; }
-    function closeDrawer() { drawer.classList.add('hidden'); drawer.setAttribute('aria-hidden', 'true'); openBtn.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+    var openBtn = document.getElementById('mobile-menu-toggle');
+    var closeBtn = document.getElementById('mobile-menu-close');
+    var drawer = document.getElementById('mobile-drawer');
+    var backdrop = document.getElementById('mobile-backdrop');
+    function openDrawer() { drawer.classList.remove('hidden'); drawer.setAttribute('aria-hidden','false'); openBtn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
+    function closeDrawer() { drawer.classList.add('hidden'); drawer.setAttribute('aria-hidden','true'); openBtn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
     openBtn && openBtn.addEventListener('click', openDrawer);
     closeBtn && closeBtn.addEventListener('click', closeDrawer);
     backdrop && backdrop.addEventListener('click', closeDrawer);
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDrawer(); });
   })();
 </script>

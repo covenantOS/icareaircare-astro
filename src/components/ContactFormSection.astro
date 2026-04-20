@@ -1,29 +1,82 @@
 ---
-import LeadForm from './LeadForm.astro';
+import { SITE } from '../lib/site';
+import MultiStepForm from './MultiStepForm.astro';
+
+const mapEmbed = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3462.2!2d-82.3726776!3d28.2426914!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDE0JzM0LjciTiA4MsKwMjInMjEuNiJX!5e0!3m2!1sen!2sus!4v1713600000000';
 ---
-<section class="relative py-16 md:py-20 overflow-hidden" id="quote">
-  <div class="absolute inset-0 bg-gradient-to-br from-brand-600 via-brand-500 to-brand-700"></div>
-  <img src="/images/I-Care-Air-Care-%E2%80%93-Blue-Background-Banner-lines.webp" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-25" />
-  <div class="relative container-site max-w-5xl">
-    <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
-      <div class="lg:col-span-2 text-white">
-        <h2 class="text-white text-3xl md:text-4xl title-accent text-left">Contact Us for a Free Quote</h2>
-        <p class="mt-6 text-blue-50 leading-relaxed">
-          Tell us a little about your HVAC need and we'll reach out with next steps and a free quote — usually within the same business day.
-        </p>
-        <ul class="mt-6 space-y-2 text-blue-50 text-sm">
-          <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Upfront, flat-rate pricing</li>
-          <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Licensed · CAC1816515</li>
-          <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Hundreds of five-star Google reviews</li>
-          <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Serving Wesley Chapel, New Tampa, Land O' Lakes &amp; all Tampa Bay</li>
+<section class="py-16 md:py-20 bg-surface" id="quote">
+  <div class="container-site max-w-6xl">
+    <div class="grid lg:grid-cols-5 gap-10 lg:gap-14 items-start">
+
+      <!-- Left: Contact info + map -->
+      <div class="lg:col-span-2">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-brand-600">Get in Touch</p>
+        <h2 class="mt-2 text-3xl md:text-4xl title-accent text-left">Contact Us</h2>
+        <p class="mt-4 text-slate-600 leading-relaxed">Call or send a message — we'll get back to you same business day with a free estimate.</p>
+
+        <ul class="mt-6 space-y-4">
+          <li class="flex items-start gap-3">
+            <span class="inline-flex w-9 h-9 rounded-full bg-brand-50 text-brand-600 items-center justify-center shrink-0 mt-0.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+            </span>
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-wide text-slate-400">Phone</div>
+              <a href={SITE.phoneHref} class="text-navy-700 font-bold text-lg hover:text-accent-500 transition-colors">{SITE.phone}</a>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="inline-flex w-9 h-9 rounded-full bg-brand-50 text-brand-600 items-center justify-center shrink-0 mt-0.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </span>
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-wide text-slate-400">Email</div>
+              <a href={`mailto:${SITE.email}`} class="text-navy-700 font-medium hover:text-accent-500 transition-colors">{SITE.email}</a>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="inline-flex w-9 h-9 rounded-full bg-brand-50 text-brand-600 items-center justify-center shrink-0 mt-0.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 10a3 3 0 110-6 3 3 0 010 6z"/></svg>
+            </span>
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-wide text-slate-400">Address</div>
+              <address class="not-italic text-navy-700 font-medium leading-snug">
+                {SITE.address.street}<br />{SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}
+              </address>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="inline-flex w-9 h-9 rounded-full bg-brand-50 text-brand-600 items-center justify-center shrink-0 mt-0.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </span>
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-wide text-slate-400">Hours</div>
+              <div class="text-navy-700 font-medium text-sm leading-snug">{SITE.hours}</div>
+            </div>
+          </li>
         </ul>
+
+        <!-- Inline map -->
+        <div class="mt-6 rounded-xl overflow-hidden shadow-[var(--shadow-card)] ring-1 ring-slate-200">
+          <iframe
+            src={mapEmbed}
+            width="100%"
+            height="200"
+            style="border:0;display:block;"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="I Care Air Care location map"></iframe>
+        </div>
       </div>
+
+      <!-- Right: Multi-step form -->
       <div class="lg:col-span-3">
-        <LeadForm title="Request a Free Quote" variant="card" />
+        <MultiStepForm />
       </div>
     </div>
   </div>
 </section>
+
 <style>
   .title-accent.text-left::after { margin-left: 0; }
 </style>

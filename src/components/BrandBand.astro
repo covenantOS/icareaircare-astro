@@ -1,21 +1,37 @@
 ---
-const brands = ['Carrier', 'Trane', 'Lennox', 'Rheem', 'Goodman', 'American Standard', 'Bryant', 'Mitsubishi'];
+const brands = ['Carrier', 'Trane', 'Lennox', 'Rheem', 'Goodman', 'American Standard', 'Bryant', 'Mitsubishi Electric'];
+// Duplicate list for seamless infinite loop
+const track = [...brands, ...brands];
 ---
-<section class="py-10 border-y border-slate-100 bg-white">
-  <div class="container-site">
-    <div class="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
-      <div class="shrink-0">
-        <p class="text-xs font-bold uppercase tracking-[0.18em] text-brand-600">We service every major brand</p>
-        <p class="mt-1 text-sm text-slate-600">Factory-trained on residential & light-commercial</p>
-      </div>
-      <ul class="flex-1 flex flex-wrap gap-x-6 gap-y-2 text-navy-700 font-semibold">
-        {brands.map(b => (
-          <li class="flex items-center gap-2">
-            <span class="inline-block w-1.5 h-1.5 rounded-full bg-accent-500"></span>
-            {b}
-          </li>
-        ))}
-      </ul>
+<section class="py-8 border-y border-slate-100 bg-white overflow-hidden">
+  <div class="container-site mb-5 text-center">
+    <p class="text-xs font-bold uppercase tracking-[0.18em] text-brand-600">We service every major brand</p>
+    <p class="mt-1 text-sm text-slate-500">Factory-trained on residential & light-commercial equipment</p>
+  </div>
+  <div class="relative overflow-hidden" aria-hidden="true">
+    <!-- Fade edges -->
+    <div class="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style="background:linear-gradient(to right,#fff,transparent)"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style="background:linear-gradient(to left,#fff,transparent)"></div>
+    <!-- Scrolling track -->
+    <div class="brand-marquee flex items-center gap-10 w-max py-1">
+      {track.map(b => (
+        <div class="shrink-0 flex items-center justify-center px-4 py-2 rounded-lg border border-slate-100 bg-white shadow-sm min-w-[140px]">
+          <span class="text-[15px] font-bold text-slate-400 tracking-tight whitespace-nowrap">{b}</span>
+        </div>
+      ))}
     </div>
   </div>
 </section>
+
+<style>
+  .brand-marquee {
+    animation: brand-scroll 28s linear infinite;
+  }
+  .brand-marquee:hover {
+    animation-play-state: paused;
+  }
+  @keyframes brand-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+</style>

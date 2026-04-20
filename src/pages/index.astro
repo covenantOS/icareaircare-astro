@@ -80,7 +80,7 @@ const faqs = [
   <ThreeStep />
   <FinalCTA />
   <BlogStrip />
-  <FAQ title="Frequently Asked Questions — AC Repair & HVAC Services in Wesley Chapel & Tampa" items={faqs} />
+  <FAQ title="Frequently Asked Questions" items={faqs.slice(0, 5)} columns={1} variant="white" />
   <ContactFormSection />
 
   <Schema type="FAQPage" faqs={faqs.map(f => ({ q: f.q, a: f.a.replace(/<[^>]*>/g,'') }))} />
