@@ -1,0 +1,52 @@
+---
+import { SITE } from '../lib/site';
+interface Props {
+  type?: 'LocalBusiness' | 'Service' | 'FAQPage' | 'BreadcrumbList' | 'Article';
+  data?: Record<string, any>;
+  faqs?: { q: string; a: string }[];
+  breadcrumbs?: { name: string; url: string }[];
+}
+const { type = 'LocalBusiness', data = {}, faqs, breadcrumbs } = Astro.props;
+
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'HVACBusiness',
+  '@id': `${SITE.url}/#business`,
+  name: SITE.name,
+  image: `${SITE.url}/images/ICAC%20Full%20Logo.webp`,
+  url: SITE.url,
+  telephone: SITE.phone,
+  priceRange: '$$',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.address.street,
+    addressLocality: SITE.address.city,
+    addressRegion: SITE.address.region,
+    postalCode: SITE.address.postalCode,
+    addressCountry: SITE.address.country,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: SITE.geo.latitude, longitude: SITE.geo.longitude },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: SITE.rating.value,
+    reviewCount: SITE.rating.count,
+  },
+  areaServed: SITE.serviceAreas.map(a => a.name),
+  sameAs: [SITE.socials.google],
+};
+
+let json: any = localBusiness;
+if (type === 'Service') json = { '@context': 'https://schema.org', '@type': 'Service', provider: { '@id': `${SITE.url}/#business` }, ...data };
+if (type === 'Article') json = { '@context': 'https://schema.org', '@type': 'Article', ...data };
+if (type === 'FAQPage' && faqs) json = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+if (type === 'BreadcrumbList' && breadcrumbs) json = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbs.map((b, i) => ({ '@type': 'ListItem', position: i + 1, name: b.name, item: b.url })),
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(json)} />

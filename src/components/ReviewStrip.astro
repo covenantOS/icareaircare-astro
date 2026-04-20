@@ -1,0 +1,30 @@
+---
+const reviews = [
+  { name: 'Jessica M.', area: 'Wesley Chapel', stars: 5, text: 'Kevin and the team replaced our AC same-day during a heat wave. Clean install, fair price, no upsell.' },
+  { name: 'David R.', area: 'Land O\u2019 Lakes', stars: 5, text: 'Honest technicians who explain what they\u2019re doing. Our maintenance plan paid for itself the first visit.' },
+  { name: 'Amanda T.', area: 'New Tampa', stars: 5, text: 'Booked online, answered after hours, fixed the system before bedtime. I Care Air Care lives up to the name.' },
+];
+---
+<section class="py-16 md:py-20 bg-surface">
+  <div class="container-site">
+    <div class="text-center max-w-2xl mx-auto">
+      <p class="text-xs font-bold uppercase tracking-[0.18em] text-brand-600">What neighbors say</p>
+      <h2 class="mt-2 text-3xl md:text-4xl font-bold">4.9★ from 120+ verified Google reviews</h2>
+      <p class="mt-3 text-slate-600">Real homeowners across Tampa Bay trust us to keep their homes cool.</p>
+    </div>
+    <div class="mt-10 grid md:grid-cols-3 gap-5">
+      {reviews.map(r => (
+        <figure class="rounded-2xl bg-white border border-slate-200 p-6 shadow-sm">
+          <div class="flex gap-0.5 text-amber-400 text-lg" aria-label={`${r.stars} star review`}>
+            {Array.from({length:r.stars}).map(() => '★')}
+          </div>
+          <blockquote class="mt-3 text-slate-700 leading-relaxed">"{r.text}"</blockquote>
+          <figcaption class="mt-4 text-sm text-slate-500"><span class="font-semibold text-brand-800">{r.name}</span> • {r.area}</figcaption>
+        </figure>
+      ))}
+    </div>
+    <div class="mt-8 text-center">
+      <a href="/reviews/" class="inline-flex items-center gap-2 text-brand-700 font-semibold hover:text-brand-800">Read all reviews →</a>
+    </div>
+  </div>
+</section>

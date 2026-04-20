@@ -1,0 +1,44 @@
+---
+import { SITE } from '../lib/site';
+---
+<footer class="mt-24 bg-brand-800 text-slate-200">
+  <div class="container-site py-14 grid gap-10 md:grid-cols-4">
+    <div class="md:col-span-1">
+      <img src="/images/ICAC%20Full%20Dark%20Logo.png" alt={SITE.name} class="h-12 w-auto mb-4 brightness-0 invert" />
+      <p class="text-sm text-slate-300 leading-relaxed">{SITE.tagline}</p>
+      <p class="mt-4 text-sm">
+        <a href={SITE.phoneHref} class="font-semibold text-white hover:underline">{SITE.phone}</a>
+      </p>
+      <p class="text-sm text-slate-300">{SITE.address.street}<br/>{SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}</p>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold mb-3">Services</h4>
+      <ul class="space-y-2 text-sm">
+        {SITE.services.map(s => <li><a class="hover:text-white" href={`/services/${s.slug}/`}>{s.name}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold mb-3">Service Areas</h4>
+      <ul class="space-y-2 text-sm">
+        {SITE.serviceAreas.map(a => <li><a class="hover:text-white" href={`/service-areas/${a.slug}/`}>{a.name}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold mb-3">Company</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a class="hover:text-white" href="/about-us/">About Us</a></li>
+        <li><a class="hover:text-white" href="/our-team/">Our Team</a></li>
+        <li><a class="hover:text-white" href="/reviews/">Reviews</a></li>
+        <li><a class="hover:text-white" href="/financing/">Financing</a></li>
+        <li><a class="hover:text-white" href="/blogs/">Blog</a></li>
+        <li><a class="hover:text-white" href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="container-site py-5 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-slate-400">
+      <p>© {new Date().getFullYear()} {SITE.legalName}. All rights reserved.</p>
+      <p>Licensed & insured HVAC contractor in Florida.</p>
+    </div>
+  </div>
+</footer>

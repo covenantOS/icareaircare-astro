@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import CTABand from '../components/CTABand.astro';
+---
+<BaseLayout
+  title="Financing | I Care Air Care"
+  description="Flexible HVAC financing options with approved credit."
+  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Financing","url":"https://www.icareaircare.com/financing/"}]}
+>
+  <Hero title="Financing" subtitle="Flexible HVAC financing options with approved credit." ctaLabel="Call Us" />
+  <section class="py-16">
+    <div class="container-site max-w-3xl prose-icac">
+      <p class="text-slate-500 italic">[Phase 4 will rewrite this page with full content and schema.]</p>
+    </div>
+  </section>
+  <CTABand />
+</BaseLayout>

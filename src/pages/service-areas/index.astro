@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AreaGrid from '../../components/AreaGrid.astro';
+import CTABand from '../../components/CTABand.astro';
+---
+<BaseLayout
+  title="Service Areas | I Care Air Care"
+  description="We serve Wesley Chapel, Tampa, Land O Lakes, Lutz, New Tampa, Odessa, Zephyrhills, Pasco, Hillsborough & Polk counties."
+  breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'Service Areas',url:'https://www.icareaircare.com/service-areas/'}]}
+>
+  <section class="bg-brand-800 text-white py-14">
+    <div class="container-site">
+      <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-200">Where we work</p>
+      <h1 class="mt-2 text-4xl md:text-5xl font-bold text-white">Service areas across Tampa Bay</h1>
+    </div>
+  </section>
+  <AreaGrid />
+  <CTABand />
+</BaseLayout>

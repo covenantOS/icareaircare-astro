@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand — I Care Air Care */
+  --color-brand-50:  #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #2563eb;
+  --color-brand-600: #1d4ed8;
+  --color-brand-700: #1e3a8a;
+  --color-brand-800: #172554;
+  --color-brand-900: #0f1e47;
+
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+
+  --color-ink:      #0b1220;
+  --color-ink-soft: #334155;
+  --color-muted:    #64748b;
+  --color-line:     #e2e8f0;
+  --color-surface:  #f8fafc;
+
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body:    "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-lg: 14px;
+  --shadow-soft: 0 10px 30px -12px rgb(15 30 71 / 0.18);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
+  color: var(--color-brand-800);
+}
+
+.container-site { @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8; }
+
+.prose-icac p { @apply text-slate-700 leading-relaxed; }
+.prose-icac h2 { @apply text-3xl md:text-4xl font-bold mt-12 mb-4; }
+.prose-icac h3 { @apply text-xl md:text-2xl font-semibold mt-8 mb-3; }
+.prose-icac ul { @apply list-disc pl-5 space-y-2 text-slate-700; }
+.prose-icac a { @apply text-brand-600 underline underline-offset-2 hover:text-brand-700; }
+
+/* Skip link for a11y */
+.skip-link {
+  @apply sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:rounded focus:shadow;
+}

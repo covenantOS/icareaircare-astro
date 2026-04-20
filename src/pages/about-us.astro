@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import CTABand from '../components/CTABand.astro';
+---
+<BaseLayout
+  title="About Us | I Care Air Care"
+  description="Family-run Tampa Bay HVAC contractor with 30+ years of experience."
+  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"About Us","url":"https://www.icareaircare.com/about-us/"}]}
+>
+  <Hero title="About Us" subtitle="Family-run Tampa Bay HVAC contractor with 30+ years of experience." ctaLabel="Call Us" />
+  <section class="py-16">
+    <div class="container-site max-w-3xl prose-icac">
+      <p class="text-slate-500 italic">[Phase 4 will rewrite this page with full content and schema.]</p>
+    </div>
+  </section>
+  <CTABand />
+</BaseLayout>

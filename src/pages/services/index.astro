@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceGrid from '../../components/ServiceGrid.astro';
+import CTABand from '../../components/CTABand.astro';
+---
+<BaseLayout
+  title="HVAC Services in Tampa Bay | I Care Air Care"
+  description="Full HVAC services in Tampa Bay: AC repair, installation, maintenance, air duct cleaning, heating and smart thermostats. Call (813) 395-2324."
+  breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'Services',url:'https://www.icareaircare.com/services/'}]}
+>
+  <section class="bg-brand-800 text-white py-14">
+    <div class="container-site">
+      <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-200">Services</p>
+      <h1 class="mt-2 text-4xl md:text-5xl font-bold text-white">HVAC services for Tampa Bay homes</h1>
+      <p class="mt-4 max-w-2xl text-blue-100">Eight core services, one local team — from quick repairs to full system replacements.</p>
+    </div>
+  </section>
+  <ServiceGrid />
+  <CTABand />
+</BaseLayout>

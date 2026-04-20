@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import CTABand from '../../components/CTABand.astro';
+---
+<BaseLayout
+  title="AC Repair in Tampa | I Care Air Care"
+  description="Fast, honest AC repair across Tampa Bay. Licensed techs, same-day service, no pressure diagnostics."
+  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Services","url":"https://www.icareaircare.com/services/"},{"name":"AC Repair in Tampa","url":"https://www.icareaircare.com/services/ac-repair-tampa/"}]}
+>
+  <Hero eyebrow="HVAC Service" title="AC Repair in Tampa" subtitle="Fast, honest AC repair across Tampa Bay. Licensed techs, same-day service, no pressure diagnostics." ctaLabel="Schedule Service" />
+  <section class="py-16">
+    <div class="container-site max-w-3xl prose-icac">
+      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
+    </div>
+  </section>
+  <CTABand />
+</BaseLayout>

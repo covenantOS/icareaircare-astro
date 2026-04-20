@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import CTABand from '../../components/CTABand.astro';
+---
+<BaseLayout
+  title="Polk County Residential AC Repair | I Care Air Care"
+  description="Local HVAC & AC repair in Polk County, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324."
+  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Service Areas","url":"https://www.icareaircare.com/service-areas/"},{"name":"Polk County","url":"https://www.icareaircare.com/service-areas/polk-county-residential-ac-repair/"}]}
+>
+  <Hero eyebrow="Polk County, FL" title="Polk County Residential AC Repair" subtitle="Local HVAC & AC repair in Polk County, FL. 30+ years experience, 4.9★ Google rated. Call (813) 395-2324." ctaLabel="Schedule Service" />
+  <section class="py-16">
+    <div class="container-site max-w-3xl prose-icac">
+      <p class="text-slate-500 italic">[Phase 2/3 will rewrite this page with fresh 2026-researched content, full FAQ section, local signals and Service schema. This stub preserves the URL so rankings survive the migration.]</p>
+    </div>
+  </section>
+  <CTABand />
+</BaseLayout>

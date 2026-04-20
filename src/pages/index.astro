@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import ReviewStrip from '../components/ReviewStrip.astro';
+import AreaGrid from '../components/AreaGrid.astro';
+import CTABand from '../components/CTABand.astro';
+import FAQ from '../components/FAQ.astro';
+
+const faqs = [
+  { q: 'Do you offer 24/7 emergency AC repair?', a: 'Yes — we dispatch technicians around the clock across Wesley Chapel, Tampa, Land O\u2019 Lakes and the surrounding Tampa Bay area.' },
+  { q: 'Are your technicians licensed and insured?', a: 'Every I Care Air Care technician is licensed in Florida, background-checked and fully insured. We pull permits on every install.' },
+  { q: 'Do you offer financing for new HVAC systems?', a: 'Yes. Flexible financing is available with approved credit — see our financing page for current terms and monthly-payment estimates.' },
+  { q: 'How quickly can you come out?', a: 'Most service calls are handled same-day. During peak heat we prioritize homes without working AC, seniors, and families with small children.' },
+];
+---
+<BaseLayout
+  title="HVAC & AC Repair in Wesley Chapel, FL | I Care Air Care"
+  description="Trusted HVAC contractor in Wesley Chapel & Tampa Bay. 4.9★ rated, 30+ years experience. Same-day AC repair, installation, maintenance and air duct cleaning."
+>
+  <Hero
+    eyebrow="Wesley Chapel • Tampa Bay"
+    title="Honest HVAC service, done right the first time."
+    subtitle="Same-day AC repair, high-efficiency installations and straightforward pricing from a family-run team your neighbors already trust."
+  />
+  <ServiceGrid />
+  <AreaGrid />
+  <ReviewStrip />
+  <FAQ items={faqs} />
+  <CTABand />
+</BaseLayout>

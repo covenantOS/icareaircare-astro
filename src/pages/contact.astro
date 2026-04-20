@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import CTABand from '../components/CTABand.astro';
+---
+<BaseLayout
+  title="Contact Us | I Care Air Care"
+  description="Call (813) 395-2324 or book online. We serve Wesley Chapel & Tampa Bay."
+  breadcrumbs={[{"name":"Home","url":"https://www.icareaircare.com/"},{"name":"Contact Us","url":"https://www.icareaircare.com/contact/"}]}
+>
+  <Hero title="Contact Us" subtitle="Call (813) 395-2324 or book online. We serve Wesley Chapel & Tampa Bay." ctaLabel="Call Us" />
+  <section class="py-16">
+    <div class="container-site max-w-3xl prose-icac">
+      <p class="text-slate-500 italic">[Phase 4 will rewrite this page with full content and schema.]</p>
+    </div>
+  </section>
+  <CTABand />
+</BaseLayout>
