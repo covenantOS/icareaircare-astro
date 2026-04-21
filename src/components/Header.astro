@@ -21,8 +21,15 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
   <!-- Top trust strip (hides on scroll) -->
   <div id="trust-strip" class="bg-navy-800 text-white text-[12px] leading-none overflow-hidden will-change-[max-height,opacity]" style="transition:max-height 320ms cubic-bezier(.4,0,.2,1),opacity 220ms ease-out;max-height:36px;opacity:1;">
     <div class="container-site h-9 flex items-center justify-between gap-3">
-      <!-- Left: address → phone → reviews -->
-      <div class="flex items-center gap-4 min-w-0">
+
+      <!-- Mobile trust signal (left) — hidden at md+ -->
+      <span class="md:hidden inline-flex items-center gap-1.5 shrink-0 text-slate-200 text-[11px]">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400 shrink-0" aria-hidden="true"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+        Licensed &amp; Insured · Wesley Chapel
+      </span>
+
+      <!-- Desktop left: address → phone → reviews (hidden on mobile) -->
+      <div class="hidden md:flex items-center gap-4 min-w-0">
         <span class="hidden md:inline-flex items-center gap-1.5 shrink-0 text-slate-200">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400 shrink-0" aria-hidden="true"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 10a3 3 0 110-6 3 3 0 010 6z"/></svg>
           {SITE.address.street}, {SITE.address.city}, {SITE.address.region}
@@ -36,13 +43,23 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
           {SITE.rating.count}+ 5-Star Reviews
         </span>
       </div>
-      <!-- Right: license -->
-      <div class="hidden lg:flex items-center gap-4 text-slate-300 shrink-0 text-[11.5px]">
-        <span class="inline-flex items-center gap-1.5">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400" aria-hidden="true"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
-          Licensed {SITE.license}
-        </span>
+
+      <!-- Right: mobile tap-to-call + desktop license -->
+      <div class="flex items-center gap-4 shrink-0">
+        <!-- Mobile tap-to-call (right) — hidden at md+ -->
+        <a href={SITE.phoneHref} class="md:hidden inline-flex items-center gap-1.5 text-white font-semibold text-[11px] hover:text-accent-200 transition">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400 shrink-0" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+          {SITE.phone}
+        </a>
+        <!-- Desktop license — hidden below lg -->
+        <div class="hidden lg:flex items-center gap-4 text-slate-300 text-[11.5px]">
+          <span class="inline-flex items-center gap-1.5">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400" aria-hidden="true"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+            Licensed {SITE.license}
+          </span>
+        </div>
       </div>
+
     </div>
   </div>
 
