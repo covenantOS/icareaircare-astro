@@ -1,92 +1,329 @@
 ---
 import { SITE } from '../lib/site';
+
 const reviews = [
-  {
-    name: 'Jessica R.',
-    neighborhood: 'Wesley Chapel',
-    date: 'March 2026',
-    text: 'Tim\'s crew came out same day. The technician explained every step before touching anything, gave me a written quote, and fixed the capacitor in under an hour. No upsell pressure at all. This is the only HVAC company I\'ll call going forward.',
-  },
-  {
-    name: 'Marcus T.',
-    neighborhood: 'Seven Oaks',
-    date: 'February 2026',
-    text: 'Had a freon leak the week before a family visit. They diagnosed it fast, explained the repair versus replace math honestly, and completed the repair with a written warranty. Truck was clean, technician was in uniform, price matched the quote exactly.',
-  },
-  {
-    name: 'Sandra L.',
-    neighborhood: 'Land O\' Lakes',
-    date: 'January 2026',
-    text: 'Our 17-year-old Carrier unit finally gave out in July. I Care Air Care gave us a honest quote, pulled the permit, and had the new system running in one day. They registered the warranty and left us a startup report. Exactly what you want.',
-  },
+  { name: "John Saner", tag: "10+ year customer · Tampa", quote: "Kleber is incredibly efficient, knowledgeable and friendly. He takes real pride in his work and has always had our best interests at heart." },
+  { name: "bcutting1", tag: "15+ year customer", quote: "Great service and excellent knowledge of my AC. Been a customer for over 15 years and will continue to use I Care Air Care. The best." },
+  { name: "Cindy Suy", tag: "5 year customer", quote: "James and Eric came out to address issues in our home. Both very professional, extremely knowledgeable. Tim, the owner, is also wonderful to work with." },
+  { name: "Bob Aloisio", tag: "A/C maintenance", quote: "Always helpful, professional and responsive. They came out on a Sunday emergency call when we returned from vacation to a home with no AC." },
+  { name: "Ronda Allen", tag: "A/C maintenance", quote: "Very satisfied with the service. Eric and the pricing were great. They're never pushy, always willing to make it work. If they say they're going to be here, they're here." },
+  { name: "Glenna Turner", tag: "A/C maintenance", quote: "Eric is very friendly and efficiently completes his mission. He is the embodiment of the 'I Care' in the company title. They are the best!" },
+  { name: "Richard ODell", tag: "A/C maintenance", quote: "Kleber serviced our system and as always, he was prompt, professional, and pleasurable to work with. He knows his stuff!" },
+  { name: "John Shackelford", tag: "HVAC maintenance", quote: "Look no further for reliable and reasonable pricing on AC equipment and repair. Tech Gerald Thompson was outstanding. Owner Tim is the real deal." },
+  { name: "KG", tag: "New customer", quote: "Great company! Professional and knowledgeable. Carmen scheduled Erick, who educated me on what repairs are needed and why. Do not hesitate." },
+  { name: "Jennifer W", tag: "Full system install", quote: "Angel and Cesar were the utmost in professional and competent as they were here two days installing two entire AC systems in our house. Very happy with the work!" },
+  { name: "Amy Barno", tag: "Thermostat install", quote: "Erick did a great job, explained everything thoroughly, and was able to get us back up and running with AC quickly!" },
+  { name: "Nancy Cross", tag: "A/C maintenance", quote: "Kleber was amazing! Kept us informed throughout the service process and AC is working great!" },
+  { name: "Fanny Schoettlin", tag: "Long-time customer", quote: "James is the man! Very thorough, clean, and professional. Shared pics of what he found. Warned me of future problems. These guys are great." },
+  { name: "Amber Higgins", tag: "Service inquiry", quote: "Kleber was very thorough, asked appropriate questions, listened to what I needed, and was overall very insightful and helpful." },
+  { name: "Ty Willingham", tag: "A/C maintenance", quote: "Fantastic vendor. I have used them a couple of times, and they are timely, honest, and do quality work. If you need AC work or duct cleaning, they are a go-to!" },
+  { name: "Sharon Faulk", tag: "HVAC maintenance", quote: "Tran does a great job maintaining my HVAC and leaves the garage looking better than when he came. He is always polite and never pushy." },
+  { name: "Michael Jeffries", tag: "A/C maintenance", quote: "Kleber did a great job! He was thorough and efficient. I will ask for him in the future. An asset to your company." },
+  { name: "Ron Szala", tag: "A/C maintenance", quote: "Great service, fair pricing. Would never go anywhere else." },
+  { name: "Doug Comet", tag: "HVAC maintenance", quote: "Excellent service with complete honesty. Very professional every time." },
+  { name: "Don Bohannon", tag: "A/C repair", quote: "Tim came out and did the braising right away and the unit is now working fine. I'm grateful that Tim responded promptly." },
+  { name: "John Beaver", tag: "Install + maintenance", quote: "Prompt and professional. They proactively scheduled our tune up service and made sure both units were ready for the hot summer to come." },
+  { name: "Philippe Chain", tag: "A/C maintenance", quote: "Great help overall. Personable and professional. I would recommend this company to anyone." },
+  { name: "Laurie Bargfeldt", tag: "A/C maintenance", quote: "Kleber did a great job! Highly recommend!" },
+  { name: "Stacy Fast", tag: "HVAC maintenance", quote: "James did a great job, very professional too!" },
+  { name: "Holly Freeman", tag: "Install + repair", quote: "This company consistently delivers excellent service." },
+  { name: "Peter Molloy", tag: "Dryer vent cleaning", quote: "James was great in cleaning out our dryer vent." },
+  { name: "Arcadio Garcia", tag: "A/C maintenance", quote: "James was a very pleasant individual." },
+  { name: "Dale Menninger", tag: "HVAC maintenance", quote: "Courteous and professional, very respectful." },
 ];
+
+const avatarColors = [
+  "#d97736", "#528c9e", "#7c5e9b", "#3f8a5e", "#c25450",
+  "#5b7eb8", "#b8804f", "#4a8d8d", "#a76590", "#6f7f3d",
+];
+
+function getInitials(name: string) {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
 ---
+
 <section class="py-14 md:py-18 bg-paper">
   <div class="container-site">
-    <div class="text-center max-w-2xl mx-auto">
-      <h2 class="text-3xl md:text-4xl title-accent">Our Great Customer Experience</h2>
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <h2 class="text-3xl md:text-4xl title-accent">Our Customers Say It Best</h2>
       <p class="mt-5 text-slate-600 leading-relaxed">
-        Common themes from homeowners who needed <a class="text-brand-600 underline underline-offset-2 hover:text-brand-700" href="/services/ac-repair-tampa/">AC repair</a>, <a class="text-brand-600 underline underline-offset-2 hover:text-brand-700" href="/services/emergency-ac-repair-tampa/">urgent air conditioner repair</a>, and HVAC services across Wesley Chapel and Tampa.
+        Real Google reviews from homeowners across Wesley Chapel, New Tampa, Land O' Lakes &amp; Tampa Bay — for <a class="text-brand-600 underline underline-offset-2 hover:text-brand-700" href="/services/ac-repair-tampa/">AC repair</a>, <a class="text-brand-600 underline underline-offset-2 hover:text-brand-700" href="/services/ac-maintenance-tampa/">maintenance</a>, and <a class="text-brand-600 underline underline-offset-2 hover:text-brand-700" href="/services/emergency-ac-repair-tampa/">urgent service</a>. {SITE.rating.count}+ five-star ratings and counting.
       </p>
     </div>
 
-    <div class="mt-8 rounded-2xl bg-white shadow-[var(--shadow-soft)] ring-1 ring-slate-100 p-6 md:p-8">
-      <div class="flex items-start justify-between gap-4 flex-wrap mb-6">
-        <h3 class="text-navy-700 font-bold text-lg">What our clients say about us</h3>
-        <div class="text-right">
-          <div class="text-3xl font-bold text-navy-700">{SITE.rating.value.toFixed(2)}</div>
-          <div class="text-accent-500 tracking-tight">★★★★★</div>
-          <div class="text-xs text-slate-500">{SITE.rating.count}+ reviews</div>
-        </div>
-      </div>
+    <div class="max-w-3xl mx-auto">
+      <div class="ica-review-widget">
 
-      <!-- Carousel container -->
-      <div class="relative overflow-hidden" style="min-height:140px">
-        {reviews.map((r, i) => (
-          <div
-            class="review-slide absolute inset-0 transition-opacity duration-700"
-            style={i === 0 ? 'opacity:1;z-index:1' : 'opacity:0;z-index:0'}
-            data-idx={i}
-          >
-            <figure class="rounded-xl bg-surface p-5 h-full">
-              <div class="flex items-center justify-between">
-                <div class="text-accent-500 text-base">★★★★★</div>
-                <span class="text-xs text-slate-500">Verified Google Review</span>
+        <div class="ica-rw-header">
+          <div class="ica-rw-stats">
+            <div class="ica-rw-score">{SITE.rating.value.toFixed(1)}</div>
+            <div class="ica-rw-stars-wrap">
+              <div class="ica-rw-stars" aria-label={`${SITE.rating.value} out of 5 stars`}>
+                {[0,1,2,3,4].map(() => (
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.39 5.64L18 7.24l-4 4.13L15 18 10 14.77 5 18l1-6.63-4-4.13 5.61-.6z"/></svg>
+                ))}
               </div>
-              <blockquote class="mt-3 text-[14.5px] text-slate-700 leading-relaxed">"{r.text}"</blockquote>
-              <figcaption class="mt-4 flex items-center justify-between">
-                <div>
-                  <span class="text-sm font-semibold text-navy-700">{r.name}</span>
-                  {r.neighborhood && <span class="text-xs text-slate-500 ml-1.5">· {r.neighborhood}</span>}
-                </div>
-                <span class="text-xs text-slate-400">{r.date}</span>
-              </figcaption>
-            </figure>
+              <div class="ica-rw-count">{SITE.rating.count}+ Google Reviews</div>
+            </div>
           </div>
-        ))}
-      </div>
+          <div class="ica-rw-logo" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+          </div>
+        </div>
 
-      <!-- Dot navigation -->
-      <div class="flex justify-center gap-2 mt-5">
-        {reviews.map((_, i) => (
-          <button
-            class="review-dot w-2.5 h-2.5 rounded-full transition-colors"
-            style={i === 0 ? 'background-color:var(--color-accent-500)' : 'background-color:var(--color-line)'}
-            data-idx={i}
-            aria-label={`View review ${i + 1}`}
-          ></button>
-        ))}
-      </div>
-    </div>
+        <div class="ica-rw-divider"></div>
 
-    <div class="mt-8 text-center">
-      <a href="/reviews/" class="btn-primary btn-lg">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
-        See All Reviews
-      </a>
+        <div class="ica-rw-carousel" data-ica-carousel>
+          {reviews.map((r, i) => (
+            <div class={`ica-rw-item ${i === 0 ? 'is-active' : ''}`} data-idx={i}>
+              <div class="ica-rw-avatar" style={`background-color: ${avatarColors[i % avatarColors.length]}`} aria-hidden="true">
+                {getInitials(r.name)}
+              </div>
+              <div class="ica-rw-content">
+                <p class="ica-rw-quote">"{r.quote}"</p>
+                <p class="ica-rw-author">{r.name}<span> · {r.tag}</span></p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="ica-rw-progress-row">
+          <div class="ica-rw-progress-track" role="presentation">
+            <div class="ica-rw-progress-fill" data-ica-progress></div>
+          </div>
+          <div class="ica-rw-counter" data-ica-counter>1 / {reviews.length}</div>
+        </div>
+
+        <a class="ica-rw-cta" href={SITE.socials.google} target="_blank" rel="noopener noreferrer">
+          Read all {SITE.rating.count}+ Google reviews
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .ica-review-widget {
+    container-type: inline-size;
+    container-name: icaw;
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--color-line);
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ica-rw-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+  }
+  .ica-rw-stats { display: flex; align-items: center; gap: 14px; }
+  .ica-rw-score {
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--color-navy-700);
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .ica-rw-stars-wrap { display: flex; flex-direction: column; gap: 3px; }
+  .ica-rw-stars { display: flex; gap: 2px; }
+  .ica-rw-stars svg { width: 16px; height: 16px; fill: #fbbc04; }
+  .ica-rw-count {
+    font-size: 13px;
+    color: var(--color-muted);
+    font-weight: 500;
+  }
+  .ica-rw-logo svg { display: block; }
+
+  .ica-rw-divider {
+    height: 1px;
+    background-color: var(--color-line);
+    margin: 20px 0;
+    width: 100%;
+  }
+
+  .ica-rw-carousel {
+    position: relative;
+    width: 100%;
+    min-height: 180px;
+  }
+  .ica-rw-item {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: flex-start;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.55s ease-in-out;
+    pointer-events: none;
+  }
+  .ica-rw-item.is-active {
+    opacity: 1;
+    position: relative;
+    pointer-events: auto;
+  }
+  .ica-rw-avatar {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .ica-rw-content { flex: 1; min-width: 0; }
+  .ica-rw-quote {
+    font-size: 15px;
+    color: var(--color-ink-soft);
+    font-style: italic;
+    line-height: 1.55;
+    margin: 0 0 10px 0;
+  }
+  .ica-rw-author {
+    font-size: 13.5px;
+    color: var(--color-navy-700);
+    margin: 0;
+    font-weight: 700;
+  }
+  .ica-rw-author span {
+    font-weight: 400;
+    color: var(--color-muted);
+  }
+
+  .ica-rw-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .ica-rw-progress-track {
+    flex: 1;
+    height: 3px;
+    background-color: var(--color-line);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .ica-rw-progress-fill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--color-brand-500);
+    border-radius: 99px;
+    transition: width 0.1s linear;
+  }
+  .ica-rw-counter {
+    font-size: 11px;
+    color: var(--color-muted);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .ica-rw-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 12px 16px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    color: var(--color-navy-700);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .ica-rw-cta:hover,
+  .ica-rw-cta:focus-visible {
+    background-color: var(--color-brand-500);
+    border-color: var(--color-brand-500);
+    color: #ffffff;
+    outline: none;
+  }
+  .ica-rw-cta svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s ease;
+  }
+  .ica-rw-cta:hover svg,
+  .ica-rw-cta:focus-visible svg { transform: translateX(3px); }
+
+  /* Wide layout — triggered by the widget's own width, not the viewport */
+  @container icaw (min-width: 540px) {
+    .ica-review-widget {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      grid-template-rows: 1fr auto;
+      grid-template-areas:
+        "header  carousel"
+        "cta     progress";
+      column-gap: 32px;
+      row-gap: 20px;
+      padding: 32px;
+    }
+    .ica-rw-header {
+      grid-area: header;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .ica-rw-score { font-size: 52px; }
+    .ica-rw-stars svg { width: 18px; height: 18px; }
+    .ica-rw-count { font-size: 14px; }
+    .ica-rw-divider { display: none; }
+    .ica-rw-carousel {
+      grid-area: carousel;
+      padding-left: 32px;
+      border-left: 1px solid var(--color-line);
+      min-height: 150px;
+    }
+    .ica-rw-quote { font-size: 16px; }
+    .ica-rw-progress-row {
+      grid-area: progress;
+      padding-left: 32px;
+      margin-top: 0;
+    }
+    .ica-rw-cta {
+      grid-area: cta;
+      margin-top: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ica-rw-item { transition: none; }
+    .ica-rw-progress-fill { transition: none; }
+    .ica-rw-cta svg { transition: none; }
+  }
+</style>
 
 <script type="application/ld+json" set:html={JSON.stringify({
   '@context': 'https://schema.org',
@@ -98,48 +335,63 @@ const reviews = [
     reviewCount: SITE.rating.count,
     bestRating: 5,
   },
-  review: reviews.map(r => ({
+  review: reviews.slice(0, 10).map(r => ({
     '@type': 'Review',
     author: { '@type': 'Person', name: r.name },
     reviewRating: { '@type': 'Rating', ratingValue: 5, bestRating: 5 },
-    reviewBody: r.text,
-    datePublished: r.date,
+    reviewBody: r.quote,
   })),
 })} />
 
 <script is:inline>
   (function () {
-    function initCarousel(section) {
-      var slides = section.querySelectorAll('.review-slide');
-      var dots = section.querySelectorAll('.review-dot');
-      if (!slides.length) return;
-      var current = 0;
-      var ACCENT = 'var(--color-accent-500)';
-      var LINE = 'var(--color-line)';
+    function initCarousel(widget) {
+      var items = widget.querySelectorAll('.ica-rw-item');
+      var counter = widget.querySelector('[data-ica-counter]');
+      var progress = widget.querySelector('[data-ica-progress]');
+      if (!items.length || !counter || !progress) return;
 
-      function goTo(n) {
-        slides[current].style.opacity = '0';
-        slides[current].style.zIndex = '0';
-        dots[current].style.backgroundColor = LINE;
-        current = n % slides.length;
-        slides[current].style.opacity = '1';
-        slides[current].style.zIndex = '1';
-        dots[current].style.backgroundColor = ACCENT;
+      var total = items.length;
+      var current = 0;
+      var progressValue = 0;
+      var paused = false;
+      var DURATION_MS = 5500;
+      var TICK_MS = 50;
+      var STEP = (TICK_MS / DURATION_MS) * 100;
+
+      counter.textContent = '1 / ' + total;
+
+      function advance() {
+        items[current].classList.remove('is-active');
+        current = (current + 1) % total;
+        items[current].classList.add('is-active');
+        counter.textContent = (current + 1) + ' / ' + total;
+        progressValue = 0;
+        progress.style.width = '0%';
       }
 
-      dots.forEach(function (dot, i) {
-        dot.addEventListener('click', function () { goTo(i); clearInterval(timer); timer = setInterval(advance, 4500); });
-      });
+      setInterval(function () {
+        if (paused) return;
+        progressValue += STEP;
+        if (progressValue >= 100) advance();
+        else progress.style.width = progressValue + '%';
+      }, TICK_MS);
 
-      function advance() { goTo((current + 1) % slides.length); }
-      var timer = setInterval(advance, 4500);
+      widget.addEventListener('mouseenter', function () { paused = true; });
+      widget.addEventListener('mouseleave', function () { paused = false; });
+      widget.addEventListener('focusin', function () { paused = true; });
+      widget.addEventListener('focusout', function () { paused = false; });
+      document.addEventListener('visibilitychange', function () {
+        paused = document.hidden;
+      });
     }
 
     function ready(fn) {
-      if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn);
+      if (document.readyState !== 'loading') fn();
+      else document.addEventListener('DOMContentLoaded', fn);
     }
     ready(function () {
-      document.querySelectorAll('.review-slide').length && initCarousel(document.querySelector('.review-slide').closest('section'));
+      document.querySelectorAll('.ica-review-widget').forEach(initCarousel);
     });
   })();
 </script>

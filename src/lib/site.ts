@@ -5,7 +5,7 @@ export const SITE = {
   url: 'https://www.icareaircare.com',
   phone: '(813) 395-2324',
   phoneHref: 'tel:+18133952324',
-  bookUrl: 'https://book.housecallpro.com/book/I-Care-Air-Care/cb3eaa8c',
+  bookUrl: 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4ca7c48c3bbcf2e13316f44e8?v2=true',
   email: 'tim@icareaircare.com',
   license: 'CAC1822037',
   address: {
