@@ -1,7 +1,11 @@
 ---
 import { SITE } from '../lib/site';
 ---
-<div class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur border-t border-slate-200 px-4 py-3 flex gap-2 shadow-lg">
+<div
+  id="sticky-mobile-cta"
+  class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur border-t border-slate-200 px-4 py-3 flex gap-2 shadow-lg"
+  style="transform:translateY(100%);transition:transform 360ms cubic-bezier(.4,0,.2,1);"
+>
   <a href={SITE.phoneHref} class="flex-1 inline-flex items-center justify-center rounded-full bg-brand-600 text-white font-semibold text-sm px-4 py-3">
     Call {SITE.phone}
   </a>
@@ -9,3 +13,24 @@ import { SITE } from '../lib/site';
     Book
   </a>
 </div>
+
+<script is:inline>
+  (function () {
+    var bar = document.getElementById('sticky-mobile-cta');
+    if (!bar) return;
+    var visible = false;
+    var ticking = false;
+    function update() {
+      var show = window.scrollY > 200;
+      if (show !== visible) {
+        visible = show;
+        bar.style.transform = show ? 'translateY(0)' : 'translateY(100%)';
+      }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+  })();
+</script>
