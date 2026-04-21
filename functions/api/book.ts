@@ -159,7 +159,9 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     source: 'Website (icareaircare.com)',
   };
 
-  const base = env.HCP_API_BASE || 'https://api.housecallpro.com/v1';
+  // HCP public API — NO /v1 prefix. Confirmed by probing: /customers and /leads return 401 (valid route),
+  // while /v1/customers and /v1/leads return 404. Docs/tutorials that cite /v1 are wrong.
+  const base = env.HCP_API_BASE || 'https://api.housecallpro.com';
 
   try {
     const res = await fetch(`${base}/leads`, {
@@ -181,18 +183,20 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         status: res.status,
         bodySnippet: text.slice(0, 1200),
       });
+      // Friendlier message per status
+      let friendly = `We got your request but could not auto-schedule. Someone from our team will call you shortly at the number you provided. Or call (813) 395-2324 to confirm now.`;
+      if (res.status === 401) {
+        friendly = `Booking is temporarily unavailable (auth issue). Please call (813) 395-2324 and we will get you on the schedule.`;
+      } else if (res.status === 422) {
+        friendly = `We got most of your request but our schedule system flagged a field. Someone will call you shortly to finish booking. Or call (813) 395-2324 now.`;
+      }
       return json({
-        error: `We got your request but could not auto-schedule. Someone from our team will call you shortly at the number you provided. Or call (813) 395-2324 to confirm now.`,
+        error: friendly,
         debug: {
           hcp_status: res.status,
-          hcp_body: text.slice(0, 1200),
+          hcp_body: text.slice(0, 1400),
           endpoint: `${base}/leads`,
-          payload_preview: {
-            has_name: !!data.name,
-            has_email: !!data.email,
-            has_phone: !!data.phone,
-            has_address: !!data.address?.street,
-          },
+          payload_sent: hcpPayload,
         },
       }, 502);
     }
