@@ -1,5 +1,9 @@
 # build output
 dist/
+
+# image optimizer artifacts — never commit temp files or the backup tree
+*.tmp
+public/images/.original-backup/
 # generated types
 .astro/
 
