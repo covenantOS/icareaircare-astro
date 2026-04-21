@@ -2,329 +2,177 @@
 import { SITE } from '../lib/site';
 
 const reviews = [
-  { name: "John Saner", tag: "10+ year customer · Tampa", quote: "Kleber is incredibly efficient, knowledgeable and friendly. He takes real pride in his work and has always had our best interests at heart." },
-  { name: "bcutting1", tag: "15+ year customer", quote: "Great service and excellent knowledge of my AC. Been a customer for over 15 years and will continue to use I Care Air Care. The best." },
-  { name: "Cindy Suy", tag: "5 year customer", quote: "James and Eric came out to address issues in our home. Both very professional, extremely knowledgeable. Tim, the owner, is also wonderful to work with." },
-  { name: "Bob Aloisio", tag: "A/C maintenance", quote: "Always helpful, professional and responsive. They came out on a Sunday emergency call when we returned from vacation to a home with no AC." },
-  { name: "Ronda Allen", tag: "A/C maintenance", quote: "Very satisfied with the service. Eric and the pricing were great. They're never pushy, always willing to make it work. If they say they're going to be here, they're here." },
-  { name: "Glenna Turner", tag: "A/C maintenance", quote: "Eric is very friendly and efficiently completes his mission. He is the embodiment of the 'I Care' in the company title. They are the best!" },
-  { name: "Richard ODell", tag: "A/C maintenance", quote: "Kleber serviced our system and as always, he was prompt, professional, and pleasurable to work with. He knows his stuff!" },
-  { name: "John Shackelford", tag: "HVAC maintenance", quote: "Look no further for reliable and reasonable pricing on AC equipment and repair. Tech Gerald Thompson was outstanding. Owner Tim is the real deal." },
-  { name: "KG", tag: "New customer", quote: "Great company! Professional and knowledgeable. Carmen scheduled Erick, who educated me on what repairs are needed and why. Do not hesitate." },
-  { name: "Jennifer W", tag: "Full system install", quote: "Angel and Cesar were the utmost in professional and competent as they were here two days installing two entire AC systems in our house. Very happy with the work!" },
-  { name: "Amy Barno", tag: "Thermostat install", quote: "Erick did a great job, explained everything thoroughly, and was able to get us back up and running with AC quickly!" },
-  { name: "Nancy Cross", tag: "A/C maintenance", quote: "Kleber was amazing! Kept us informed throughout the service process and AC is working great!" },
-  { name: "Fanny Schoettlin", tag: "Long-time customer", quote: "James is the man! Very thorough, clean, and professional. Shared pics of what he found. Warned me of future problems. These guys are great." },
-  { name: "Amber Higgins", tag: "Service inquiry", quote: "Kleber was very thorough, asked appropriate questions, listened to what I needed, and was overall very insightful and helpful." },
-  { name: "Ty Willingham", tag: "A/C maintenance", quote: "Fantastic vendor. I have used them a couple of times, and they are timely, honest, and do quality work. If you need AC work or duct cleaning, they are a go-to!" },
-  { name: "Sharon Faulk", tag: "HVAC maintenance", quote: "Tran does a great job maintaining my HVAC and leaves the garage looking better than when he came. He is always polite and never pushy." },
-  { name: "Michael Jeffries", tag: "A/C maintenance", quote: "Kleber did a great job! He was thorough and efficient. I will ask for him in the future. An asset to your company." },
-  { name: "Ron Szala", tag: "A/C maintenance", quote: "Great service, fair pricing. Would never go anywhere else." },
-  { name: "Doug Comet", tag: "HVAC maintenance", quote: "Excellent service with complete honesty. Very professional every time." },
-  { name: "Don Bohannon", tag: "A/C repair", quote: "Tim came out and did the braising right away and the unit is now working fine. I'm grateful that Tim responded promptly." },
-  { name: "John Beaver", tag: "Install + maintenance", quote: "Prompt and professional. They proactively scheduled our tune up service and made sure both units were ready for the hot summer to come." },
-  { name: "Philippe Chain", tag: "A/C maintenance", quote: "Great help overall. Personable and professional. I would recommend this company to anyone." },
-  { name: "Laurie Bargfeldt", tag: "A/C maintenance", quote: "Kleber did a great job! Highly recommend!" },
-  { name: "Stacy Fast", tag: "HVAC maintenance", quote: "James did a great job, very professional too!" },
-  { name: "Holly Freeman", tag: "Install + repair", quote: "This company consistently delivers excellent service." },
-  { name: "Peter Molloy", tag: "Dryer vent cleaning", quote: "James was great in cleaning out our dryer vent." },
-  { name: "Arcadio Garcia", tag: "A/C maintenance", quote: "James was a very pleasant individual." },
-  { name: "Dale Menninger", tag: "HVAC maintenance", quote: "Courteous and professional, very respectful." },
+  { n: 'Ronda Allen',      d: '14 hours ago', t: "Very satisfied with service men Eric and the pricing. Always pleased. Kleber Tortorelli was our tech. He was very professional. They're never pushy, always willing to make it work. If they say they're going to be here, they're here." },
+  { n: 'Nancy Cross',      d: '21 hours ago', t: 'Kleber was amazing! Kept us informed throughout the service process and AC is working great!' },
+  { n: 'Amy Barno',        d: '4 days ago',   t: 'Erick did a great job, explained everything thoroughly, and was able to get us back up and running with AC quickly!' },
+  { n: 'Don Bohannon',     d: '4 days ago',   t: "My AC unit developed a leak. They put in a new coil unit. Tim came out and did the braising right away and the unit is now working fine. I'm grateful that Tim responded promptly." },
+  { n: 'Doug Comet',       d: '5 days ago',   t: 'Excellent service with complete honesty. Very professional every time.' },
+  { n: 'Brian Cutting',    d: '5 days ago',   t: 'Great service and excellent knowledge of my AC. Been a customer for over 15 years and will continue to use I Care Air Care. The best.' },
+  { n: 'Dale Menninger',   d: '7 days ago',   t: 'Courteous and professional, very respectful.' },
+  { n: 'Fanny Schoettlin', d: '7 days ago',   t: 'JAMES is the man!!! Very thorough, clean, and professional. Shared pics of what he found. Warned me of future problems. These guys are great, been working with them for years.' },
+  { n: 'Ron Szala',        d: '1 week ago',   t: 'Great service, fair pricing. Would never go anywhere else.' },
+  { n: 'KG',               d: '2 weeks ago',  t: 'Great company to reach out to! They are professional and knowledgeable. Great experience from speaking to Carmen who scheduled Erick, the technician. He educated me on what repairs are needed on my unit and why.' },
+  { n: 'Laurie Bargfeldt', d: '2 weeks ago',  t: 'Kleber did a great job! Highly recommend!' },
+  { n: 'Michael Jeffries', d: '2 weeks ago',  t: 'Kleber did a great job! He was thorough and efficient. I will ask for him in the future. An asset to your company.' },
+  { n: 'Bob Aloisio',      d: '2 weeks ago',  t: 'The I Care Air Care team are always helpful, professional and responsive. The first time we used them was many years ago on an emergency call on a Sunday after we returned from vacation to a home with no AC. They were great then and still great today.' },
+  { n: 'John Beaver',      d: '2 weeks ago',  t: 'I Care Air Care was prompt and professional. They proactively scheduled our tune up service and made sure both units were ready for the hot summer to come.' },
+  { n: 'Arcadio Garcia',   d: '2 weeks ago',  t: 'James was a very pleasant individual.' },
+  { n: 'Richard ODell',    d: '2 weeks ago',  t: 'Kleber serviced our system today and as always, he was prompt, professional, and pleasurable to work with. I Care Air is the best and Kleber deserves great credit for their reputation and success. He knows his stuff!' },
+  { n: 'Peter Molloy',     d: '2 weeks ago',  t: 'James was great in cleaning out our dryer vent.' },
+  { n: 'Philippe Chain',   d: '2 weeks ago',  t: 'Great help overall. Personable and professional. I would recommend this company to anyone.' },
+  { n: 'Glenna Turner',    d: '3 weeks ago',  t: "Eric is very friendly and efficiently completes his mission. He is the embodiment of the 'I Care' in the company title. They are the best!" },
+  { n: 'Stacy Fast',       d: '3 weeks ago',  t: 'James did a great job, very professional too!' },
+  { n: 'Sharon Faulk',     d: '3 weeks ago',  t: 'Tran does a great job maintaining my HVAC and leaves the garage looking better than when he came. He is always polite and tells me what should to be done but is never pushy.' },
+  { n: 'Jennifer W',       d: '4 weeks ago',  t: 'Angel and Cesar were the utmost in professional and competent as they were here two days installing two entire AC systems in our house. We are very happy with the work!' },
+  { n: 'John Shackelford', d: '4 weeks ago',  t: 'Look no further for reliable and reasonable pricing on AC equipment and repair. Tech Gerald Thompson was outstanding. Owner Tim, I Care Air, is the real deal. Customer focused owner.' },
+  { n: 'Amber Higgins',    d: '4 weeks ago',  t: 'Kleber, the tech, was very thorough, asked appropriate questions, listened to what I needed, and was overall very insightful and very helpful. I look forward to doing business with them.' },
+  { n: 'John Saner',       d: '4 weeks ago',  t: 'As usual the service was professional and really excellent! This is our air con go to company for sure. They are always on time and they just do what you ask and charge very reasonably. Kleber takes a real pride in his work.' },
+  { n: 'Cindy Suy',        d: '4 weeks ago',  t: 'We have been with Icare for 5 years now. James and Eric came out today to address issues in our home. They are both very professional, extremely knowledgeable, and have great attention to detail. Tim, the owner is also wonderful to work with.' },
+  { n: 'Holly Freeman',    d: '4 weeks ago',  t: 'This company consistently delivers excellent service.' },
+  { n: 'Ty Willingham',    d: '4 weeks ago',  t: 'Fantastic Vendor. I have used them now a couple of times, and they are timely, honest, and do quality work. If you need AC work or duct cleaning, they are a go-to!' },
 ];
 
-const avatarColors = [
-  "#d97736", "#528c9e", "#7c5e9b", "#3f8a5e", "#c25450",
-  "#5b7eb8", "#b8804f", "#4a8d8d", "#a76590", "#6f7f3d",
+const featured = [
+  { t: 'Been a customer for over 15 years and will continue to use I Care Air Care. Great service and excellent knowledge of my AC. The best.', a: 'Brian Cutting' },
+  { t: 'Kleber takes a real pride in his work and I have always felt he has our best interests at heart. I Care Air Care have been our aircon company for over ten years now.', a: 'John Saner' },
+  { t: 'We have been with Icare for 5 years now. James and Eric are both very professional, extremely knowledgeable, and have great attention to detail. Tim, the owner is also wonderful to work with.', a: 'Cindy Suy' },
+  { t: 'The first time we used them was many years ago on an emergency call on a Sunday after we returned from vacation to a home with no AC. They were great then and still great today.', a: 'Bob Aloisio' },
+  { t: 'Look no further for reliable and reasonable pricing on AC equipment and repair. Owner Tim is the real deal. Customer focused owner.', a: 'John Shackelford' },
+  { t: "Eric is the embodiment of the 'I Care' in the company title. They are the best!", a: 'Glenna Turner' },
+  { t: 'JAMES is the man! Very thorough, clean, and professional. Shared pics of what he found. These guys are great, been working with them for years.', a: 'Fanny Schoettlin' },
+  { t: 'Great company to reach out to! They are professional and knowledgeable. Erick educated me on what repairs are needed on my unit and why.', a: 'KG' },
 ];
 
-function getInitials(name: string) {
+function initials(name: string) {
   const parts = name.trim().split(/\s+/);
   if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
+
+const googleReviewsUrl = 'https://www.google.com/maps/place/I+Care+Air+Care/data=!4m2!3m1!1s0x0:0xa28123280a3b50cc?sa=X&ved=1t:2428&ictx=111';
+
+// Duplicate array for seamless marquee
+const marqueeCards = [...reviews, ...reviews];
+
+// Pick first featured for SSR
+const firstFeatured = featured[0];
 ---
 
-<section class="py-14 md:py-18 bg-paper">
+<section class="iac-reviews" aria-label="Customer Reviews">
   <div class="container-site">
-    <div class="text-center max-w-2xl mx-auto mb-10">
-      <h2 class="text-3xl md:text-4xl title-accent">Our Customers Say It Best</h2>
-      <p class="mt-5 text-slate-600 leading-relaxed">
-        Real Google reviews from homeowners across Wesley Chapel, New Tampa, Land O' Lakes &amp; Tampa Bay — for <a class="text-brand-600 underline underline-offset-2 hover:text-brand-700" href="/services/ac-repair-tampa/">AC repair</a>, <a class="text-brand-600 underline underline-offset-2 hover:text-brand-700" href="/services/ac-maintenance-tampa/">maintenance</a>, and <a class="text-brand-600 underline underline-offset-2 hover:text-brand-700" href="/services/emergency-ac-repair-tampa/">urgent service</a>. {SITE.rating.count}+ five-star ratings and counting.
-      </p>
-    </div>
 
-    <div class="max-w-3xl mx-auto">
-      <div class="ica-review-widget">
-
-        <div class="ica-rw-header">
-          <div class="ica-rw-stats">
-            <div class="ica-rw-score">{SITE.rating.value.toFixed(1)}</div>
-            <div class="ica-rw-stars-wrap">
-              <div class="ica-rw-stars" aria-label={`${SITE.rating.value} out of 5 stars`}>
-                {[0,1,2,3,4].map(() => (
-                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.39 5.64L18 7.24l-4 4.13L15 18 10 14.77 5 18l1-6.63-4-4.13 5.61-.6z"/></svg>
-                ))}
-              </div>
-              <div class="ica-rw-count">{SITE.rating.count}+ Google Reviews</div>
-            </div>
-          </div>
-          <div class="ica-rw-logo" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="28" height="28">
-              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-            </svg>
-          </div>
-        </div>
-
-        <div class="ica-rw-divider"></div>
-
-        <div class="ica-rw-carousel" data-ica-carousel>
-          {reviews.map((r, i) => (
-            <div class={`ica-rw-item ${i === 0 ? 'is-active' : ''}`} data-idx={i}>
-              <div class="ica-rw-avatar" style={`background-color: ${avatarColors[i % avatarColors.length]}`} aria-hidden="true">
-                {getInitials(r.name)}
-              </div>
-              <div class="ica-rw-content">
-                <p class="ica-rw-quote">"{r.quote}"</p>
-                <p class="ica-rw-author">{r.name}<span> · {r.tag}</span></p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div class="ica-rw-progress-row">
-          <div class="ica-rw-progress-track" role="presentation">
-            <div class="ica-rw-progress-fill" data-ica-progress></div>
-          </div>
-          <div class="ica-rw-counter" data-ica-counter>1 / {reviews.length}</div>
-        </div>
-
-        <a class="ica-rw-cta" href={SITE.socials.google} target="_blank" rel="noopener noreferrer">
-          Read all {SITE.rating.count}+ Google reviews
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="5" y1="12" x2="19" y2="12"/>
-            <polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </a>
-
+    <!-- Header -->
+    <div class="iac-reviews__header">
+      <div class="iac-reviews__badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+        {SITE.rating.value} Stars · {SITE.rating.count}+ Google Reviews
+      </div>
+      <div class="iac-reviews__subtitle">Licensed &amp; Insured HVAC Experts · Tampa Bay &amp; Wesley Chapel</div>
+      <div class="iac-reviews__trust">
+        <span class="iac-reviews__trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Licensed &amp; Insured
+        </span>
+        <span class="iac-reviews__trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          EPA 608 Certified Techs
+        </span>
+        <span class="iac-reviews__trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+          {SITE.yearsInBusiness}+ Years Serving Tampa Bay
+        </span>
+        <span class="iac-reviews__trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          Family-Owned &amp; Operated
+        </span>
+        <span class="iac-reviews__trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Same-Day Service Available
+        </span>
+      </div>
+      <div class="iac-reviews__live">
+        <span class="iac-reviews__pulse" aria-hidden="true"></span>
+        Verified Google Reviews
       </div>
     </div>
+
+    <!-- Featured rotating review -->
+    <div class="iac-featured" aria-live="polite">
+      <div class="iac-stars" role="img" aria-label="5 out of 5 stars">
+        {[0,1,2,3,4].map(() => (
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fbbc04" d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+        ))}
+      </div>
+      <div class="iac-featured__text iac-featured__fade" data-feat-text>{firstFeatured.t}</div>
+      <div class="iac-featured__author" data-feat-author>— {firstFeatured.a}</div>
+    </div>
+
+    <!-- Marquee review track -->
+    <div class="iac-reviews__track-wrap">
+      <div class="iac-reviews__track" data-track>
+        {marqueeCards.map((r, i) => (
+          <div class="iac-card" aria-hidden={i >= reviews.length ? 'true' : undefined}>
+            <div class="iac-card__top">
+              <div class="iac-card__avatar" aria-hidden="true">{initials(r.n)}</div>
+              <div>
+                <div class="iac-card__name">{r.n}</div>
+                <div class="iac-card__date">{r.d}</div>
+              </div>
+            </div>
+            <div class="iac-card__stars iac-stars" role="img" aria-label="5 stars">
+              {[0,1,2,3,4].map(() => (
+                <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fbbc04" d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+              ))}
+            </div>
+            <div class="iac-card__text">{r.t}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="iac-stats">
+      <div class="iac-stat">
+        <div class="iac-stat__num">{SITE.rating.value}</div>
+        <div class="iac-stat__label">Average Rating</div>
+      </div>
+      <div class="iac-stat">
+        <div class="iac-stat__num"><a href={googleReviewsUrl} target="_blank" rel="noopener noreferrer">{SITE.rating.count}+</a></div>
+        <div class="iac-stat__label">Google Reviews</div>
+      </div>
+      <div class="iac-stat">
+        <div class="iac-stat__num">{SITE.yearsInBusiness}+</div>
+        <div class="iac-stat__label">Years in Tampa Bay</div>
+      </div>
+      <div class="iac-stat">
+        <div class="iac-stat__num">CAC</div>
+        <div class="iac-stat__label">FL {SITE.license}</div>
+      </div>
+    </div>
+
+    <!-- Primary CTA -->
+    <div class="iac-cta">
+      <a class="iac-cta__btn" href={googleReviewsUrl} target="_blank" rel="noopener noreferrer" aria-label={`Read all ${SITE.rating.count}+ reviews on Google`}>
+        Read All {SITE.rating.count}+ Reviews on Google
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+      <span class="iac-cta__sub">Every review is verified by Google · sourced in real-time</span>
+    </div>
+
+    <div class="iac-reviews__google">
+      <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
+        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18A10.96 10.96 0 001 12c0 1.77.42 3.45 1.18 4.93l3.66-2.84z"/>
+        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+      </svg>
+      Reviews sourced from Google
+    </div>
+
   </div>
 </section>
 
-<style>
-  .ica-review-widget {
-    container-type: inline-size;
-    container-name: icaw;
-    background-color: #ffffff;
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: var(--shadow-soft);
-    border: 1px solid var(--color-line);
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .ica-rw-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    gap: 16px;
-  }
-  .ica-rw-stats { display: flex; align-items: center; gap: 14px; }
-  .ica-rw-score {
-    font-size: 40px;
-    font-weight: 800;
-    color: var(--color-navy-700);
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-  .ica-rw-stars-wrap { display: flex; flex-direction: column; gap: 3px; }
-  .ica-rw-stars { display: flex; gap: 2px; }
-  .ica-rw-stars svg { width: 16px; height: 16px; fill: #fbbc04; }
-  .ica-rw-count {
-    font-size: 13px;
-    color: var(--color-muted);
-    font-weight: 500;
-  }
-  .ica-rw-logo svg { display: block; }
-
-  .ica-rw-divider {
-    height: 1px;
-    background-color: var(--color-line);
-    margin: 20px 0;
-    width: 100%;
-  }
-
-  .ica-rw-carousel {
-    position: relative;
-    width: 100%;
-    min-height: 180px;
-  }
-  .ica-rw-item {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    align-items: flex-start;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    transition: opacity 0.55s ease-in-out;
-    pointer-events: none;
-  }
-  .ica-rw-item.is-active {
-    opacity: 1;
-    position: relative;
-    pointer-events: auto;
-  }
-  .ica-rw-avatar {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-  }
-  .ica-rw-content { flex: 1; min-width: 0; }
-  .ica-rw-quote {
-    font-size: 15px;
-    color: var(--color-ink-soft);
-    font-style: italic;
-    line-height: 1.55;
-    margin: 0 0 10px 0;
-  }
-  .ica-rw-author {
-    font-size: 13.5px;
-    color: var(--color-navy-700);
-    margin: 0;
-    font-weight: 700;
-  }
-  .ica-rw-author span {
-    font-weight: 400;
-    color: var(--color-muted);
-  }
-
-  .ica-rw-progress-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 20px;
-  }
-  .ica-rw-progress-track {
-    flex: 1;
-    height: 3px;
-    background-color: var(--color-line);
-    border-radius: 99px;
-    overflow: hidden;
-  }
-  .ica-rw-progress-fill {
-    height: 100%;
-    width: 0%;
-    background-color: var(--color-brand-500);
-    border-radius: 99px;
-    transition: width 0.1s linear;
-  }
-  .ica-rw-counter {
-    font-size: 11px;
-    color: var(--color-muted);
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-  }
-
-  .ica-rw-cta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 20px;
-    padding: 12px 16px;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-line);
-    border-radius: 10px;
-    color: var(--color-navy-700);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-  }
-  .ica-rw-cta:hover,
-  .ica-rw-cta:focus-visible {
-    background-color: var(--color-brand-500);
-    border-color: var(--color-brand-500);
-    color: #ffffff;
-    outline: none;
-  }
-  .ica-rw-cta svg {
-    width: 14px;
-    height: 14px;
-    transition: transform 0.2s ease;
-  }
-  .ica-rw-cta:hover svg,
-  .ica-rw-cta:focus-visible svg { transform: translateX(3px); }
-
-  /* Wide layout — triggered by the widget's own width, not the viewport */
-  @container icaw (min-width: 540px) {
-    .ica-review-widget {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      grid-template-rows: 1fr auto;
-      grid-template-areas:
-        "header  carousel"
-        "cta     progress";
-      column-gap: 32px;
-      row-gap: 20px;
-      padding: 32px;
-    }
-    .ica-rw-header {
-      grid-area: header;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 20px;
-    }
-    .ica-rw-score { font-size: 52px; }
-    .ica-rw-stars svg { width: 18px; height: 18px; }
-    .ica-rw-count { font-size: 14px; }
-    .ica-rw-divider { display: none; }
-    .ica-rw-carousel {
-      grid-area: carousel;
-      padding-left: 32px;
-      border-left: 1px solid var(--color-line);
-      min-height: 150px;
-    }
-    .ica-rw-quote { font-size: 16px; }
-    .ica-rw-progress-row {
-      grid-area: progress;
-      padding-left: 32px;
-      margin-top: 0;
-    }
-    .ica-rw-cta {
-      grid-area: cta;
-      margin-top: 0;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .ica-rw-item { transition: none; }
-    .ica-rw-progress-fill { transition: none; }
-    .ica-rw-cta svg { transition: none; }
-  }
-</style>
-
+<!-- JSON-LD: AggregateRating + first 10 Reviews -->
 <script type="application/ld+json" set:html={JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
@@ -337,61 +185,310 @@ function getInitials(name: string) {
   },
   review: reviews.slice(0, 10).map(r => ({
     '@type': 'Review',
-    author: { '@type': 'Person', name: r.name },
+    author: { '@type': 'Person', name: r.n },
     reviewRating: { '@type': 'Rating', ratingValue: 5, bestRating: 5 },
-    reviewBody: r.quote,
+    reviewBody: r.t,
   })),
 })} />
 
-<script is:inline>
+<style is:global>
+  .iac-reviews {
+    padding: 56px 0;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+  }
+  .iac-reviews__header { text-align: center; margin-bottom: 32px; }
+  .iac-reviews__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--color-navy-700);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 7px 16px;
+    border-radius: 999px;
+    letter-spacing: 0.3px;
+    margin-bottom: 12px;
+  }
+  .iac-reviews__badge svg { color: var(--color-accent-400); flex-shrink: 0; }
+  .iac-reviews__subtitle { font-size: 14px; color: var(--color-muted); }
+  .iac-reviews__live {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--color-muted);
+    margin-top: 14px;
+  }
+  .iac-reviews__pulse {
+    width: 9px;
+    height: 9px;
+    background: var(--color-brand-500);
+    border-radius: 50%;
+    position: relative;
+  }
+  .iac-reviews__pulse::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 2px solid var(--color-brand-500);
+    animation: iac-pulse 2s ease-out infinite;
+    opacity: 0;
+  }
+  @keyframes iac-pulse {
+    0%   { transform: scale(0.8); opacity: 0.6; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+
+  .iac-stars { display: inline-flex; gap: 1px; }
+  .iac-stars svg { width: 14px; height: 14px; }
+
+  .iac-reviews__trust {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .iac-reviews__trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--color-navy-700);
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-weight: 600;
+  }
+  .iac-reviews__trust-item svg {
+    width: 14px; height: 14px; flex-shrink: 0; color: var(--color-brand-500);
+  }
+
+  .iac-reviews__track-wrap {
+    position: relative;
+    overflow: hidden;
+    margin: 8px 0 28px;
+  }
+  .iac-reviews__track-wrap::before,
+  .iac-reviews__track-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 64px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .iac-reviews__track-wrap::before { left: 0;  background: linear-gradient(90deg, var(--color-surface), transparent); }
+  .iac-reviews__track-wrap::after  { right: 0; background: linear-gradient(270deg, var(--color-surface), transparent); }
+  .iac-reviews__track {
+    display: flex;
+    gap: 16px;
+    animation: iac-scroll 90s linear infinite;
+    width: max-content;
+  }
+  .iac-reviews__track:hover { animation-play-state: paused; }
+  @keyframes iac-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .iac-reviews__track { animation: none; }
+    .iac-reviews__pulse::after { animation: none; }
+  }
+
+  .iac-card {
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    padding: 20px;
+    width: 320px;
+    flex-shrink: 0;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+  .iac-card:hover {
+    box-shadow: var(--shadow-card);
+    border-color: var(--color-brand-400);
+    transform: translateY(-2px);
+  }
+  .iac-card__top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .iac-card__avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--color-brand-500);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+  }
+  .iac-card__name { font-size: 14px; font-weight: 700; color: var(--color-navy-700); }
+  .iac-card__date { font-size: 11px; color: var(--color-muted); margin-top: 1px; }
+  .iac-card__text {
+    font-size: 13px;
+    color: var(--color-ink-soft);
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .iac-card__stars { margin-bottom: 10px; }
+
+  .iac-featured {
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: 14px;
+    padding: 32px 28px;
+    text-align: center;
+    margin: 0 auto 32px;
+    position: relative;
+    overflow: hidden;
+    max-width: 860px;
+    box-shadow: var(--shadow-card);
+  }
+  .iac-featured::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-brand-500), var(--color-accent-500));
+  }
+  .iac-featured__text {
+    font-size: 17px;
+    color: var(--color-navy-700);
+    line-height: 1.6;
+    max-width: 680px;
+    margin: 12px auto 14px;
+    font-style: italic;
+  }
+  .iac-featured__text::before { content: '\201C'; font-size: 32px; color: var(--color-brand-500); line-height: 0; vertical-align: -10px; margin-right: 2px; }
+  .iac-featured__text::after  { content: '\201D'; font-size: 32px; color: var(--color-brand-500); line-height: 0; vertical-align: -10px; margin-left: 2px; }
+  .iac-featured__author { font-size: 13px; font-weight: 700; color: var(--color-muted); letter-spacing: 0.02em; }
+  .iac-featured__fade { animation: iac-featfade 0.55s ease; }
+  @keyframes iac-featfade {
+    0%   { opacity: 0; transform: translateY(6px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .iac-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .iac-stat { text-align: center; }
+  .iac-stat__num {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--color-navy-700);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .iac-stat__num a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 2px dotted var(--color-brand-500);
+    transition: opacity 0.2s ease;
+  }
+  .iac-stat__num a:hover { opacity: 0.7; }
+  .iac-stat__label {
+    font-size: 12px;
+    color: var(--color-muted);
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  .iac-cta {
+    text-align: center;
+    margin-top: 32px;
+    padding-top: 28px;
+    border-top: 1px solid var(--color-line);
+  }
+  .iac-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--color-brand-500);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 14px 26px;
+    border-radius: 10px;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-card);
+    letter-spacing: 0.02em;
+  }
+  .iac-cta__btn:hover,
+  .iac-cta__btn:focus-visible {
+    background: var(--color-brand-600);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-soft);
+    outline: none;
+  }
+  .iac-cta__sub {
+    display: block;
+    font-size: 12px;
+    color: var(--color-muted);
+    margin-top: 12px;
+  }
+
+  .iac-reviews__google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 18px;
+    font-size: 12px;
+    color: var(--color-muted);
+  }
+  .iac-reviews__google svg { width: 14px; height: 14px; }
+
+  @media (max-width: 600px) {
+    .iac-reviews { padding: 36px 0; }
+    .iac-card { width: 280px; padding: 18px; }
+    .iac-featured { padding: 24px 20px; }
+    .iac-featured__text { font-size: 15px; }
+    .iac-stats { gap: 24px; }
+    .iac-stat__num { font-size: 22px; }
+    .iac-reviews__trust { gap: 8px; }
+    .iac-reviews__trust-item { font-size: 11px; padding: 5px 10px; }
+    .iac-cta__btn { font-size: 13px; padding: 12px 22px; }
+  }
+</style>
+
+<script is:inline define:vars={{ featured }}>
   (function () {
-    function initCarousel(widget) {
-      var items = widget.querySelectorAll('.ica-rw-item');
-      var counter = widget.querySelector('[data-ica-counter]');
-      var progress = widget.querySelector('[data-ica-progress]');
-      if (!items.length || !counter || !progress) return;
+    var textEl = document.querySelector('[data-feat-text]');
+    var authorEl = document.querySelector('[data-feat-author]');
+    if (!textEl || !authorEl || !featured || !featured.length) return;
 
-      var total = items.length;
-      var current = 0;
-      var progressValue = 0;
-      var paused = false;
-      var DURATION_MS = 5500;
-      var TICK_MS = 50;
-      var STEP = (TICK_MS / DURATION_MS) * 100;
-
-      counter.textContent = '1 / ' + total;
-
-      function advance() {
-        items[current].classList.remove('is-active');
-        current = (current + 1) % total;
-        items[current].classList.add('is-active');
-        counter.textContent = (current + 1) + ' / ' + total;
-        progressValue = 0;
-        progress.style.width = '0%';
-      }
-
-      setInterval(function () {
-        if (paused) return;
-        progressValue += STEP;
-        if (progressValue >= 100) advance();
-        else progress.style.width = progressValue + '%';
-      }, TICK_MS);
-
-      widget.addEventListener('mouseenter', function () { paused = true; });
-      widget.addEventListener('mouseleave', function () { paused = false; });
-      widget.addEventListener('focusin', function () { paused = true; });
-      widget.addEventListener('focusout', function () { paused = false; });
-      document.addEventListener('visibilitychange', function () {
-        paused = document.hidden;
-      });
+    var i = 0;
+    function show() {
+      var f = featured[i];
+      textEl.classList.remove('iac-featured__fade');
+      // force reflow so the class re-animates
+      void textEl.offsetWidth;
+      textEl.textContent = f.t;
+      authorEl.textContent = '— ' + f.a;
+      textEl.classList.add('iac-featured__fade');
+      i = (i + 1) % featured.length;
     }
 
-    function ready(fn) {
-      if (document.readyState !== 'loading') fn();
-      else document.addEventListener('DOMContentLoaded', fn);
-    }
-    ready(function () {
-      document.querySelectorAll('.ica-review-widget').forEach(initCarousel);
-    });
+    // Skip animation for reduced-motion users; still rotate the content
+    var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var duration = rm ? 8000 : 5500;
+
+    // Start at index 1 since index 0 is already SSR'd
+    i = 1;
+    setInterval(show, duration);
   })();
 </script>

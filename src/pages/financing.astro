@@ -3,7 +3,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import FAQ from '../components/FAQ.astro';
 import FinalCTA from '../components/FinalCTA.astro';
+import Schema from '../components/Schema.astro';
 import { SITE } from '../lib/site';
+
+const financialProduct = {
+  name: 'HVAC Financing via Synchrony',
+  description: 'Promotional 0% APR and fixed-rate consumer loans for HVAC installation, replacement, and major repairs in Wesley Chapel and Tampa Bay. Approval amounts up to $75,000.',
+  url: `${SITE.url}/financing/`,
+  brand: { '@type': 'Brand', name: 'I Care Air Care + Synchrony' },
+  areaServed: SITE.serviceAreas.map(a => a.name),
+  feesAndCommissionsSpecification: 'No prepayment penalty. Interest may apply if promotional balance is not paid within the promotional period.',
+  termsOfService: `${SITE.url}/financing/`,
+  amount: { '@type': 'MonetaryAmount', minValue: 2000, maxValue: 75000, currency: 'USD' },
+  loanTerm: { '@type': 'QuantitativeValue', unitText: 'months', minValue: 6, maxValue: 120 },
+};
 
 // Placeholder Synchrony application URL — owner will swap for the real partner link.
 const applyUrl = 'https://www.mysynchrony.com/mmc/I0000000000';
@@ -439,4 +452,5 @@ const faqs = [
   </section>
 
   <FinalCTA />
+  <Schema type="FinancialProduct" data={financialProduct} />
 </BaseLayout>

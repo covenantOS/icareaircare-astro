@@ -60,6 +60,44 @@ const mapEmbed = 'https://www.google.com/maps?q=27022+Foamflower+Blvd+Wesley+Cha
     </div>
   </section>
 
+  <!-- Service areas + quick links strip -->
+  <section class="py-12 bg-paper">
+    <div class="container-site max-w-5xl">
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <h2 class="text-2xl md:text-3xl title-accent">While you're here</h2>
+        <p class="mt-3 text-slate-600 text-sm">Already know what you need? Jump to the service or area page for details, pricing, and FAQ.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="rounded-xl bg-white ring-1 ring-slate-200 p-6 shadow-[var(--shadow-card)]">
+          <h3 class="font-bold text-navy-700 text-lg">Services</h3>
+          <ul class="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 text-[14px]">
+            {SITE.services.map(s => (
+              <li><a class="text-brand-600 hover:text-brand-700" href={`/services/${s.slug}/`}>{s.name}</a></li>
+            ))}
+          </ul>
+          <a href="/services/" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent-500 hover:text-accent-600">All services →</a>
+        </div>
+        <div class="rounded-xl bg-white ring-1 ring-slate-200 p-6 shadow-[var(--shadow-card)]">
+          <h3 class="font-bold text-navy-700 text-lg">Service Areas</h3>
+          <ul class="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 text-[14px]">
+            {SITE.serviceAreas.map(a => (
+              <li><a class="text-brand-600 hover:text-brand-700" href={`/service-areas/${a.slug}/`}>{a.name}</a></li>
+            ))}
+          </ul>
+          <a href="/service-areas/" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent-500 hover:text-accent-600">All areas →</a>
+        </div>
+      </div>
+      <div class="mt-8 flex flex-wrap justify-center gap-3 text-sm">
+        <a href="/about-us/" class="rounded-full bg-white ring-1 ring-slate-200 px-4 py-2 text-navy-700 hover:bg-brand-50">About Us</a>
+        <a href="/reviews/" class="rounded-full bg-white ring-1 ring-slate-200 px-4 py-2 text-navy-700 hover:bg-brand-50">700+ Reviews</a>
+        <a href="/financing/" class="rounded-full bg-white ring-1 ring-slate-200 px-4 py-2 text-navy-700 hover:bg-brand-50">Financing</a>
+        <a href="/blogs/" class="rounded-full bg-white ring-1 ring-slate-200 px-4 py-2 text-navy-700 hover:bg-brand-50">HVAC Library</a>
+        <a href="/careers/" class="rounded-full bg-white ring-1 ring-slate-200 px-4 py-2 text-navy-700 hover:bg-brand-50">Careers</a>
+        <a href="/book/" class="rounded-full bg-brand-500 text-white hover:bg-brand-600 px-4 py-2 font-semibold">Book Online</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Form success anchor -->
   <div id="thanks" class="scroll-mt-24">
     <div id="thanks-banner" class="hidden container-site max-w-2xl py-6">

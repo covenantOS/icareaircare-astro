@@ -26,25 +26,28 @@ const sameTagPosts = BLOG_POSTS.filter(p => p.slug !== post.slug && p.tag === po
 const fillerPosts = BLOG_POSTS.filter(p => p.slug !== post.slug && p.tag !== post.tag).slice(0, 4 - sameTagPosts.length);
 const relatedPosts = [...sameTagPosts, ...fillerPosts].slice(0, 4);
 const articleSchema = {
+  '@type': 'Article',
   headline: post.title,
   description: post.description,
   image: `${SITE.url}${post.image}`,
   datePublished: new Date(post.date).toISOString(),
   dateModified: new Date(post.date).toISOString(),
-  author: {
-    '@type': 'Person',
-    name: SITE.owner,
-    jobTitle: 'Licensed HVAC Contractor',
-    description: `Florida HVAC License ${SITE.license}`,
-    worksFor: { '@id': `${SITE.url}/#business` },
-  },
-  publisher: {
-    '@type': 'Organization',
-    name: SITE.name,
-    logo: { '@type': 'ImageObject', url: `${SITE.url}/images/ICAC%20Full%20Logo.webp` },
-  },
+  author: { '@id': `${SITE.url}/#tim-hawk` },
+  reviewedBy: { '@id': `${SITE.url}/#tim-hawk` },
+  publisher: { '@id': `${SITE.url}/#business` },
   mainEntityOfPage: url,
 };
+
+// HowTo schema for fix-it / troubleshooting posts. The checklist becomes HowTo steps.
+const isHowTo =
+  /ac-not-cooling|warm-air|filter-change|how-to-lower|fix-it-fast|emergency-ac-repair/.test(post.slug) &&
+  post.checklist && post.checklist.length > 0;
+const howToData = isHowTo ? {
+  name: post.title,
+  description: post.description,
+  image: `${SITE.url}${post.image}`,
+  totalTime: 'PT30M',
+} : null;
 ---
 <BaseLayout title={`${post.title} | I Care Air Care`} description={post.description} breadcrumbs={breadcrumbs}>
   <Hero
@@ -215,4 +218,5 @@ const articleSchema = {
   <FinalCTA />
   <ContactFormSection />
   <Schema type="Article" data={articleSchema} />
+  {isHowTo && <Schema type="HowTo" data={howToData} steps={post.checklist} />}
 </BaseLayout>

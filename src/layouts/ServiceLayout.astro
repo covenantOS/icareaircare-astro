@@ -65,6 +65,13 @@ const guides = relatedGuides.length ? relatedGuides : BLOG_POSTS.slice(0, 3);
   <section class="py-14 md:py-20">
     <div class="container-site grid lg:grid-cols-12 gap-10">
       <article class="lg:col-span-8 prose-icac">
+        <div class="not-prose flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+          <img src="/images/Tim%20Hawk%20(ICAC%20Owner).webp" alt={`${SITE.owner}, Owner`} class="w-10 h-10 rounded-full ring-2 ring-brand-100 object-cover object-top shrink-0" width="40" height="40" loading="lazy" />
+          <div class="text-[13px] text-slate-600 leading-snug">
+            <span>Reviewed by <a href="/about-us/" class="font-semibold text-navy-700 hover:text-brand-600">{SITE.owner}</a> · Florida License <strong class="text-navy-700">{SITE.license}</strong> · EPA 608 Universal</span>
+            <span class="block text-[11.5px] text-slate-500 mt-0.5">Updated {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
+          </div>
+        </div>
         <slot />
       </article>
       <aside class="lg:col-span-4 space-y-6">

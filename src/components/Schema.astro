@@ -1,22 +1,55 @@
 ---
 import { SITE } from '../lib/site';
 interface Props {
-  type?: 'LocalBusiness' | 'Service' | 'FAQPage' | 'BreadcrumbList' | 'Article';
+  type?: 'LocalBusiness' | 'Service' | 'FAQPage' | 'BreadcrumbList' | 'Article' | 'HowTo' | 'FinancialProduct';
   data?: Record<string, any>;
   faqs?: { q: string; a: string }[];
   breadcrumbs?: { name: string; url: string }[];
+  steps?: string[];
 }
-const { type = 'LocalBusiness', data = {}, faqs, breadcrumbs } = Astro.props;
+const { type = 'LocalBusiness', data = {}, faqs, breadcrumbs, steps } = Astro.props;
+
+// Named Person entity for Tim — powers E-E-A-T across the site.
+// Referenced by @id from Article schema on blog posts and Person reference in LocalBusiness.
+const tim = {
+  '@type': 'Person',
+  '@id': `${SITE.url}/#tim-hawk`,
+  name: SITE.owner,
+  jobTitle: 'Owner · Master HVAC Technician',
+  worksFor: { '@id': `${SITE.url}/#business` },
+  image: `${SITE.url}/images/Tim%20Hawk%20(ICAC%20Owner).webp`,
+  url: `${SITE.url}/about-us/#team`,
+  description: `Founded I Care Air Care in 2010 after 30+ years in the Tampa Bay HVAC trade. Florida licensed master contractor ${SITE.license}. EPA Section 608 Universal certified.`,
+  knowsAbout: [
+    'HVAC installation',
+    'AC repair',
+    'Florida heat pump service',
+    'Air duct cleaning',
+    'Commercial refrigeration',
+    'Residential AC maintenance',
+    'Manual-J load calculation',
+    'Indoor air quality',
+  ],
+  hasCredential: [
+    { '@type': 'EducationalOccupationalCredential', credentialCategory: 'license', name: `Florida HVAC License ${SITE.license}` },
+    { '@type': 'EducationalOccupationalCredential', credentialCategory: 'certification', name: 'EPA Section 608 Universal' },
+  ],
+};
 
 const localBusiness = {
   '@context': 'https://schema.org',
   '@type': 'HVACBusiness',
   '@id': `${SITE.url}/#business`,
   name: SITE.name,
+  legalName: SITE.legalName,
   image: `${SITE.url}/images/ICAC%20Full%20Logo.webp`,
+  logo: `${SITE.url}/images/ICAC%20Full%20Logo.webp`,
   url: SITE.url,
   telephone: SITE.phone,
+  email: SITE.email,
   priceRange: '$$',
+  foundingDate: '2010',
+  slogan: SITE.tagline,
   address: {
     '@type': 'PostalAddress',
     streetAddress: SITE.address.street,
@@ -30,9 +63,21 @@ const localBusiness = {
     '@type': 'AggregateRating',
     ratingValue: SITE.rating.value,
     reviewCount: SITE.rating.count,
+    bestRating: 5,
   },
-  areaServed: SITE.serviceAreas.map(a => a.name),
+  areaServed: SITE.serviceAreas.map(a => ({ '@type': 'City', name: a.name, containedInPlace: { '@type': 'State', name: 'Florida' } })),
   sameAs: [SITE.socials.google],
+  founder: { '@id': `${SITE.url}/#tim-hawk` },
+  employee: { '@id': `${SITE.url}/#tim-hawk` },
+  makesOffer: SITE.services.map(s => ({
+    '@type': 'Offer',
+    itemOffered: {
+      '@type': 'Service',
+      name: s.name,
+      url: `${SITE.url}/services/${s.slug}/`,
+    },
+  })),
+  hasCredential: { '@type': 'EducationalOccupationalCredential', credentialCategory: 'license', name: `Florida HVAC License ${SITE.license}` },
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
@@ -50,8 +95,28 @@ const localBusiness = {
 };
 
 let json: any = localBusiness;
+if (type === 'LocalBusiness') {
+  // Emit both LocalBusiness + Person via @graph so Tim is a first-class linked entity
+  json = {
+    '@context': 'https://schema.org',
+    '@graph': [localBusiness, tim],
+  };
+}
 if (type === 'Service') json = { '@context': 'https://schema.org', '@type': 'Service', provider: { '@id': `${SITE.url}/#business` }, ...data };
 if (type === 'Article') json = { '@context': 'https://schema.org', '@type': 'Article', ...data };
+if (type === 'HowTo') {
+  json = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    ...data,
+    step: (steps || []).map((s, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      text: s,
+    })),
+  };
+}
+if (type === 'FinancialProduct') json = { '@context': 'https://schema.org', '@type': 'FinancialProduct', provider: { '@id': `${SITE.url}/#business` }, ...data };
 if (type === 'FAQPage' && faqs) json = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
