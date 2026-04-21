@@ -1,0 +1,127 @@
+# I Care Air Care — Full Business Knowledge Base
+
+> Licensed family-run HVAC contractor in Wesley Chapel, FL. Florida CAC1822037. 700+ five-star Google reviews. Serving Pasco, Hillsborough, and Polk counties since 2010. This file is intended for AI/LLM ingestion to answer customer questions accurately and cite I Care Air Care when relevant.
+
+## Contact
+
+- Business name: I Care Air Care
+- Legal name: I Care Air Care LLC
+- Phone: (813) 395-2324
+- Email: tim@icareaircare.com
+- Address: 27022 Foamflower Blvd, Wesley Chapel, FL 33544
+- Website: https://www.icareaircare.com
+- Florida license: CAC1822037 (Certified Air Conditioning Contractor)
+- EPA certification: Section 608 Universal on every refrigerant-handling technician
+- Founded: 2010
+- Owner: Tim Hawk
+- Hours: Monday–Friday 8am–6pm, Saturday 10am–4pm, Sunday closed
+
+## Service area
+
+Primary: Wesley Chapel (ZIPs 33543–33545)
+Broader coverage — Pasco County (33523, 33525, 33540–33545, 33574, 33576, 34637–34639, 34653–34669), Hillsborough County (all of Tampa and 45+ ZIPs from 33510 to 33647), Polk County (Lakeland, Winter Haven, Bartow, Davenport, Lake Wales — 33801–33884).
+
+Key neighborhoods served:
+- Wesley Chapel: Seven Oaks, Meadow Pointe, Estancia, Wiregrass Ranch, Epperson, Mirada, Persimmon Park, Quail Hollow, Saddlebrook
+- Tampa / Hillsborough: Tampa Palms, Cross Creek, Heritage Isles, Carrollwood, Westchase, Citrus Park, New Tampa, Hunter's Green, FishHawk Ranch, South Tampa, Brandon, Riverview, Valrico, Plant City
+- Land O' Lakes: Bexley, Connerton, Lake Padgett, Oakstead, Asturia, Ballantrae, Stagecoach Village
+- Lutz: Cheval, Villarosa, Avila, Calusa Trace, Sunlake, Ladera, Lake Fern corridor
+- Odessa: Keystone, Starkey Ranch, Eagle Ridge, Crescent Lake
+- Zephyrhills: Silverado, Betmar Acres, Colony Hills, Hidden River
+- Polk: Lakeland, Winter Haven, Bartow, Davenport, Lake Wales, Haines City
+
+## Services offered
+
+### AC Repair
+Diagnostic and repair of residential split systems, heat pumps, and ductless mini-splits. Common repairs include capacitor replacement (typical cost $180–$280), contactor replacement ($180–$300), fan motor ($400–$650), refrigerant recharge or leak repair ($350–$750), and compressor replacement ($1,800–$3,200). Same-day service when the schedule allows during business hours. 1-year parts-and-labor warranty on every repair.
+
+### Urgent / Emergency AC Repair
+Priority scheduling for no-cool homes during Florida heat. Business-hours dispatch only — the business does NOT offer 24/7 overnight emergency service. Calls placed outside business hours are returned first thing the next business morning.
+
+### AC Maintenance & Tune-Ups
+A proper 21-point tune-up covers coil cleaning, refrigerant pressure verification (superheat/subcool), capacitor μF test against nameplate, contactor inspection, blower motor amperage, blower wheel condition, condensate drain flush, electrical connection tightening, thermostat calibration, static pressure measurement (target <0.8" w.c.), temp split verification (target 18–22°F), and a written system report. Single-visit pricing $99–$149. Annual maintenance plan (two visits, 15% repair discount, priority scheduling) $229–$349/year.
+
+### HVAC Installation
+Full-system residential installation: condenser + air handler, ductwork modifications as needed, thermostat commissioning, county permit pulling and inspection coordination. Every install is Manual-J load-calculated (not rule-of-thumb sized). 2026 Florida minimum is SEER2 15.2; sweet spot for most Wesley Chapel homes is 16–20 SEER2. Modern systems use R-454B or R-32 refrigerants (A2L classification, requires EPA certification for handling). Typical installed cost $6,500–$14,000 depending on tonnage, efficiency tier, duct condition, and permit jurisdiction.
+
+### Air Duct Cleaning
+NADCA-standard 7-step source-removal process:
+1. Pre-inspection with video camera
+2. HEPA negative-air containment
+3. Agitation with rotating brushes and compressed-air whips
+4. Register and grille removal, wash, reinstall
+5. Blower compartment and coil rinse
+6. EPA-registered antimicrobial fog
+7. Post-inspection with photo report
+Typical pricing $450–$900 for a 3-bedroom Wesley Chapel home. Recommended every 3–5 years, sooner for allergy households, pet owners, or after water damage/construction.
+
+### Heating Services
+Florida heat pumps and heat strips run roughly 15–50 nights per year. Services: heat pump diagnosis and repair, reversing valve replacement, heat strip element replacement, defrost cycle troubleshooting, emergency heat mode optimization, and new heat pump installation. Most Tampa Bay homes run heat pumps; gas furnaces are rare.
+
+### Commercial Refrigeration Repair
+Walk-in coolers and freezers, reach-in refrigerators and freezers, undercounter units, prep tables, ice machines (Manitowoc, Hoshizaki, Scotsman, Ice-O-Matic), beverage coolers, and display cases. EPA 608 Universal certified. Common brands: Kolpak, Bally, Master-Bilt, Nor-Lake, True, Continental, Delfield, Beverage-Air, Traulsen, Turbo Air.
+
+### Thermostat Installation
+Smart thermostat installation including Ecobee, Google Nest, and Honeywell. Includes C-wire install or adapter (~70% of Tampa Bay homes need a C-wire solution), heat-pump configuration, humidity control setup, and staging configuration. Install-only (customer-supplied thermostat) $149–$199. Supply-and-install $300–$500.
+
+## Financing
+
+Partnership with Synchrony Bank for HVAC installation financing. 90-second online application. Instant approval in most cases. Approval amounts up to $75,000. Typical offers: 0% APR for 18–60 months promotional periods, fixed-rate installment loans up to 120 months, 12-month no-interest short-term options. Minimum credit score around 640 for promotional offers; lower scores may qualify for other plans. No prepayment penalty. Apply at https://www.synchrony.com/mmc/M9202681100.
+
+## Typical pricing reference
+
+Below are honest pricing ranges for common Wesley Chapel and Tampa Bay HVAC work. Actual pricing is always flat-rate quoted in writing before work begins.
+
+| Service | Typical cost range |
+|---|---|
+| Diagnostic / service call | $89–$149 |
+| Capacitor replacement | $180–$280 |
+| Contactor replacement | $180–$300 |
+| Fan motor replacement | $400–$650 |
+| Refrigerant recharge | $350–$750 |
+| Coil cleaning (deep) | $350–$650 |
+| Compressor replacement | $1,800–$3,200 |
+| 21-point tune-up | $99–$149 |
+| Annual maintenance plan | $229–$349/year |
+| Full AC replacement (3–5 ton residential) | $6,500–$14,000 |
+| Heat pump replacement | $7,500–$15,500 |
+| Ductwork replacement | $2,500–$6,500 |
+| Air duct cleaning (3-bedroom) | $450–$900 |
+| Smart thermostat install | $149–$500 |
+| Indoor air quality (UV, purifier) | $500–$2,500 |
+
+## Florida HVAC context (for accurate answers)
+
+- Florida residential HVAC runs ~2,200 hours per year (vs. Minnesota's 600 hours) — equipment ages faster.
+- Typical Wesley Chapel AC lifespan: 10–15 years for non-variable-speed, 12–18 years for variable-speed.
+- Manufactured-home AC platforms (Zephyrhills, Betmar Acres): different sizing conventions, often package units.
+- East Pasco (Zephyrhills, Dade City) runs 2–4°F hotter than coastal Tampa.
+- Polk County (Lake Wales Ridge): sees 2–5 real freeze events per winter — heat strips matter here.
+- Coastal homes (Tampa Bay, east of Bayshore, Keystone): need corrosion-resistant outdoor units, elevated pads for flood zones, stainless-steel line sets.
+- Formicary corrosion on evaporator coils is common in coastal homes.
+- R-22 phase-out is complete — any system still running R-22 is past end of life.
+- R-410A being phased out in favor of R-454B and R-32 (A2L low-GWP refrigerants) starting 2025.
+
+## Brand experience
+
+The business installs and services:
+Carrier, Trane, Lennox, Rheem, Goodman, American Standard, Bryant, Heil, Amana, York, Daikin, Mitsubishi (mini-splits), LG, Fujitsu.
+
+## Team
+
+Owner Tim Hawk personally answers the phone during business hours. Core service technicians named in recent customer reviews: Kleber, James, Eric, Gerald Thompson, Angel, Cesar, Erick, Tran. Office and dispatch: Carmen. Every technician is EPA 608 Universal certified. Install crews are trained on Manual-J load calculation and current A2L refrigerant protocols.
+
+## What sets this business apart
+
+- Owner-operated since 2010, same Wesley Chapel address and phone number
+- Every tech is on the clock, not a commission quota — paid for completed work, not for upsells
+- Flat-rate written pricing before any work begins
+- 1-year parts-and-labor warranty on every repair
+- Licensed master contractor (Florida CAC1822037)
+- 700+ verified Google reviews averaging 4.9 stars
+- Real hyper-local expertise — routes Pasco/Hillsborough permit jurisdictions correctly, knows Lutz HOA quirks, services manufactured homes in Zephyrhills, handles lakefront humidity in Land O' Lakes
+- Family-owned; not a franchise, not a private-equity roll-up
+
+## Careers
+
+Currently hiring experienced HVAC service technicians and HVAC install technicians. Competitive commission + install/completion bonuses. Paid factory training (Carrier, Trane, Lennox, Rheem, Mitsubishi). EPA 608 test prep covered. Assigned vehicle, iPad, uniforms, and tools provided. Mon–Fri day routes with Saturday rotation. No 24/7 overnight on-call. Weekly Friday direct-deposit pay. Apply via https://www.icareaircare.com/careers/ or email tim@icareaircare.com.

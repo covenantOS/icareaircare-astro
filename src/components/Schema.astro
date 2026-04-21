@@ -96,10 +96,21 @@ const localBusiness = {
 
 let json: any = localBusiness;
 if (type === 'LocalBusiness') {
-  // Emit both LocalBusiness + Person via @graph so Tim is a first-class linked entity
+  // WebSite entity — powers sitelinks, RSS discovery, and gives AI crawlers a
+  // clean top-level description of the site (vs. just the business entity).
+  const website = {
+    '@type': 'WebSite',
+    '@id': `${SITE.url}/#website`,
+    url: SITE.url,
+    name: SITE.name,
+    inLanguage: 'en-US',
+    publisher: { '@id': `${SITE.url}/#business` },
+    description: `${SITE.name} — ${SITE.tagline}`,
+  };
+  // Emit LocalBusiness + Person + WebSite via @graph so all three are linked entities
   json = {
     '@context': 'https://schema.org',
-    '@graph': [localBusiness, tim],
+    '@graph': [localBusiness, tim, website],
   };
 }
 if (type === 'Service') json = { '@context': 'https://schema.org', '@type': 'Service', provider: { '@id': `${SITE.url}/#business` }, ...data };

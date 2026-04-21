@@ -32,6 +32,11 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href;
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="shortcut icon" href="/favicon-bear.png" />
     <link rel="canonical" href={canonical} />
+
+    {/* RSS feed discovery + sitemap hint */}
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} — HVAC Library`} href="/rss.xml" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap-index.xml" />
+
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}

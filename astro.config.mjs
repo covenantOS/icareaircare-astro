@@ -14,6 +14,7 @@ export default defineConfig({
         !page.includes('/terms-of-use/') &&
         !page.includes('/thank-you/') &&
         !page.includes('/book/') &&
+        !page.endsWith('/rss.xml') &&
         // Legacy URLs that 301 to canonical versions — do not include in sitemap
         !page.includes('/emergency-ac-repair-wesley-chapel-fl/') &&
         !page.includes('/air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/') &&
