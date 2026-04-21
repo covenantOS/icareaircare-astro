@@ -10,12 +10,17 @@
 // env setup; rotate here or override via env var.
 
 interface Env {
-  LC_LEAD_WEBHOOK?: string;
+  LC_MAIN_WEBHOOK?: string;        // regular contact / quote forms
+  LC_CAREERS_WEBHOOK?: string;     // job application form only
   FORMSUBMIT_FALLBACK_EMAIL?: string;
 }
 
-const DEFAULT_LEAD_WEBHOOK =
+// Main Form webhook — regular contact / quote request forms
+const DEFAULT_MAIN_WEBHOOK =
   'https://services.leadconnectorhq.com/hooks/9z6AJkL0xkPy2TPVG0J3/webhook-trigger/MTyKfllEL7s6kVraDwmN';
+// Job Appt (Application) webhook — careers/employment form only
+const DEFAULT_CAREERS_WEBHOOK =
+  'https://services.leadconnectorhq.com/hooks/9z6AJkL0xkPy2TPVG0J3/webhook-trigger/JpX53sPd20rcb3QFxQ3m';
 const DEFAULT_FALLBACK_EMAIL = 'tim@icareaircare.com';
 
 function makeRequestId(): string {
@@ -98,7 +103,13 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     request_id: reqId,
   };
 
-  const leadWebhook = env.LC_LEAD_WEBHOOK || DEFAULT_LEAD_WEBHOOK;
+  // Route to the correct LC webhook based on form type:
+  //   - careers_application → Job Appt (Application) webhook
+  //   - everything else (quote_request, hero_multistep, contact) → Main Form webhook
+  const isCareers = formType === 'careers_application';
+  const leadWebhook = isCareers
+    ? (env.LC_CAREERS_WEBHOOK || DEFAULT_CAREERS_WEBHOOK)
+    : (env.LC_MAIN_WEBHOOK || DEFAULT_MAIN_WEBHOOK);
 
   // Primary: LeadConnector webhook
   let webhookOk = false;
@@ -118,6 +129,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       console.log(JSON.stringify({
         level: 'info', request_id: reqId,
         msg: 'lc_webhook_ok', form_type: formType,
+        webhook: isCareers ? 'careers' : 'main',
       }));
     }
   } catch (err) {
