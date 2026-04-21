@@ -22,3 +22,8 @@
 
 # Catch-all for any other WordPress-style /YYYY/MM/DD/slug/ URLs we missed
 /:year/:month/:day/:slug/ /:slug/ 301
+
+# Safety net: blog posts live at root /slug/, not /blogs/slug/. Anything that
+# tried to link to /blogs/<post-slug>/ (old internal links, bad backlinks, etc.)
+# redirects to the canonical root URL. /blogs/ itself is unchanged — it's the hub.
+/blogs/:slug/ /:slug/ 301
