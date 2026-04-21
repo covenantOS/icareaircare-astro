@@ -1,3 +1,6 @@
+# Canonical domain: www.icareaircare.com — redirect bare domain to www (301)
+https://icareaircare.com/* https://www.icareaircare.com/:splat 301
+
 /our-team /about-us/#team 301
 /our-team/ /about-us/#team 301
 /contact-us /contact/ 301
