@@ -5,8 +5,8 @@ export const SITE = {
   url: 'https://www.icareaircare.com',
   phone: '(813) 395-2324',
   phoneHref: 'tel:+18133952324',
-  bookUrl: '/book/',
-  bookUrlExternal: 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4ca7c48c3bbcf2e13316f44e8?v2=true',
+  bookUrl: 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4ca7c48c3bbcf2e13316f44e8?v2=true&lead_source=google&merchant_id=20299a14-5630-423e-86f1-4e7f59c7f1c8&rwg_token=AFd1xnGAsHVZNInJGvpu38195sGp79l7PNwlA7p5bjxGrC4HxCnMJhyim0v8UUckWrmgMBm9R6IfC7pHAG2eizmJtX7s7KiAvw%3D%3D',
+  bookUrlExternal: 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4ca7c48c3bbcf2e13316f44e8?v2=true&lead_source=google&merchant_id=20299a14-5630-423e-86f1-4e7f59c7f1c8&rwg_token=AFd1xnGAsHVZNInJGvpu38195sGp79l7PNwlA7p5bjxGrC4HxCnMJhyim0v8UUckWrmgMBm9R6IfC7pHAG2eizmJtX7s7KiAvw%3D%3D',
   email: 'tim@icareaircare.com',
   license: 'CAC1822037',
   address: {
