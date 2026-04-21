@@ -13,3 +13,12 @@
 /emergency-ac-repair-wesley-chapel-fl/ /emergency-ac-repair-wesley-chapel/ 301
 /air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/ /air-duct-cleaning-wesley-chapel/ 301
 /ac-not-cooling-solutions/ /ac-not-cooling-wesley-chapel/ 301
+
+# Legacy WordPress date-based permalinks — preserve ranking equity
+# (verified via DataForSEO ranked-keywords audit 2026-04-21)
+/2026/02/11/air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/ /air-duct-cleaning-wesley-chapel/ 301
+/2025/12/09/wesley-chapel-air-conditioning/ /wesley-chapel-air-conditioning/ 301
+/2025/03/31/air-filter-change-frequency/ /air-filter-change-frequency/ 301
+
+# Catch-all for any other WordPress-style /YYYY/MM/DD/slug/ URLs we missed
+/:year/:month/:day/:slug/ /:slug/ 301

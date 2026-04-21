@@ -4,36 +4,171 @@ import { SITE } from '../lib/site';
 ---
 <BaseLayout
   title="Thank You | I Care Air Care"
-  description="Your message was received. The I Care Air Care team will be in touch shortly."
+  description="Your request was received. See what happens next and how to reach us if it is urgent."
   noindex={true}
 >
-  <section class="py-24 md:py-32">
-    <div class="container-site max-w-2xl text-center">
-      <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-brand-50 ring-1 ring-brand-200 mb-6">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-brand-600"><polyline points="20 6 9 17 4 12"/></svg>
+  <section class="py-14 md:py-20" style="background: var(--color-surface);">
+    <div class="container-site max-w-3xl">
+
+      <div class="bg-white rounded-2xl shadow-[var(--shadow-soft)] ring-1 ring-slate-100 p-6 md:p-10 text-center">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-brand-50 ring-1 ring-brand-200 mb-5">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-brand-600"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-navy-700" data-heading>Request received!</h1>
+        <p class="mt-4 text-lg text-slate-600 leading-relaxed" data-body>We got your message and will be in touch shortly. During business hours (Mon–Fri 8am–6pm, Sat 10am–4pm) we typically reply within 1–2 hours.</p>
+
+        <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a href={SITE.phoneHref} class="inline-flex items-center gap-2 rounded-md bg-accent-500 hover:bg-accent-600 text-white font-bold px-6 py-3 text-base">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+            Call {SITE.phone}
+          </a>
+          <a href="sms:+18133952324" class="inline-flex items-center gap-2 rounded-md bg-white text-navy-700 ring-1 ring-slate-300 hover:bg-brand-50 font-bold px-6 py-3 text-base">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2z"/></svg>
+            Text us
+          </a>
+        </div>
+        <p class="mt-3 text-xs text-slate-500">Urgent no-cool issue during business hours? Please call — we prioritize those.</p>
       </div>
-      <h1 class="text-4xl md:text-5xl font-bold text-navy-700" data-heading>Request received!</h1>
-      <p class="mt-5 text-lg text-slate-600 leading-relaxed" data-body>We got your message and will be in touch shortly. During business hours (Mon–Fri 8am–6pm, Sat 10am–4pm) we typically reply within 1–2 hours.</p>
-      <script is:inline>
-        (function () {
-          var params = new URLSearchParams(window.location.search);
-          if (params.get('ref') === 'booking') {
-            var h = document.querySelector('[data-heading]');
-            var p = document.querySelector('[data-body]');
-            if (h) h.textContent = 'Booking received!';
-            if (p) p.textContent = "We got your appointment request and it's in our schedule inbox. We'll call or text you shortly to confirm the exact arrival window. Business hours: Mon–Fri 8am–6pm, Sat 10am–4pm.";
-          }
-        })();
-      </script>
-      <p class="mt-4 text-slate-600">For urgent no-cool issues, call us directly:</p>
-      <a href={SITE.phoneHref} class="mt-4 inline-flex items-center gap-2 text-2xl font-bold text-brand-600 hover:text-brand-700">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
-        {SITE.phone}
-      </a>
-      <div class="mt-10 flex flex-wrap gap-4 justify-center">
-        <a href="/" class="btn-primary">Back to Home</a>
-        <a href="/services/" class="btn-outline" style="color:var(--color-navy-700);border-color:var(--color-navy-300);">Browse Services</a>
-      </div>
+
+      {/* WHAT HAPPENS NEXT */}
+      <section class="mt-10">
+        <h2 class="text-2xl md:text-3xl font-bold text-navy-700 text-center">What happens next</h2>
+        <p class="mt-3 text-slate-600 text-center max-w-xl mx-auto">Here's exactly what to expect — no guessing, no mystery queue.</p>
+
+        <ol class="mt-8 grid md:grid-cols-3 gap-4">
+          <li class="rounded-xl bg-white ring-1 ring-slate-200 p-5 text-left shadow-[var(--shadow-card)]">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-brand-500 text-white font-bold flex items-center justify-center text-sm" aria-hidden="true">1</span>
+              <span class="font-bold text-navy-700">We review your request</span>
+            </div>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">Within minutes during business hours. After hours, first thing the next business morning.</p>
+          </li>
+          <li class="rounded-xl bg-white ring-1 ring-slate-200 p-5 text-left shadow-[var(--shadow-card)]">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-brand-500 text-white font-bold flex items-center justify-center text-sm" aria-hidden="true">2</span>
+              <span class="font-bold text-navy-700">A real person calls or texts</span>
+            </div>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">Usually within 1–2 business hours. We confirm your address, the issue, and lock in an arrival window that works for you.</p>
+          </li>
+          <li class="rounded-xl bg-white ring-1 ring-slate-200 p-5 text-left shadow-[var(--shadow-card)]">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-brand-500 text-white font-bold flex items-center justify-center text-sm" aria-hidden="true">3</span>
+              <span class="font-bold text-navy-700">Licensed tech shows up</span>
+            </div>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">Marked truck, uniform, shoe covers. You get a heads-up call before they arrive and a written quote before any work begins.</p>
+          </li>
+        </ol>
+      </section>
+
+      {/* WHAT TO HAVE READY */}
+      <section class="mt-10 rounded-2xl bg-brand-50 ring-1 ring-brand-200 p-6 md:p-8">
+        <h2 class="text-xl md:text-2xl font-bold text-navy-700">While you wait — a few things to have handy</h2>
+        <p class="mt-2 text-slate-600 text-sm">Having these ready when we call back makes diagnosis faster and gets a tech to your door sooner.</p>
+        <ul class="mt-4 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[14.5px] text-slate-700">
+          <li class="flex gap-2"><span class="text-brand-600">✓</span>Approximate system age (if you know)</li>
+          <li class="flex gap-2"><span class="text-brand-600">✓</span>The brand name on the indoor / outdoor unit</li>
+          <li class="flex gap-2"><span class="text-brand-600">✓</span>Thermostat setting and what it's reading right now</li>
+          <li class="flex gap-2"><span class="text-brand-600">✓</span>Whether the outdoor unit is spinning</li>
+          <li class="flex gap-2"><span class="text-brand-600">✓</span>Any error codes or noises you've noticed</li>
+          <li class="flex gap-2"><span class="text-brand-600">✓</span>Access instructions (gate code, pets, HOA notes)</li>
+        </ul>
+      </section>
+
+      {/* TRUST STRIP */}
+      <section class="mt-10 rounded-2xl bg-navy-700 text-white p-6 md:p-8">
+        <div class="grid sm:grid-cols-3 gap-5 text-center">
+          <div>
+            <div class="text-3xl font-extrabold text-accent-400 leading-none">{SITE.rating.value}★</div>
+            <div class="mt-1 text-xs uppercase tracking-wide text-blue-100">{SITE.rating.count}+ Google Reviews</div>
+          </div>
+          <div class="sm:border-x border-white/15">
+            <div class="text-3xl font-extrabold text-accent-400 leading-none">{SITE.yearsInBusiness}+</div>
+            <div class="mt-1 text-xs uppercase tracking-wide text-blue-100">Years in Wesley Chapel</div>
+          </div>
+          <div>
+            <div class="text-3xl font-extrabold text-accent-400 leading-none">FL {SITE.license}</div>
+            <div class="mt-1 text-xs uppercase tracking-wide text-blue-100">Licensed · Bonded · Insured</div>
+          </div>
+        </div>
+        <p class="mt-5 text-center text-sm text-blue-100">Family-owned since 2010 · Dispatching from {SITE.address.street}, {SITE.address.city}, {SITE.address.region}</p>
+      </section>
+
+      {/* EXPLORE WHILE YOU WAIT */}
+      <section class="mt-10">
+        <h2 class="text-xl md:text-2xl font-bold text-navy-700 text-center">While you wait for our call</h2>
+        <div class="mt-5 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <a href="/about-us/" class="rounded-xl bg-white ring-1 ring-slate-200 p-5 hover:ring-brand-300 hover:shadow-[var(--shadow-card)] transition group">
+            <div class="text-xs uppercase tracking-[0.14em] font-bold text-brand-600">Our Story</div>
+            <div class="mt-2 font-bold text-navy-700 group-hover:text-brand-700">Meet Tim &amp; the team</div>
+            <div class="mt-2 text-xs text-slate-500">Why we do this and who shows up</div>
+          </a>
+          <a href="/reviews/" class="rounded-xl bg-white ring-1 ring-slate-200 p-5 hover:ring-brand-300 hover:shadow-[var(--shadow-card)] transition group">
+            <div class="text-xs uppercase tracking-[0.14em] font-bold text-brand-600">Reviews</div>
+            <div class="mt-2 font-bold text-navy-700 group-hover:text-brand-700">Read 700+ reviews</div>
+            <div class="mt-2 text-xs text-slate-500">From your Wesley Chapel &amp; Tampa neighbors</div>
+          </a>
+          <a href="/services/" class="rounded-xl bg-white ring-1 ring-slate-200 p-5 hover:ring-brand-300 hover:shadow-[var(--shadow-card)] transition group">
+            <div class="text-xs uppercase tracking-[0.14em] font-bold text-brand-600">Services</div>
+            <div class="mt-2 font-bold text-navy-700 group-hover:text-brand-700">Browse what we do</div>
+            <div class="mt-2 text-xs text-slate-500">Repair · maintenance · install · more</div>
+          </a>
+          <a href="/blogs/" class="rounded-xl bg-white ring-1 ring-slate-200 p-5 hover:ring-brand-300 hover:shadow-[var(--shadow-card)] transition group">
+            <div class="text-xs uppercase tracking-[0.14em] font-bold text-brand-600">HVAC Library</div>
+            <div class="mt-2 font-bold text-navy-700 group-hover:text-brand-700">Troubleshooting guides</div>
+            <div class="mt-2 text-xs text-slate-500">30+ articles written by the team</div>
+          </a>
+        </div>
+      </section>
+
+      <p class="mt-10 text-center text-xs text-slate-500">Save us in your contacts: <strong class="text-navy-700">I Care Air Care (813) 395-2324</strong> · {SITE.email}</p>
+
     </div>
   </section>
+
+  <script is:inline>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var ref = (params.get('ref') || 'contact').toLowerCase();
+
+      // Customize heading + body per form type
+      var h = document.querySelector('[data-heading]');
+      var p = document.querySelector('[data-body]');
+      var copy = {
+        booking: {
+          h: 'Booking received!',
+          p: "We got your appointment request and it's in our schedule. Someone will call or text within business hours (Mon–Fri 8am–6pm, Sat 10am–4pm) to confirm the exact arrival window."
+        },
+        careers: {
+          h: 'Application received!',
+          p: "Thanks for applying. If your experience looks like a match, Tim or the office team will reach out within 2–3 business days to set up a quick phone call."
+        },
+        careers_application: {
+          h: 'Application received!',
+          p: "Thanks for applying. If your experience looks like a match, Tim or the office team will reach out within 2–3 business days to set up a quick phone call."
+        },
+        quote_request: {
+          h: 'Quote request received!',
+          p: "We got your quote request. A real person will call or text within 1–2 business hours to ask a couple quick questions and line up a time to take a look."
+        },
+        hero_multistep: {
+          h: 'Free estimate request received!',
+          p: "Thanks for the details. We'll call or text within 1–2 business hours with a clear next step and, when relevant, an honest cost range before we come out."
+        }
+      };
+      var variant = copy[ref];
+      if (variant) {
+        if (h) h.textContent = variant.h;
+        if (p) p.textContent = variant.p;
+      }
+
+      // Push conversion event to dataLayer for GTM → GA4 + Clarity
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'form_submit',
+        form_type: ref,
+        conversion: true,
+        page_path: '/thank-you/',
+      });
+    })();
+  </script>
 </BaseLayout>
