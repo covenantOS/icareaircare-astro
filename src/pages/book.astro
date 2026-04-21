@@ -320,25 +320,20 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
             </div>
           </div>
 
-          <!-- STEP 6: ARRIVAL WINDOW + REVIEW + SUBMIT -->
+          <!-- STEP 6: CALENDAR SLOT + REVIEW + SUBMIT -->
           <div data-step="6" class="bk-step" hidden>
-            <h2 class="bk-h2">When works best?</h2>
-            <p class="bk-sub">We'll confirm the exact arrival window by phone or text after you submit.</p>
+            <h2 class="bk-h2">Pick an arrival window</h2>
+            <p class="bk-sub">We'll call or text to confirm the exact time after you submit. You can always reschedule with one call.</p>
 
-            <div class="bk-sub-heading">Preferred day</div>
-            <div class="bk-card-grid bk-card-grid-2">
-              <button type="button" class="bk-card bk-card-compact" data-choice="when" data-value="asap"><strong>ASAP</strong><span class="bk-card-hint">Earliest available slot</span></button>
-              <button type="button" class="bk-card bk-card-compact" data-choice="when" data-value="today"><strong>Today</strong><span class="bk-card-hint">If we can</span></button>
-              <button type="button" class="bk-card bk-card-compact" data-choice="when" data-value="tomorrow"><strong>Tomorrow</strong><span class="bk-card-hint">Plan-ahead booking</span></button>
-              <button type="button" class="bk-card bk-card-compact" data-choice="when" data-value="this-week"><strong>This week</strong><span class="bk-card-hint">You pick the best time</span></button>
+            <div class="bk-sub-heading">Choose a date</div>
+            <div class="bk-date-scroll">
+              <div class="bk-date-row" data-date-row></div>
             </div>
 
-            <div class="bk-sub-heading">Preferred time</div>
-            <div class="bk-card-grid bk-card-grid-3">
-              <button type="button" class="bk-card bk-card-compact" data-choice="time" data-value="morning"><strong>Morning</strong><span class="bk-card-hint">8am–12pm</span></button>
-              <button type="button" class="bk-card bk-card-compact" data-choice="time" data-value="afternoon"><strong>Afternoon</strong><span class="bk-card-hint">12pm–4pm</span></button>
-              <button type="button" class="bk-card bk-card-compact" data-choice="time" data-value="any"><strong>Any</strong><span class="bk-card-hint">First available</span></button>
-            </div>
+            <div class="bk-sub-heading" data-slot-heading hidden>Choose a 2-hour window</div>
+            <div class="bk-slot-grid" data-slot-grid hidden></div>
+
+            <p class="bk-slot-hint" data-slot-hint hidden>Windows are requests. We confirm the exact arrival time by phone or text within an hour of receiving your booking.</p>
 
             <div class="bk-review" data-review hidden>
               <h3 class="bk-review-h">Quick review</h3>
@@ -412,6 +407,7 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
     font-weight: 700;
     color: var(--color-navy-700);
     letter-spacing: -0.01em;
+    scroll-margin-top: 100px;
   }
   @media (min-width: 768px) {
     .bk-h2 { font-size: 26px; }
@@ -676,6 +672,113 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
     border-radius: 10px;
     font-size: 14px;
   }
+  .bk-error-debug {
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: #fff7ed;
+    color: #7c2d12;
+    border: 1px dashed #fcd34d;
+    border-radius: 8px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px;
+    white-space: pre-wrap;
+    overflow-x: auto;
+    max-height: 220px;
+  }
+  .bk-error-debug summary { cursor: pointer; font-weight: 600; }
+
+  /* Calendar / slot picker */
+  .bk-date-scroll {
+    margin-top: 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .bk-date-row {
+    display: flex;
+    gap: 8px;
+    padding: 2px;
+    min-width: max-content;
+  }
+  .bk-date-pill {
+    flex: 0 0 auto;
+    min-width: 72px;
+    padding: 10px 6px;
+    border: 2px solid var(--color-line);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--color-navy-700);
+    cursor: pointer;
+    text-align: center;
+    font-family: inherit;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .bk-date-pill:hover { border-color: var(--color-brand-400); background: var(--color-brand-50); }
+  .bk-date-pill.is-selected {
+    border-color: var(--color-brand-500);
+    background: var(--color-brand-500);
+    color: #fff;
+  }
+  .bk-date-pill.is-selected .bk-date-pill-month,
+  .bk-date-pill.is-selected .bk-date-pill-dow { color: rgba(255,255,255,0.85); }
+  .bk-date-pill-dow {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+  .bk-date-pill-day {
+    display: block;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-top: 2px;
+  }
+  .bk-date-pill-month {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+  .bk-slot-grid {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  @media (min-width: 540px) {
+    .bk-slot-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .bk-slot {
+    padding: 12px 10px;
+    border: 2px solid var(--color-line);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--color-navy-700);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .bk-slot:hover { border-color: var(--color-brand-400); background: var(--color-brand-50); }
+  .bk-slot.is-selected {
+    border-color: var(--color-brand-500);
+    background: var(--color-brand-50);
+    box-shadow: 0 0 0 3px rgba(93,165,184,0.15);
+  }
+  .bk-slot-hint {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
 </style>
 
 <script is:inline>
@@ -701,9 +804,10 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
       phone: '',
       email: '',
       address: { street:'', unit:'', city:'', state:'FL', zip:'' },
-      window: { when:'', time:'' },
+      window: { date: '', slot: '', label: '' },
     };
     var TOTAL = 6;
+    var initialized = false;
 
     var form = document.getElementById('booking-form');
     if (!form) return;
@@ -723,9 +827,7 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
       progressBar.style.width = (100 * n / TOTAL) + '%';
       backBtn.hidden = n === 1;
 
-      // Hide all steps
       form.querySelectorAll('.bk-step').forEach(function (el) { el.hidden = true; });
-      // Show the right step 3 variant based on category
       var show;
       if (n === 3) {
         show = form.querySelector('[data-step="3"][data-category="' + state.category + '"]');
@@ -734,31 +836,46 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
       }
       if (show) show.hidden = false;
 
-      // Show the right follow-up questions on step 4
       if (n === 4) {
         form.querySelectorAll('[data-followup]').forEach(function (el) { el.hidden = true; });
         var fu = form.querySelector('[data-followup="' + state.service + '"]');
         if (fu) fu.hidden = false;
       }
 
-      // Update review on step 6
       if (n === 6) renderReview();
 
-      // Hide nav on the submit step (step 6 has its own submit button)
       if (nav) nav.hidden = (n === 6);
 
-      // Clear error
       errorEl.hidden = true;
       errorEl.textContent = '';
 
-      // Scroll to top of form card
-      form.closest('.bg-white').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Scroll to step heading — only on user-driven navigation, never on initial mount.
+      // block:'start' + scroll-margin-top:100px keeps the heading below the sticky header.
+      if (initialized && show) {
+        var h2 = show.querySelector('.bk-h2');
+        if (h2) {
+          // Delay a tick so the fade-in transform settles before measuring
+          setTimeout(function () {
+            h2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 40);
+        }
+      }
     }
 
-    function setError(msg) {
-      errorEl.textContent = msg;
-      errorEl.hidden = !msg;
-      if (msg) errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    function setError(msg, debug) {
+      if (!msg) {
+        errorEl.hidden = true;
+        errorEl.innerHTML = '';
+        return;
+      }
+      var html = '<div>' + escapeHtml(msg) + '</div>';
+      if (debug) {
+        html += '<details class="bk-error-debug"><summary>Technical details (share with support)</summary><pre style="margin-top:8px;margin-bottom:0;">' +
+          escapeHtml(JSON.stringify(debug, null, 2)) + '</pre></details>';
+      }
+      errorEl.innerHTML = html;
+      errorEl.hidden = false;
+      errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     function validateStep(n) {
@@ -859,15 +976,10 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
 
       if (choice === 'category') state.category = value;
       else if (choice === 'service') state.service = value;
-      else if (choice === 'when') state.window.when = value;
-      else if (choice === 'time') state.window.time = value;
 
-      // Auto-advance for category (one decision → next screen)
+      // Auto-advance for category + service
       if (choice === 'category') setTimeout(function(){ goNext(); }, 150);
       if (choice === 'service') setTimeout(function(){ goNext(); }, 150);
-
-      // Update live review on step 6
-      if (state.step === 6) renderReview();
     });
 
     // --- Phone input format ---
@@ -890,8 +1002,7 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
       if (!dl) return;
       var rows = [];
       rows.push(['Service', labelFor('service', state.service)]);
-      if (state.window.when) rows.push(['Preferred day', labelFor('when', state.window.when)]);
-      if (state.window.time) rows.push(['Preferred time', labelFor('time', state.window.time)]);
+      if (state.window.label) rows.push(['Appointment', state.window.label]);
       rows.push(['Name', state.name]);
       rows.push(['Phone', state.phone]);
       rows.push(['Email', state.email]);
@@ -900,7 +1011,7 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
       dl.innerHTML = rows.map(function (r) {
         return '<dt>' + escapeHtml(r[0]) + '</dt><dd>' + escapeHtml(r[1] || '—') + '</dd>';
       }).join('');
-      wrap.hidden = !(state.window.when && state.window.time);
+      wrap.hidden = !(state.window.date && state.window.slot);
     }
 
     function labelFor(group, value) {
@@ -945,8 +1056,8 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
       e.preventDefault();
       setError('');
 
-      if (!state.window.when) { setError('Please pick a preferred day.'); return; }
-      if (!state.window.time) { setError('Please pick a preferred time window.'); return; }
+      if (!state.window.date) { setError('Please pick a date.'); return; }
+      if (!state.window.slot) { setError('Please pick an arrival window.'); return; }
 
       var consent = form.querySelector('input[name="consent"]').checked;
       if (!consent) { setError('Please check the consent box to continue.'); return; }
@@ -981,7 +1092,7 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
         }
 
         var msg = (body && body.error) || 'Something went wrong. Please call (813) 395-2324 to finish booking.';
-        setError(msg);
+        setError(msg, body && body.debug);
       } catch (err) {
         setError('Network error. Please check your connection or call (813) 395-2324.');
       } finally {
@@ -991,7 +1102,101 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
       }
     });
 
+    // --- Calendar / slot generator ---
+    var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var DOW_LONG = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+    function slotsFor(dow) {
+      if (dow === 6) return ['10am–12pm','12pm–2pm','2pm–4pm']; // Sat
+      return ['8am–10am','10am–12pm','12pm–2pm','2pm–4pm','4pm–6pm']; // Mon-Fri
+    }
+
+    function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+    function isoDate(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+
+    function renderCalendar() {
+      var row = form.querySelector('[data-date-row]');
+      if (!row) return;
+      row.innerHTML = '';
+      var now = new Date();
+      // Cutoff: if it is after 3pm local, same-day booking is probably unrealistic — offer from tomorrow.
+      var sameDayOk = now.getHours() < 15;
+      var offset = sameDayOk ? 0 : 1;
+      var count = 0;
+      for (var i = offset; i < 28 && count < 14; i++) {
+        var d = new Date(now);
+        d.setDate(d.getDate() + i);
+        var dow = d.getDay();
+        if (dow === 0) continue; // skip Sundays
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'bk-date-pill';
+        btn.setAttribute('data-date', isoDate(d));
+        btn.setAttribute('data-dow', String(dow));
+        btn.innerHTML =
+          '<span class="bk-date-pill-dow">' + DOW[dow] + '</span>' +
+          '<span class="bk-date-pill-day">' + d.getDate() + '</span>' +
+          '<span class="bk-date-pill-month">' + MONTHS[d.getMonth()] + '</span>';
+        row.appendChild(btn);
+        count++;
+      }
+    }
+
+    function renderSlotsFor(dateIso, dow) {
+      var grid = form.querySelector('[data-slot-grid]');
+      var heading = form.querySelector('[data-slot-heading]');
+      var hint = form.querySelector('[data-slot-hint]');
+      if (!grid) return;
+      grid.innerHTML = '';
+      var slots = slotsFor(parseInt(dow, 10));
+      slots.forEach(function (s) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'bk-slot';
+        btn.setAttribute('data-slot', s);
+        btn.textContent = s;
+        grid.appendChild(btn);
+      });
+      heading.hidden = false;
+      grid.hidden = false;
+      hint.hidden = false;
+    }
+
+    function friendlyDateLabel(iso) {
+      var parts = iso.split('-');
+      var d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+      return DOW_LONG[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate();
+    }
+
+    // Calendar click delegation
+    form.addEventListener('click', function (e) {
+      var datePill = e.target.closest('[data-date]');
+      if (datePill) {
+        e.preventDefault();
+        form.querySelectorAll('.bk-date-pill').forEach(function (p) { p.classList.remove('is-selected'); });
+        datePill.classList.add('is-selected');
+        state.window.date = datePill.getAttribute('data-date');
+        state.window.slot = '';
+        state.window.label = '';
+        renderSlotsFor(state.window.date, datePill.getAttribute('data-dow'));
+        renderReview();
+        return;
+      }
+      var slotBtn = e.target.closest('[data-slot]');
+      if (slotBtn) {
+        e.preventDefault();
+        form.querySelectorAll('.bk-slot').forEach(function (s) { s.classList.remove('is-selected'); });
+        slotBtn.classList.add('is-selected');
+        state.window.slot = slotBtn.getAttribute('data-slot');
+        state.window.label = friendlyDateLabel(state.window.date) + ' · ' + state.window.slot;
+        renderReview();
+      }
+    });
+
     // Init
+    renderCalendar();
     showStep(1);
+    initialized = true;
   })();
 </script>

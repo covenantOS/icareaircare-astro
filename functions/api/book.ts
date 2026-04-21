@@ -177,14 +177,23 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     try { parsed = text ? JSON.parse(text) : null; } catch { /* leave null */ }
 
     if (!res.ok) {
-      // Log server-side for debugging; surface a friendly message to the user.
       console.log('[HCP] lead creation failed', {
         status: res.status,
-        bodySnippet: text.slice(0, 800),
+        bodySnippet: text.slice(0, 1200),
       });
       return json({
         error: `We got your request but could not auto-schedule. Someone from our team will call you shortly at the number you provided. Or call (813) 395-2324 to confirm now.`,
-        _status: res.status,
+        debug: {
+          hcp_status: res.status,
+          hcp_body: text.slice(0, 1200),
+          endpoint: `${base}/leads`,
+          payload_preview: {
+            has_name: !!data.name,
+            has_email: !!data.email,
+            has_phone: !!data.phone,
+            has_address: !!data.address?.street,
+          },
+        },
       }, 502);
     }
 
