@@ -29,6 +29,8 @@ export default defineConfig({
     responsiveStyles: true,
   },
   build: {
-    inlineStylesheets: 'auto',
+    // Inline every stylesheet — kills the render-blocking CSS requests
+    // flagged by Lighthouse (BaseLayout.css + ReviewStrip.css were ~310ms)
+    inlineStylesheets: 'always',
   },
 });

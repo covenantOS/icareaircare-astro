@@ -121,11 +121,11 @@ const icon = (k: string) => ({
         </div>
         <div class="mt-4 rounded-xl bg-surface ring-1 ring-slate-200 p-5 text-sm">
           <div class="flex items-start gap-3">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-brand-600 mt-0.5 shrink-0"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 10a3 3 0 110-6 3 3 0 010 6z"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-brand-700 mt-0.5 shrink-0"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 10a3 3 0 110-6 3 3 0 010 6z"/></svg>
             <div>
               <div class="font-bold text-navy-700">Headquartered in Wesley Chapel</div>
               <div class="text-slate-600 mt-1">27022 Foamflower Blvd, Wesley Chapel, FL 33544</div>
-              <a href="https://maps.app.goo.gl/2iCjuu1yf3GAbvSS8" target="_blank" rel="noopener" class="mt-2 inline-flex items-center gap-1 text-brand-600 font-semibold">Get directions →</a>
+              <a href="https://maps.app.goo.gl/2iCjuu1yf3GAbvSS8" target="_blank" rel="noopener" class="mt-2 inline-flex items-center gap-1 text-brand-700 font-semibold">Get directions →</a>
             </div>
           </div>
         </div>
@@ -144,7 +144,7 @@ const icon = (k: string) => ({
       <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
         {values.map(v => (
           <div class="rounded-2xl bg-white ring-1 ring-slate-200 p-6 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-soft)] transition">
-            <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center">
+            <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-700 flex items-center justify-center">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" set:html={icon(v.icon)} />
             </div>
             <h3 class="mt-4 text-lg font-bold text-navy-700">{v.title}</h3>
@@ -169,9 +169,9 @@ const icon = (k: string) => ({
           {milestones.map((m, i) => (
             <li class={`relative md:grid md:grid-cols-2 md:gap-10 ${i % 2 === 0 ? '' : 'md:[&>div:first-child]:order-2'}`}>
               <div class="pl-12 md:pl-0 md:pr-10 md:text-right">
-                <div class="hidden md:inline-flex absolute left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-white ring-4 ring-brand-500 text-brand-600 font-bold items-center justify-center text-xs">{m.year.slice(-2)}</div>
-                <div class="md:hidden absolute left-0 top-1 w-9 h-9 rounded-full bg-white ring-4 ring-brand-500 text-brand-600 font-bold flex items-center justify-center text-xs">{m.year.slice(-2)}</div>
-                <div class="text-brand-600 font-bold tracking-wider text-sm">{m.year}</div>
+                <div class="hidden md:inline-flex absolute left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-white ring-4 ring-brand-500 text-brand-700 font-bold items-center justify-center text-xs">{m.year.slice(-2)}</div>
+                <div class="md:hidden absolute left-0 top-1 w-9 h-9 rounded-full bg-white ring-4 ring-brand-500 text-brand-700 font-bold flex items-center justify-center text-xs">{m.year.slice(-2)}</div>
+                <div class="text-brand-700 font-bold tracking-wider text-sm">{m.year}</div>
                 <h3 class="mt-1 text-xl font-bold text-navy-700">{m.title}</h3>
                 <p class="mt-2 text-slate-600 text-[15px] leading-relaxed">{m.body}</p>
               </div>

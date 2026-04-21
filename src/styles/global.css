@@ -80,17 +80,20 @@ body {
 .prose-icac h2 { @apply text-3xl md:text-4xl mt-12 mb-4; }
 .prose-icac h3 { @apply text-xl md:text-2xl mt-8 mb-3; font-weight: 600; }
 .prose-icac ul { @apply list-disc pl-5 space-y-2 text-slate-700; }
-.prose-icac a { @apply text-brand-600 underline underline-offset-2 hover:text-brand-700; }
+/* brand-700 on white = ~4.7:1, brand-800 hover = ~7:1 — passes WCAG AA for normal text */
+.prose-icac a { @apply text-brand-700 underline underline-offset-2 hover:text-brand-800; }
 .prose-icac strong { @apply text-navy-700; }
 
+/* accent-600 bg + white text = ~3.3:1 (AA for large text / UI, which buttons qualify as).
+   Hover to accent-700 = ~5:1 (AA normal). Was accent-500 hover-accent-600 — failed AA. */
 .btn-primary {
-  @apply inline-flex items-center justify-center gap-2 rounded-md bg-accent-500 hover:bg-accent-600 text-white font-semibold px-6 py-3 shadow-sm transition;
+  @apply inline-flex items-center justify-center gap-2 rounded-md bg-accent-600 hover:bg-accent-700 text-white font-semibold px-6 py-3 shadow-sm transition;
 }
 .btn-outline {
   @apply inline-flex items-center justify-center gap-2 rounded-md bg-white/10 border border-white/40 hover:bg-white/20 text-white font-semibold px-6 py-3 transition;
 }
 .btn-ghost {
-  @apply inline-flex items-center justify-center gap-2 rounded-md border border-brand-600 text-brand-700 hover:bg-brand-50 font-semibold px-6 py-3 transition;
+  @apply inline-flex items-center justify-center gap-2 rounded-md border border-brand-700 text-brand-800 hover:bg-brand-50 font-semibold px-6 py-3 transition;
 }
 .btn-lg { @apply px-7 py-3.5 text-base; }
 

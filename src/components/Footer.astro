@@ -12,8 +12,8 @@ const mapEmbed = 'https://www.google.com/maps?q=27022+Foamflower+Blvd+Wesley+Cha
           <p class="mt-2 text-slate-600">Have a question or need HVAC help?</p>
           <p class="mt-4 text-slate-700"><strong class="text-navy-700">Contact us today!</strong> Our team is ready to assist you with honest answers and fast service.</p>
           <dl class="mt-6 space-y-2 text-[15px]">
-            <div class="flex gap-3"><dt class="w-20 text-navy-700 font-semibold">Email:</dt><dd><a class="text-brand-600 hover:text-brand-700 underline underline-offset-2" href={`mailto:${SITE.email}`}>{SITE.email}</a></dd></div>
-            <div class="flex gap-3"><dt class="w-20 text-navy-700 font-semibold">Phone:</dt><dd><a class="text-brand-600 hover:text-brand-700 underline underline-offset-2" href={SITE.phoneHref}>{SITE.phone}</a></dd></div>
+            <div class="flex gap-3"><dt class="w-20 text-navy-700 font-semibold">Email:</dt><dd><a class="text-brand-700 hover:text-brand-800 underline underline-offset-2" href={`mailto:${SITE.email}`}>{SITE.email}</a></dd></div>
+            <div class="flex gap-3"><dt class="w-20 text-navy-700 font-semibold">Phone:</dt><dd><a class="text-brand-700 hover:text-brand-800 underline underline-offset-2" href={SITE.phoneHref}>{SITE.phone}</a></dd></div>
             <div class="flex gap-3"><dt class="w-20 text-navy-700 font-semibold">Address:</dt><dd class="text-slate-700">{SITE.address.street}, {SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}, United States</dd></div>
           </dl>
         </div>
@@ -24,8 +24,8 @@ const mapEmbed = 'https://www.google.com/maps?q=27022+Foamflower+Blvd+Wesley+Cha
     </div>
   </section>
 
-  <!-- Main footer -->
-  <section class="bg-brand-400">
+  <!-- Main footer — brand-700 gives AA contrast for white text -->
+  <section class="bg-brand-700">
     <div class="container-site py-10 grid md:grid-cols-4 gap-8">
       <div>
         <img src="/images/ICAC%20Full%20Logo.webp" alt={SITE.name} class="h-12 w-auto" width="200" height="56" loading="lazy" />
@@ -44,14 +44,14 @@ const mapEmbed = 'https://www.google.com/maps?q=27022+Foamflower+Blvd+Wesley+Cha
       </div>
 
       <div>
-        <h4 class="text-white font-bold uppercase tracking-wide text-sm">Call Us Now</h4>
+        <h3 class="text-white font-bold uppercase tracking-wide text-sm">Call Us Now</h3>
         <p class="mt-3"><a href={SITE.phoneHref} class="text-white font-bold text-xl hover:underline">{SITE.phone}</a></p>
         <p class="mt-2 text-white/90 text-sm">Fully Licensed</p>
         <p class="mt-1 text-white/90 text-sm">License #: {SITE.license}</p>
       </div>
 
       <div>
-        <h4 class="text-white font-bold uppercase tracking-wide text-sm">Hours</h4>
+        <h3 class="text-white font-bold uppercase tracking-wide text-sm">Hours</h3>
         <ul class="mt-3 space-y-1 text-white/90 text-sm">
           <li>Mon – Fri: 8 AM – 6 PM</li>
           <li>Saturday: 10 AM – 4 PM</li>
@@ -62,13 +62,13 @@ const mapEmbed = 'https://www.google.com/maps?q=27022+Foamflower+Blvd+Wesley+Cha
 
       <div class="grid grid-cols-2 gap-4 text-sm">
         <div>
-          <h4 class="text-white font-bold uppercase tracking-wide text-sm mb-3">Services</h4>
+          <h3 class="text-white font-bold uppercase tracking-wide text-sm mb-3">Services</h3>
           <ul class="space-y-1.5">
             {SITE.services.map(s => <li><a class="text-white/90 hover:text-white" href={`/services/${s.slug}/`}>{s.name}</a></li>)}
           </ul>
         </div>
         <div>
-          <h4 class="text-white font-bold uppercase tracking-wide text-sm mb-3">Areas</h4>
+          <h3 class="text-white font-bold uppercase tracking-wide text-sm mb-3">Areas</h3>
           <ul class="space-y-1.5">
             {SITE.serviceAreas.slice(0,6).map(a => <li><a class="text-white/90 hover:text-white" href={`/service-areas/${a.slug}/`}>{a.name}</a></li>)}
           </ul>

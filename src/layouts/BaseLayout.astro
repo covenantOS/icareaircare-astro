@@ -33,6 +33,12 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href;
     <link rel="shortcut icon" href="/favicon-bear.png" />
     <link rel="canonical" href={canonical} />
 
+    {/* Preconnect the third-party origins we actually use so the TLS handshake happens in parallel with HTML parse */}
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://www.clarity.ms" crossorigin />
+    <link rel="preconnect" href="https://script.advertiserreports.com" crossorigin />
+
     {/* RSS feed discovery + sitemap hint */}
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} — HVAC Library`} href="/rss.xml" />
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap-index.xml" />
