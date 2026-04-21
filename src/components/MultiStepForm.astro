@@ -46,12 +46,11 @@ const fieldClass = 'w-full rounded-lg border border-slate-200 bg-slate-50 focus:
   <!-- Step 2: Contact info (hidden initially) -->
   <form
     class="msform-step-2 hidden bg-white px-5 pt-4 pb-5 space-y-3"
-    action="https://formsubmit.co/tim@icareaircare.com"
+    action="/api/lead"
     method="POST"
   >
-    <input type="hidden" name="_subject" value="New lead from icareaircare.com" />
-    <input type="hidden" name="_next" value="https://www.icareaircare.com/contact/#thanks" />
-    <input type="hidden" name="_captcha" value="true" />
+    <input type="hidden" name="_form_type" value="hero_multistep" />
+    <input type="hidden" name="_next" value="/thank-you/" />
     <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
     <input type="hidden" name="service" class="msform-service-input" />
 

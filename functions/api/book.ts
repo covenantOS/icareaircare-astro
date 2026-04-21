@@ -5,7 +5,11 @@
 interface Env {
   HCP_API_KEY: string;
   HCP_API_BASE?: string;
+  LC_BOOKING_WEBHOOK?: string;
 }
+
+const DEFAULT_BOOKING_WEBHOOK =
+  'https://services.leadconnectorhq.com/hooks/9z6AJkL0xkPy2TPVG0J3/webhook-trigger/JpX53sPd20rcb3QFxQ3m';
 
 interface BookingPayload {
   zip?: string;
@@ -150,6 +154,55 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const mobile = normalizePhone(data.phone!);
   const note = buildNote(data);
 
+  // Fire-and-forget: mirror every booking to LeadConnector (CRM) in parallel with
+  // the HCP call. Booking still succeeds if the webhook is down; failures are logged
+  // server-side with the request_id for correlation.
+  const lcBookingWebhook = env.LC_BOOKING_WEBHOOK || DEFAULT_BOOKING_WEBHOOK;
+  const lcPayload = {
+    first_name,
+    last_name,
+    full_name: data.name,
+    email: (data.email || '').trim().toLowerCase(),
+    phone: mobile,
+    address1: data.address!.street,
+    address2: data.address!.unit || '',
+    city: data.address!.city,
+    state: data.address!.state || 'FL',
+    postal_code: data.address!.zip,
+    country: 'US',
+    service: data.service,
+    service_category: data.category,
+    requested_date: data.window?.date || null,
+    requested_slot: data.window?.slot || null,
+    requested_label: data.window?.label || null,
+    answers: data.answers || {},
+    source: 'icareaircare.com',
+    form_type: 'booking',
+    tags: ['website-lead', 'form:booking'],
+    submitted_at: new Date().toISOString(),
+    user_agent: request.headers.get('user-agent') || null,
+    referer: request.headers.get('referer') || null,
+    request_id: reqId,
+    note,
+  };
+  const lcPromise = fetch(lcBookingWebhook, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(lcPayload),
+  }).then(r => {
+    console.log(JSON.stringify({
+      level: r.ok ? 'info' : 'warn',
+      request_id: reqId,
+      msg: r.ok ? 'lc_booking_webhook_ok' : 'lc_booking_webhook_failed',
+      status: r.status,
+    }));
+  }).catch(err => {
+    console.log(JSON.stringify({
+      level: 'error', request_id: reqId, msg: 'lc_booking_webhook_error',
+      error: err instanceof Error ? err.message : String(err),
+    }));
+  });
+
   // Housecall Pro Create Lead payload.
   // Per HCP docs: nested `customer` (with `addresses[]`), lead-level `note` (singular),
   // and `lead_source`. We also include `notes` as a hedge against schema drift — HCP
@@ -228,12 +281,17 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       lead_id: parsed?.id || parsed?.lead?.id || null,
     }));
 
+    // Wait for LC webhook to finish so Cloudflare doesn't kill the promise on function exit
+    await lcPromise;
+
     return json({
       success: true,
       lead_id: parsed?.id || parsed?.lead?.id || null,
       request_id: reqId,
     });
   } catch (err: unknown) {
+    // If HCP threw, still try to capture the lead in LC so it isn't lost
+    try { await lcPromise; } catch { /* already logged */ }
     console.log(JSON.stringify({
       level: 'error',
       request_id: reqId,
