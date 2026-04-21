@@ -4,7 +4,7 @@ import Hero from '../components/Hero.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import { SITE } from '../lib/site';
-const mapEmbed = 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14061.8!2d-82.3727!3d28.2427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1713600000000';
+const mapEmbed = 'https://www.google.com/maps?q=27022+Foamflower+Blvd+Wesley+Chapel+FL+33544&output=embed';
 ---
 <BaseLayout
   title="Contact I Care Air Care | Wesley Chapel HVAC (813) 395-2324"
@@ -58,6 +58,28 @@ const mapEmbed = 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14061.8!
     </div>
   </section>
 
+  <!-- Form success anchor -->
+  <div id="thanks" class="scroll-mt-24">
+    <div id="thanks-banner" class="hidden container-site max-w-2xl py-6">
+      <div class="rounded-xl bg-brand-50 border border-brand-200 p-6 text-center">
+        <svg class="mx-auto text-brand-600 mb-3" width="36" height="36" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+        <h2 class="text-xl font-bold text-navy-700">Message received — thank you!</h2>
+        <p class="mt-2 text-slate-600">Tim's team will follow up same business day. For urgent no-cool help call <a href={SITE.phoneHref} class="text-accent-500 font-bold hover:text-accent-600">{SITE.phone}</a> directly.</p>
+      </div>
+    </div>
+  </div>
   <ContactFormSection />
   <FinalCTA />
 </BaseLayout>
+
+<script is:inline>
+  (function () {
+    if (window.location.hash === '#thanks') {
+      var el = document.getElementById('thanks-banner');
+      if (el) {
+        el.classList.remove('hidden');
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  })();
+</script>

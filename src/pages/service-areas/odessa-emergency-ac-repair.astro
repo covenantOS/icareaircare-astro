@@ -1,39 +1,113 @@
----
+﻿---
 import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
 
 const faqs = [
   {
-    "q": "What's your Odessa urgent AC repair availability?",
-    "a": "Odessa is a regular service area for us. Call for the earliest available appointment window and a realistic ETA before dispatch."
+    q: "What is your Odessa urgent AC repair availability?",
+    a: "Odessa and Keystone are regular service routes from our Wesley Chapel base — typically 20-30 minutes. Call (813) 395-2324 for the earliest available window and an honest ETA before dispatch.",
   },
   {
-    "q": "Are after-hours rates much higher?",
-    "a": "A modest dispatch fee — still flat-rate, still quoted before any work."
+    q: "Do you service Starkey Ranch?",
+    a: "Yes — Starkey Ranch is one of our most frequent Odessa service communities. We know the community layout, the builder-grade equipment common to recent construction, and the HOA easement requirements for replacement equipment.",
   },
   {
-    "q": "Do you service Starkey Ranch?",
-    "a": "Yes. Starkey Ranch is a regular service community for us."
+    q: "Do you service the Keystone and Lake Keystone rural estate properties?",
+    a: "Yes. Keystone rural properties often have larger multi-zone systems and well water rather than municipal supply. We handle high-tonnage residential HVAC and are familiar with the unique service considerations for larger Keystone homes.",
   },
   {
-    "q": "Keystone properties often have larger HVAC systems — can you handle those?",
-    "a": "Absolutely — multi-zone, high-tonnage residential systems are our specialty."
-  }
+    q: "Are after-hours repair rates much higher in Odessa?",
+    a: "A modest dispatch fee applies for calls outside business hours. All work is flat-rate and quoted before we begin — no surprises.",
+  },
+  {
+    q: "Do you handle Westchase-border Odessa neighborhoods?",
+    a: "Yes — the western Odessa corridor bordering Westchase is a regular service area. We navigate the Gunn Highway corridor from both the Pasco and Hillsborough sides.",
+  },
+  {
+    q: "Can you handle multi-zone systems in larger Keystone homes?",
+    a: "Absolutely. Multi-zone, high-tonnage residential systems are a specialty. We service zoned damper systems, dual-unit configurations, and variable-speed equipment common in larger Keystone and Eagle Ridge homes.",
+  },
+  {
+    q: "Do you serve Citrus Park and the Odessa-Citrus Park border area?",
+    a: "Yes. The western Hillsborough corridor including Citrus Park and the Odessa border is within our regular service area.",
+  },
+  {
+    q: "What HVAC issues are common in Starkey Ranch new construction?",
+    a: "Builder-grade HVAC in newer Starkey Ranch homes often needs airflow balancing, return-air sizing review, and humidity control calibration. We offer new-construction evaluations before the 1-year builder warranty expires.",
+  },
 ];
 ---
 <ServiceAreaLayout
   slug="odessa-emergency-ac-repair"
-  title="Odessa Urgent AC Repair | I Care Air Care"
-  description="Odessa, FL urgent AC repair and HVAC services across Keystone, Lake Keystone, Starkey Ranch. Call (813) 395-2324."
-  h1="Odessa Urgent AC Repair"
+  title="Odessa Urgent AC Repair & HVAC Service | I Care Air Care"
+  description="Odessa FL HVAC specialists — urgent AC repair, maintenance, installation & duct cleaning serving Keystone, Lake Keystone, Starkey Ranch, Eagle Ridge & Gunn Highway corridor. 4.9-star · 700+ reviews. Call (813) 395-2324."
+  h1="Odessa Urgent AC Repair & HVAC Service"
   eyebrow="Odessa, FL"
-  subtitle={"Urgent AC repair and HVAC service in Odessa, Keystone & the Starkey Ranch corridor."}
+  subtitle={"Urgent AC repair and complete HVAC service for Keystone, Lake Keystone, Starkey Ranch, Eagle Ridge, Crescent Lake & the full Gunn Highway corridor — dispatching from Wesley Chapel."}
   heroImage="/images/ICAC%20Team%281%29.webp"
   cityName="Odessa"
   faqs={faqs}
-  neighborhoods={["Keystone","Lake Keystone","Starkey Ranch","Gunn Highway","Citrus Park","Westchase border"]}
+  geo={{ lat: 28.1714, lng: -82.5476 }}
+  zipCodes={["33556", "33558"]}
+  neighborhoods={[
+    "Keystone",
+    "Lake Keystone",
+    "Starkey Ranch",
+    "Eagle Ridge",
+    "Crescent Lake",
+    "Gunn Highway Corridor",
+    "Citrus Park border",
+    "Westchase border",
+    "Keystone Groves",
+  ]}
+  landmarks={[
+    { name: "Starkey Ranch Community", note: "One of west Pasco's largest master-planned communities; mix of builder and custom homes" },
+    { name: "Lake Keystone", note: "Estate properties around the lake often have larger multi-zone HVAC systems" },
+    { name: "Keystone Park (Hillsborough County)", note: "Boundary landmark between Pasco and Hillsborough service jurisdictions" },
+    { name: "Gunn Highway Corridor", note: "Dense residential and light commercial service corridor we travel regularly" },
+    { name: "Odessa Elementary School Area", note: "Established neighborhoods in the Odessa core with older HVAC equipment" },
+    { name: "Eagle Ridge Estates", note: "Larger custom homes with high-efficiency and multi-stage equipment" },
+    { name: "Suncoast Parkway (589) Corridor", note: "New construction along the parkway corridor — builder-grade HVAC common" },
+  ]}
+  climateNote={"Odessa straddles the Pasco-Hillsborough county line at one of the highest elevation points in the greater Tampa Bay area. The slight elevation reduces coastal sea-breeze effect, meaning summer temperatures hold higher into the evening — HVAC systems in Odessa run longer overnight compared to bay-adjacent communities. The Keystone area in particular, with its large wooded lots and lake proximity, creates a high-humidity micro-climate that increases latent load on air conditioning systems. <strong>Dehumidification performance</strong> matters as much as cooling capacity for comfortable Keystone homes."}
+  reviews={[
+    { name: "Tom W.", neighborhood: "Keystone", body: "Our multi-zone system in a large Keystone home had one zone failing. I Care Air Care diagnosed a failed zone board and low refrigerant on the secondary unit, quoted both repairs with options, and completed both in one visit. They did not try to upsell a full replacement that was not needed.", rating: 5 },
+    { name: "Andrea M.", neighborhood: "Starkey Ranch", body: "Our Starkey Ranch builder system was short-cycling and not controlling humidity well. Tim's technician found an oversized unit for the square footage and adjusted the fan speed settings to improve dehumidification without a full replacement. Exactly the kind of honest diagnostic I was hoping for.", rating: 5 },
+    { name: "Craig L.", neighborhood: "Gunn Highway", body: "Three estimates for a full replacement in our Odessa home. I Care Air Care came in with the right tonnage based on a load calculation — the other two contractors both quoted a size larger. They installed, permitted, and registered warranty in one day. Highly recommend.", rating: 5 },
+  ]}
+  relatedAreas={[
+    { slug: "wesley-chapel-ac-repair", name: "Wesley Chapel", note: "Our home base — fastest dispatch" },
+    { slug: "lutz-home-air-conditioning-service", name: "Lutz", note: "Avila, Cheval & Pasco-Hillsborough border" },
+    { slug: "hillsborough-county-hvac-company", name: "Hillsborough County", note: "Tampa, Carrollwood, Westchase" },
+    { slug: "pasco-county-ac-repair", name: "Pasco County", note: "Full county coverage north and east" },
+  ]}
+  driveTime="20-30 min"
+  responseWindow="Same-day when available"
 >
-<h2>Odessa &amp; Keystone — urgent HVAC scheduling</h2>
-<p>Odessa and Keystone sit between our Wesley Chapel base and the Hillsborough line. When AC fails in Odessa during a July heat wave, call and we will give you the next available arrival window for <strong>Starkey Ranch</strong>, <strong>Keystone</strong>, and the <strong>Gunn Highway corridor</strong>.</p>
-<h2>Every HVAC service Odessa homes need</h2>
-<p>We handle urgent <a href="/services/emergency-ac-repair-tampa/">AC repair</a>, routine <a href="/services/ac-maintenance-tampa/">maintenance</a>, <a href="/services/hvac-installation-tampa/">new system installation</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a>, <a href="/services/heating-services-tampa/">heating</a>, and <a href="/services/thermostat-installation-tampa/">smart thermostats</a> across Odessa. Flat-rate pricing, 1-year warranty, Florida-licensed (CAC1816515).</p>
+
+<h2>Odessa & Keystone — NW Hillsborough's most distinctive HVAC service area</h2>
+<p>Odessa is one of the most geographically diverse service areas we cover. The Keystone corridor — <strong>Lake Keystone</strong>, <strong>Eagle Ridge</strong>, <strong>Keystone Groves</strong> — contains some of the largest custom homes in the greater Tampa Bay area, with multi-zone systems, high-efficiency variable-speed equipment, and HVAC loads that require real load-calculation expertise. A few miles east on Gunn Highway, <strong>Starkey Ranch</strong> is one of the fastest-growing master-planned communities in west Pasco, with thousands of homes built since 2017. And throughout the western Hillsborough corridor toward <strong>Westchase</strong> and <strong>Citrus Park</strong>, there are established mid-2000s neighborhoods with equipment that is now approaching replacement age.</p>
+
+<p>Our Wesley Chapel base puts us in the middle of this area. We know Gunn Highway well, we know the Suncoast Parkway corridor, and we have years of calls in both the rural Keystone estate properties and the master-planned communities on the west side of Pasco.</p>
+
+<h2>Urgent AC repair in Odessa — what to expect when you call</h2>
+<p>When AC fails in Odessa on a July afternoon, the house reaches uncomfortable temperatures quickly — particularly in larger homes with higher ceiling heights and more glass area. When you call us:</p>
+
+<ul>
+  <li><strong>You get a realistic ETA before we dispatch</strong> — not a vague "someone will be there today." If we cannot get there same-day, we will tell you and give you the earliest available window.</li>
+  <li><strong>We diagnose before we quote</strong> — our technicians measure before they recommend. You will see the diagnostic findings before any repair cost is presented.</li>
+  <li><strong>Flat-rate pricing, always written</strong> — the price you are quoted is the price you pay. No post-repair additions.</li>
+  <li><strong>All repairs carry our 1-year parts and labor warranty</strong> — if the same issue returns within a year, we fix it at no charge.</li>
+</ul>
+
+<h2>Keystone estate properties — what large homes require</h2>
+<p>Keystone's large-lot properties — many exceeding 5,000 square feet — present HVAC challenges that standard service trucks are not always equipped for. Multi-zone damper systems, dual condensers on a single air handler, variable-speed scroll compressors, and whole-home dehumidifiers require technicians who are trained on this equipment, not just familiar with standard residential split systems. Our team services all of these configurations with the same licensed standards applied to every job.</p>
+
+<p>High humidity near Lake Keystone also means that <strong>dehumidification performance</strong> is as important as cooling capacity for comfort. A correctly sized, properly calibrated system should control indoor humidity to 50-55% RH year-round — if yours is not achieving that, call us for a dehumidification evaluation.</p>
+
+<h2>Starkey Ranch new construction HVAC issues</h2>
+<p>Starkey Ranch is a master-planned community that has added several thousand homes since 2017. Builder-grade systems installed in this timeframe often share predictable issues that appear in the first 3-7 years: undersized return-air in two-story floor plans, flex duct runs that were installed with excessive bends, and smart thermostat configurations that do not account for Florida humidity. If your Starkey Ranch home is not as comfortable as you expect for a newer system, schedule a diagnostic before the builder's warranty window closes.</p>
+
+<h2>All HVAC services available in Odessa</h2>
+<p>Complete HVAC coverage for all Odessa ZIP codes (33556, 33558): <a href="/services/ac-repair-tampa/">AC repair</a>, <a href="/services/emergency-ac-repair-tampa/">urgent no-cool scheduling</a>, <a href="/services/ac-maintenance-tampa/">maintenance tune-ups</a>, <a href="/services/hvac-installation-tampa/">system replacement with permit</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a>, <a href="/services/heating-services-tampa/">heating service</a>, <a href="/services/thermostat-installation-tampa/">smart thermostat installation</a>, and <a href="/services/refrigeration-repair-tampa/">commercial refrigeration</a>. Florida license CAC1822037. Bonded and insured.</p>
+
 </ServiceAreaLayout>

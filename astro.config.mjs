@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import partytown from '@astrojs/partytown';
 
 export default defineConfig({
-  site: 'https://www.icareaircare.com',
+  site: 'https://icareaircare.com',
   integrations: [
     sitemap(),
     partytown({ config: { forward: ['dataLayer.push', 'gtag'] } }),

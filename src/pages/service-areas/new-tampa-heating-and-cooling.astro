@@ -3,38 +3,111 @@ import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
 
 const faqs = [
   {
-    "q": "How fast can you reach New Tampa?",
-    "a": "New Tampa is a regular route from our Wesley Chapel base. Call for the earliest available appointment window."
+    q: "How fast can you reach New Tampa for an urgent no-cool call?",
+    a: "New Tampa is a regular route from our Wesley Chapel base — typically 15-25 minutes. Call (813) 395-2324 for the earliest available arrival window and an honest ETA before we dispatch.",
   },
   {
-    "q": "Do you service Tampa Palms and K-Bar Ranch?",
-    "a": "Yes — frequent service area. We know the common HVAC issues for homes of that vintage."
+    q: "Do you service Tampa Palms, Hunter's Green, and K-Bar Ranch?",
+    a: "Yes — all three are frequent service communities. We know the common HVAC issues for homes of that vintage (late 1990s through mid-2000s construction) and bring the right parts for common failures on the first trip.",
   },
   {
-    "q": "Is New Tampa equipment reaching replacement age?",
-    "a": "Many systems from the 2000s build boom are hitting 18–22 years — past the economic repair point. We'll give you honest replace-vs-repair math."
+    q: "Many New Tampa systems are 18-22 years old. Is it time to replace?",
+    a: "Not automatically. We evaluate refrigerant type, repair history, efficiency, and the repair cost vs. system value ratio. You get honest replace-vs.-repair math in writing — no pressure.",
   },
   {
-    "q": "Do you offer New Tampa urgent AC repair?",
-    "a": "Yes. We prioritize no-cool calls in New Tampa when availability allows and provide a realistic ETA before dispatch."
-  }
+    q: "Do you handle HOA equipment requirements in Cory Lake Isles and Heritage Isles?",
+    a: "Yes. We handle permit coordination and advise on equipment placement that satisfies HOA guidelines in gated New Tampa communities.",
+  },
+  {
+    q: "Can you service USF-area rentals and light commercial buildings?",
+    a: "Yes — residential rentals and light commercial near USF, including restaurant refrigeration. Florida license CAC1822037 covers residential and light commercial work.",
+  },
+  {
+    q: "What is a common HVAC problem in New Tampa two-story homes?",
+    a: "Return-air is often undersized for the second floor, creating hot bedrooms in the afternoon. Duct sealing and return upgrades frequently fix what homeowners assume requires a bigger unit.",
+  },
+  {
+    q: "Do you offer financing for system replacements in New Tampa?",
+    a: 'Yes — Synchrony financing for qualified homeowners. See our <a class="underline" href="/financing/">financing page</a> for current terms and monthly-payment estimates.',
+  },
+  {
+    q: "Do you service Cross Creek and Live Oak Preserve?",
+    a: "Yes — both are regular service areas. Live Oak Preserve has a high concentration of two-story floor plans with multi-zone systems that need careful airflow balancing.",
+  },
 ];
 ---
 <ServiceAreaLayout
   slug="new-tampa-heating-and-cooling"
-  title="New Tampa Heating & Cooling | I Care Air Care"
-  description="New Tampa HVAC services — AC repair, heating, installation, duct cleaning. Serving Tampa Palms, Hunter's Green, K-Bar Ranch, Cory Lake. Call (813) 395-2324."
+  title="New Tampa Heating & Cooling | HVAC Service | I Care Air Care"
+  description="New Tampa HVAC specialists — AC repair, heating, installation & duct cleaning. Tampa Palms, Hunter's Green, K-Bar Ranch, Cory Lake, Heritage Isles & more. 4.9-star · 700+ reviews. Call (813) 395-2324."
   h1="New Tampa Heating & Cooling"
   eyebrow="New Tampa, FL"
-  subtitle={"Serving Tampa Palms, Hunter's Green, K-Bar Ranch, Cory Lake Isles, Cross Creek & every New Tampa community."}
+  subtitle={"Licensed HVAC service for Tampa Palms, Hunter's Green, K-Bar Ranch, Cory Lake Isles, Cross Creek, Heritage Isles & Live Oak Preserve — dispatching from Wesley Chapel in minutes."}
   heroImage="/images/ICAC%20Team%281%29.webp"
   cityName="New Tampa"
   faqs={faqs}
-  neighborhoods={["Tampa Palms","Hunter’s Green","K-Bar Ranch","Cory Lake Isles","Cross Creek","Easton Park","Live Oak Preserve","Richmond Place","Pebble Creek"]}
+  geo={{ lat: 28.1607, lng: -82.3424 }}
+  zipCodes={["33647", "33637"]}
+  neighborhoods={[
+    "Tampa Palms",
+    "Hunter's Green",
+    "K-Bar Ranch",
+    "Cory Lake Isles",
+    "Cross Creek",
+    "Heritage Isles",
+    "Live Oak Preserve",
+    "Pebble Creek",
+    "Richmond Place",
+    "Easton Park",
+  ]}
+  landmarks={[
+    { name: "Tampa Palms Golf & Country Club", note: "Anchor for mid-1990s surrounding homes now hitting replacement age" },
+    { name: "Hunter's Green Country Club", note: "Mature landscaping can block condenser airflow — we check clearance on every visit" },
+    { name: "K-Bar Ranch Community", note: "Newer builder-grade HVAC often needs airflow tuning and return upgrades" },
+    { name: "USF Tampa Campus", note: "Proximity drives rental and student-housing service calls in the corridor" },
+    { name: "Moffitt Cancer Center", note: "We service commercial and residential clients near this medical campus" },
+    { name: "Heritage Isles Golf & Country Club", note: "Larger estate homes with multi-zone systems requiring careful load balancing" },
+    { name: "Pebble Creek Village", note: "Established 1980s-90s community; many original air handlers past useful life" },
+    { name: "Flatwoods Park (Morris Bridge Rd)", note: "Higher humidity micro-climate near the Hillsborough River affects latent load" },
+  ]}
+  climateNote={"New Tampa sits on the eastern edge of Hillsborough County where temperatures run 2-3 degrees warmer than coastal Tampa during peak summer afternoons. Concrete-block construction retains heat well, meaning air handlers run longer to pull stored heat out of slab and walls after sunset. <strong>Oversized replacement equipment</strong> is a common mistake: a larger unit cools fast but short-cycles, leaving humidity high and rooms clammy. Manual-J load calculations are essential for New Tampa replacements — we perform them on every new system quote."}
+  reviews={[
+    { name: "David K.", neighborhood: "Tampa Palms", body: "Our 2003 Carrier system finally gave out in August. I Care Air Care quoted honestly, explained why our ductwork needed a return-air upgrade, and had the new system running in one day. Permit handled, warranty registered, startup report left on the counter.", rating: 5 },
+    { name: "Michelle F.", neighborhood: "Hunter's Green", body: "Called at 8 AM on a Saturday when our upstairs zone stopped cooling. Tim's team was at our house by noon, diagnosed a failed capacitor, quoted the repair before touching anything, and had cold air running in under two hours. Honest and fast.", rating: 5 },
+    { name: "Robert S.", neighborhood: "K-Bar Ranch", body: "Builder HVAC was not keeping the master comfortable. I Care Air Care found crushed flex duct in the attic and an undersized return. Fixed both, recalibrated the thermostat, and the room is now 4 degrees cooler at the same set point.", rating: 5 },
+  ]}
+  relatedAreas={[
+    { slug: "wesley-chapel-ac-repair", name: "Wesley Chapel", note: "Our home base — fastest dispatch" },
+    { slug: "lutz-home-air-conditioning-service", name: "Lutz", note: "Avila, Cheval & unincorporated Hillsborough" },
+    { slug: "pasco-county-ac-repair", name: "Pasco County", note: "Full county coverage" },
+    { slug: "hillsborough-county-hvac-company", name: "Hillsborough County", note: "Tampa, Brandon, Carrollwood" },
+  ]}
+  driveTime="15-25 min"
+  responseWindow="Same-day when available"
 >
-<h2>New Tampa HVAC — practical service from Pebble Creek to K-Bar Ranch</h2>
-<p>New Tampa's explosive growth through the early 2000s means thousands of homes here are hitting the 20-year mark all at once — which is exactly when HVAC systems start to fail. We've seen the pattern in every New Tampa community: <strong>Tampa Palms, Hunter's Green, Pebble Creek</strong> and <strong>Cross Creek</strong> all have concentrated clusters of replacement-age equipment.</p>
-<p>From our Wesley Chapel base, New Tampa is one of our regular service routes. That proximity, combined with 16+ years of hands-on experience in these exact neighborhoods, is why we're a local go-to for honest diagnosis and no-pressure quotes.</p>
-<h2>Heating &amp; cooling services for New Tampa homes</h2>
-<p><a href="/services/ac-repair-tampa/">AC repair</a>, <a href="/services/emergency-ac-repair-tampa/">urgent no-cool help</a>, <a href="/services/ac-maintenance-tampa/">tune-ups</a>, <a href="/services/hvac-installation-tampa/">high-efficiency installation</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a>, <a href="/services/heating-services-tampa/">heat pump & heat strip service</a>, <a href="/services/thermostat-installation-tampa/">smart thermostats</a>, and <a href="/services/refrigeration-repair-tampa/">commercial refrigeration</a>. All backed by our 1-year repair warranty and hundreds of Google reviews.</p>
+
+<h2>New Tampa HVAC — a neighborhood built in waves, now failing in waves</h2>
+<p>New Tampa's explosive build-out from the early 1990s through the mid-2000s created one of the densest concentrations of same-vintage housing in the Tampa Bay area. In <strong>Tampa Palms</strong>, systems installed in the Clinton era are now 25-30 years old. In <strong>Hunter's Green</strong> and <strong>Pebble Creek</strong>, late-1990s equipment is hitting the 20-year mark. In <strong>K-Bar Ranch</strong> and <strong>Heritage Isles</strong>, 2005-2010 builder-grade systems are approaching the age where compressor failures and refrigerant leaks become routine.</p>
+
+<p>When everyone's system was installed in the same three-year window, they tend to break in the same three-year window. If your neighbors are talking about HVAC replacements, get a system health check before you're making the call from a 90-degree house in July. Our Wesley Chapel team runs the New Tampa route regularly — we know the neighborhoods and we know the equipment.</p>
+
+<h2>What we see most often in New Tampa homes</h2>
+
+<p><strong>Failed capacitors and contactors</strong> are wear items that typically last 7-12 years in Florida heat. Homes with 15+ year old systems often have original capacitors from the builder install. We test on every maintenance visit and replace proactively before they strand you mid-summer.</p>
+
+<p><strong>R-22 refrigerant systems</strong> — R-22 was phased out of production in 2020. Systems still using it can be repaired if they are in good shape, but replacement refrigerant is expensive and supply is dwindling. We will give you the realistic cost picture and let you decide whether repair or replacement makes financial sense.</p>
+
+<p><strong>Duct leakage in two-story homes</strong> — New Tampa has a high density of two-story floor plans. The return-air system is often undersized for the second floor, creating hot bedrooms in the afternoon. Duct sealing and return upgrades frequently fix what homeowners assume requires a bigger unit or a second system.</p>
+
+<p><strong>Builder-grade thermostat limitations</strong> — Homes built in the 2000s often still have original thermostats that cannot control humidity independently. A smart thermostat upgrade can meaningfully improve comfort without replacing the whole system.</p>
+
+<h2>Heating service in New Tampa</h2>
+<p>Most New Tampa homes use heat pumps or heat strips for winter heating — very few furnaces exist in this ZIP code. Heat pump service requires a different diagnostic approach than standard AC repair, including defrost cycle testing, reversing valve checks, and supplemental heat strip verification. If your heat pump is blowing cool air in January, call us — it is usually a reversing valve or defrost cycle issue, not a refrigerant problem.</p>
+
+<h2>New construction HVAC evaluation for K-Bar Ranch and Easton Park</h2>
+<p>The eastern edge of New Tampa has seen significant construction in the 2015-2024 range. Builder-grade systems in these newer homes often present: undersized returns, flex duct runs kinked in the attic, and thermostat humidity settings not configured for Florida climate. We offer new-construction evaluations that identify and fix these issues before the builder warranty expires — typically well before the 1-year mark when coverage lapses.</p>
+
+<h2>All HVAC services available in New Tampa</h2>
+<p>Every service is available at the same flat-rate pricing, 1-year repair warranty, and Florida-licensed standards as our Wesley Chapel home base: <a href="/services/ac-repair-tampa/">AC repair</a>, <a href="/services/emergency-ac-repair-tampa/">urgent no-cool scheduling</a>, <a href="/services/ac-maintenance-tampa/">21-point AC tune-ups</a>, <a href="/services/hvac-installation-tampa/">full system replacement with permit coordination</a>, <a href="/services/air-duct-cleaning-tampa/">air duct cleaning</a>, <a href="/services/heating-services-tampa/">heat pump and heating service</a>, <a href="/services/thermostat-installation-tampa/">smart thermostat installation</a>, and <a href="/services/refrigeration-repair-tampa/">commercial refrigeration repair</a>.</p>
+
 </ServiceAreaLayout>

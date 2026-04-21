@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+---
+<BaseLayout
+  title="Privacy Policy | I Care Air Care"
+  description="Privacy policy for icareaircare.com — how I Care Air Care collects, uses, and protects your personal information."
+  breadcrumbs={[{name:'Home',url:'https://icareaircare.com/'},{name:'Privacy Policy',url:'https://icareaircare.com/privacy-policy/'}]}
+>
+  <section class="py-16 md:py-20 bg-white">
+    <div class="container-site max-w-3xl prose-icac">
+      <h1>Privacy Policy</h1>
+      <p class="text-slate-500 text-sm">Effective date: January 1, 2025 · Last updated: April 2026</p>
+
+      <p>I Care Air Care LLC ("I Care Air Care," "we," "us," or "our") operates icareaircare.com. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or contact us for service.</p>
+
+      <h2>Information We Collect</h2>
+      <p>We collect information you voluntarily provide when you:</p>
+      <ul>
+        <li>Fill out a contact or quote request form (name, email, phone number, address, service type)</li>
+        <li>Call or email us directly</li>
+        <li>Schedule service through our online booking system (Housecall Pro)</li>
+      </ul>
+      <p>We may also automatically collect limited technical data when you visit our site, including your IP address, browser type, referring URL, and pages visited. This data is used in aggregate form only for improving site performance.</p>
+
+      <h2>How We Use Your Information</h2>
+      <p>We use the information we collect to:</p>
+      <ul>
+        <li>Respond to service inquiries and schedule appointments</li>
+        <li>Send appointment confirmations and follow-up communications</li>
+        <li>Provide written estimates and invoices</li>
+        <li>Improve our website and service quality</li>
+        <li>Comply with legal obligations</li>
+      </ul>
+      <p>We do not sell, rent, or share your personal information with third parties for marketing purposes.</p>
+
+      <h2>Form Submissions</h2>
+      <p>Contact forms on this site are processed through FormSubmit (formsubmit.co), a third-party form service. Submissions are delivered directly to our business email address. FormSubmit's privacy policy governs their handling of form data in transit.</p>
+
+      <h2>Booking System</h2>
+      <p>Online appointment booking is powered by Housecall Pro. When you book through the booking link, you interact with Housecall Pro's platform. Their privacy policy governs the data they collect during the booking process.</p>
+
+      <h2>Analytics</h2>
+      <p>We may use Google Analytics (GA4) to understand aggregate traffic patterns on our website. Google Analytics collects data anonymously and does not identify individual visitors. You can opt out of Google Analytics tracking by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics Opt-out Browser Add-on</a>.</p>
+
+      <h2>Cookies</h2>
+      <p>Our website may use cookies to remember preferences and analyze site traffic. Most browsers allow you to refuse or delete cookies through your browser settings. Doing so will not prevent you from using the site, but some features may work differently.</p>
+
+      <h2>Data Security</h2>
+      <p>We take reasonable steps to protect your information from unauthorized access. However, no method of transmission over the internet is 100% secure. We cannot guarantee absolute security of your data.</p>
+
+      <h2>Children's Privacy</h2>
+      <p>Our website is not directed at children under 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, contact us and we will delete it.</p>
+
+      <h2>Third-Party Links</h2>
+      <p>Our site may contain links to third-party websites (Google Maps, Google Business Profile, Housecall Pro). We are not responsible for the privacy practices of those sites.</p>
+
+      <h2>Your Rights</h2>
+      <p>You may request access to, correction of, or deletion of personal information we hold about you by contacting us at the information below. We will respond within a reasonable time.</p>
+
+      <h2>Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. The effective date at the top of this page reflects the most recent revision. Continued use of our website after changes constitutes acceptance of the updated policy.</p>
+
+      <h2>Contact Us</h2>
+      <p>Questions about this Privacy Policy? Contact us:</p>
+      <ul>
+        <li><strong>I Care Air Care LLC</strong></li>
+        <li>{SITE.address.street}, {SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}</li>
+        <li>Phone: <a href={SITE.phoneHref}>{SITE.phone}</a></li>
+        <li>Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

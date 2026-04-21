@@ -1,3 +1,5 @@
+import { BLOG_BODIES } from './blog-bodies';
+
 export interface BlogLink {
   href: string;
   label: string;
@@ -11,10 +13,12 @@ export interface BlogPost {
   date: string;
   read: string;
   image: string;
+  imageAlt?: string;
   location: string;
   primaryService: BlogLink;
   related: BlogLink[];
   checklist: string[];
+  body?: string;
 }
 
 const services = {
@@ -437,6 +441,8 @@ export const BLOG_POSTS: BlogPost[] = [
     checklist: ["Keep the outdoor condenser clear by at least two feet.", "Change filters before they bow or gray over.", "Flush drains before summer algae growth.", "Schedule spring maintenance before the first long heat wave."],
   },
 ];
+
+BLOG_POSTS.forEach(p => { p.body = BLOG_BODIES[p.slug]; });
 
 export const featuredBlogPosts = BLOG_POSTS.slice(0, 3);
 

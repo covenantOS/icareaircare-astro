@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+---
+<BaseLayout
+  title="Terms of Use | I Care Air Care"
+  description="Terms of use for icareaircare.com — the terms governing your use of the I Care Air Care website and services."
+  breadcrumbs={[{name:'Home',url:'https://icareaircare.com/'},{name:'Terms of Use',url:'https://icareaircare.com/terms-of-use/'}]}
+>
+  <section class="py-16 md:py-20 bg-white">
+    <div class="container-site max-w-3xl prose-icac">
+      <h1>Terms of Use</h1>
+      <p class="text-slate-500 text-sm">Effective date: January 1, 2025 · Last updated: April 2026</p>
+
+      <p>By accessing or using icareaircare.com (the "Site"), you agree to be bound by these Terms of Use. If you do not agree to these terms, please do not use the Site.</p>
+
+      <h2>Use of This Site</h2>
+      <p>This Site is operated by I Care Air Care LLC ("I Care Air Care") to provide information about our HVAC services and to allow you to contact us or request service. You may use this Site for lawful purposes only. You agree not to:</p>
+      <ul>
+        <li>Use the Site in any way that violates applicable laws or regulations</li>
+        <li>Transmit unsolicited communications or spam</li>
+        <li>Attempt to gain unauthorized access to any part of the Site or its systems</li>
+        <li>Scrape, copy, or redistribute Site content without written permission</li>
+        <li>Engage in any conduct that restricts or inhibits anyone's use of the Site</li>
+      </ul>
+
+      <h2>Service Information</h2>
+      <p>The information on this Site about HVAC services, pricing ranges, and scheduling is provided for general informational purposes. Specific pricing for any service is provided only through a written estimate after diagnosis. All estimates are subject to change based on actual conditions found at the time of service. We reserve the right to decline any service call at our discretion.</p>
+
+      <h2>Accuracy of Information</h2>
+      <p>We make reasonable efforts to keep information on this Site current and accurate. However, we make no warranties of any kind, express or implied, that the Site content is complete, accurate, or free from errors. Technical specifications, service descriptions, and availability are subject to change without notice.</p>
+
+      <h2>Intellectual Property</h2>
+      <p>All content on this Site — including text, images, logos, graphics, and code — is owned by I Care Air Care LLC or its content suppliers and is protected by applicable copyright and trademark laws. You may not reproduce, distribute, modify, or create derivative works of Site content without our prior written permission, except for personal, non-commercial use.</p>
+
+      <h2>Third-Party Links</h2>
+      <p>This Site may contain links to third-party websites. These links are provided for your convenience. We do not control those sites and are not responsible for their content, privacy practices, or terms. A link does not imply endorsement by I Care Air Care.</p>
+
+      <h2>Disclaimer of Warranties</h2>
+      <p>This Site is provided on an "as is" and "as available" basis without warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, or non-infringement. I Care Air Care does not warrant that the Site will be uninterrupted, error-free, or free from viruses or other harmful components.</p>
+
+      <h2>Limitation of Liability</h2>
+      <p>To the fullest extent permitted by law, I Care Air Care LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or relating to your use of the Site or any content on it, even if we have been advised of the possibility of such damages.</p>
+
+      <h2>Indemnification</h2>
+      <p>You agree to indemnify and hold harmless I Care Air Care LLC, its officers, employees, and agents from any claims, damages, or expenses (including reasonable attorney's fees) arising from your use of the Site or violation of these Terms.</p>
+
+      <h2>Governing Law</h2>
+      <p>These Terms of Use are governed by the laws of the State of Florida, without regard to its conflict of law provisions. Any disputes arising under these Terms shall be resolved exclusively in the courts of Pasco County, Florida.</p>
+
+      <h2>Changes to These Terms</h2>
+      <p>We reserve the right to update these Terms of Use at any time. The revised terms will be posted on this page with an updated effective date. Your continued use of the Site after such changes constitutes your acceptance of the new terms.</p>
+
+      <h2>Contact</h2>
+      <p>Questions about these Terms? Contact us:</p>
+      <ul>
+        <li><strong>I Care Air Care LLC</strong></li>
+        <li>{SITE.address.street}, {SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}</li>
+        <li>Phone: <a href={SITE.phoneHref}>{SITE.phone}</a></li>
+        <li>Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

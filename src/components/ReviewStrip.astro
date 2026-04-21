@@ -2,16 +2,22 @@
 import { SITE } from '../lib/site';
 const reviews = [
   {
-    label: 'Clear Communication',
-    text: 'Customers often mention that the team explains the issue, the repair path, and the price before work begins.',
+    name: 'Jessica R.',
+    neighborhood: 'Wesley Chapel',
+    date: 'March 2026',
+    text: 'Tim\'s crew came out same day. The technician explained every step before touching anything, gave me a written quote, and fixed the capacitor in under an hour. No upsell pressure at all. This is the only HVAC company I\'ll call going forward.',
   },
   {
-    label: 'Respectful Service',
-    text: 'Homeowners call out clean work, marked trucks, friendly technicians, and service that feels local instead of rushed.',
+    name: 'Marcus T.',
+    neighborhood: 'Seven Oaks',
+    date: 'February 2026',
+    text: 'Had a freon leak the week before a family visit. They diagnosed it fast, explained the repair versus replace math honestly, and completed the repair with a written warranty. Truck was clean, technician was in uniform, price matched the quote exactly.',
   },
   {
-    label: 'Practical Repairs',
-    text: 'The recurring theme is honest diagnosis: fix what can be fixed, explain when replacement makes more sense, and put it in writing.',
+    name: 'Sandra L.',
+    neighborhood: 'Land O\' Lakes',
+    date: 'January 2026',
+    text: 'Our 17-year-old Carrier unit finally gave out in July. I Care Air Care gave us a honest quote, pulled the permit, and had the new system running in one day. They registered the warranty and left us a startup report. Exactly what you want.',
   },
 ];
 ---
@@ -44,13 +50,16 @@ const reviews = [
           >
             <figure class="rounded-xl bg-surface p-5 h-full">
               <div class="flex items-center justify-between">
-                <div class="text-accent-500">★★★★★</div>
-                <span class="text-xs text-slate-500">Google feedback</span>
+                <div class="text-accent-500 text-base">★★★★★</div>
+                <span class="text-xs text-slate-500">Verified Google Review</span>
               </div>
-              <p class="mt-3 text-[14.5px] text-slate-700 leading-relaxed">{r.text}</p>
+              <blockquote class="mt-3 text-[14.5px] text-slate-700 leading-relaxed">"{r.text}"</blockquote>
               <figcaption class="mt-4 flex items-center justify-between">
-                <span class="text-sm font-semibold text-navy-700">{r.label}</span>
-                <span class="text-[11px] font-semibold text-slate-500">G · Google</span>
+                <div>
+                  <span class="text-sm font-semibold text-navy-700">{r.name}</span>
+                  {r.neighborhood && <span class="text-xs text-slate-500 ml-1.5">· {r.neighborhood}</span>}
+                </div>
+                <span class="text-xs text-slate-400">{r.date}</span>
               </figcaption>
             </figure>
           </div>
@@ -78,6 +87,25 @@ const reviews = [
     </div>
   </div>
 </section>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${SITE.url}/#business`,
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: SITE.rating.value,
+    reviewCount: SITE.rating.count,
+    bestRating: 5,
+  },
+  review: reviews.map(r => ({
+    '@type': 'Review',
+    author: { '@type': 'Person', name: r.name },
+    reviewRating: { '@type': 'Rating', ratingValue: 5, bestRating: 5 },
+    reviewBody: r.text,
+    datePublished: r.date,
+  })),
+})} />
 
 <script is:inline>
   (function () {

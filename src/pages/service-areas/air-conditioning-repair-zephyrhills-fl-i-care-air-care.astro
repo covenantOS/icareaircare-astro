@@ -3,38 +3,114 @@ import ServiceAreaLayout from '../../layouts/ServiceAreaLayout.astro';
 
 const faqs = [
   {
-    "q": "How fast can you reach Zephyrhills?",
-    "a": "Zephyrhills is a regular route from our Wesley Chapel base. Call for the earliest available appointment window."
+    q: "How fast can you reach Zephyrhills from Wesley Chapel?",
+    a: "Zephyrhills is a regular route from our Wesley Chapel base — typically 20-30 minutes via Highway 54 or SR 56. Call (813) 395-2324 for the earliest available arrival window and an honest ETA before dispatch.",
   },
   {
-    "q": "Do you service Betmar Acres and manufactured homes?",
-    "a": "Yes — frequently. We know the specific HVAC and ductwork considerations for these homes."
+    q: "Do you service Betmar Acres and other manufactured home communities?",
+    a: "Yes — frequently. We know the specific HVAC and ductwork considerations for manufactured homes, including the flex duct configurations, platform AC systems, and ductwork repairs common in these communities.",
   },
   {
-    "q": "Do you service new construction in Silverado and Abbott Park?",
-    "a": "Yes — supplementing builder-grade systems with smart thermostats, better returns, and humidity control is a common call."
+    q: "Do you service the newer communities like Silverado and Abbott Park?",
+    a: "Yes. Builder-grade HVAC systems in Silverado and Abbott Park often need airflow balancing, return-air review, and humidity control calibration. We offer new-construction evaluations before the 1-year builder warranty expires.",
   },
   {
-    "q": "Are rates the same for Zephyrhills service?",
-    "a": "Yes — county-wide flat-rate pricing."
-  }
+    q: "Are rates the same for Zephyrhills as for Wesley Chapel?",
+    a: "Yes — county-wide flat-rate pricing. There is no additional travel fee for Zephyrhills service calls. All work is quoted in writing before we begin.",
+  },
+  {
+    q: "Do you service Colony Hills and Hidden River?",
+    a: "Yes — both are regular Zephyrhills service communities. Colony Hills has a mix of 1970s-90s homes with older HVAC systems that we service regularly for repairs and replacements.",
+  },
+  {
+    q: "Can you handle HVAC for mobile home parks and RV communities near Zephyrhills?",
+    a: "Yes. We service packaged AC units, platform systems, and mini-split installations common in Zephyrhills-area mobile home and RV communities. We carry parts for common platform system brands.",
+  },
+  {
+    q: "What is the design temperature for Zephyrhills AC sizing?",
+    a: "East Pasco County design conditions run slightly hotter and drier than coastal Tampa — approximately 93 degrees F dry-bulb, 76 degrees wet-bulb. This affects Manual-J sizing calculations and means equipment must handle higher sensible loads than bay-adjacent communities.",
+  },
+  {
+    q: "Do you service AdventHealth Zephyrhills-area businesses?",
+    a: "Yes — we service light commercial properties near AdventHealth Zephyrhills and throughout the Zephyrhills commercial corridor on US-301 and SR-54.",
+  },
 ];
 ---
 <ServiceAreaLayout
   slug="air-conditioning-repair-zephyrhills-fl-i-care-air-care"
-  title="AC Repair in Zephyrhills, FL | I Care Air Care"
-  description="Zephyrhills AC repair and HVAC services — Silverado, Abbott Park, Link's Landing. 4.9★ · 700+ reviews. Call (813) 395-2324."
+  title="AC Repair in Zephyrhills, FL | I Care Air Care HVAC"
+  description="Zephyrhills AC repair & HVAC service — Silverado, Abbott Park, Betmar Acres, Colony Hills, Hidden River & more. Manufactured home specialists. 4.9-star · 700+ reviews. Call (813) 395-2324."
   h1="Air Conditioning Repair in Zephyrhills, FL"
   eyebrow="Zephyrhills, FL"
-  subtitle={"Serving Silverado, Abbott Park, Link's Landing & every Zephyrhills neighborhood from our Wesley Chapel base."}
+  subtitle={"Complete AC repair, maintenance, installation & duct cleaning serving Silverado, Abbott Park, Betmar Acres, Colony Hills & every Zephyrhills community — from our Wesley Chapel base via Highway 54."}
   heroImage="/images/ICAC%20Team%281%29.webp"
   cityName="Zephyrhills"
   faqs={faqs}
-  neighborhoods={["Silverado","Abbott Park","Link’s Landing","Hidden River","Betmar Acres","Zephyr Lakes"]}
+  geo={{ lat: 28.2336, lng: -82.1815 }}
+  zipCodes={["33540", "33541", "33542", "33543", "33544"]}
+  neighborhoods={[
+    "Silverado",
+    "Abbott Park",
+    "Link's Landing",
+    "Hidden River",
+    "Betmar Acres",
+    "Colony Hills",
+    "Zephyr Lakes",
+    "Lake Bernadette",
+    "Boyette Road Corridor",
+    "Meadowbrook",
+  ]}
+  landmarks={[
+    { name: "Silverado Community", note: "One of Zephyrhills' largest newer master-planned communities; builder-grade HVAC common" },
+    { name: "Betmar Acres (55+ Community)", note: "Large manufactured home community; platform AC and flex duct systems are our specialty" },
+    { name: "AdventHealth Zephyrhills", note: "We service commercial and residential clients throughout this medical corridor on US-301" },
+    { name: "Skydive City (Zephyrhills Airport)", note: "Landmark east of town; rural properties east of Skydive City have older HVAC equipment" },
+    { name: "Lake Bernadette", note: "Lake-adjacent properties have higher humidity loads — latent capacity matters more here" },
+    { name: "Zephyrhills Historic Downtown (5th Ave)", note: "Older commercial buildings near downtown often have aging package unit systems" },
+    { name: "SR-54 / Eiland Blvd Corridor", note: "Primary commercial and residential growth corridor connecting Zephyrhills to Wesley Chapel" },
+  ]}
+  climateNote={"Zephyrhills sits in east Pasco County, farther from the Gulf than Wesley Chapel or Land O' Lakes, and at a slightly higher elevation. This inland position means the afternoon sea breeze arrives later and with less effect, pushing design temperatures 2-4 degrees higher than coastal communities. The east Pasco design day — approximately 93 degrees F dry-bulb — is an important input for Manual-J sizing calculations. Systems sized for the more moderate bay-side climate will be undersized for Zephyrhills peak conditions. <strong>Freeze protection</strong> is also worth noting: Zephyrhills has historically seen slightly more frequent below-freezing events than Tampa coastal areas, making annual heating system checks important for heat pump owners."}
+  reviews={[
+    { name: "Barbara H.", neighborhood: "Betmar Acres", body: "I have a manufactured home and was worried nobody would service it properly. I Care Air Care was professional, knew the platform AC system immediately, had the right capacitor on the truck, and fixed it same-day. The technician also checked my flex duct and found a disconnected run I did not know about.", rating: 5 },
+    { name: "James T.", neighborhood: "Silverado", body: "Our new Silverado home was not cooling the back bedrooms properly. I Care Air Care found two crushed flex runs in the attic and an undersized return grille. Repaired both and the whole house finally matches the thermostat setting. Should have been done right by the builder.", rating: 5 },
+    { name: "Susan R.", neighborhood: "Colony Hills", body: "Our 2001 system finally gave out. I Care Air Care gave us a load calculation, explained why we did not need the larger tonnage we were quoted elsewhere, installed the right size with a Pasco County permit, and registered the manufacturer warranty. Clean installation, honest price.", rating: 5 },
+  ]}
+  relatedAreas={[
+    { slug: "pasco-county-ac-repair", name: "Pasco County", note: "Full east and west Pasco coverage" },
+    { slug: "wesley-chapel-ac-repair", name: "Wesley Chapel", note: "Our home base on Highway 54 west" },
+    { slug: "land-o-lakes-hvac-services", name: "Land O' Lakes", note: "Bexley, Connerton & lake communities" },
+    { slug: "polk-county-residential-ac-repair", name: "Polk County", note: "Dade City to Lakeland corridor" },
+  ]}
+  driveTime="20-30 min"
+  responseWindow="Same-day when available"
 >
-<h2>Zephyrhills AC repair &amp; HVAC — the local contractor your neighbors trust</h2>
-<p>Zephyrhills has seen a major wave of new construction along the east side — <strong>Silverado, Abbott Park, Link's Landing</strong> — while the established communities (<strong>Betmar Acres, Hidden River</strong>, the original Zephyrhills core) continue to need reliable HVAC service for aging equipment. We handle both.</p>
-<p>From our Wesley Chapel base, Zephyrhills is a regular drive on Highway 54. Same-day scheduling is often available when the route has room.</p>
-<h2>Zephyrhills HVAC services</h2>
-<p>Complete residential HVAC line: <a href="/services/ac-repair-tampa/">AC repair</a>, <a href="/services/emergency-ac-repair-tampa/">urgent no-cool scheduling</a>, <a href="/services/ac-maintenance-tampa/">tune-ups &amp; maintenance plans</a>, <a href="/services/hvac-installation-tampa/">new system installation</a>, <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a>, <a href="/services/heating-services-tampa/">heating</a>, and <a href="/services/thermostat-installation-tampa/">smart thermostat installation</a>. We also handle manufactured-home HVAC common to Zephyrhills, and commercial refrigeration for local restaurants and markets.</p>
+
+<h2>Zephyrhills AC repair — serving the old town, the new communities, and everything between</h2>
+<p>Zephyrhills is a study in contrasts: the original <strong>Zephyrhills core</strong> around 5th Avenue has housing stock dating to the 1950s and 1960s, with older package units, wall-mount systems, and aging ductwork that requires careful hands-on diagnosis. <strong>Betmar Acres</strong> and other manufactured home communities along Gall Boulevard represent one of the largest concentrations of platform AC and flex duct systems in east Pasco. And the eastern growth corridor — <strong>Silverado</strong>, <strong>Abbott Park</strong>, <strong>Link's Landing</strong> — has added thousands of builder-grade systems since 2015 that are now reaching their first major service calls.</p>
+
+<p>Our Wesley Chapel base puts us about 20-30 minutes from downtown Zephyrhills via Highway 54 or SR-56. We run this route regularly and know the community well — the neighborhoods, the common equipment brands, and the specific failure modes each area sees most often.</p>
+
+<h2>Manufactured home HVAC — what Betmar Acres and Zephyrhills communities need</h2>
+<p>Manufactured home HVAC is a specialty, not a side service for us. These homes typically use <strong>platform-mount AC systems</strong> installed in a dedicated HVAC closet or under the home, with flexible ductwork running through the floor system. The failure modes are different from stick-built homes:</p>
+
+<ul>
+  <li><strong>Flex duct disconnections under the floor</strong> — vibration and rodent activity can disconnect duct boots from floor registers, causing significant cooling losses. We inspect the full duct run, not just the unit.</li>
+  <li><strong>Platform system compressor and capacitor failures</strong> — common brands in Zephyrhills manufactured communities include Nordyne, Goodman, and older Intertherm units. We carry parts for these platforms.</li>
+  <li><strong>Low return-air capacity</strong> — many older manufactured homes have a single return-air grille that is undersized for the system, causing the unit to starve for airflow. We can add additional returns to solve comfort complaints.</li>
+</ul>
+
+<h2>East Pasco climate and AC sizing</h2>
+<p>Zephyrhills sits inland at slightly higher elevation than coastal Tampa Bay communities, and the afternoon sea breeze arrives later here with less cooling effect. The design temperature for east Pasco County — used to properly size replacement HVAC equipment — is approximately 93°F dry-bulb with 76°F wet-bulb. This is meaningfully different from the 91-92°F design day used for Tampa coastal areas. A contractor who uses the wrong design temperature will undersize your replacement system for Zephyrhills peak conditions.</p>
+
+<p>We use location-specific Manual-J calculations for every replacement we quote in Zephyrhills — not a tonnage-per-square-foot rule of thumb.</p>
+
+<h2>New construction HVAC in Silverado and Abbott Park</h2>
+<p>The master-planned communities on Zephyrhills' eastern growth corridor were built quickly by production builders using standard HVAC packages. Common issues we find when called to service these homes include: undersized return-air grilles that cause high static pressure and early filter clogging; flex duct runs with excessive bends or compression in the attic; and smart thermostat dehumidification settings that are not calibrated for Zephyrhills' higher inland humidity. We offer a new-construction HVAC evaluation that covers all of these items before the builder's 1-year warranty period ends.</p>
+
+<h2>Heating in Zephyrhills — freeze protection matters</h2>
+<p>Zephyrhills has historically seen slightly more frequent below-freezing events than Tampa's coastal areas. Heat pump owners should have their system's defrost cycle tested annually — a defrost cycle that is not functioning will cause ice buildup on the outdoor coil during cold snaps and switch the system to emergency heat, significantly increasing your electric bill. We test defrost cycles on every fall maintenance visit.</p>
+
+<h2>All HVAC services in Zephyrhills</h2>
+<p>Complete coverage for all Zephyrhills ZIP codes (33540-33544): <a href="/services/ac-repair-tampa/">AC repair</a> for all residential and light commercial systems, <a href="/services/emergency-ac-repair-tampa/">urgent no-cool scheduling</a>, <a href="/services/ac-maintenance-tampa/">21-point maintenance tune-ups</a>, <a href="/services/hvac-installation-tampa/">full system replacement with Pasco County permit</a>, <a href="/services/air-duct-cleaning-tampa/">air duct cleaning including manufactured home flex duct</a>, <a href="/services/heating-services-tampa/">heating service and freeze protection checks</a>, <a href="/services/thermostat-installation-tampa/">smart thermostat installation</a>, and <a href="/services/refrigeration-repair-tampa/">commercial refrigeration for local restaurants and businesses</a>. Florida license CAC1822037. Flat-rate pricing. 1-year repair warranty.</p>
+
 </ServiceAreaLayout>

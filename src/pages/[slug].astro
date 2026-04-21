@@ -27,7 +27,13 @@ const articleSchema = {
   image: `${SITE.url}${post.image}`,
   datePublished: new Date(post.date).toISOString(),
   dateModified: new Date(post.date).toISOString(),
-  author: { '@type': 'Organization', name: SITE.name },
+  author: {
+    '@type': 'Person',
+    name: SITE.owner,
+    jobTitle: 'Licensed HVAC Contractor',
+    description: `Florida HVAC License ${SITE.license}`,
+    worksFor: { '@id': `${SITE.url}/#business` },
+  },
   publisher: {
     '@type': 'Organization',
     name: SITE.name,
@@ -42,6 +48,7 @@ const articleSchema = {
     title={post.title}
     subtitle={post.description}
     image={post.image}
+    imageAlt={post.imageAlt || `${post.title} — I Care Air Care Wesley Chapel, FL`}
     ctaLabel={`Schedule ${post.primaryService.label}`}
     ctaHref={post.primaryService.href}
   />
@@ -51,6 +58,8 @@ const articleSchema = {
       <article class="lg:col-span-8 prose-icac">
         <div class="not-prose flex flex-wrap items-center gap-3 text-sm text-slate-500 mb-6">
           <span class="inline-flex rounded-md bg-brand-50 text-brand-700 text-xs font-semibold px-2.5 py-1">{post.tag}</span>
+          <span>By <strong class="text-navy-700">{SITE.owner}</strong>, Licensed HVAC Contractor · {SITE.license}</span>
+          <span>•</span>
           <span>{post.date}</span>
           <span>•</span>
           <span>{post.read} read</span>
@@ -71,12 +80,28 @@ const articleSchema = {
           </ul>
         </div>
 
-        <h2>What this usually means in {post.location}</h2>
-        <p>Florida HVAC problems tend to stack together: long runtime, humidity, clogged drains, dusty returns, and outdoor condenser heat all show up at the same time. That is why the best first step is a measured diagnosis instead of guessing from one symptom.</p>
-        <p>If the issue connects to cooling performance, airflow, maintenance, or replacement planning, the service path usually starts with <a href={post.primaryService.href}>{post.primaryService.label}</a>. From there, a technician can separate the simple fixes from the repairs that need parts, gauges, electrical testing, or a written replacement proposal.</p>
+        {post.body
+          ? <Fragment set:html={post.body} />
+          : (
+            <>
+              <h2>What this usually means in {post.location}</h2>
+              <p>Florida HVAC problems tend to stack together: long runtime, humidity, clogged drains, dusty returns, and outdoor condenser heat all show up at the same time. That is why the best first step is a measured diagnosis instead of guessing from one symptom.</p>
+              <p>If the issue connects to cooling performance, airflow, maintenance, or replacement planning, the service path usually starts with <a href={post.primaryService.href}>{post.primaryService.label}</a>. From there, a technician can separate the simple fixes from the repairs that need parts, gauges, electrical testing, or a written replacement proposal.</p>
+              <h2>When to call I Care Air Care</h2>
+              <p>Call when the system is not keeping up, the air feels warm, water is near the air handler, the outdoor unit is not running, the breaker trips repeatedly, or the repair decision is no longer obvious. We will explain the next step, give you the earliest available appointment window, and quote work before it begins.</p>
+            </>
+          )
+        }
 
-        <h2>When to call I Care Air Care</h2>
-        <p>Call when the system is not keeping up, the air feels warm, water is near the air handler, the outdoor unit is not running, the breaker trips repeatedly, or the repair decision is no longer obvious. We will explain the next step, give you the earliest available appointment window, and quote work before it begins.</p>
+        <!-- Author bio -->
+        <div class="not-prose mt-10 rounded-xl bg-surface ring-1 ring-slate-200 p-5 flex items-start gap-4">
+          <img src="/images/Tim%20Hawk%20(ICAC%20Owner).webp" alt="Tim Hawk, Owner of I Care Air Care" class="w-14 h-14 rounded-full ring-2 ring-brand-200 object-cover shrink-0" width="56" height="56" loading="lazy" />
+          <div>
+            <div class="font-bold text-navy-700">{SITE.owner}</div>
+            <div class="text-xs text-brand-600 font-semibold uppercase tracking-wide">Owner &amp; Master HVAC Technician · Florida License {SITE.license}</div>
+            <p class="mt-2 text-[14px] text-slate-600 leading-relaxed">Tim founded I Care Air Care in 2010 after 30+ years in the Tampa Bay HVAC trade. EPA Universal certified. The source for all technical guidance published on this site.</p>
+          </div>
+        </div>
 
         <h2>Related local help</h2>
         <p>These pages connect this guide to the services and local areas homeowners usually need next:</p>
@@ -89,13 +114,13 @@ const articleSchema = {
 
       <aside class="lg:col-span-4 space-y-5">
         <div class="rounded-xl bg-brand-500 text-white p-6 shadow-[var(--shadow-soft)]">
-          <h2 class="text-white text-xl font-bold">Need help with this?</h2>
+          <h3 class="text-white text-xl font-bold">Need help with this?</h3>
           <p class="mt-3 text-blue-50 text-sm leading-relaxed">Talk with the Wesley Chapel team and get the right next step for your home.</p>
           <a href={SITE.phoneHref} class="mt-5 inline-flex w-full justify-center rounded-md bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-3">{SITE.phone}</a>
           <a href={SITE.bookUrl} target="_blank" rel="noopener" class="mt-2 inline-flex w-full justify-center rounded-md bg-white/10 border border-white/30 hover:bg-white/20 text-white font-semibold px-4 py-3">Book Online</a>
         </div>
         <div class="rounded-xl bg-surface ring-1 ring-slate-200 p-6">
-          <h2 class="text-lg font-bold text-navy-700">Popular next steps</h2>
+          <h3 class="text-lg font-bold text-navy-700">Popular next steps</h3>
           <ul class="mt-3 space-y-2 text-[15px]">
             {post.related.map((link) => (
               <li><a class="text-brand-600 hover:text-brand-700 underline underline-offset-2" href={link.href}>{link.label}</a></li>
