@@ -12,7 +12,8 @@ export default defineConfig({
         !page.includes('/our-team/') &&
         !page.includes('/privacy-policy/') &&
         !page.includes('/terms-of-use/') &&
-        !page.includes('/thank-you/'),
+        !page.includes('/thank-you/') &&
+        !page.includes('/book/'),
     }),
     partytown({ config: { forward: ['dataLayer.push', 'gtag'] } }),
   ],

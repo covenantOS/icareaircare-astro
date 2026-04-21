@@ -1,0 +1,997 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+
+const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4ca7c48c3bbcf2e13316f44e8?v2=true';
+---
+<BaseLayout
+  title="Book Service Online | I Care Air Care"
+  description="Book AC repair, maintenance, or HVAC installation online with I Care Air Care — Wesley Chapel's 4.9★ HVAC team serving Pasco, Hillsborough & Polk counties."
+  breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'Book Online',url:'https://www.icareaircare.com/book/'}]}
+>
+  <section class="py-10 md:py-14 min-h-screen" style="background: var(--color-surface);">
+    <div class="container-site max-w-2xl">
+
+      <header class="mb-6 md:mb-8 text-center">
+        <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Book Online</span>
+        <h1 class="mt-3 text-3xl md:text-4xl text-navy-700" style="font-weight:700;">Schedule your service</h1>
+        <p class="mt-2 text-slate-600 text-sm md:text-base">Takes about 60 seconds. Prefer to talk? Call <a href={SITE.phoneHref} class="text-brand-600 font-semibold hover:text-brand-700">{SITE.phone}</a>.</p>
+      </header>
+
+      <div class="bg-white rounded-2xl shadow-[var(--shadow-soft)] ring-1 ring-slate-100 overflow-hidden">
+
+        <div class="bk-progress" aria-hidden="true">
+          <div class="bk-progress-bar" data-progress></div>
+        </div>
+
+        <div class="px-6 md:px-8 pt-5 flex items-center justify-between text-xs md:text-sm text-slate-500">
+          <span>Step <span data-current>1</span> of 6</span>
+          <button type="button" data-back class="bk-back" hidden>← Back</button>
+        </div>
+
+        <form id="booking-form" class="px-6 md:px-8 pb-6 md:pb-8 pt-4" novalidate>
+
+          <!-- STEP 1: ZIP -->
+          <div data-step="1" class="bk-step">
+            <h2 class="bk-h2">Let's make sure we serve your area</h2>
+            <p class="bk-sub">We dispatch from Wesley Chapel across Pasco, Hillsborough, and Polk counties.</p>
+            <label class="bk-label">
+              <span>ZIP code</span>
+              <input name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" required autocomplete="postal-code" class="bk-input" placeholder="e.g. 33544" data-zip-input />
+            </label>
+            <p data-zip-warn class="bk-warn" hidden></p>
+            <p data-zip-ok class="bk-ok" hidden></p>
+          </div>
+
+          <!-- STEP 2: CATEGORY -->
+          <div data-step="2" class="bk-step" hidden>
+            <h2 class="bk-h2">What can we do for you?</h2>
+            <p class="bk-sub">Pick the closest match — we'll narrow it down next.</p>
+            <div class="bk-card-grid bk-card-grid-2">
+              <button type="button" class="bk-card" data-choice="category" data-value="hvac">
+                <span class="bk-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-5h2v3h-2v-3zm-3-4h2v3H8v-3zm8 0h-2v3h2v-3zm-6-4h4v2h-4v-2z"/></svg>
+                </span>
+                <strong>Heating &amp; Air Conditioning</strong>
+                <span class="bk-card-hint">Repair, maintenance, new system, emergency</span>
+              </button>
+              <button type="button" class="bk-card" data-choice="category" data-value="basic">
+                <span class="bk-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M4 4h16v4H4V4zm0 6h16v4H4v-4zm0 6h16v4H4v-4z"/></svg>
+                </span>
+                <strong>Basic Services</strong>
+                <span class="bk-card-hint">Duct cleaning, thermostats, air quality</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3a: HVAC SUB-OPTIONS -->
+          <div data-step="3" data-category="hvac" class="bk-step" hidden>
+            <h2 class="bk-h2">What kind of service?</h2>
+            <p class="bk-sub">Pick the best match. We'll ask a couple quick questions next.</p>
+            <div class="bk-card-grid">
+              <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="diagnostic">
+                <strong>Diagnostic</strong>
+                <span class="bk-card-hint">Something's off — it's not cooling, it's making noise, it's leaking, etc.</span>
+              </button>
+              <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="care-plan-tuneup">
+                <strong>Care Plan Tune-Up</strong>
+                <span class="bk-card-hint">I'm a maintenance plan member — time for my scheduled visit.</span>
+              </button>
+              <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="tuneup">
+                <strong>Standard Tune-Up</strong>
+                <span class="bk-card-hint">21-point preventive maintenance. Catch issues before summer.</span>
+              </button>
+              <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="estimate">
+                <strong>Estimate / New System</strong>
+                <span class="bk-card-hint">Thinking about replacing — get a written quote.</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3b: BASIC SUB-OPTIONS -->
+          <div data-step="3" data-category="basic" class="bk-step" hidden>
+            <h2 class="bk-h2">Which service?</h2>
+            <div class="bk-card-grid">
+              <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="duct">
+                <strong>Air Duct Cleaning</strong>
+                <span class="bk-card-hint">7-step HEPA-vacuumed deep clean with sanitization.</span>
+              </button>
+              <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="thermostat">
+                <strong>Thermostat Installation</strong>
+                <span class="bk-card-hint">Ecobee, Nest, Honeywell — install + configure for your heat pump.</span>
+              </button>
+              <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="iaq">
+                <strong>Indoor Air Quality</strong>
+                <span class="bk-card-hint">UV lights, purifiers, humidity control, filtration.</span>
+              </button>
+              <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="other">
+                <strong>Other / Not Sure</strong>
+                <span class="bk-card-hint">Tell us what's going on — we'll figure it out.</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 4: FOLLOW-UP QUESTIONS -->
+          <div data-step="4" class="bk-step" hidden>
+            <h2 class="bk-h2">A couple quick questions</h2>
+            <p class="bk-sub" data-followup-hint>These help our techs arrive prepared.</p>
+
+            <div data-followup="diagnostic" hidden>
+              <label class="bk-label">
+                <span>What's happening with your system?</span>
+                <select name="q_issue" class="bk-input">
+                  <option value="">Choose one</option>
+                  <option value="Not cooling — warm air">Not cooling (warm air)</option>
+                  <option value="Not heating">Not heating</option>
+                  <option value="Weak airflow">Weak airflow</option>
+                  <option value="Strange noises">Strange noises</option>
+                  <option value="Leaking water or ice">Leaking water or ice on the unit</option>
+                  <option value="Won't turn on">Won't turn on at all</option>
+                  <option value="Tripping the breaker">Tripping the breaker</option>
+                  <option value="High humidity / sticky air">High humidity / sticky air indoors</option>
+                  <option value="Other">Other</option>
+                </select>
+              </label>
+              <label class="bk-label">
+                <span>How urgent? <span class="bk-small">(be honest — helps us prioritize)</span></span>
+                <select name="q_urgency" class="bk-input">
+                  <option value="Emergency — no cooling right now">Emergency — no cooling right now</option>
+                  <option value="Today if possible">Today if possible</option>
+                  <option value="This week">This week</option>
+                  <option value="Flexible — whenever">Flexible — whenever</option>
+                </select>
+              </label>
+            </div>
+
+            <div data-followup="care-plan-tuneup" hidden>
+              <label class="bk-label">
+                <span>Approximately how old is your system?</span>
+                <select name="q_system_age" class="bk-input">
+                  <option value="">Choose one</option>
+                  <option value="Under 5 years">Under 5 years</option>
+                  <option value="5–10 years">5–10 years</option>
+                  <option value="10–15 years">10–15 years</option>
+                  <option value="15+ years">15+ years</option>
+                  <option value="Not sure">Not sure</option>
+                </select>
+              </label>
+            </div>
+
+            <div data-followup="tuneup" hidden>
+              <label class="bk-label">
+                <span>Approximately how old is your system?</span>
+                <select name="q_system_age2" class="bk-input">
+                  <option value="">Choose one</option>
+                  <option value="Under 5 years">Under 5 years</option>
+                  <option value="5–10 years">5–10 years</option>
+                  <option value="10–15 years">10–15 years</option>
+                  <option value="15+ years">15+ years</option>
+                  <option value="Not sure">Not sure</option>
+                </select>
+              </label>
+              <label class="bk-label">
+                <span>When was it last serviced?</span>
+                <select name="q_last_service" class="bk-input">
+                  <option value="Within the last year">Within the last year</option>
+                  <option value="1–2 years ago">1–2 years ago</option>
+                  <option value="More than 2 years ago">More than 2 years ago</option>
+                  <option value="Never / not sure">Never / not sure</option>
+                </select>
+              </label>
+            </div>
+
+            <div data-followup="estimate" hidden>
+              <label class="bk-label">
+                <span>What are you looking to replace?</span>
+                <select name="q_replace" class="bk-input">
+                  <option value="">Choose one</option>
+                  <option value="AC only (outdoor condenser)">AC only (outdoor condenser)</option>
+                  <option value="Full system (indoor + outdoor)">Full system (indoor + outdoor)</option>
+                  <option value="Heat pump">Heat pump</option>
+                  <option value="Ductwork">Ductwork</option>
+                  <option value="Mini-split / ductless">Mini-split / ductless</option>
+                  <option value="Not sure — help me decide">Not sure — help me decide</option>
+                </select>
+              </label>
+              <label class="bk-label">
+                <span>Home size (approximate sq ft)</span>
+                <select name="q_sqft" class="bk-input">
+                  <option value="">Choose one</option>
+                  <option value="Under 1,500">Under 1,500 sq ft</option>
+                  <option value="1,500–2,500">1,500–2,500 sq ft</option>
+                  <option value="2,500–3,500">2,500–3,500 sq ft</option>
+                  <option value="3,500+">3,500+ sq ft</option>
+                  <option value="Not sure">Not sure</option>
+                </select>
+              </label>
+            </div>
+
+            <div data-followup="duct" hidden>
+              <label class="bk-label">
+                <span>How many vents/registers approximately?</span>
+                <select name="q_vents" class="bk-input">
+                  <option value="">Choose one</option>
+                  <option value="5 or fewer">5 or fewer</option>
+                  <option value="6–10">6–10</option>
+                  <option value="11–15">11–15</option>
+                  <option value="16+">16+</option>
+                  <option value="Not sure">Not sure</option>
+                </select>
+              </label>
+              <label class="bk-label">
+                <span>Any of these apply? <span class="bk-small">(optional)</span></span>
+                <select name="q_duct_reason" class="bk-input">
+                  <option value="">Choose if relevant</option>
+                  <option value="Allergies / asthma in household">Allergies / asthma in household</option>
+                  <option value="Pets">Pets</option>
+                  <option value="Recent remodel / construction">Recent remodel / construction</option>
+                  <option value="Visible dust from vents">Visible dust from vents</option>
+                  <option value="Musty odor">Musty odor</option>
+                  <option value="Just due for a cleaning">Just due for a cleaning</option>
+                </select>
+              </label>
+            </div>
+
+            <div data-followup="thermostat" hidden>
+              <label class="bk-label">
+                <span>Do you have a smart thermostat picked out?</span>
+                <select name="q_thermostat_choice" class="bk-input">
+                  <option value="">Choose one</option>
+                  <option value="Ecobee">Ecobee</option>
+                  <option value="Google Nest">Google Nest</option>
+                  <option value="Honeywell">Honeywell</option>
+                  <option value="Other brand">Other brand</option>
+                  <option value="Need a recommendation">Need a recommendation</option>
+                </select>
+              </label>
+              <label class="bk-label">
+                <span>System type <span class="bk-small">(if you know)</span></span>
+                <select name="q_system_type" class="bk-input">
+                  <option value="">Choose one</option>
+                  <option value="Heat pump">Heat pump</option>
+                  <option value="Straight cool + heat strips">Straight cool + heat strips</option>
+                  <option value="Gas furnace">Gas furnace</option>
+                  <option value="Not sure">Not sure</option>
+                </select>
+              </label>
+            </div>
+
+            <div data-followup="iaq" hidden>
+              <label class="bk-label">
+                <span>What are you hoping to improve?</span>
+                <select name="q_iaq_goal" class="bk-input">
+                  <option value="">Choose one</option>
+                  <option value="Allergies / asthma">Allergies / asthma</option>
+                  <option value="Humidity control">Humidity control</option>
+                  <option value="Germs / viruses (UV)">Germs / viruses (UV light)</option>
+                  <option value="Odors">Odors</option>
+                  <option value="Overall air quality">Overall air quality — help me decide</option>
+                </select>
+              </label>
+            </div>
+
+            <div data-followup="other" hidden>
+              <label class="bk-label">
+                <span>Tell us a bit about what's going on</span>
+                <textarea name="q_other_details" class="bk-input bk-textarea" rows="4" placeholder="Describe what you need help with…"></textarea>
+              </label>
+            </div>
+          </div>
+
+          <!-- STEP 5: CONTACT + ADDRESS -->
+          <div data-step="5" class="bk-step" hidden>
+            <h2 class="bk-h2">Where should we come and who do we ask for?</h2>
+            <label class="bk-label">
+              <span>Full name</span>
+              <input name="name" type="text" autocomplete="name" required class="bk-input" placeholder="Jane Doe" />
+            </label>
+            <div class="bk-row-2">
+              <label class="bk-label">
+                <span>Phone</span>
+                <input name="phone" type="tel" autocomplete="tel" inputmode="tel" required class="bk-input" placeholder="(813) 555-0100" />
+              </label>
+              <label class="bk-label">
+                <span>Email</span>
+                <input name="email" type="email" autocomplete="email" required class="bk-input" placeholder="you@email.com" />
+              </label>
+            </div>
+            <label class="bk-label">
+              <span>Street address</span>
+              <input name="street" type="text" autocomplete="address-line1" required class="bk-input" placeholder="123 Main St" />
+            </label>
+            <label class="bk-label">
+              <span>Apt / Unit <span class="bk-small">(optional)</span></span>
+              <input name="unit" type="text" autocomplete="address-line2" class="bk-input" placeholder="Apt 4B" />
+            </label>
+            <div class="bk-row-3">
+              <label class="bk-label">
+                <span>City</span>
+                <input name="city" type="text" autocomplete="address-level2" required class="bk-input" placeholder="Wesley Chapel" />
+              </label>
+              <label class="bk-label">
+                <span>State</span>
+                <input name="state" type="text" autocomplete="address-level1" value="FL" required class="bk-input" />
+              </label>
+              <label class="bk-label">
+                <span>ZIP</span>
+                <input name="zip2" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" autocomplete="postal-code" required class="bk-input" placeholder="33544" />
+              </label>
+            </div>
+          </div>
+
+          <!-- STEP 6: ARRIVAL WINDOW + REVIEW + SUBMIT -->
+          <div data-step="6" class="bk-step" hidden>
+            <h2 class="bk-h2">When works best?</h2>
+            <p class="bk-sub">We'll confirm the exact arrival window by phone or text after you submit.</p>
+
+            <div class="bk-sub-heading">Preferred day</div>
+            <div class="bk-card-grid bk-card-grid-2">
+              <button type="button" class="bk-card bk-card-compact" data-choice="when" data-value="asap"><strong>ASAP</strong><span class="bk-card-hint">Earliest available slot</span></button>
+              <button type="button" class="bk-card bk-card-compact" data-choice="when" data-value="today"><strong>Today</strong><span class="bk-card-hint">If we can</span></button>
+              <button type="button" class="bk-card bk-card-compact" data-choice="when" data-value="tomorrow"><strong>Tomorrow</strong><span class="bk-card-hint">Plan-ahead booking</span></button>
+              <button type="button" class="bk-card bk-card-compact" data-choice="when" data-value="this-week"><strong>This week</strong><span class="bk-card-hint">You pick the best time</span></button>
+            </div>
+
+            <div class="bk-sub-heading">Preferred time</div>
+            <div class="bk-card-grid bk-card-grid-3">
+              <button type="button" class="bk-card bk-card-compact" data-choice="time" data-value="morning"><strong>Morning</strong><span class="bk-card-hint">8am–12pm</span></button>
+              <button type="button" class="bk-card bk-card-compact" data-choice="time" data-value="afternoon"><strong>Afternoon</strong><span class="bk-card-hint">12pm–4pm</span></button>
+              <button type="button" class="bk-card bk-card-compact" data-choice="time" data-value="any"><strong>Any</strong><span class="bk-card-hint">First available</span></button>
+            </div>
+
+            <div class="bk-review" data-review hidden>
+              <h3 class="bk-review-h">Quick review</h3>
+              <dl class="bk-review-list" data-review-body></dl>
+            </div>
+
+            <label class="bk-consent">
+              <input type="checkbox" name="consent" required />
+              <span>I agree to be contacted by I Care Air Care to confirm this appointment by phone, text, or email. Standard message &amp; data rates may apply.</span>
+            </label>
+
+            <button type="submit" class="bk-submit" data-submit>
+              <span data-submit-label>Confirm Booking</span>
+              <svg class="bk-submit-spinner" viewBox="0 0 24 24" width="18" height="18" hidden aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="30 30" />
+              </svg>
+            </button>
+
+            <p class="bk-fallback">Trouble submitting? Call <a href={SITE.phoneHref} class="font-semibold">{SITE.phone}</a> or <a href={hcpFallback} target="_blank" rel="noopener" class="underline">book on our scheduling system</a>.</p>
+          </div>
+
+          <!-- NAV -->
+          <div class="bk-nav" data-nav>
+            <button type="button" data-next class="bk-next">Continue
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+          <div data-error class="bk-error" hidden></div>
+        </form>
+
+      </div>
+
+      <p class="mt-5 text-center text-xs text-slate-500">4.9★ · {SITE.rating.count}+ Google reviews · Florida license {SITE.license} · Family-owned in Wesley Chapel</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .bk-progress {
+    height: 3px;
+    background: var(--color-line);
+    width: 100%;
+  }
+  .bk-progress-bar {
+    height: 100%;
+    background: var(--color-brand-500);
+    width: 16.67%;
+    transition: width 0.35s ease;
+  }
+  .bk-back {
+    background: none;
+    border: 0;
+    color: var(--color-muted);
+    cursor: pointer;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+  .bk-back:hover { color: var(--color-navy-700); background: var(--color-surface); }
+
+  .bk-step { animation: bkFade 0.25s ease-out; }
+  @keyframes bkFade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .bk-h2 {
+    font-size: 22px;
+    line-height: 1.25;
+    font-weight: 700;
+    color: var(--color-navy-700);
+    letter-spacing: -0.01em;
+  }
+  @media (min-width: 768px) {
+    .bk-h2 { font-size: 26px; }
+  }
+  .bk-sub {
+    margin-top: 8px;
+    color: var(--color-muted);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .bk-sub-heading {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+  }
+  .bk-small { color: var(--color-muted); font-weight: 400; font-size: 12px; }
+
+  .bk-label {
+    display: block;
+    margin-top: 16px;
+  }
+  .bk-label > span:first-child {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-navy-700);
+    margin-bottom: 6px;
+  }
+  .bk-input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--color-ink);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    font-family: inherit;
+  }
+  .bk-input:focus {
+    outline: none;
+    border-color: var(--color-brand-500);
+    box-shadow: 0 0 0 3px rgba(93,165,184,0.18);
+  }
+  .bk-textarea { resize: vertical; min-height: 96px; }
+
+  .bk-row-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  @media (min-width: 540px) {
+    .bk-row-2 { grid-template-columns: 1fr 1fr; gap: 12px; }
+  }
+  .bk-row-3 {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 539px) {
+    .bk-row-3 { grid-template-columns: 1fr 1fr; }
+    .bk-row-3 .bk-label:first-child { grid-column: span 2; }
+  }
+
+  .bk-card-grid {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .bk-card-grid-2 { grid-template-columns: 1fr 1fr; }
+  .bk-card-grid-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 539px) {
+    .bk-card-grid-2 { grid-template-columns: 1fr; }
+    .bk-card-grid-3 { grid-template-columns: 1fr; }
+  }
+  .bk-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 4px;
+    padding: 16px;
+    background: #fff;
+    border: 2px solid var(--color-line);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.05s ease;
+    font-family: inherit;
+    color: var(--color-navy-700);
+  }
+  .bk-card:hover {
+    border-color: var(--color-brand-400);
+    background: var(--color-brand-50);
+  }
+  .bk-card:active { transform: scale(0.99); }
+  .bk-card.is-selected {
+    border-color: var(--color-brand-500);
+    background: var(--color-brand-50);
+    box-shadow: 0 0 0 3px rgba(93,165,184,0.15);
+  }
+  .bk-card strong {
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .bk-card-hint {
+    font-size: 13px;
+    color: var(--color-muted);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  .bk-card-icon {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--color-brand-100);
+    color: var(--color-brand-700);
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+  }
+  .bk-card-wide strong { font-size: 16px; }
+  .bk-card-compact {
+    padding: 12px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .bk-warn {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: #fef5ea;
+    color: var(--color-accent-700);
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .bk-ok {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: #f0f7fa;
+    color: var(--color-brand-700);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .bk-review {
+    margin-top: 20px;
+    padding: 16px;
+    background: var(--color-surface);
+    border-radius: 12px;
+    border: 1px solid var(--color-line);
+  }
+  .bk-review-h {
+    margin: 0 0 10px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+    font-weight: 700;
+  }
+  .bk-review-list {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 14px;
+    margin: 0;
+    font-size: 14px;
+  }
+  .bk-review-list dt {
+    color: var(--color-muted);
+    font-weight: 600;
+  }
+  .bk-review-list dd {
+    margin: 0;
+    color: var(--color-navy-700);
+  }
+
+  .bk-consent {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--color-muted);
+    line-height: 1.5;
+    cursor: pointer;
+  }
+  .bk-consent input { margin-top: 3px; flex-shrink: 0; }
+
+  .bk-submit {
+    margin-top: 16px;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 20px;
+    background: var(--color-accent-500);
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    font-family: inherit;
+  }
+  .bk-submit:hover:not(:disabled) { background: var(--color-accent-600); }
+  .bk-submit:disabled { opacity: 0.6; cursor: wait; }
+  .bk-submit-spinner {
+    animation: bkSpin 0.9s linear infinite;
+  }
+  @keyframes bkSpin { to { transform: rotate(360deg); } }
+
+  .bk-fallback {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--color-muted);
+    text-align: center;
+    line-height: 1.55;
+  }
+  .bk-fallback a { color: var(--color-brand-700); }
+
+  .bk-nav {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .bk-next {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: var(--color-brand-500);
+    color: #fff;
+    border: 0;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 15px;
+    transition: background 0.15s ease;
+  }
+  .bk-next:hover { background: var(--color-brand-600); }
+  .bk-next:disabled {
+    background: var(--color-line);
+    color: var(--color-muted);
+    cursor: not-allowed;
+  }
+
+  .bk-error {
+    margin-top: 16px;
+    padding: 12px 14px;
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    // --- Served ZIP prefixes (Pasco, Hillsborough, Polk and nearby) ---
+    var SERVED_PREFIXES = ['335','336','337','338','340','346','347'];
+    var SERVED_EXTRA = ['33523','33525','33540','33541','33542','33543','33544','33545','33574','33576','33597','34637','34638','34639','34653','34654','34655','34668','34669','34677','34685','34695'];
+
+    function isServedZip(zip) {
+      if (!/^\d{5}$/.test(zip)) return false;
+      if (SERVED_PREFIXES.indexOf(zip.slice(0,3)) !== -1) return true;
+      return SERVED_EXTRA.indexOf(zip) !== -1;
+    }
+
+    // --- State ---
+    var state = {
+      step: 1,
+      zip: '',
+      category: '',
+      service: '',
+      answers: {},
+      name: '',
+      phone: '',
+      email: '',
+      address: { street:'', unit:'', city:'', state:'FL', zip:'' },
+      window: { when:'', time:'' },
+    };
+    var TOTAL = 6;
+
+    var form = document.getElementById('booking-form');
+    if (!form) return;
+    var progressBar = form.closest('.bg-white').querySelector('[data-progress]');
+    var currentLbl = form.closest('.bg-white').querySelector('[data-current]');
+    var backBtn = form.closest('.bg-white').querySelector('[data-back]');
+    var nextBtn = form.querySelector('[data-next]');
+    var nav = form.querySelector('[data-nav]');
+    var errorEl = form.querySelector('[data-error]');
+    var submitBtn = form.querySelector('[data-submit]');
+    var submitLbl = form.querySelector('[data-submit-label]');
+    var submitSpinner = form.querySelector('.bk-submit-spinner');
+
+    function showStep(n) {
+      state.step = n;
+      currentLbl.textContent = String(n);
+      progressBar.style.width = (100 * n / TOTAL) + '%';
+      backBtn.hidden = n === 1;
+
+      // Hide all steps
+      form.querySelectorAll('.bk-step').forEach(function (el) { el.hidden = true; });
+      // Show the right step 3 variant based on category
+      var show;
+      if (n === 3) {
+        show = form.querySelector('[data-step="3"][data-category="' + state.category + '"]');
+      } else {
+        show = form.querySelector('[data-step="' + n + '"]:not([data-category])');
+      }
+      if (show) show.hidden = false;
+
+      // Show the right follow-up questions on step 4
+      if (n === 4) {
+        form.querySelectorAll('[data-followup]').forEach(function (el) { el.hidden = true; });
+        var fu = form.querySelector('[data-followup="' + state.service + '"]');
+        if (fu) fu.hidden = false;
+      }
+
+      // Update review on step 6
+      if (n === 6) renderReview();
+
+      // Hide nav on the submit step (step 6 has its own submit button)
+      if (nav) nav.hidden = (n === 6);
+
+      // Clear error
+      errorEl.hidden = true;
+      errorEl.textContent = '';
+
+      // Scroll to top of form card
+      form.closest('.bg-white').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function setError(msg) {
+      errorEl.textContent = msg;
+      errorEl.hidden = !msg;
+      if (msg) errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function validateStep(n) {
+      setError('');
+      if (n === 1) {
+        var zipInput = form.querySelector('[data-zip-input]');
+        var zip = (zipInput.value || '').trim();
+        if (!/^\d{5}$/.test(zip)) { setError('Please enter a 5-digit ZIP code.'); return false; }
+        state.zip = zip;
+        state.address.zip = zip;
+        return true;
+      }
+      if (n === 2) {
+        if (!state.category) { setError('Please pick one.'); return false; }
+        return true;
+      }
+      if (n === 3) {
+        if (!state.service) { setError('Please pick a service type.'); return false; }
+        return true;
+      }
+      if (n === 4) {
+        var fu = form.querySelector('[data-followup="' + state.service + '"]');
+        if (fu) {
+          var selects = fu.querySelectorAll('select, textarea');
+          state.answers = {};
+          for (var i = 0; i < selects.length; i++) {
+            var el = selects[i];
+            var label = el.closest('.bk-label').querySelector('span:first-child');
+            var key = label ? label.textContent.trim().replace(/\s+/g,' ') : el.name;
+            state.answers[key] = (el.value || '').trim();
+          }
+          // required: first select must be filled (if present)
+          var firstSelect = fu.querySelector('select');
+          if (firstSelect && !firstSelect.value && state.service !== 'other') {
+            setError('Please answer the first question.'); return false;
+          }
+        }
+        return true;
+      }
+      if (n === 5) {
+        var f = form;
+        state.name = f.name.value.trim();
+        state.phone = f.phone.value.trim();
+        state.email = f.email.value.trim();
+        state.address.street = f.street.value.trim();
+        state.address.unit = (f.unit.value || '').trim();
+        state.address.city = f.city.value.trim();
+        state.address.state = f.state.value.trim() || 'FL';
+        state.address.zip = f.zip2.value.trim() || state.zip;
+
+        if (state.name.length < 2) { setError('Please enter your full name.'); return false; }
+        if (state.phone.replace(/\D/g,'').length < 10) { setError('Please enter a 10-digit phone number.'); return false; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email)) { setError('Please enter a valid email.'); return false; }
+        if (!state.address.street || !state.address.city || !state.address.zip) { setError('Please complete the address.'); return false; }
+        return true;
+      }
+      return true;
+    }
+
+    // --- ZIP input live feedback ---
+    var zipInput = form.querySelector('[data-zip-input]');
+    var zipOk = form.querySelector('[data-zip-ok]');
+    var zipWarn = form.querySelector('[data-zip-warn]');
+    if (zipInput) {
+      zipInput.addEventListener('input', function () {
+        var v = (zipInput.value || '').replace(/\D/g,'').slice(0,5);
+        zipInput.value = v;
+        if (v.length === 5) {
+          if (isServedZip(v)) {
+            zipOk.hidden = false; zipOk.textContent = '✓ We serve your area.';
+            zipWarn.hidden = true;
+          } else {
+            zipWarn.hidden = false; zipWarn.textContent = "We may be out of our usual range — we'll still try. Or call (813) 395-2324 to confirm.";
+            zipOk.hidden = true;
+          }
+        } else {
+          zipOk.hidden = true; zipWarn.hidden = true;
+        }
+      });
+    }
+
+    // --- Card selection ---
+    form.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-choice]');
+      if (!btn) return;
+      e.preventDefault();
+      var choice = btn.getAttribute('data-choice');
+      var value = btn.getAttribute('data-value');
+
+      // Deselect siblings in the same group
+      var group = btn.closest('.bk-card-grid');
+      if (group) {
+        group.querySelectorAll('[data-choice="' + choice + '"]').forEach(function (el) {
+          el.classList.remove('is-selected');
+        });
+      }
+      btn.classList.add('is-selected');
+
+      if (choice === 'category') state.category = value;
+      else if (choice === 'service') state.service = value;
+      else if (choice === 'when') state.window.when = value;
+      else if (choice === 'time') state.window.time = value;
+
+      // Auto-advance for category (one decision → next screen)
+      if (choice === 'category') setTimeout(function(){ goNext(); }, 150);
+      if (choice === 'service') setTimeout(function(){ goNext(); }, 150);
+
+      // Update live review on step 6
+      if (state.step === 6) renderReview();
+    });
+
+    // --- Phone input format ---
+    var phoneInput = form.querySelector('input[name="phone"]');
+    if (phoneInput) {
+      phoneInput.addEventListener('input', function () {
+        var d = phoneInput.value.replace(/\D/g,'').slice(0,10);
+        var formatted = d;
+        if (d.length > 6) formatted = '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6);
+        else if (d.length > 3) formatted = '(' + d.slice(0,3) + ') ' + d.slice(3);
+        else if (d.length > 0) formatted = '(' + d;
+        phoneInput.value = formatted;
+      });
+    }
+
+    // --- Render review ---
+    function renderReview() {
+      var dl = form.querySelector('[data-review-body]');
+      var wrap = form.querySelector('[data-review]');
+      if (!dl) return;
+      var rows = [];
+      rows.push(['Service', labelFor('service', state.service)]);
+      if (state.window.when) rows.push(['Preferred day', labelFor('when', state.window.when)]);
+      if (state.window.time) rows.push(['Preferred time', labelFor('time', state.window.time)]);
+      rows.push(['Name', state.name]);
+      rows.push(['Phone', state.phone]);
+      rows.push(['Email', state.email]);
+      var addr = [state.address.street, state.address.unit, state.address.city + ', ' + state.address.state + ' ' + state.address.zip].filter(Boolean).join(', ');
+      rows.push(['Address', addr]);
+      dl.innerHTML = rows.map(function (r) {
+        return '<dt>' + escapeHtml(r[0]) + '</dt><dd>' + escapeHtml(r[1] || '—') + '</dd>';
+      }).join('');
+      wrap.hidden = !(state.window.when && state.window.time);
+    }
+
+    function labelFor(group, value) {
+      var btn = form.querySelector('[data-choice="' + group + '"][data-value="' + value + '"]');
+      if (!btn) return value;
+      var strong = btn.querySelector('strong');
+      return strong ? strong.textContent : value;
+    }
+
+    function escapeHtml(s) {
+      return String(s || '').replace(/[&<>"']/g, function (c) {
+        return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+      });
+    }
+
+    // --- Nav ---
+    function goNext() {
+      if (!validateStep(state.step)) return;
+      var next = state.step + 1;
+      if (next > TOTAL) return;
+      showStep(next);
+    }
+    function goBack() {
+      if (state.step === 1) return;
+      var prev = state.step - 1;
+      // If we went from step 4 back and service is selected, we came from step 3
+      showStep(prev);
+    }
+    nextBtn.addEventListener('click', goNext);
+    backBtn.addEventListener('click', goBack);
+
+    // Enter key on step 1 advances
+    form.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && state.step === 1) {
+        e.preventDefault();
+        goNext();
+      }
+    });
+
+    // --- Submit ---
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      setError('');
+
+      if (!state.window.when) { setError('Please pick a preferred day.'); return; }
+      if (!state.window.time) { setError('Please pick a preferred time window.'); return; }
+
+      var consent = form.querySelector('input[name="consent"]').checked;
+      if (!consent) { setError('Please check the consent box to continue.'); return; }
+
+      submitBtn.disabled = true;
+      submitLbl.textContent = 'Submitting…';
+      submitSpinner.hidden = false;
+
+      try {
+        var res = await fetch('/api/book', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            zip: state.zip,
+            category: state.category,
+            service: state.service,
+            answers: state.answers,
+            name: state.name,
+            phone: state.phone,
+            email: state.email,
+            address: state.address,
+            window: state.window,
+            consent: true,
+          }),
+        });
+
+        var body = await res.json().catch(function () { return {}; });
+
+        if (res.ok && body && body.success) {
+          window.location.href = '/thank-you/?ref=booking';
+          return;
+        }
+
+        var msg = (body && body.error) || 'Something went wrong. Please call (813) 395-2324 to finish booking.';
+        setError(msg);
+      } catch (err) {
+        setError('Network error. Please check your connection or call (813) 395-2324.');
+      } finally {
+        submitBtn.disabled = false;
+        submitLbl.textContent = 'Confirm Booking';
+        submitSpinner.hidden = true;
+      }
+    });
+
+    // Init
+    showStep(1);
+  })();
+</script>
