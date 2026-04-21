@@ -8,6 +8,7 @@ interface Props {
   subtitle?: string;
   image?: string;
   imageAlt?: string;
+  imagePosition?: string;
   showForm?: boolean;
   variant?: 'home' | 'page';
   ctaLabel?: string;
@@ -19,6 +20,7 @@ const {
   subtitle,
   image = '/images/ICAC%20Team%281%29.webp',
   imageAlt = 'I Care Air Care team in Wesley Chapel, FL',
+  imagePosition = 'center',
   showForm = false,
   variant = 'page',
   ctaLabel = 'See Our Service Areas',
@@ -101,7 +103,7 @@ const {
         <div class="relative">
           <div class="absolute -inset-4 rounded-3xl bg-accent-500/10 blur-2xl"></div>
           <div class="relative rounded-2xl overflow-hidden ring-1 ring-white/20 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.55)] aspect-[4/3] bg-white/5">
-            <img src={image} alt={imageAlt} class="w-full h-full object-cover" width="960" height="720" loading="eager" decoding="async" fetchpriority="high" />
+            <img src={image} alt={imageAlt} class="w-full h-full object-cover" style={`object-position: ${imagePosition};`} width="960" height="720" loading="eager" decoding="async" fetchpriority="high" />
           </div>
           <div class="absolute -bottom-4 -left-4 bg-white text-navy-700 rounded-xl shadow-xl px-4 py-3 flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-accent-500 text-white flex items-center justify-center font-bold" aria-hidden="true">★</div>

@@ -9,7 +9,7 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
   description="Book AC repair, maintenance, or HVAC installation online with I Care Air Care — Wesley Chapel's 4.9★ HVAC team serving Pasco, Hillsborough & Polk counties."
   breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'Book Online',url:'https://www.icareaircare.com/book/'}]}
 >
-  <section class="py-10 md:py-14 min-h-screen" style="background: var(--color-surface);">
+  <section class="py-10 md:py-14 pb-20 md:pb-24" style="background: var(--color-surface);">
     <div class="container-site max-w-2xl">
 
       <header class="mb-6 md:mb-8 text-center">
@@ -136,10 +136,10 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
               <label class="bk-label">
                 <span>How urgent? <span class="bk-small">(be honest — helps us prioritize)</span></span>
                 <select name="q_urgency" class="bk-input">
-                  <option value="Emergency — no cooling right now">Emergency — no cooling right now</option>
-                  <option value="Today if possible">Today if possible</option>
+                  <option value="Flexible — whenever" selected>Flexible — whenever</option>
                   <option value="This week">This week</option>
-                  <option value="Flexible — whenever">Flexible — whenever</option>
+                  <option value="Today if possible">Today if possible</option>
+                  <option value="Emergency — no cooling right now">Emergency — no cooling right now</option>
                 </select>
               </label>
             </div>
@@ -372,7 +372,7 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
   </section>
 </BaseLayout>
 
-<style>
+<style is:global>
   .bk-progress {
     height: 3px;
     background: var(--color-line);
@@ -848,18 +848,8 @@ const hcpFallback = 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4
 
       errorEl.hidden = true;
       errorEl.textContent = '';
-
-      // Scroll to step heading — only on user-driven navigation, never on initial mount.
-      // block:'start' + scroll-margin-top:100px keeps the heading below the sticky header.
-      if (initialized && show) {
-        var h2 = show.querySelector('.bk-h2');
-        if (h2) {
-          // Delay a tick so the fade-in transform settles before measuring
-          setTimeout(function () {
-            h2.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 40);
-        }
-      }
+      // Intentionally no auto-scroll on step change — users find it jarring.
+      // The fade-in animation + progress bar is enough visual feedback.
     }
 
     function setError(msg, debug) {

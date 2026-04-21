@@ -1,45 +1,467 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
+import FAQ from '../components/FAQ.astro';
 import FinalCTA from '../components/FinalCTA.astro';
-import ContactFormSection from '../components/ContactFormSection.astro';
+import { SITE } from '../lib/site';
+
+// "Why work here" reasons — icon keys rendered inline below
+const reasons = [
+  {
+    icon: 'home',
+    title: 'Local & family-run',
+    body: `We dispatch out of <strong>27022 Foamflower Blvd</strong> in Wesley Chapel — not a call center in Tampa, not a private-equity roll-up. Tim knows every tech by name, and every tech knows Tim's pager number.`,
+  },
+  {
+    icon: 'clock',
+    title: 'Predictable schedule',
+    body: `Real hours, real shifts. Mon–Fri day routes, Saturday rotation for urgent no-cool calls. No commission quota hovering over your head, no 12-hour ride-alongs with a closer.`,
+  },
+  {
+    icon: 'wrench',
+    title: 'Tools, truck & uniforms',
+    body: `Company van, fuel card, iPad, gauges, uniforms, and laundered shirts provided. You show up with your boots and your brain — we cover the rest.`,
+  },
+  {
+    icon: 'ladder',
+    title: 'A real growth path',
+    body: `Helper → Apprentice → Service Tech → Lead Tech → Crew Chief. We promote from inside first. Two of our current leads started as helpers with zero HVAC experience.`,
+  },
+  {
+    icon: 'shield',
+    title: 'Benefits that matter',
+    body: `Paid time off, paid holidays, performance bonuses (not commission — performance), factory training reimbursement, and help covering EPA 608 / Manual-J testing fees.`,
+  },
+  {
+    icon: 'handshake',
+    title: 'Honest culture',
+    body: `Our <a href="/reviews/" class="text-brand-600 underline underline-offset-2 hover:text-brand-700">700+ five-star reviews</a> come from doing the right thing on every call. You'll never be asked to sell a customer something they don't need. Ever.`,
+  },
+];
+
+const icon = (k: string) => ({
+  home:      '<path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/>',
+  clock:     '<path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/>',
+  wrench:    '<path d="M22 7l-4.4 4.4a4 4 0 01-5.4.3L4 20l-2-2 8.3-8.2a4 4 0 01.3-5.4L15 0l2 4-3 3 3 3 3-3 2 0z"/>',
+  ladder:    '<path d="M7 2v20h2v-3h6v3h2V2h-2v3H9V2H7zm2 5h6v3H9V7zm0 5h6v3H9v-3z"/>',
+  shield:    '<path d="M12 2L4 6v6c0 5 3.4 9.6 8 11 4.6-1.4 8-6 8-11V6l-8-4zm-1 14l-4-4 1.4-1.4L11 13.2l5.6-5.6L18 9l-7 7z"/>',
+  handshake: '<path d="M12 3L6 6v6a6 6 0 006 6 6 6 0 006-6V6l-6-3zm0 2.2L17 7v5a5 5 0 01-10 0V7l5-1.8zM9 10l1.5 1.5L12 10l1.5 1.5L15 10l1 1-3 3-1-1-1 1-3-3 1-1z"/>',
+}[k] || '');
+
+// Open roles — easy for Tim to edit later
+const roles = [
+  {
+    slug: 'HVAC Service Technician',
+    title: 'HVAC Service Technician',
+    pay: '$24 - $32 / hr',
+    location: 'Wesley Chapel · mobile service area',
+    blurb: `Diagnose and repair residential split systems, heat pumps, and mini-splits across Pasco, Hillsborough and Polk. Average 4-6 calls per day from a Wesley Chapel home base. You own your van, your iPad, and your routes.`,
+    reqs: [
+      'EPA Section 608 (Type II or Universal preferred)',
+      '2+ years residential HVAC service experience',
+      'Valid FL driver license, clean MVR',
+      'Comfortable using service software on an iPad (training provided)',
+    ],
+  },
+  {
+    slug: 'HVAC Install Technician',
+    title: 'HVAC Install Technician',
+    pay: '$22 - $30 / hr + install bonus',
+    location: 'Wesley Chapel · Pasco / Hillsborough / Polk',
+    blurb: `Run or help on residential changeouts, new-construction air handlers, heat pump swaps and ductwork touch-ups. Lead/helper combo role — we'll slot you where your experience fits and grow you toward crew chief.`,
+    reqs: [
+      '1+ year install experience (lead or helper)',
+      'Comfortable with copper braze, vacuum pulls, and startup',
+      'Reads Manual-J / Manual-D basics (we train the rest)',
+      'Valid FL driver license',
+    ],
+  },
+  {
+    slug: 'Apprentice / Helper',
+    title: 'Apprentice / Helper',
+    pay: '$20 - $24 / hr · paid training',
+    location: 'Wesley Chapel · ride-along routes',
+    blurb: `No HVAC experience required. If you show up on time, work hard, and treat customers right — we will teach you the trade. Paid EPA 608 prep, factory training, and a clear step up to Service Tech in 12-18 months.`,
+    reqs: [
+      'High school diploma or GED',
+      'Willing to work outdoors in Florida summer',
+      'Mechanical aptitude (cars, carpentry, small engines — any of it counts)',
+      'Valid FL driver license',
+    ],
+  },
+  {
+    slug: 'Dispatcher / Customer Experience',
+    title: 'Dispatcher / Customer Experience',
+    pay: '$45,000 - $62,000 / yr',
+    location: 'Wesley Chapel office (on-site)',
+    blurb: `Answer the phone, route the techs, confirm the appointments, and keep customers looped in with text updates and technician photos. You are the voice customers hear before the truck rolls up.`,
+    reqs: [
+      '1+ year dispatching, scheduling, or service-desk experience',
+      'Comfortable with CRM / scheduling software (Housecall Pro, ServiceTitan, or similar)',
+      'Clear phone voice, thick skin on the bad-AC-day calls',
+      'Must work from our Foamflower Blvd office',
+    ],
+  },
+];
+
+// Training & certifications we fund or run in-house
+const training = [
+  { t: 'EPA Section 608', d: 'Test prep, study materials, and reimbursement for Type II and Universal certifications.' },
+  { t: 'Manufacturer factory training', d: 'Carrier, Trane, Lennox, Rheem and Mitsubishi factory programs — travel and hours paid.' },
+  { t: 'Manual-J & Manual-D', d: 'Load calculation and duct design training for install techs moving toward crew chief.' },
+  { t: 'Low-GWP refrigerant transition', d: 'R-454B and R-32 handling, startup and safety — every tech gets current on the new equipment entering FL homes.' },
+  { t: 'OSHA 10 safety', d: 'Ladder, electrical, attic-heat, and jobsite safety — refreshed every two years on the clock.' },
+  { t: 'Customer communication', d: 'How we write estimates, explain repairs to homeowners, and hand off a finished job. The stuff that makes our reviews 5-star.' },
+];
+
+// Team testimonials — real tech names from our review strip
+const teamQuotes = [
+  {
+    quote: "Been here six years. No pushy quotas, no commission hanging over my head — I just fix stuff right and the customers write the reviews. Tim has my back every time.",
+    name: 'Kleber',
+    role: 'Service Technician',
+  },
+  {
+    quote: "I started as a helper with zero HVAC background. Three years later I'm running my own install route. They actually teach you here, they don't just throw you on a roof.",
+    name: 'Gerald Thompson',
+    role: 'Install Technician',
+  },
+  {
+    quote: "The office crew, the techs, Tim — it feels like a family business because it is one. I send my appointment confirmations, I hear back from the homeowners, and I know every name on the schedule.",
+    name: 'Dispatch Team',
+    role: 'Office',
+  },
+];
+
+// Applicant FAQs
+const faqs = [
+  { q: 'Do I need EPA 608 before I apply?', a: 'For <strong>service tech</strong> roles, yes — Type II or Universal. For <strong>install helper</strong> and <strong>apprentice</strong> roles, no. We pay for your test prep and reimburse the exam fee once you pass.' },
+  { q: 'What do the trucks look like?', a: 'Marked white-and-blue service vans and install trucks — same fleet you see rolling through Wesley Chapel every morning. Assigned vehicle, fuel card, and maintenance on us. You take it home.' },
+  { q: 'What are the hours?', a: 'Standard day shift is 8am-5pm Monday through Friday with a Saturday rotation (10am-4pm) for urgent no-cool calls. Office staff is Mon-Fri only. We do not run overnight or 2am emergency crews.' },
+  { q: 'Weekly or bi-weekly pay?', a: 'Every Friday — direct deposit, no held-back week. First check goes out the Friday after your first full week.' },
+  { q: 'What training do you provide?', a: 'In-house ride-alongs, Carrier / Trane / Lennox factory schools, Manual-J classes, low-GWP refrigerant handling, OSHA 10, and EPA 608 prep. All on the clock. See the <a class="underline" href="#training">training section above</a>.' },
+  { q: 'How does scheduling work? Will I be on call at 2am?', a: 'No. Dispatch routes your day the night before and adjusts in the morning. Saturday urgent calls are a rotation — roughly one Saturday every 4-5 weeks — and always with a paid on-call stipend. Sundays and holidays are off unless you volunteer.' },
+  { q: 'Do I need my own tools?', a: 'Bring your boots. We provide the rest — gauges, recovery, vacuum pump, torch kit, meters, iPad, uniforms. Personal hand tools are welcome but not required on day one.' },
+  { q: 'Where is the shop?', a: `Our office and dispatch is at <strong>27022 Foamflower Blvd, Wesley Chapel, FL 33544</strong> — same building, same phone, <a href="tel:+18133952324" class="underline">(813) 395-2324</a>. If you want to stop by and drop a resume, Tim is usually in by 7:30.` },
+];
+
+const heroImage = '/images/ICAC%20Team%281%29.webp';
 ---
 <BaseLayout
-  title="Careers at I Care Air Care | Wesley Chapel HVAC Jobs"
-  description="Join a Wesley Chapel, FL HVAC team that treats technicians like family. Competitive pay, benefits, growth. Now hiring licensed and apprentice HVAC techs."
-  breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'Careers',url:'https://www.icareaircare.com/careers/'}]}
+  title="HVAC Jobs Wesley Chapel FL | I Care Air Care Careers"
+  description="Now hiring HVAC techs, installers, apprentices and dispatchers in Wesley Chapel, FL. Family-run, no commission quotas, paid training, weekly pay."
+  breadcrumbs={[
+    {name:'Home',url:'https://www.icareaircare.com/'},
+    {name:'Careers',url:'https://www.icareaircare.com/careers/'},
+  ]}
 >
   <Hero
     eyebrow="Now Hiring"
-    title="Join the I Care Air Care Team"
-    subtitle="Wesley Chapel's most-reviewed HVAC company is always looking for honest, talented technicians who want to do right by customers and grow with a family-run team."
-    image="/images/I-Care-Air-Care-HVAC-Installation-%E2%80%93-Local-Team-and-Service-AC.webp"
-    ctaLabel="Apply Now"
-    ctaHref="mailto:tim@icareaircare.com?subject=HVAC%20Career%20Inquiry"
+    title={`HVAC Jobs in Wesley Chapel,<br/>built around the people doing the work.`}
+    subtitle={`Tim Hawk's family-run Wesley Chapel HVAC team is hiring service techs, install techs, apprentices and a dispatcher. Predictable schedule, paid training, real growth path — and zero commission-driven sales pressure.`}
+    image={heroImage}
+    imageAlt="I Care Air Care Wesley Chapel HVAC team and service vans"
+    ctaLabel="See Open Roles"
+    ctaHref="#open-roles"
   />
-  <section class="py-16">
-    <div class="container-site max-w-4xl prose-icac">
-      <h2>Why technicians stay with I Care Air Care</h2>
-      <p>We're not a big corporate chain. We're a Wesley Chapel-based, family-run HVAC contractor where every technician matters, every route is reasonable, and every paycheck reflects the care you put into the work.</p>
-      <h3>Open positions</h3>
-      <ul>
-        <li><strong>Lead HVAC Service Technician</strong> — 5+ years residential experience, EPA 608 certified</li>
-        <li><strong>HVAC Installer</strong> — Experience with residential AC &amp; heat pump installation</li>
-        <li><strong>HVAC Apprentice</strong> — Entry level, we'll train the right person</li>
-        <li><strong>Commercial Refrigeration Tech</strong> — EPA Universal, commercial experience preferred</li>
-      </ul>
-      <h3>What we offer</h3>
-      <ul>
-        <li>Competitive hourly + commission structure</li>
-        <li>Company vehicle, fuel card, tools, uniforms</li>
-        <li>Health, dental &amp; vision insurance</li>
-        <li>Paid time off &amp; holidays</li>
-        <li>Ongoing paid training and certifications</li>
-        <li>Family-owned culture — no corporate BS</li>
-      </ul>
-      <p>Interested? Email <a href="mailto:tim@icareaircare.com">tim@icareaircare.com</a> with your resume, or call <a href="tel:+18133952324">(813) 395-2324</a> to chat with Tim directly.</p>
+
+  {/* Why work here */}
+  <section class="py-16 md:py-20 bg-white">
+    <div class="container-site">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Why work here</span>
+        <h2 class="mt-3 text-3xl md:text-4xl title-accent">The reasons our techs stay for 5, 10, 15 years</h2>
+        <p class="mt-4 text-slate-600 text-[17px] leading-relaxed">Tampa Bay has a lot of HVAC companies hiring. Here is exactly what makes this one different — straight from the crew who have been here the longest.</p>
+      </div>
+
+      <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {reasons.map(r => (
+          <div class="group rounded-2xl bg-white ring-1 ring-slate-200 p-6 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-soft)] hover:ring-brand-300 transition">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white flex items-center justify-center shadow-[var(--shadow-card)]">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" set:html={icon(r.icon)} />
+            </div>
+            <h3 class="mt-4 text-lg font-bold text-navy-700">{r.title}</h3>
+            <p class="mt-2 text-slate-600 text-[15px] leading-relaxed" set:html={r.body}></p>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
-  <FinalCTA />
-  <ContactFormSection />
+
+  {/* Open roles */}
+  <section id="open-roles" class="py-16 md:py-20 bg-surface scroll-mt-24">
+    <div class="container-site">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center rounded-full bg-accent-50 text-accent-600 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Open Roles</span>
+        <h2 class="mt-3 text-3xl md:text-4xl">Four seats we are actively filling</h2>
+        <p class="mt-4 text-slate-600 text-[17px] leading-relaxed">Tap Apply on any card to email Tim directly, or jump to the full <a href="#apply" class="text-brand-600 font-semibold underline underline-offset-2">application form</a> below.</p>
+      </div>
+
+      <div class="mt-12 grid md:grid-cols-2 gap-6">
+        {roles.map(role => (
+          <div class="rounded-2xl bg-white ring-1 ring-slate-200 p-6 md:p-7 shadow-[var(--shadow-card)] flex flex-col">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h3 class="text-xl font-bold text-navy-700">{role.title}</h3>
+                <div class="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-[13px] text-slate-500">
+                  <span class="inline-flex items-center gap-1.5">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-brand-500"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 10a3 3 0 110-6 3 3 0 010 6z"/></svg>
+                    {role.location}
+                  </span>
+                </div>
+              </div>
+              <span class="shrink-0 inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-xs font-bold">{role.pay}</span>
+            </div>
+
+            <p class="mt-4 text-slate-600 text-[15px] leading-relaxed">{role.blurb}</p>
+
+            <div class="mt-5">
+              <div class="text-[11px] uppercase tracking-[0.14em] text-slate-500 font-bold">What you bring</div>
+              <ul class="mt-2 space-y-1.5">
+                {role.reqs.map(req => (
+                  <li class="flex items-start gap-2 text-[14px] text-slate-700">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-accent-500 mt-1 shrink-0"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+                    <span>{req}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="mt-6 pt-5 border-t border-slate-100 flex flex-wrap gap-3">
+              <a href={`mailto:${SITE.email}?subject=Application: ${encodeURIComponent(role.slug)}`} class="btn-primary">
+                Apply for this role
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </a>
+              <a href="#apply" class="inline-flex items-center gap-1.5 text-brand-700 font-semibold hover:text-brand-800">
+                Or use the form
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* A day in the life */}
+  <section class="py-16 md:py-20 bg-white">
+    <div class="container-site grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-5 order-2 lg:order-1">
+        <div class="relative">
+          <div class="absolute -inset-4 rounded-3xl bg-brand-500/10 blur-2xl"></div>
+          <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200 shadow-[var(--shadow-soft)] aspect-[4/3] bg-slate-100">
+            <img src="/images/ICAC%20Team%282%29.webp" alt="I Care Air Care technician team at Wesley Chapel headquarters in the morning" class="w-full h-full object-cover" width="800" height="600" loading="lazy" decoding="async" />
+          </div>
+          <div class="absolute -bottom-4 -left-4 bg-white text-navy-700 rounded-xl shadow-xl px-4 py-3 max-w-[220px]">
+            <div class="text-[11px] uppercase tracking-[0.12em] text-slate-500">Morning dispatch</div>
+            <div class="mt-1 font-bold text-[14px]">27022 Foamflower Blvd, 7:30am sharp</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7 order-1 lg:order-2 prose-icac">
+        <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">A day in the life</span>
+        <h2 class="mt-3">What Tuesday actually looks like</h2>
+        <p><strong>7:30am, Foamflower Blvd.</strong> Coffee, huddle, routes on the whiteboard. Dispatch hands you your first three stops — usually a no-cool call in Wesley Chapel, a maintenance in Land O' Lakes, and a second-opinion quote somewhere in New Tampa. You grab your iPad, check refrigerant in the van, and roll by 8.</p>
+        <p><strong>Mid-morning.</strong> First call is in <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a> — homeowner says the unit is blowing warm. You diagnose a failed capacitor, show her the readings, quote $180 written, swap it out, and she is cool again in 40 minutes. She hands you a cold water. She will probably leave a Google review before you are back in the van.</p>
+        <p><strong>Lunch.</strong> Half the crew meets at a Publix parking lot in Lutz or a taco spot off BBD. No policy that says you have to. Just how it tends to go.</p>
+        <p><strong>Afternoon.</strong> A Lakeland install check-in, a thermostat swap, a capacitor pop in Zephyrhills. Honest work, written quotes, no pressure to upsell a system she does not need. If the call turns into a full replacement, great — the <a href="/services/hvac-installation-tampa/">install crew</a> takes the handoff.</p>
+        <p><strong>5pm.</strong> Paperwork in the iPad, back to Foamflower, keys on the hook. Saturday rotation hits every 4-5 weeks. Otherwise Saturday is yours.</p>
+        <p class="text-slate-500 italic">That is the day. No commission closer riding shotgun, no script, no 14-hour push. Just techs who like the trade, doing the trade.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* Training & certs */}
+  <section id="training" class="py-16 md:py-20 bg-surface scroll-mt-24">
+    <div class="container-site">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center rounded-full bg-accent-50 text-accent-600 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Training & Certifications</span>
+        <h2 class="mt-3 text-3xl md:text-4xl">We pay for the stuff that makes you a better tech</h2>
+        <p class="mt-4 text-slate-600 text-[17px] leading-relaxed">Florida HVAC is changing fast — low-GWP refrigerants, variable-speed equipment, new code. We keep every tech current, on the clock, with real training paid for by the company.</p>
+      </div>
+
+      <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {training.map(t => (
+          <div class="rounded-2xl bg-white ring-1 ring-slate-200 p-6 shadow-[var(--shadow-card)]">
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 rounded-lg bg-brand-50 text-brand-700 flex items-center justify-center shrink-0">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.9V17h2V9L12 3zm0 11.5L4.2 10 12 5.7 19.8 10 12 14.5zM5 13.5V17l7 4 7-4v-3.5l-7 4-7-4z"/></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-navy-700 text-[17px]">{t.t}</h3>
+                <p class="mt-1.5 text-slate-600 text-[14px] leading-relaxed">{t.d}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Team testimonials */}
+  <section class="py-16 md:py-20 bg-white">
+    <div class="container-site">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">From the crew</span>
+        <h2 class="mt-3 text-3xl md:text-4xl">Why the techs stay</h2>
+      </div>
+      <div class="mt-12 grid md:grid-cols-3 gap-6">
+        {teamQuotes.map(q => (
+          <figure class="rounded-2xl bg-gradient-to-br from-brand-700 to-brand-900 text-white p-7 shadow-[var(--shadow-soft)] flex flex-col">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400 opacity-80" aria-hidden="true"><path d="M7 7h4v4H8c0 2 1 3 3 3v2c-4 0-6-2-6-5V7zm8 0h4v4h-3c0 2 1 3 3 3v2c-4 0-6-2-6-5V7z"/></svg>
+            <blockquote class="mt-4 text-[15px] leading-relaxed text-blue-50 flex-1">"{q.quote}"</blockquote>
+            <figcaption class="mt-5 pt-5 border-t border-white/15">
+              <div class="font-bold text-white">{q.name}</div>
+              <div class="text-[12px] uppercase tracking-[0.12em] text-accent-300 mt-0.5">{q.role}</div>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Application form */}
+  <section id="apply" class="py-16 md:py-20 bg-surface scroll-mt-24">
+    <div class="container-site grid lg:grid-cols-12 gap-10 items-start">
+      <div class="lg:col-span-5">
+        <span class="inline-flex items-center rounded-full bg-white text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] ring-1 ring-slate-200">Apply now</span>
+        <h2 class="mt-3 text-3xl md:text-4xl">Send Tim your application</h2>
+        <p class="mt-4 text-slate-600 text-[17px] leading-relaxed">Fill this out and it lands directly in Tim's inbox at <a href={`mailto:${SITE.email}`} class="text-brand-600 underline underline-offset-2 font-semibold">{SITE.email}</a>. He reads every one. If your fit is obvious, expect a call within 1-2 business days.</p>
+
+        <div class="mt-8 space-y-4">
+          <div class="rounded-xl bg-white ring-1 ring-slate-200 p-5 flex items-start gap-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-brand-600 mt-0.5 shrink-0"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+            <div>
+              <div class="font-bold text-navy-700">Prefer to just call?</div>
+              <div class="text-slate-600 text-sm mt-0.5">Ring <a href={SITE.phoneHref} class="text-brand-600 font-semibold underline">{SITE.phone}</a> and ask for Tim. Morning calls are best.</div>
+            </div>
+          </div>
+
+          <div class="rounded-xl bg-white ring-1 ring-slate-200 p-5 flex items-start gap-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-brand-600 mt-0.5 shrink-0"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 10a3 3 0 110-6 3 3 0 010 6z"/></svg>
+            <div>
+              <div class="font-bold text-navy-700">Stop by the shop</div>
+              <div class="text-slate-600 text-sm mt-0.5">27022 Foamflower Blvd, Wesley Chapel, FL 33544. Drop a resume, grab a coffee.</div>
+            </div>
+          </div>
+
+          <div class="rounded-xl bg-white ring-1 ring-slate-200 p-5 flex items-start gap-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-brand-600 mt-0.5 shrink-0"><path d="M4 4h16v2H4zm0 4h16v2H4zm0 4h10v2H4z"/></svg>
+            <div>
+              <div class="font-bold text-navy-700">Want to see what we do first?</div>
+              <div class="text-slate-600 text-sm mt-0.5">Read our <a href="/about-us/" class="text-brand-600 font-semibold underline">story and team</a> or scan our <a href="/services/" class="text-brand-600 font-semibold underline">services</a>.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <form
+          class="rounded-2xl bg-white ring-1 ring-slate-200 shadow-[var(--shadow-soft)] p-6 md:p-8"
+          action={`https://formsubmit.co/${SITE.email}`}
+          method="POST"
+        >
+          <input type="hidden" name="_subject" value="New Careers Application — icareaircare.com" />
+          <input type="hidden" name="_next" value="https://www.icareaircare.com/thank-you/?ref=careers" />
+          <input type="hidden" name="_captcha" value="true" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" />
+
+          <h3 class="text-xl font-bold text-navy-700">Application form</h3>
+          <p class="mt-1 text-sm text-slate-500">Takes about 2 minutes. Fields marked * are required.</p>
+
+          <div class="mt-6 grid sm:grid-cols-2 gap-4">
+            <label class="block">
+              <span class="text-[12px] font-bold text-navy-700 uppercase tracking-[0.1em]">Full name *</span>
+              <input name="name" type="text" required placeholder="First and last" class="mt-1.5 w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3.5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 text-ink placeholder:text-slate-400" />
+            </label>
+            <label class="block">
+              <span class="text-[12px] font-bold text-navy-700 uppercase tracking-[0.1em]">Phone *</span>
+              <input name="phone" type="tel" required placeholder="(813) 555-0110" class="mt-1.5 w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3.5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 text-ink placeholder:text-slate-400" />
+            </label>
+          </div>
+
+          <label class="block mt-4">
+            <span class="text-[12px] font-bold text-navy-700 uppercase tracking-[0.1em]">Email *</span>
+            <input name="email" type="email" required placeholder="you@example.com" class="mt-1.5 w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3.5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 text-ink placeholder:text-slate-400" />
+          </label>
+
+          <div class="mt-4 grid sm:grid-cols-2 gap-4">
+            <label class="block">
+              <span class="text-[12px] font-bold text-navy-700 uppercase tracking-[0.1em]">Position applying for *</span>
+              <select name="position" required class="mt-1.5 w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3.5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 text-ink">
+                <option value="">Select a role...</option>
+                <option value="HVAC Service Technician">HVAC Service Technician</option>
+                <option value="HVAC Install Technician">HVAC Install Technician</option>
+                <option value="Apprentice / Helper">Apprentice / Helper</option>
+                <option value="Dispatcher / Customer Experience">Dispatcher / Customer Experience</option>
+                <option value="Other">Other / general interest</option>
+              </select>
+            </label>
+            <label class="block">
+              <span class="text-[12px] font-bold text-navy-700 uppercase tracking-[0.1em]">Years of HVAC experience *</span>
+              <select name="experience" required class="mt-1.5 w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3.5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 text-ink">
+                <option value="">Select...</option>
+                <option value="0 (none / apprentice)">0 - none yet (apprentice / helper)</option>
+                <option value="Less than 1 year">Less than 1 year</option>
+                <option value="1-2 years">1-2 years</option>
+                <option value="3-5 years">3-5 years</option>
+                <option value="5-10 years">5-10 years</option>
+                <option value="10+ years">10+ years</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="block mt-4">
+            <span class="text-[12px] font-bold text-navy-700 uppercase tracking-[0.1em]">EPA 608 status</span>
+            <select name="epa608" class="mt-1.5 w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3.5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 text-ink">
+              <option value="">Select...</option>
+              <option value="Universal">EPA 608 Universal</option>
+              <option value="Type II">EPA 608 Type II</option>
+              <option value="Type I">EPA 608 Type I</option>
+              <option value="Studying">Studying / not yet certified</option>
+              <option value="None">None yet</option>
+            </select>
+          </label>
+
+          <label class="block mt-4">
+            <span class="text-[12px] font-bold text-navy-700 uppercase tracking-[0.1em]">Short cover letter / anything you want Tim to know</span>
+            <textarea name="message" rows="5" placeholder="Where you are working now, why you are looking, any certs or specialties, and when you could start..." class="mt-1.5 w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3.5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 text-ink placeholder:text-slate-400"></textarea>
+          </label>
+
+          <button type="submit" class="mt-6 w-full btn-primary btn-lg">
+            Send application to Tim
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+          <p class="mt-3 text-[11px] text-center text-slate-500">We respect your privacy. Applications go only to Tim — not shared, not sold.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <FAQ items={faqs} title="Applicant FAQ" columns={2} variant="white" />
+
+  {/* Final CTA — custom, since FinalCTA component has no props */}
+  <section class="py-16 md:py-20 bg-wave">
+    <div class="container-site text-center max-w-2xl mx-auto">
+      <p class="text-sm font-semibold uppercase tracking-[0.15em] text-accent-500">
+        {SITE.yearsInBusiness}+ years · Wesley Chapel HQ · Hiring now
+      </p>
+      <h2 class="mt-3 text-3xl md:text-4xl">Ready to join the team?</h2>
+      <p class="mt-5 text-slate-600 leading-relaxed">
+        Fire off the <a href="#apply" class="text-brand-600 font-semibold underline underline-offset-2">application form</a>, email Tim at <a href={`mailto:${SITE.email}`} class="text-brand-600 font-semibold underline underline-offset-2">{SITE.email}</a>, or call the shop and introduce yourself. Morning calls reach Tim fastest.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="#apply" class="btn-primary btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          Apply now
+        </a>
+        <a href={SITE.phoneHref} class="btn-ghost btn-lg">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+          Call {SITE.phone}
+        </a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

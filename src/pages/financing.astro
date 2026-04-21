@@ -1,63 +1,442 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import FinalCTA from '../components/FinalCTA.astro';
-import ContactFormSection from '../components/ContactFormSection.astro';
 import FAQ from '../components/FAQ.astro';
+import FinalCTA from '../components/FinalCTA.astro';
 import { SITE } from '../lib/site';
+
+// Placeholder Synchrony application URL — owner will swap for the real partner link.
+const applyUrl = 'https://www.mysynchrony.com/mmc/I0000000000';
+
+const quickStats = [
+  { k: '90-second', v: 'application' },
+  { k: 'Instant', v: 'decision in most cases' },
+  { k: '0% APR', v: 'promo offers available' },
+  { k: 'No', v: 'prepayment penalty' },
+  { k: 'Up to $75,000', v: 'in approval amounts' },
+];
+
+const steps = [
+  {
+    n: 1,
+    title: 'Get a free quote',
+    body: 'We come out, run a proper Manual-J load calc, size the system right the first time, and give you a flat-rate written price — no guesswork, no pressure.',
+  },
+  {
+    n: 2,
+    title: 'Apply in 90 seconds',
+    body: 'Start the Synchrony application right from your phone or laptop. A soft pre-qualification check does not affect your credit.',
+  },
+  {
+    n: 3,
+    title: 'Get approved & schedule',
+    body: 'Most homeowners get an instant decision. Once you are approved, we lock in your install date — often within the same week.',
+  },
+  {
+    n: 4,
+    title: 'Pay monthly, skip the stress',
+    body: 'Enjoy a cool home now and pay over time — with promotional-period options that let qualified buyers pay zero interest for up to 60 months.',
+  },
+];
+
+const plans = [
+  {
+    name: '0% APR for 18 Months',
+    tag: 'Short-term promo',
+    body: 'Our most popular promotional offer for homeowners who can pay the balance within a year and a half. No interest when paid in full during the promo period.',
+    term: '18-month term · $0 interest',
+    fine: 'Subject to credit approval. Minimum monthly payments required.',
+  },
+  {
+    name: '0% APR for 60 Months',
+    tag: 'Long reduced-rate',
+    body: 'A five-year runway at zero interest on qualifying purchases — popular for full <a class="text-brand-700 underline underline-offset-2" href="/services/hvac-installation-tampa/">new HVAC installation</a> projects where lower monthly payments matter most.',
+    term: '60-month term · 0% APR for qualified buyers',
+    fine: 'Subject to credit approval and current promotional availability.',
+  },
+  {
+    name: 'Fixed Installment Loan',
+    tag: 'Up to 120 months',
+    body: 'For larger replacements or whole-home retrofits. Predictable fixed monthly payments with terms that stretch up to 10 years at a fixed APR.',
+    term: 'Up to 120 months · typical APR 7.99%–14.99%',
+    fine: 'Final APR depends on credit profile and loan amount.',
+  },
+  {
+    name: '12-Month No Interest',
+    tag: 'Fast payoff',
+    body: 'A classic Synchrony offer — popular for mid-sized repair bills and smaller changeouts where you plan to pay off within a year.',
+    term: '12-month term · 0% APR if paid in full',
+    fine: 'Interest accrues from date of purchase if not paid in full in 12 months.',
+  },
+];
+
+const scenarios = [
+  {
+    home: '3-bed Wesley Chapel home, 3-ton AC replacement',
+    cost: '$8,200',
+    payment: '~$137/mo',
+    term: '0% APR for 60 months',
+  },
+  {
+    home: '2,800 sq ft New Tampa home, full HVAC + duct modifications',
+    cost: '$12,500',
+    payment: '~$195/mo',
+    term: '7.99% APR for 84 months',
+  },
+  {
+    home: "Land O' Lakes heat pump + air handler changeout",
+    cost: '$9,400',
+    payment: '$0 down + ~$157/mo',
+    term: '0% APR for 60 months',
+  },
+];
+
 const faqs = [
-  { q: 'Who finances through I Care Air Care?', a: 'We partner with <strong>Synchrony Bank</strong>, the same financing provider trusted by most major home-service companies nationally. Applications are quick, and approvals are usually instant.' },
-  { q: 'What credit score do I need?', a: 'Synchrony approves a wide range of credit profiles. Most homeowners with a 650+ score qualify for promotional rates. Even lower scores often get approved — just at different terms.' },
-  { q: 'Does applying hurt my credit?', a: "A pre-qualification check uses a soft pull that doesn't affect your score. A full application is a hard pull." },
-  { q: 'Can I finance repairs, or only new installs?', a: 'Both — financing is typically available for purchases of $1,000 or more, which covers most repairs and all installations.' },
-  { q: 'Are there 0% promotional options?', a: 'Yes — 0% and reduced-interest promos are offered periodically. Ask when booking for current offers.' },
-  { q: "What's the longest term available?", a: 'Up to 120 months on qualifying installations.' },
+  {
+    q: 'How quick is the approval process?',
+    a: 'The Synchrony application takes about 90 seconds to fill out, and most homeowners get an <strong>instant decision</strong>. If more review is needed, a representative typically follows up within one business day. Once approved, we can often schedule your install within the same week.',
+  },
+  {
+    q: "What's the minimum credit score?",
+    a: 'Most promotional 0% offers require a credit score of roughly <strong>640 or higher</strong>, but Synchrony approves a wide range of credit profiles. Lower scores still may qualify for fixed-rate installment plans. A soft pre-qualification check lets you see what you qualify for without affecting your credit score.',
+  },
+  {
+    q: 'Can I pay off my loan early without penalty?',
+    a: 'Yes. There are <strong>no prepayment penalties</strong> on any of our Synchrony plans. You can pay off the balance early and save on interest — especially valuable on promotional 0% offers where paying off before the promo ends means you pay zero interest on the entire purchase.',
+  },
+  {
+    q: 'What documents do I need to apply?',
+    a: 'Very little — just your standard ID details, Social Security number, annual income, and employment information. The full application is online and takes about 90 seconds. You do not need to upload documents for most approvals.',
+  },
+  {
+    q: 'Is a down payment required?',
+    a: 'In most cases, <strong>no</strong>. Synchrony home-project financing typically covers 100% of the project cost up to your approved limit (often up to $75,000). If you want to lower your monthly payment, you can always put money down voluntarily.',
+  },
+  {
+    q: 'Can I combine financing with manufacturer rebates?',
+    a: 'Yes. Financing applies to the final project price, so any manufacturer rebates, utility-company incentives, or seasonal promos we pass along are already baked into your written quote. We handle rebate paperwork and warranty registration for you.',
+  },
+  {
+    q: "What happens if I'm not approved?",
+    a: "We'll walk you through other options — including Synchrony's secondary lender network, shorter-term installment loans, or a split where you pay a portion up front and finance the rest. We've helped many Wesley Chapel and Tampa Bay homeowners find a path that works, so don't assume a single declined application is the end of the road.",
+  },
+  {
+    q: 'Do you finance repairs, or just new installations?',
+    a: 'Both. Financing is typically available for any project <strong>$1,000 or more</strong>, which covers most major repairs, coil replacements, and compressor jobs — not just full changeouts. If you are on the fence about a repair vs. replace decision, we will lay out the honest numbers.',
+  },
 ];
 ---
 <BaseLayout
   title="HVAC Financing in Wesley Chapel & Tampa | I Care Air Care"
-  description="Synchrony HVAC financing for Wesley Chapel & Tampa homeowners. 0% intro options, up to 120-month terms. Apply online and get approved in minutes."
+  description="HVAC financing Wesley Chapel homeowners trust — 0% APR Synchrony plans, 90-second approval, up to 120-month terms. Apply online or call (813) 395-2324."
   breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'Financing',url:'https://www.icareaircare.com/financing/'}]}
 >
   <Hero
-    eyebrow="Financing"
-    title="HVAC Financing That Fits Your Budget"
-    subtitle="Replacing or repairing your HVAC shouldn't break the bank. Our Synchrony partnership offers fast approvals, flexible terms, and 0% promotional options for qualified buyers."
+    eyebrow="Financing Available"
+    title="Affordable HVAC Financing in Wesley Chapel & Tampa Bay"
+    subtitle="Partnered with Synchrony Bank for fast 90-second approvals, 0% APR promotional options, and terms up to 120 months — so the $6,500–$14,000 HVAC investment fits your monthly budget, not your savings account."
     image="/images/Financing-Your-Home-with-I-Care-Air-Care-%E2%80%93-Affordable-HVAC-Payments.webp"
-    ctaLabel="Call to Apply"
-    ctaHref={SITE.phoneHref}
+    imageAlt="I Care Air Care HVAC financing — affordable monthly payment options for Wesley Chapel homeowners"
+    ctaLabel="Apply Now"
+    ctaHref={applyUrl}
   />
-  <section class="py-16">
-    <div class="container-site max-w-4xl grid md:grid-cols-2 gap-10 items-start">
-      <div class="prose-icac">
-        <h2>Why finance with Synchrony?</h2>
-        <p>We chose Synchrony because their home-project financing is flexible, fast, and written specifically for homeowners making substantial investments in their homes. That means:</p>
-        <ul>
-          <li><strong>0% introductory rates</strong> for qualifying promotional periods</li>
-          <li><strong>Terms up to 120 months</strong> on qualifying installations</li>
-          <li><strong>Fast approvals</strong> — usually in minutes</li>
-          <li><strong>Soft-pull pre-qualification</strong> that doesn't touch your credit score</li>
-          <li><strong>No prepayment penalties</strong> — pay it off early with no extra cost</li>
-        </ul>
-        <h3>How to apply</h3>
-        <ol>
-          <li>Call us at <a href="tel:+18133952324">(813) 395-2324</a> or book an in-home consultation</li>
-          <li>We'll provide a written quote for your repair or installation</li>
-          <li>You apply with Synchrony — we'll walk you through the online application</li>
-          <li>Approval comes back in minutes; you sign and we schedule the work</li>
-        </ol>
+
+  <!-- Quick approval stats band -->
+  <section class="py-10 md:py-12 bg-white border-b border-slate-100">
+    <div class="container-site">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-4 text-center">
+        {quickStats.map(s => (
+          <div class="px-2">
+            <div class="text-2xl md:text-3xl font-bold text-accent-500">{s.k}</div>
+            <div class="mt-1 text-sm md:text-[15px] text-slate-600 leading-snug">{s.v}</div>
+          </div>
+        ))}
       </div>
-      <aside class="rounded-2xl bg-surface ring-1 ring-slate-200 p-6">
-        <div class="flex items-center gap-3 mb-4">
-          <img src="/images/Synchrony-Financing-Partner-%E2%80%93-I-Care-Air-Care.webp" alt="Synchrony Financial logo" class="h-10 w-auto" width="160" height="40" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="py-16 md:py-20 bg-paper">
+    <div class="container-site">
+      <div class="max-w-3xl mx-auto text-center">
+        <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">How It Works</span>
+        <h2 class="mt-4 text-3xl md:text-4xl title-accent">Financed in four simple steps</h2>
+        <p class="mt-6 text-slate-600 leading-relaxed">
+          A new system is one of the biggest investments you will make in your Florida home. We have made the financing side as frictionless as the service side — from first quote to cool air on, most projects are financed and installed inside of a week.
+        </p>
+      </div>
+      <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {steps.map(s => (
+          <div class="relative rounded-2xl bg-white ring-1 ring-slate-200 p-6 shadow-[var(--shadow-card)]">
+            <div class="w-12 h-12 rounded-full bg-accent-500 text-white flex items-center justify-center font-bold text-lg">{s.n}</div>
+            <h3 class="mt-4 text-lg font-bold text-navy-700">{s.title}</h3>
+            <p class="mt-2 text-sm text-slate-600 leading-relaxed">{s.body}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-10 text-center text-slate-600 text-sm">
+        Prefer to talk it through? Call Tim's team at
+        <a href={SITE.phoneHref} class="text-brand-700 font-semibold underline underline-offset-2">{SITE.phone}</a>
+        or <a href="/contact/" class="text-brand-700 font-semibold underline underline-offset-2">contact us</a> and we will walk you through the right plan for your project.
+      </p>
+    </div>
+  </section>
+
+  <!-- Financing options / plans -->
+  <section class="py-16 md:py-20 bg-white">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-12 gap-10 items-start">
+        <div class="lg:col-span-5">
+          <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Financing Options</span>
+          <h2 class="mt-4 text-3xl md:text-4xl">Plans built for HVAC-sized projects</h2>
+          <p class="mt-5 text-slate-600 leading-relaxed">
+            Most Wesley Chapel full-system replacements land between <strong class="text-navy-700">$6,500 and $14,000</strong> once you factor in the condenser, air handler, installation labor, permit, and any duct modifications. Synchrony's home-project plans are written specifically for that range — with promotional periods that match the way homeowners actually budget.
+          </p>
+          <p class="mt-4 text-slate-600 leading-relaxed">
+            The four plans below are the most common offers our customers qualify for. Promotional availability changes throughout the year, so final terms are confirmed during your application.
+          </p>
+          <div class="mt-6 rounded-xl bg-surface p-5 ring-1 ring-slate-200">
+            <div class="flex items-center gap-3">
+              <img
+                src="/images/Synchrony-Financing-Partner-%E2%80%93-I-Care-Air-Care.webp"
+                alt="Synchrony Financial — I Care Air Care financing partner"
+                class="h-10 w-auto"
+                width="160"
+                height="40"
+                loading="lazy"
+              />
+              <div class="text-sm text-slate-600">
+                Proudly partnered with <strong class="text-navy-700">Synchrony Bank</strong>, the financing backbone for most of America's home-service companies.
+              </div>
+            </div>
+          </div>
         </div>
-        <h3 class="font-bold text-navy-700 text-lg">Ready to apply?</h3>
-        <p class="mt-2 text-slate-600 text-sm">Call us and we'll get you the latest promotional offer available at the time of your project.</p>
-        <a href={SITE.phoneHref} class="mt-4 inline-flex w-full justify-center items-center gap-2 rounded-md bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-3">Call {SITE.phone}</a>
+        <div class="lg:col-span-7 grid sm:grid-cols-2 gap-5">
+          {plans.map(p => (
+            <div class="rounded-2xl bg-white ring-1 ring-slate-200 hover:ring-brand-300 hover:shadow-[var(--shadow-card)] transition p-6 flex flex-col">
+              <div class="text-[11px] font-bold uppercase tracking-[0.14em] text-accent-500">{p.tag}</div>
+              <h3 class="mt-2 text-lg font-bold text-navy-700">{p.name}</h3>
+              <p class="mt-2 text-sm text-slate-600 leading-relaxed" set:html={p.body}></p>
+              <div class="mt-4 rounded-md bg-brand-50 text-brand-800 text-sm font-semibold px-3 py-2">{p.term}</div>
+              <p class="mt-3 text-[12px] text-slate-500 leading-snug">{p.fine}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Estimated monthly payments table -->
+  <section class="py-16 md:py-20 bg-paper">
+    <div class="container-site max-w-5xl">
+      <div class="text-center max-w-2xl mx-auto">
+        <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Estimated Monthly Payments</span>
+        <h2 class="mt-4 text-3xl md:text-4xl title-accent">What HVAC financing looks like, month to month</h2>
+        <p class="mt-6 text-slate-600 leading-relaxed">
+          Below are realistic monthly payment estimates for the three most common Tampa Bay HVAC project tiers. These are illustrative only — your final payment depends on credit approval and current promotional offers.
+        </p>
+      </div>
+      <div class="mt-10 overflow-x-auto rounded-2xl ring-1 ring-slate-200 bg-white shadow-[var(--shadow-card)]">
+        <table class="w-full text-left border-collapse min-w-[640px]">
+          <thead class="bg-navy-700 text-white">
+            <tr>
+              <th class="px-5 py-4 text-sm font-semibold">System Tier</th>
+              <th class="px-5 py-4 text-sm font-semibold">Typical Cost</th>
+              <th class="px-5 py-4 text-sm font-semibold">18-mo 0% APR</th>
+              <th class="px-5 py-4 text-sm font-semibold">60-mo 0% APR</th>
+              <th class="px-5 py-4 text-sm font-semibold">120-mo Fixed*</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-700">
+            <tr class="hover:bg-surface/60">
+              <td class="px-5 py-4 align-top">
+                <div class="font-semibold text-navy-700">Entry (2–2.5 ton)</div>
+                <div class="text-xs text-slate-500 mt-0.5">Small condo or bungalow</div>
+              </td>
+              <td class="px-5 py-4 align-top">$6,500</td>
+              <td class="px-5 py-4 align-top">$361/mo</td>
+              <td class="px-5 py-4 align-top">$108/mo</td>
+              <td class="px-5 py-4 align-top">~$79/mo</td>
+            </tr>
+            <tr class="hover:bg-surface/60">
+              <td class="px-5 py-4 align-top">
+                <div class="font-semibold text-navy-700">Standard (3 ton)</div>
+                <div class="text-xs text-slate-500 mt-0.5">Typical 3-bed Wesley Chapel home</div>
+              </td>
+              <td class="px-5 py-4 align-top">$8,500</td>
+              <td class="px-5 py-4 align-top">$472/mo</td>
+              <td class="px-5 py-4 align-top">$142/mo</td>
+              <td class="px-5 py-4 align-top">~$103/mo</td>
+            </tr>
+            <tr class="hover:bg-surface/60">
+              <td class="px-5 py-4 align-top">
+                <div class="font-semibold text-navy-700">High-efficiency (4 ton variable)</div>
+                <div class="text-xs text-slate-500 mt-0.5">Larger New Tampa / Lutz home</div>
+              </td>
+              <td class="px-5 py-4 align-top">$11,500</td>
+              <td class="px-5 py-4 align-top">$639/mo</td>
+              <td class="px-5 py-4 align-top">$192/mo</td>
+              <td class="px-5 py-4 align-top">~$139/mo</td>
+            </tr>
+            <tr class="hover:bg-surface/60">
+              <td class="px-5 py-4 align-top">
+                <div class="font-semibold text-navy-700">Premium + ductwork</div>
+                <div class="text-xs text-slate-500 mt-0.5">Full retrofit w/ <a href="/services/air-duct-cleaning-tampa/" class="text-brand-700 underline underline-offset-2">duct cleaning</a> & mods</div>
+              </td>
+              <td class="px-5 py-4 align-top">$14,000</td>
+              <td class="px-5 py-4 align-top">$778/mo</td>
+              <td class="px-5 py-4 align-top">$234/mo</td>
+              <td class="px-5 py-4 align-top">~$170/mo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-4 text-xs text-slate-500 leading-relaxed">
+        *120-month fixed-rate estimates assume 7.99% APR. Actual APR depends on credit approval and current Synchrony offers and may range 7.99%–14.99%. 0% APR promotional plans require minimum monthly payments during the promo period; interest applies only if the balance is not paid in full by the end of the promo window. Final payment depends on credit approval and current promotional offers.
+      </p>
+    </div>
+  </section>
+
+  <!-- Who qualifies -->
+  <section class="py-16 md:py-20 bg-white">
+    <div class="container-site grid lg:grid-cols-12 gap-10 items-start">
+      <div class="lg:col-span-6">
+        <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Who Qualifies</span>
+        <h2 class="mt-4 text-3xl md:text-4xl">Honest eligibility — no gotchas</h2>
+        <p class="mt-5 text-slate-600 leading-relaxed">
+          Synchrony evaluates a mix of credit history, income, and existing debt — not just a single score. The short version: if you have steady income and reasonable credit, there is almost always a plan that works.
+        </p>
+        <ul class="mt-6 space-y-3 text-slate-700">
+          <li class="flex gap-3">
+            <svg class="w-5 h-5 text-accent-500 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+            <span><strong class="text-navy-700">Credit score of ~640+</strong> typically unlocks promotional 0% APR offers.</span>
+          </li>
+          <li class="flex gap-3">
+            <svg class="w-5 h-5 text-accent-500 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+            <span><strong class="text-navy-700">Lower scores still qualify</strong> for fixed-rate installment plans — just at a different APR.</span>
+          </li>
+          <li class="flex gap-3">
+            <svg class="w-5 h-5 text-accent-500 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+            <span><strong class="text-navy-700">Employment and income verification</strong> is light — usually self-reported in the application.</span>
+          </li>
+          <li class="flex gap-3">
+            <svg class="w-5 h-5 text-accent-500 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+            <span><strong class="text-navy-700">No prepayment penalty, ever</strong> — pay off the balance early and save on interest.</span>
+          </li>
+          <li class="flex gap-3">
+            <svg class="w-5 h-5 text-accent-500 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+            <span><strong class="text-navy-700">Soft pre-qualification</strong> checks what you qualify for without touching your credit score.</span>
+          </li>
+        </ul>
+        <p class="mt-6 text-sm text-slate-500">
+          Not sure if you will qualify? A pre-qualification check takes under a minute and gives you a real answer without any credit impact.
+        </p>
+      </div>
+      <aside class="lg:col-span-6">
+        <div class="rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 text-white p-7 md:p-8 shadow-[var(--shadow-soft)]">
+          <div class="text-[11px] font-bold uppercase tracking-[0.14em] text-accent-300">Why Finance With Us</div>
+          <h3 class="mt-2 text-2xl md:text-3xl font-bold text-white leading-tight">Local install team — not a national call center</h3>
+          <p class="mt-4 text-blue-50/95 leading-relaxed">
+            Big-box and corporate HVAC chains subcontract your install to whoever is cheapest that week. We do not. Every system we sell is put in by our own W-2 install crew out of the <a href="/about-us/" class="underline underline-offset-2 font-semibold hover:text-white">licensed local team</a> at 27022 Foamflower Blvd.
+          </p>
+          <ul class="mt-5 space-y-3 text-sm text-blue-50">
+            <li class="flex gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent-400 mt-2 shrink-0"></span>
+              <span><strong class="text-white">1-year repair warranty</strong> on every install, stacked on top of full manufacturer warranty coordination.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent-400 mt-2 shrink-0"></span>
+              <span><strong class="text-white">Flat-rate upfront pricing</strong> — the number on your quote is the number you finance. No surprise add-ons mid-job.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent-400 mt-2 shrink-0"></span>
+              <span><strong class="text-white">Honest Manual-J sizing</strong> — we will not oversize a system just to make the invoice bigger. Right-sized equipment lasts longer and costs less to run.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent-400 mt-2 shrink-0"></span>
+              <span><strong class="text-white">Florida license CAC1822037</strong> means the same licensed contractor signs your permit, does your install, and handles warranty claims — no subcontractor switch-ups.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent-400 mt-2 shrink-0"></span>
+              <span><strong class="text-white">700+ Google reviews</strong> averaging 4.9★ — read them on our <a href="/reviews/" class="underline underline-offset-2 font-semibold hover:text-white">700+ Google reviews</a> page.</span>
+            </li>
+          </ul>
+        </div>
       </aside>
     </div>
   </section>
+
+  <!-- Real-world scenarios band -->
+  <section class="py-16 md:py-20 bg-wave">
+    <div class="container-site">
+      <div class="max-w-3xl mx-auto text-center">
+        <span class="inline-flex items-center rounded-full bg-white text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] shadow-sm">Real-World Scenarios</span>
+        <h2 class="mt-4 text-3xl md:text-4xl">What financing looks like in Wesley Chapel homes</h2>
+        <p class="mt-5 text-slate-600 leading-relaxed">
+          Three real project shapes we install every week across Wesley Chapel, New Tampa, and Land O' Lakes — mapped to the financing plans most customers choose.
+        </p>
+      </div>
+      <div class="mt-12 grid md:grid-cols-3 gap-6">
+        {scenarios.map(s => (
+          <div class="rounded-2xl bg-white ring-1 ring-slate-200 p-6 shadow-[var(--shadow-card)] flex flex-col">
+            <div class="text-[11px] font-bold uppercase tracking-[0.14em] text-brand-600">Scenario</div>
+            <p class="mt-2 text-navy-700 font-semibold leading-snug">{s.home}</p>
+            <div class="mt-5 flex items-baseline gap-2">
+              <span class="text-sm text-slate-500">Project cost</span>
+              <span class="text-lg font-bold text-navy-700">{s.cost}</span>
+            </div>
+            <div class="mt-4 rounded-xl bg-accent-50 ring-1 ring-accent-100 p-4">
+              <div class="text-xs font-semibold uppercase tracking-wider text-accent-700">Monthly payment</div>
+              <div class="mt-1 text-2xl font-bold text-navy-700">{s.payment}</div>
+              <div class="mt-1 text-xs text-slate-600">{s.term}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="mt-10 text-center text-sm text-slate-500 max-w-2xl mx-auto">
+        Scenarios shown are illustrative examples based on typical recent projects. Your quote depends on the size of your system, the condition of your ductwork, and the equipment you choose. We will walk you through <a href="/services/ac-repair-tampa/" class="text-brand-700 underline underline-offset-2">AC repair</a> vs. replacement numbers honestly so you can choose what fits.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
   <FAQ title="Financing FAQs" items={faqs} />
+
+  <!-- Apply Now CTA band -->
+  <section class="py-16 md:py-20 bg-navy-700 text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.10]"
+         style="background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120' viewBox='0 0 240 120'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.2' opacity='0.9'%3E%3Cpath d='M0 60 Q60 20 120 60 T240 60'/%3E%3Cpath d='M0 90 Q60 50 120 90 T240 90'/%3E%3Cpath d='M0 30 Q60 -10 120 30 T240 30'/%3E%3C/g%3E%3C/svg%3E&quot;);background-size:360px 180px;"></div>
+    <div class="absolute -top-20 -right-20 w-[420px] h-[420px] rounded-full bg-accent-500/15 blur-3xl pointer-events-none"></div>
+    <div class="relative container-site max-w-4xl text-center">
+      <div class="inline-flex items-center rounded-full bg-accent-500 text-white px-4 py-1.5 text-xs font-bold uppercase tracking-[0.14em]">Ready to Apply?</div>
+      <h2 class="mt-5 text-3xl md:text-5xl font-bold text-white leading-tight">Apply Now in 90 Seconds</h2>
+      <p class="mt-5 text-blue-50/95 text-lg leading-relaxed max-w-2xl mx-auto">
+        Start your Synchrony application online — soft pre-qualification with no credit-score impact. Most homeowners get an instant decision and we can have cool air on within the week.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a
+          href={applyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-md bg-accent-500 hover:bg-accent-600 text-white font-bold px-8 py-4 text-lg shadow-lg transition"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          Apply with Synchrony
+        </a>
+        <a href={SITE.phoneHref} class="btn-outline btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+          Call {SITE.phone}
+        </a>
+        <a href={SITE.bookUrl} class="btn-outline btn-lg">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Book Online
+        </a>
+      </div>
+      <p class="mt-6 text-xs text-blue-100/80">
+        Financing provided by Synchrony Bank. Subject to credit approval. Minimum monthly payments required. Promotional terms vary — see your application for current offers.
+      </p>
+    </div>
+  </section>
+
   <FinalCTA />
-  <ContactFormSection />
 </BaseLayout>

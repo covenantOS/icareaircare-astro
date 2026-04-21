@@ -4,6 +4,12 @@ import Hero from '../components/Hero.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
 import { BLOG_POSTS as allPosts } from '../lib/blog';
+
+const PER_PAGE = 9;
+const totalPages = Math.ceil(allPosts.length / PER_PAGE);
+
+// Collect unique tags for filter chips
+const allTags = Array.from(new Set(allPosts.map(p => p.tag)));
 ---
 <BaseLayout
   title="HVAC Blog | I Care Air Care Wesley Chapel"
@@ -16,25 +22,268 @@ import { BLOG_POSTS as allPosts } from '../lib/blog';
     subtitle="Real answers from licensed technicians. AC troubleshooting, maintenance guides, new-construction tips, and everything Wesley Chapel homeowners need to stay comfortable."
     image="/images/HVAC-installation-Tampa-Bay-technician-installing-a-ceiling-air-vent-register-in-a-home.webp"
   />
-  <section class="py-16">
+
+  <section class="py-12 md:py-16">
     <div class="container-site">
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {allPosts.map(p => (
-          <a href={`/${p.slug}/`} class="group block rounded-2xl bg-white ring-1 ring-slate-100 shadow-[var(--shadow-card)] p-6 hover:shadow-[var(--shadow-soft)] hover:-translate-y-0.5 transition">
-            <div class="inline-flex rounded-md bg-brand-50 text-brand-700 text-xs font-semibold px-2.5 py-1">{p.tag}</div>
-            <h3 class="mt-3 text-lg font-bold text-navy-700 group-hover:text-brand-600 leading-snug">{p.title}</h3>
-            <p class="mt-3 text-sm text-slate-600 leading-relaxed">{p.description}</p>
-            <div class="mt-3 text-xs text-slate-500 flex items-center gap-3">
-              <span>{p.date}</span>
-              <span>•</span>
-              <span>{p.read} read</span>
+
+      <!-- Tag filter chips -->
+      <div class="flex flex-wrap gap-2 mb-8 items-center">
+        <span class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500 mr-2">Filter:</span>
+        <button type="button" class="blog-tag-chip is-active" data-tag="all">All posts ({allPosts.length})</button>
+        {allTags.map(t => (
+          <button type="button" class="blog-tag-chip" data-tag={t}>{t}</button>
+        ))}
+      </div>
+
+      <!-- Post grid -->
+      <div id="blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {allPosts.map((p, i) => (
+          <a
+            href={`/${p.slug}/`}
+            class="blog-card group block rounded-2xl bg-white ring-1 ring-slate-100 shadow-[var(--shadow-card)] overflow-hidden hover:shadow-[var(--shadow-soft)] hover:-translate-y-0.5 transition"
+            data-tag={p.tag}
+            data-idx={i}
+          >
+            <div class="aspect-[16/10] overflow-hidden bg-slate-100">
+              <img src={p.image} alt={p.imageAlt || p.title} class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" width="640" height="400" />
             </div>
-            <span class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent-500">Read article →</span>
+            <div class="p-5">
+              <div class="inline-flex rounded-md bg-brand-50 text-brand-700 text-xs font-semibold px-2.5 py-1">{p.tag}</div>
+              <h3 class="mt-3 text-lg font-bold text-navy-700 group-hover:text-brand-600 leading-snug">{p.title}</h3>
+              <p class="mt-2 text-sm text-slate-600 leading-relaxed line-clamp-3">{p.description}</p>
+              <div class="mt-3 text-xs text-slate-500 flex items-center gap-2">
+                <span>{p.date}</span>
+                <span aria-hidden="true">•</span>
+                <span>{p.read} read</span>
+                <span aria-hidden="true">•</span>
+                <span>{p.location}</span>
+              </div>
+            </div>
           </a>
         ))}
       </div>
+
+      <!-- Empty state (shown when filter has no matches) -->
+      <div id="blog-empty" class="text-center py-16" hidden>
+        <p class="text-slate-500">No posts match that filter.</p>
+        <button type="button" class="mt-3 text-brand-600 font-semibold underline underline-offset-2" data-clear-filter>Show all posts</button>
+      </div>
+
+      <!-- Pagination -->
+      <nav id="blog-pagination" class="mt-10 flex flex-wrap items-center justify-center gap-2" aria-label="Blog pagination">
+        <button type="button" class="blog-page-btn blog-page-nav" data-page-nav="prev" aria-label="Previous page">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+          <span class="hidden sm:inline">Prev</span>
+        </button>
+        <div class="flex gap-1" data-page-list>
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <button type="button" class={`blog-page-btn ${i === 0 ? 'is-active' : ''}`} data-page={i + 1}>{i + 1}</button>
+          ))}
+        </div>
+        <button type="button" class="blog-page-btn blog-page-nav" data-page-nav="next" aria-label="Next page">
+          <span class="hidden sm:inline">Next</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </nav>
+
+      <p class="mt-5 text-center text-xs text-slate-500" data-page-status>Showing 1–{Math.min(PER_PAGE, allPosts.length)} of {allPosts.length}</p>
+
     </div>
   </section>
+
   <FinalCTA />
   <ContactFormSection />
 </BaseLayout>
+
+<style is:global>
+  .blog-tag-chip {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 999px;
+    border: 1px solid var(--color-line);
+    background: #fff;
+    color: var(--color-navy-700);
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    font-family: inherit;
+  }
+  .blog-tag-chip:hover { border-color: var(--color-brand-400); background: var(--color-brand-50); }
+  .blog-tag-chip.is-active {
+    background: var(--color-brand-500);
+    border-color: var(--color-brand-500);
+    color: #fff;
+  }
+
+  .blog-card.is-hidden { display: none; }
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .blog-page-btn {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid var(--color-line);
+    background: #fff;
+    color: var(--color-navy-700);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    font-family: inherit;
+  }
+  .blog-page-btn:hover:not(:disabled) { border-color: var(--color-brand-400); background: var(--color-brand-50); }
+  .blog-page-btn.is-active {
+    background: var(--color-brand-500);
+    border-color: var(--color-brand-500);
+    color: #fff;
+  }
+  .blog-page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+</style>
+
+<script is:inline define:vars={{ PER_PAGE }}>
+  (function () {
+    var grid = document.getElementById('blog-grid');
+    var empty = document.getElementById('blog-empty');
+    var pagination = document.getElementById('blog-pagination');
+    var status = document.querySelector('[data-page-status]');
+    if (!grid || !pagination) return;
+
+    var allCards = Array.from(grid.querySelectorAll('.blog-card'));
+    var currentTag = 'all';
+    var currentPage = 1;
+
+    function visibleCards() {
+      return allCards.filter(function (c) {
+        return currentTag === 'all' || c.getAttribute('data-tag') === currentTag;
+      });
+    }
+
+    function render() {
+      var vis = visibleCards();
+      var totalPages = Math.max(1, Math.ceil(vis.length / PER_PAGE));
+      if (currentPage > totalPages) currentPage = 1;
+
+      // Hide all
+      allCards.forEach(function (c) { c.classList.add('is-hidden'); });
+
+      if (vis.length === 0) {
+        empty.hidden = false;
+        pagination.hidden = true;
+        if (status) status.textContent = 'No posts match that filter.';
+        return;
+      }
+      empty.hidden = true;
+      pagination.hidden = false;
+
+      // Show cards for current page
+      var start = (currentPage - 1) * PER_PAGE;
+      var end = start + PER_PAGE;
+      vis.slice(start, end).forEach(function (c) { c.classList.remove('is-hidden'); });
+
+      // Rebuild page buttons
+      var pageList = document.querySelector('[data-page-list]');
+      pageList.innerHTML = '';
+      for (var i = 1; i <= totalPages; i++) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'blog-page-btn' + (i === currentPage ? ' is-active' : '');
+        btn.setAttribute('data-page', String(i));
+        btn.textContent = String(i);
+        pageList.appendChild(btn);
+      }
+
+      // Prev/Next disabled state
+      document.querySelector('[data-page-nav="prev"]').disabled = currentPage === 1;
+      document.querySelector('[data-page-nav="next"]').disabled = currentPage === totalPages;
+
+      // Status
+      if (status) {
+        var first = start + 1;
+        var last = Math.min(end, vis.length);
+        status.textContent = 'Showing ' + first + '\u2013' + last + ' of ' + vis.length +
+          (currentTag !== 'all' ? ' in "' + currentTag + '"' : '');
+      }
+
+      // URL (soft update, no scroll)
+      try {
+        var url = new URL(window.location.href);
+        if (currentPage > 1) url.searchParams.set('page', String(currentPage));
+        else url.searchParams.delete('page');
+        if (currentTag !== 'all') url.searchParams.set('tag', currentTag);
+        else url.searchParams.delete('tag');
+        history.replaceState(null, '', url.toString());
+      } catch (_) {}
+    }
+
+    // Tag filter
+    document.querySelectorAll('.blog-tag-chip').forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        document.querySelectorAll('.blog-tag-chip').forEach(function (c) { c.classList.remove('is-active'); });
+        chip.classList.add('is-active');
+        currentTag = chip.getAttribute('data-tag');
+        currentPage = 1;
+        render();
+        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Clear filter link in empty state
+    var clearBtn = document.querySelector('[data-clear-filter]');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function () {
+        document.querySelectorAll('.blog-tag-chip').forEach(function (c) { c.classList.remove('is-active'); });
+        var allChip = document.querySelector('.blog-tag-chip[data-tag="all"]');
+        if (allChip) allChip.classList.add('is-active');
+        currentTag = 'all';
+        currentPage = 1;
+        render();
+      });
+    }
+
+    // Pagination clicks
+    pagination.addEventListener('click', function (e) {
+      var pageBtn = e.target.closest('[data-page]');
+      if (pageBtn) {
+        currentPage = parseInt(pageBtn.getAttribute('data-page'), 10) || 1;
+        render();
+        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      var navBtn = e.target.closest('[data-page-nav]');
+      if (navBtn) {
+        if (navBtn.getAttribute('data-page-nav') === 'prev' && currentPage > 1) currentPage--;
+        else if (navBtn.getAttribute('data-page-nav') === 'next') currentPage++;
+        render();
+        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+
+    // Init from URL params (?page=N&tag=foo)
+    try {
+      var params = new URL(window.location.href).searchParams;
+      var qTag = params.get('tag');
+      var qPage = parseInt(params.get('page') || '1', 10);
+      if (qTag) {
+        var chip = document.querySelector('.blog-tag-chip[data-tag="' + CSS.escape(qTag) + '"]');
+        if (chip) {
+          document.querySelectorAll('.blog-tag-chip').forEach(function (c) { c.classList.remove('is-active'); });
+          chip.classList.add('is-active');
+          currentTag = qTag;
+        }
+      }
+      if (qPage && qPage > 0) currentPage = qPage;
+    } catch (_) {}
+
+    render();
+  })();
+</script>

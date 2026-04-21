@@ -21,6 +21,10 @@ const breadcrumbs = [
   { name: 'Blog', url: `${SITE.url}/blogs/` },
   { name: post.title, url },
 ];
+// Related posts: same tag first, fill with most recent if needed, exclude current
+const sameTagPosts = BLOG_POSTS.filter(p => p.slug !== post.slug && p.tag === post.tag).slice(0, 4);
+const fillerPosts = BLOG_POSTS.filter(p => p.slug !== post.slug && p.tag !== post.tag).slice(0, 4 - sameTagPosts.length);
+const relatedPosts = [...sameTagPosts, ...fillerPosts].slice(0, 4);
 const articleSchema = {
   headline: post.title,
   description: post.description,
@@ -119,12 +123,29 @@ const articleSchema = {
       </article>
 
       <aside class="lg:col-span-4 space-y-5">
+
+        <!-- 1. Call / book CTA -->
         <div class="rounded-xl bg-brand-500 text-white p-6 shadow-[var(--shadow-soft)]">
           <h3 class="text-white text-xl font-bold">Need help with this?</h3>
           <p class="mt-3 text-blue-50 text-sm leading-relaxed">Talk with the Wesley Chapel team and get the right next step for your home.</p>
           <a href={SITE.phoneHref} class="mt-5 inline-flex w-full justify-center rounded-md bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-3">{SITE.phone}</a>
-          <a href={SITE.bookUrl} target="_blank" rel="noopener" class="mt-2 inline-flex w-full justify-center rounded-md bg-white/10 border border-white/30 hover:bg-white/20 text-white font-semibold px-4 py-3">Book Online</a>
+          <a href={SITE.bookUrl} class="mt-2 inline-flex w-full justify-center rounded-md bg-white/10 border border-white/30 hover:bg-white/20 text-white font-semibold px-4 py-3">Book Online</a>
         </div>
+
+        <!-- 2. Author / E-E-A-T card -->
+        <div class="rounded-xl bg-white ring-1 ring-slate-200 p-5 shadow-[var(--shadow-card)]">
+          <div class="flex items-center gap-3">
+            <img src="/images/Tim%20Hawk%20(ICAC%20Owner).webp" alt="Tim Hawk, Owner" class="w-12 h-12 rounded-full ring-2 ring-brand-200 object-cover object-top shrink-0" width="48" height="48" loading="lazy" />
+            <div>
+              <div class="font-bold text-navy-700 text-sm">{SITE.owner}</div>
+              <div class="text-[11px] text-brand-600 font-semibold uppercase tracking-wide">Owner · Master Tech</div>
+            </div>
+          </div>
+          <p class="mt-3 text-[13px] text-slate-600 leading-relaxed">Florida HVAC License <strong class="text-navy-700">{SITE.license}</strong> · EPA Universal certified · 16+ years serving Wesley Chapel.</p>
+          <a href="/about-us/" class="mt-3 inline-block text-brand-600 text-[13px] font-semibold hover:text-brand-700">Meet the team →</a>
+        </div>
+
+        <!-- 3. Popular next steps -->
         <div class="rounded-xl bg-surface ring-1 ring-slate-200 p-6">
           <h3 class="text-lg font-bold text-navy-700">Popular next steps</h3>
           <ul class="mt-3 space-y-2 text-[15px]">
@@ -133,6 +154,60 @@ const articleSchema = {
             ))}
           </ul>
         </div>
+
+        <!-- 4. Reviews CTA -->
+        <div class="rounded-xl bg-white ring-1 ring-slate-200 p-5 shadow-[var(--shadow-card)]">
+          <div class="flex items-center gap-3">
+            <div class="text-3xl font-extrabold text-navy-700 leading-none">{SITE.rating.value.toFixed(1)}</div>
+            <div>
+              <div class="text-accent-500 text-sm leading-none">★★★★★</div>
+              <div class="text-[11px] text-slate-500 mt-1">{SITE.rating.count}+ Google reviews</div>
+            </div>
+          </div>
+          <p class="mt-3 text-[13px] text-slate-600 leading-relaxed">Homeowners across Wesley Chapel, Tampa, Land O' Lakes & Pasco trust our work.</p>
+          <a href="/reviews/" class="mt-3 inline-block text-brand-600 text-[13px] font-semibold hover:text-brand-700">Read reviews →</a>
+        </div>
+
+        <!-- 5. More posts -->
+        <div class="rounded-xl bg-white ring-1 ring-slate-200 p-5 shadow-[var(--shadow-card)]">
+          <h3 class="text-sm font-bold text-navy-700 uppercase tracking-wide">More from the library</h3>
+          <ul class="mt-3 space-y-3">
+            {relatedPosts.map((p) => (
+              <li>
+                <a href={`/${p.slug}/`} class="group flex gap-3">
+                  <div class="w-14 h-14 rounded-md overflow-hidden bg-slate-100 shrink-0">
+                    <img src={p.image} alt="" class="w-full h-full object-cover" width="56" height="56" loading="lazy" />
+                  </div>
+                  <div class="min-w-0">
+                    <div class="text-[13.5px] font-semibold text-navy-700 group-hover:text-brand-600 leading-snug line-clamp-2">{p.title}</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5">{p.read} read</div>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a href="/blogs/" class="mt-4 inline-block text-brand-600 text-[13px] font-semibold hover:text-brand-700">All HVAC articles →</a>
+        </div>
+
+        <!-- 6. Service areas -->
+        <div class="rounded-xl bg-surface ring-1 ring-slate-200 p-6">
+          <h3 class="text-sm font-bold text-navy-700 uppercase tracking-wide">Service areas</h3>
+          <ul class="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 text-[13.5px]">
+            {SITE.serviceAreas.slice(0, 8).map((a) => (
+              <li><a class="text-brand-600 hover:text-brand-700" href={`/service-areas/${a.slug}/`}>{a.name}</a></li>
+            ))}
+          </ul>
+          <a href="/service-areas/" class="mt-3 inline-block text-brand-600 text-[13px] font-semibold hover:text-brand-700">All areas →</a>
+        </div>
+
+        <!-- 7. License / trust strip -->
+        <div class="rounded-xl bg-navy-700 text-white p-5">
+          <div class="text-[11px] uppercase tracking-[0.14em] text-blue-200 font-bold">Licensed &amp; Insured</div>
+          <div class="mt-2 font-bold">Florida CAC {SITE.license.replace('CAC','')}</div>
+          <div class="mt-1 text-[12.5px] text-blue-100">Bonded · EPA 608 · 1-year repair warranty</div>
+          <div class="mt-3 text-[12px] text-blue-200">{SITE.address.street}, {SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}</div>
+        </div>
+
       </aside>
     </div>
   </section>
