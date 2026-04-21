@@ -13,7 +13,11 @@ export default defineConfig({
         !page.includes('/privacy-policy/') &&
         !page.includes('/terms-of-use/') &&
         !page.includes('/thank-you/') &&
-        !page.includes('/book/'),
+        !page.includes('/book/') &&
+        // Legacy URLs that 301 to canonical versions — do not include in sitemap
+        !page.includes('/emergency-ac-repair-wesley-chapel-fl/') &&
+        !page.includes('/air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/') &&
+        !page.includes('/ac-not-cooling-solutions/'),
     }),
     partytown({ config: { forward: ['dataLayer.push', 'gtag'] } }),
   ],

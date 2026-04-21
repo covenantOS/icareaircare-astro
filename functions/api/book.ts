@@ -1,10 +1,10 @@
 // Cloudflare Pages Function — POST /api/book
 // Accepts booking form submissions from /book/ and creates a lead in Housecall Pro.
-// API key stored as env var HCP_API_KEY (set via: wrangler pages secret put HCP_API_KEY --project-name=icareaircare-astro)
+// API key stored as env var HCP_API_KEY in Cloudflare Pages → Settings → Environment Variables.
 
 interface Env {
   HCP_API_KEY: string;
-  HCP_API_BASE?: string; // override for testing, default below
+  HCP_API_BASE?: string;
 }
 
 interface BookingPayload {
@@ -23,8 +23,9 @@ interface BookingPayload {
     zip?: string;
   };
   window?: {
-    when?: string;
-    time?: string;
+    date?: string;   // ISO 'YYYY-MM-DD' from calendar picker
+    slot?: string;   // e.g. '2pm–4pm'
+    label?: string;  // e.g. 'Wednesday, Apr 22 · 2pm–4pm'
   };
   notes?: string;
   consent?: boolean;
@@ -41,18 +42,8 @@ const SERVICE_LABELS: Record<string, string> = {
   'other': 'Other / Not Sure',
 };
 
-const WINDOW_WHEN_LABELS: Record<string, string> = {
-  'asap': 'ASAP — earliest available',
-  'today': 'Today if possible',
-  'tomorrow': 'Tomorrow',
-  'this-week': 'Sometime this week',
-};
-
-const WINDOW_TIME_LABELS: Record<string, string> = {
-  'morning': 'Morning (8am–12pm)',
-  'afternoon': 'Afternoon (12pm–4pm)',
-  'any': 'Any time',
-};
+const VALID_SERVICES = new Set(Object.keys(SERVICE_LABELS));
+const VALID_CATEGORIES = new Set(['hvac', 'basic']);
 
 function splitName(name: string) {
   const parts = name.trim().split(/\s+/);
@@ -73,28 +64,38 @@ function validate(b: BookingPayload): string | null {
   if (!b.phone || b.phone.replace(/\D/g, '').length < 10) return 'Please enter a valid 10-digit phone number.';
   if (!b.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(b.email)) return 'Please enter a valid email address.';
   if (!b.address?.street || !b.address?.city || !b.address?.zip) return 'Please complete the service address.';
+  if (!/^\d{5}(-\d{4})?$/.test(b.address.zip.trim())) return 'Please enter a valid 5-digit ZIP code.';
+  if (b.address.state && b.address.state.trim().length !== 2) return 'Please use a 2-letter state code.';
   if (!b.consent) return 'Please agree to be contacted before we can book this.';
-  if (!b.service) return 'Please pick a service type.';
+  if (!b.service || !VALID_SERVICES.has(b.service)) return 'Please pick a service type.';
+  if (b.category && !VALID_CATEGORIES.has(b.category)) return 'Invalid service category.';
+  if (!b.window?.date) return 'Please pick a date.';
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(b.window.date)) return 'Invalid date format.';
+  if (!b.window?.slot) return 'Please pick an arrival window.';
   return null;
 }
 
-function json(data: unknown, status = 200) {
+function json(data: unknown, status = 200, extraHeaders: Record<string, string> = {}) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    headers: { 'Content-Type': 'application/json; charset=utf-8', ...extraHeaders },
   });
 }
 
 function buildNote(b: BookingPayload): string {
   const svc = SERVICE_LABELS[b.service || ''] || b.service || 'Not specified';
-  const whenLbl = WINDOW_WHEN_LABELS[b.window?.when || ''] || b.window?.when || '';
-  const timeLbl = WINDOW_TIME_LABELS[b.window?.time || ''] || b.window?.time || '';
+  const catLabel = b.category === 'hvac' ? 'Heating & Air Conditioning' : b.category === 'basic' ? 'Basic Services' : '';
 
   const lines: string[] = [];
   lines.push(`Service requested: ${svc}`);
-  if (b.category) lines.push(`Category: ${b.category === 'hvac' ? 'Heating & Air Conditioning' : 'Basic Services'}`);
-  if (whenLbl) lines.push(`Preferred day: ${whenLbl}`);
-  if (timeLbl) lines.push(`Preferred time: ${timeLbl}`);
+  if (catLabel) lines.push(`Category: ${catLabel}`);
+
+  // Appointment window — front-end sends { date, slot, label }
+  if (b.window?.label) {
+    lines.push(`Requested appointment: ${b.window.label}`);
+  } else if (b.window?.date || b.window?.slot) {
+    lines.push(`Requested appointment: ${[b.window.date, b.window.slot].filter(Boolean).join(' · ')}`);
+  }
 
   const answerEntries = Object.entries(b.answers || {}).filter(([, v]) => v);
   if (answerEntries.length) {
@@ -115,10 +116,23 @@ function buildNote(b: BookingPayload): string {
   return lines.join('\n');
 }
 
+// Stateless short request-id so we can correlate client error reports with function logs
+// without exposing PII. crypto.randomUUID is available in the Workers runtime.
+function makeRequestId(): string {
+  try {
+    return (globalThis.crypto as Crypto | undefined)?.randomUUID?.().slice(0, 8) || Math.random().toString(36).slice(2, 10);
+  } catch {
+    return Math.random().toString(36).slice(2, 10);
+  }
+}
+
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+  const reqId = makeRequestId();
+
   if (!env.HCP_API_KEY) {
     return json({
       error: 'Booking is temporarily unavailable online. Please call (813) 395-2324 and we will get you on the schedule.',
+      request_id: reqId,
     }, 503);
   }
 
@@ -126,20 +140,20 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   try {
     data = (await request.json()) as BookingPayload;
   } catch {
-    return json({ error: 'Invalid booking data.' }, 400);
+    return json({ error: 'Invalid booking data.', request_id: reqId }, 400);
   }
 
   const vErr = validate(data);
-  if (vErr) return json({ error: vErr }, 400);
+  if (vErr) return json({ error: vErr, request_id: reqId }, 400);
 
   const { first_name, last_name } = splitName(data.name!);
   const mobile = normalizePhone(data.phone!);
   const note = buildNote(data);
 
   // Housecall Pro Create Lead payload.
-  // HCP requires a nested `customer` object. The address lives inside the
-  // customer as an `addresses` array (HCP's customer model allows multiple).
-  // Lead-level fields: notes, lead_source.
+  // Per HCP docs: nested `customer` (with `addresses[]`), lead-level `note` (singular),
+  // and `lead_source`. We also include `notes` as a hedge against schema drift — HCP
+  // ignores unknown fields, and keeping both keeps the request forward-compatible.
   const hcpPayload: Record<string, unknown> = {
     customer: {
       first_name,
@@ -160,19 +174,20 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         },
       ],
     },
+    note,
     notes: note,
     lead_source: 'Website (icareaircare.com)',
   };
 
-  // HCP public API — NO /v1 prefix. Confirmed by probing: /customers and /leads return 401 (valid route),
-  // while /v1/customers and /v1/leads return 404. Docs/tutorials that cite /v1 are wrong.
+  // HCP public API base — NO /v1 prefix (confirmed by probing).
   const base = env.HCP_API_BASE || 'https://api.housecallpro.com';
 
   try {
+    // Per HCP API docs: auth uses `Token {api-key}`, not `Bearer`.
     const res = await fetch(`${base}/leads`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${env.HCP_API_KEY}`,
+        'Authorization': `Token ${env.HCP_API_KEY}`,
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
@@ -184,45 +199,54 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     try { parsed = text ? JSON.parse(text) : null; } catch { /* leave null */ }
 
     if (!res.ok) {
-      console.log('[HCP] lead creation failed', {
-        status: res.status,
-        bodySnippet: text.slice(0, 1200),
-      });
-      // Friendlier message per status
+      // Log full details server-side (visible in Cloudflare Pages → Functions → Logs).
+      // NEVER echo payload or HCP body to the browser — it contains PII.
+      console.log(JSON.stringify({
+        level: 'error',
+        request_id: reqId,
+        hcp_status: res.status,
+        hcp_body: text.slice(0, 1500),
+        endpoint: `${base}/leads`,
+      }));
+
       let friendly = `We got your request but could not auto-schedule. Someone from our team will call you shortly at the number you provided. Or call (813) 395-2324 to confirm now.`;
-      if (res.status === 401) {
-        friendly = `Booking is temporarily unavailable (auth issue). Please call (813) 395-2324 and we will get you on the schedule.`;
-      } else if (res.status === 422) {
-        friendly = `We got most of your request but our schedule system flagged a field. Someone will call you shortly to finish booking. Or call (813) 395-2324 now.`;
+      if (res.status === 401 || res.status === 403) {
+        friendly = `Booking is temporarily unavailable. Please call (813) 395-2324 and we will get you on the schedule right away.`;
+      } else if (res.status === 422 || res.status === 400) {
+        friendly = `We got most of your request but our schedule system flagged a field. Someone will call you shortly to finish booking, or call (813) 395-2324 now.`;
+      } else if (res.status === 429) {
+        friendly = `A lot of people are booking right now. Give us a moment and try again, or call (813) 395-2324.`;
       }
-      return json({
-        error: friendly,
-        debug: {
-          hcp_status: res.status,
-          hcp_body: text.slice(0, 1400),
-          endpoint: `${base}/leads`,
-          payload_sent: hcpPayload,
-        },
-      }, 502);
+
+      return json({ error: friendly, request_id: reqId }, 502);
     }
+
+    console.log(JSON.stringify({
+      level: 'info',
+      request_id: reqId,
+      hcp_status: res.status,
+      lead_id: parsed?.id || parsed?.lead?.id || null,
+    }));
 
     return json({
       success: true,
       lead_id: parsed?.id || parsed?.lead?.id || null,
+      request_id: reqId,
     });
   } catch (err: unknown) {
-    console.log('[HCP] fetch error', err);
+    console.log(JSON.stringify({
+      level: 'error',
+      request_id: reqId,
+      type: 'fetch_error',
+      message: err instanceof Error ? err.message : String(err),
+    }));
     return json({
       error: `We could not reach our scheduling system. Please call (813) 395-2324 or try again in a moment.`,
+      request_id: reqId,
     }, 502);
   }
 };
 
-// Reject everything that is not POST so the endpoint does not leak anything.
-export const onRequest: PagesFunction<Env> = async ({ request }) => {
-  if (request.method === 'POST') {
-    // onRequestPost handles this; this catch-all is only for non-POST.
-    return new Response('Method Not Allowed', { status: 405, headers: { Allow: 'POST' } });
-  }
-  return new Response('Method Not Allowed', { status: 405, headers: { Allow: 'POST' } });
-};
+// NOTE: No catch-all onRequest export — Cloudflare Pages Functions' method-specific
+// exports (onRequestPost) handle routing. A duplicate onRequest could shadow POST
+// handling depending on runtime semantics.

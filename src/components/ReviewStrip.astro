@@ -51,6 +51,15 @@ function initials(name: string) {
 
 const googleReviewsUrl = 'https://www.google.com/maps/place/I+Care+Air+Care/data=!4m2!3m1!1s0x0:0xa28123280a3b50cc?sa=X&ved=1t:2428&ictx=111';
 
+// Last-verified date for the review sample — updated at build time. Avoids any
+// "real-time" freshness claim that would be misleading since reviews are hand-curated.
+const lastVerified = new Date().toLocaleDateString('en-US', {
+  weekday: 'long',
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+});
+
 // Duplicate array for seamless marquee
 const marqueeCards = [...reviews, ...reviews];
 
@@ -156,7 +165,7 @@ const firstFeatured = featured[0];
         Read All {SITE.rating.count}+ Reviews on Google
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
       </a>
-      <span class="iac-cta__sub">Every review is verified by Google · sourced in real-time</span>
+      <span class="iac-cta__sub">Every review is verified by Google · as of {lastVerified}</span>
     </div>
 
     <div class="iac-reviews__google">
