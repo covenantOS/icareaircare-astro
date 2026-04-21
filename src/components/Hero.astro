@@ -30,7 +30,7 @@ const {
   {variant === 'home' && (
     <img src="/images/ICAC%20Team%281%29.webp" alt="" aria-hidden="true"
          class="absolute inset-0 w-full h-full object-cover object-center"
-         width="960" height="720" loading="eager" decoding="async" />
+         width="960" height="720" loading="eager" decoding="async" fetchpriority="high" />
   )}
   <!-- Dark overlay gradient — opaque on page variant, semi-transparent on home to show photo -->
   <div class={`absolute inset-0 ${variant === 'home' ? 'bg-gradient-to-br from-navy-900/92 via-navy-900/82 to-brand-800/78' : 'bg-gradient-to-br from-navy-900 via-navy-800 to-brand-800'}`}></div>

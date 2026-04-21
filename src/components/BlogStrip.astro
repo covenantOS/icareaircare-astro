@@ -13,7 +13,7 @@ import { featuredBlogPosts as posts } from '../lib/blog';
     <div class="mt-10 grid md:grid-cols-3 gap-5">
       {posts.map(p => (
         <a href={`/${p.slug}/`} class="group relative block rounded-xl overflow-hidden aspect-[4/5] shadow-[var(--shadow-soft)]">
-          <img src={p.image} alt={p.title} class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" />
+          <img src={p.image} alt={p.title} class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" width="400" height="500" decoding="async" />
           <div class="absolute inset-0 bg-gradient-to-t from-navy-800/85 via-navy-800/25 to-transparent"></div>
           <div class="absolute top-4 left-4 inline-flex rounded-md bg-brand-700/90 text-white text-xs font-semibold px-2.5 py-1">{p.tag}</div>
           <div class="absolute bottom-0 inset-x-0 p-5">

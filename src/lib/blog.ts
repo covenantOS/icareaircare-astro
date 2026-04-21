@@ -37,7 +37,7 @@ const areas = {
 
 const images = {
   notCooling: "/images/air-conditioning-not-cooling-tampa-fl-mini-split-outdoor-condenser-unit-wall-mounted.webp",
-  warmAir: "/images/ac-blowing-warm-air-tampa-woman-relaxing-cool-comfort-mini-split-living-room.png",
+  warmAir: "/images/ac-blowing-warm-air-tampa-woman-relaxing-cool-comfort-mini-split-living-room.webp",
   install: "/images/HVAC-Installation-Tampa-Bay-%E2%80%93-New-Outdoor-Condenser-Installation.webp",
   ducts: "/images/air-duct-cleaning-wesley-chapel-rotary-brush-dirty-ceiling-duct.webp",
   maintenance: "/images/ac-maintenance-wesley-chapel-indoor-unit-deep-cleaning-technician.webp",
