@@ -8,3 +8,8 @@
 /service-area/ /service-areas/ 301
 /ac-installation-tampa /services/hvac-installation-tampa/ 301
 /ac-installation-tampa/ /services/hvac-installation-tampa/ 301
+
+# Keyword cannibalization consolidation
+/emergency-ac-repair-wesley-chapel-fl/ /emergency-ac-repair-wesley-chapel/ 301
+/air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/ /air-duct-cleaning-wesley-chapel/ 301
+/ac-not-cooling-solutions/ /ac-not-cooling-wesley-chapel/ 301

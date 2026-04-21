@@ -30,7 +30,7 @@ const faqs = [
 ];
 ---
 <BaseLayout
-  title="Wesley Chapel HVAC Contractor | AC Repair & Installation | I Care Air Care"
+  title="Wesley Chapel AC Repair & HVAC | I Care Air Care"
   description="Wesley Chapel's 5-star HVAC contractor. 4.9★ · 700+ Google reviews · 16+ years. Serving Wesley Chapel, New Tampa, Land O' Lakes, Lutz & all Tampa Bay. Call (813) 395-2324."
 >
   <link rel="preload" as="image" href="/images/ICAC%20Team%281%29.webp" slot="head" />
@@ -76,6 +76,37 @@ const faqs = [
   <IntroBand />
   <AreaGrid />
   <WhyChooseUs />
+
+  <!-- Owner spotlight + photo variety band -->
+  <section class="py-14 md:py-20 bg-surface">
+    <div class="container-site grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-5 order-2 lg:order-1">
+        <span class="inline-flex items-center rounded-full bg-accent-50 text-accent-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">From the owner</span>
+        <h2 class="mt-3 text-3xl md:text-4xl">Meet Tim — founder, master tech, and the voice on the phone.</h2>
+        <p class="mt-4 text-slate-600 leading-relaxed">Tim Hawk founded I Care Air Care in 2010 after 30+ years in the Tampa Bay HVAC trade. He still shows up on the hard calls — the ones that need a master technician, not a parts-swapper. <strong>Florida License CAC1822037. EPA Universal certified.</strong> When you call (813) 395-2324, you're talking to someone who has actually been on a rooftop in July diagnosing the same problem you're describing.</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/about-us/" class="btn-primary">Our full story</a>
+          <a href="tel:+18133952324" class="btn-outline" style="color:var(--color-navy-700);border-color:var(--color-navy-300);">(813) 395-2324</a>
+        </div>
+      </div>
+      <div class="lg:col-span-7 order-1 lg:order-2">
+        <div class="grid grid-cols-2 gap-3">
+          <div class="rounded-2xl overflow-hidden ring-1 ring-slate-200 shadow-[var(--shadow-card)] aspect-[3/4]">
+            <img src="/images/Tim%20Hawk%20(ICAC%20Owner).webp" alt="Tim Hawk, Owner of I Care Air Care — Master HVAC Technician" class="w-full h-full object-cover object-top" width="400" height="533" loading="lazy" decoding="async" />
+          </div>
+          <div class="grid grid-rows-2 gap-3">
+            <div class="rounded-2xl overflow-hidden ring-1 ring-slate-200 shadow-[var(--shadow-card)]">
+              <img src="/images/ICAC%20Team%284%29.webp" alt="I Care Air Care office and dispatch team in Wesley Chapel" class="w-full h-full object-cover" width="400" height="260" loading="lazy" decoding="async" />
+            </div>
+            <div class="rounded-2xl overflow-hidden ring-1 ring-slate-200 shadow-[var(--shadow-card)]">
+              <img src="/images/SUNDAY-2026-01-30T130107.789.webp" alt="I Care Air Care team at the Wesley Chapel office" class="w-full h-full object-cover" width="400" height="260" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <ReviewStrip />
   <ThreeStep />
   <FinalCTA />

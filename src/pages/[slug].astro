@@ -80,6 +80,12 @@ const articleSchema = {
           </ul>
         </div>
 
+        <!-- Mobile-only CTA after checklist -->
+        <div class="not-prose my-6 lg:hidden rounded-xl bg-brand-500 text-white p-4 flex items-center justify-between gap-4">
+          <p class="text-sm font-semibold text-blue-50">Sounds like you need a tech?</p>
+          <a href="tel:+18133952324" class="shrink-0 rounded-md bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-2.5 text-sm">(813) 395-2324</a>
+        </div>
+
         {post.body
           ? <Fragment set:html={post.body} />
           : (

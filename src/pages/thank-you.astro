@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+---
+<BaseLayout
+  title="Thank You | I Care Air Care"
+  description="Your message was received. The I Care Air Care team will be in touch shortly."
+>
+  <section class="py-24 md:py-32">
+    <div class="container-site max-w-2xl text-center">
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-brand-50 ring-1 ring-brand-200 mb-6">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-brand-600"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold text-navy-700">Request received!</h1>
+      <p class="mt-5 text-lg text-slate-600 leading-relaxed">We got your message and will be in touch shortly. During business hours (Mon–Fri 8am–6pm, Sat 10am–4pm) we typically reply within 1–2 hours.</p>
+      <p class="mt-4 text-slate-600">For urgent no-cool issues, call us directly:</p>
+      <a href={SITE.phoneHref} class="mt-4 inline-flex items-center gap-2 text-2xl font-bold text-brand-600 hover:text-brand-700">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+        {SITE.phone}
+      </a>
+      <div class="mt-10 flex flex-wrap gap-4 justify-center">
+        <a href="/" class="btn-primary">Back to Home</a>
+        <a href="/services/" class="btn-outline" style="color:var(--color-navy-700);border-color:var(--color-navy-300);">Browse Services</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
