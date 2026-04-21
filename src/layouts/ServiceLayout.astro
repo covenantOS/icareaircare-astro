@@ -39,10 +39,22 @@ const breadcrumbs = [
 const serviceSchema = {
   name: serviceName,
   serviceType,
-  areaServed: SITE.serviceAreas.map(a => ({ '@type': 'City', name: a.name })),
+  areaServed: SITE.serviceAreas.map(a => ({ '@type': 'City', name: a.name, containedInPlace: { '@type': 'State', name: 'Florida' } })),
   description,
   url: `${SITE.url}/services/${slug}/`,
-  offers: { '@type': 'Offer', availability: 'https://schema.org/InStock' },
+  inLanguage: 'en-US',
+  offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', areaServed: SITE.serviceAreas.map(a => a.name) },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: SITE.rating.value,
+    reviewCount: SITE.rating.count,
+    bestRating: 5,
+  },
+  brand: { '@type': 'Brand', name: SITE.name },
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    xpath: ['/html/head/title', '/html/body//h1', '/html/body//h2[1]', '/html/body//p[1]'],
+  },
 };
 const relatedGuides = BLOG_POSTS
   .filter((post) => {

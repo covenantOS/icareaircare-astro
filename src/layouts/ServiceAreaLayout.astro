@@ -70,6 +70,17 @@ const areaSchema: any = {
   name: `HVAC Services in ${cityName}, FL`,
   description,
   url: `${SITE.url}/service-areas/${slug}/`,
+  inLanguage: 'en-US',
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: SITE.rating.value,
+    reviewCount: SITE.rating.count,
+    bestRating: 5,
+  },
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    xpath: ['/html/head/title', '/html/body//h1', '/html/body//h2[1]', '/html/body//p[1]'],
+  },
 };
 ---
 <BaseLayout title={title} description={description} breadcrumbs={breadcrumbs}>

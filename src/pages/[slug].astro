@@ -32,10 +32,21 @@ const articleSchema = {
   image: `${SITE.url}${post.image}`,
   datePublished: new Date(post.date).toISOString(),
   dateModified: new Date(post.date).toISOString(),
+  inLanguage: 'en-US',
   author: { '@id': `${SITE.url}/#tim-hawk` },
   reviewedBy: { '@id': `${SITE.url}/#tim-hawk` },
   publisher: { '@id': `${SITE.url}/#business` },
   mainEntityOfPage: url,
+  // Speakable — Google Assistant / Alexa / Siri will read these xpaths aloud
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    xpath: ['/html/head/title', '/html/body//h1', '/html/body//h2[1]', '/html/body//p[1]'],
+  },
+  about: {
+    '@type': 'Thing',
+    name: post.tag,
+  },
+  keywords: [post.tag, post.location, 'HVAC', 'Wesley Chapel', 'Tampa Bay'].filter(Boolean).join(', '),
 };
 
 // HowTo schema for fix-it / troubleshooting posts. The checklist becomes HowTo steps.
@@ -48,6 +59,34 @@ const howToData = isHowTo ? {
   image: `${SITE.url}${post.image}`,
   totalTime: 'PT30M',
 } : null;
+
+// FAQPage schema — we ship a curated HVAC FAQ set on every blog post so
+// every post gets the FAQ rich-result slot + voice-assistant citation
+// surface, while also giving the reader a consistent Q&A block at the
+// bottom of every article. Questions are answered with canonical site
+// facts (hours, service area, license, warranty) so AI answers are correct.
+const postFAQs = [
+  {
+    q: `How much does ${post.primaryService.label.toLowerCase()} typically cost in Wesley Chapel?`,
+    a: `Most residential ${post.primaryService.label.toLowerCase()} calls in Wesley Chapel and Tampa Bay range $150–$600 depending on the specific part or service. Diagnostic visits are quoted upfront before any work begins. Larger repairs (compressor replacement, coil leaks) are priced separately with written estimates.`,
+  },
+  {
+    q: 'Do you offer same-day service?',
+    a: `Yes, same-day service is often available in Wesley Chapel, Land O' Lakes, New Tampa, Lutz, and nearby ZIP codes when the route schedule allows. Call (813) 395-2324 and we will give you the earliest available arrival window. Business hours: Mon–Fri 8am–6pm, Sat 10am–4pm.`,
+  },
+  {
+    q: 'Are you licensed and insured?',
+    a: `Yes. I Care Air Care is fully licensed, bonded, and insured under Florida CAC1822037. Every refrigerant-handling technician is EPA Section 608 Universal certified. Every repair comes with a 1-year parts-and-labor warranty.`,
+  },
+  {
+    q: 'What areas do you serve?',
+    a: `We dispatch from 27022 Foamflower Blvd in Wesley Chapel and serve all of Pasco, Hillsborough, and Polk counties — including ${post.location}, Tampa, Land O' Lakes, Lutz, New Tampa, Odessa, Zephyrhills, Lakeland, and surrounding communities.`,
+  },
+  {
+    q: 'Do you work on all HVAC brands?',
+    a: `Yes. We install and service Carrier, Trane, Lennox, Rheem, Goodman, American Standard, Bryant, Mitsubishi, LG, and Fujitsu. We are a factory-authorized Rheem Pro Partner and carry Rheem-specific parts on every truck.`,
+  },
+];
 ---
 <BaseLayout title={`${post.title} | I Care Air Care`} description={post.description} breadcrumbs={breadcrumbs}>
   <Hero
@@ -215,8 +254,26 @@ const howToData = isHowTo ? {
     </div>
   </section>
 
+  {/* Curated FAQ block — reinforces voice/AI answer surface + gives every post
+      the FAQ rich-result eligibility */}
+  <section class="py-12 md:py-14 bg-surface">
+    <div class="container-site max-w-3xl">
+      <h2 class="text-2xl md:text-3xl font-bold text-navy-700">Frequently asked about {post.primaryService.label.toLowerCase()}</h2>
+      <p class="mt-2 text-slate-600 text-[15px]">Common questions we hear from Wesley Chapel, Tampa Bay, and Pasco County homeowners.</p>
+      <dl class="mt-6 space-y-5">
+        {postFAQs.map(f => (
+          <div class="rounded-xl bg-white ring-1 ring-slate-200 p-5 md:p-6">
+            <dt class="font-bold text-navy-700">{f.q}</dt>
+            <dd class="mt-2 text-[15px] text-slate-600 leading-relaxed">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
   <FinalCTA />
   <ContactFormSection />
   <Schema type="Article" data={articleSchema} />
+  <Schema type="FAQPage" faqs={postFAQs.map(f => ({ q: f.q, a: f.a }))} />
   {isHowTo && <Schema type="HowTo" data={howToData} steps={post.checklist} />}
 </BaseLayout>
