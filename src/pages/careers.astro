@@ -15,7 +15,7 @@ const reasons = [
   {
     icon: 'clock',
     title: 'Predictable schedule',
-    body: `Real hours, real shifts. Mon–Fri day routes, Saturday rotation for urgent no-cool calls. No commission quota hovering over your head, no 12-hour ride-alongs with a closer.`,
+    body: `Real hours, real shifts. Mon–Fri day routes, Saturday rotation for urgent no-cool calls. Paid on the work you complete — no 12-hour ride-alongs with a closer, no sales quota on every house call.`,
   },
   {
     icon: 'wrench',
@@ -25,12 +25,12 @@ const reasons = [
   {
     icon: 'ladder',
     title: 'A real growth path',
-    body: `Helper → Apprentice → Service Tech → Lead Tech → Crew Chief. We promote from inside first. Two of our current leads started as helpers with zero HVAC experience.`,
+    body: `Service Tech → Lead Tech → Crew Chief → Install Crew Chief. We promote from inside first. Our current leads came up through these ranks with us.`,
   },
   {
     icon: 'shield',
-    title: 'Benefits that matter',
-    body: `Paid time off, paid holidays, performance bonuses (not commission — performance), factory training reimbursement, and help covering EPA 608 / Manual-J testing fees.`,
+    title: 'Pay & benefits that matter',
+    body: `Competitive commission structure, install & completion bonuses, paid time off, paid holidays, factory training reimbursement, and help covering EPA 608 / Manual-J testing fees. Weekly direct-deposit pay, every Friday.`,
   },
   {
     icon: 'handshake',
@@ -53,7 +53,7 @@ const roles = [
   {
     slug: 'HVAC Service Technician',
     title: 'HVAC Service Technician',
-    pay: '$24 - $32 / hr',
+    pay: 'Competitive commission + benefits',
     location: 'Wesley Chapel · mobile service area',
     blurb: `Diagnose and repair residential split systems, heat pumps, and mini-splits across Pasco, Hillsborough and Polk. Average 4-6 calls per day from a Wesley Chapel home base. You own your van, your iPad, and your routes.`,
     reqs: [
@@ -66,40 +66,14 @@ const roles = [
   {
     slug: 'HVAC Install Technician',
     title: 'HVAC Install Technician',
-    pay: '$22 - $30 / hr + install bonus',
+    pay: 'Competitive commission + install bonuses',
     location: 'Wesley Chapel · Pasco / Hillsborough / Polk',
-    blurb: `Run or help on residential changeouts, new-construction air handlers, heat pump swaps and ductwork touch-ups. Lead/helper combo role — we'll slot you where your experience fits and grow you toward crew chief.`,
+    blurb: `Run or help on residential changeouts, new-construction air handlers, heat pump swaps and ductwork touch-ups. We'll slot you where your experience fits and grow you toward crew chief.`,
     reqs: [
-      '1+ year install experience (lead or helper)',
+      '2+ years install experience preferred',
       'Comfortable with copper braze, vacuum pulls, and startup',
       'Reads Manual-J / Manual-D basics (we train the rest)',
       'Valid FL driver license',
-    ],
-  },
-  {
-    slug: 'Apprentice / Helper',
-    title: 'Apprentice / Helper',
-    pay: '$20 - $24 / hr · paid training',
-    location: 'Wesley Chapel · ride-along routes',
-    blurb: `No HVAC experience required. If you show up on time, work hard, and treat customers right — we will teach you the trade. Paid EPA 608 prep, factory training, and a clear step up to Service Tech in 12-18 months.`,
-    reqs: [
-      'High school diploma or GED',
-      'Willing to work outdoors in Florida summer',
-      'Mechanical aptitude (cars, carpentry, small engines — any of it counts)',
-      'Valid FL driver license',
-    ],
-  },
-  {
-    slug: 'Dispatcher / Customer Experience',
-    title: 'Dispatcher / Customer Experience',
-    pay: '$45,000 - $62,000 / yr',
-    location: 'Wesley Chapel office (on-site)',
-    blurb: `Answer the phone, route the techs, confirm the appointments, and keep customers looped in with text updates and technician photos. You are the voice customers hear before the truck rolls up.`,
-    reqs: [
-      '1+ year dispatching, scheduling, or service-desk experience',
-      'Comfortable with CRM / scheduling software (Housecall Pro, ServiceTitan, or similar)',
-      'Clear phone voice, thick skin on the bad-AC-day calls',
-      'Must work from our Foamflower Blvd office',
     ],
   },
 ];
@@ -117,28 +91,28 @@ const training = [
 // Team testimonials — real tech names from our review strip
 const teamQuotes = [
   {
-    quote: "Been here six years. No pushy quotas, no commission hanging over my head — I just fix stuff right and the customers write the reviews. Tim has my back every time.",
+    quote: "Been here six years. Paid on the work I complete, not on what I can talk someone into — I fix stuff right and the customers write the reviews. Tim has my back every time.",
     name: 'Kleber',
     role: 'Service Technician',
   },
   {
-    quote: "I started as a helper with zero HVAC background. Three years later I'm running my own install route. They actually teach you here, they don't just throw you on a roof.",
+    quote: "Came in as an install tech and three years later I'm running my own crew. They actually train you here — factory schools, Manual-J classes, real on-the-job mentorship. Not just thrown on a roof.",
     name: 'Gerald Thompson',
     role: 'Install Technician',
   },
   {
-    quote: "The office crew, the techs, Tim — it feels like a family business because it is one. I send my appointment confirmations, I hear back from the homeowners, and I know every name on the schedule.",
-    name: 'Dispatch Team',
-    role: 'Office',
+    quote: "Every call goes to the same small rotation of techs. Customers remember our names. That's why they keep calling back — and why I've got no plans to work anywhere else.",
+    name: 'James',
+    role: 'Service Technician',
   },
 ];
 
 // Applicant FAQs
 const faqs = [
-  { q: 'Do I need EPA 608 before I apply?', a: 'For <strong>service tech</strong> roles, yes — Type II or Universal. For <strong>install helper</strong> and <strong>apprentice</strong> roles, no. We pay for your test prep and reimburse the exam fee once you pass.' },
+  { q: 'Do I need EPA 608 before I apply?', a: 'For <strong>service tech</strong> roles, Type II or Universal is required. For <strong>install tech</strong> roles, preferred but not required — we pay for your test prep and reimburse the exam fee once you pass.' },
+  { q: 'How does pay work?', a: 'Competitive commission structure plus install and completion bonuses — you are rewarded for the work you complete, not for upselling a customer. Weekly direct-deposit pay every Friday with no held-back week. Benefits kick in at 90 days.' },
   { q: 'What do the trucks look like?', a: 'Marked white-and-blue service vans and install trucks — same fleet you see rolling through Wesley Chapel every morning. Assigned vehicle, fuel card, and maintenance on us. You take it home.' },
-  { q: 'What are the hours?', a: 'Standard day shift is 8am-5pm Monday through Friday with a Saturday rotation (10am-4pm) for urgent no-cool calls. Office staff is Mon-Fri only. We do not run overnight or 2am emergency crews.' },
-  { q: 'Weekly or bi-weekly pay?', a: 'Every Friday — direct deposit, no held-back week. First check goes out the Friday after your first full week.' },
+  { q: 'What are the hours?', a: 'Standard day shift is 8am-5pm Monday through Friday with a Saturday rotation (10am-4pm) for urgent no-cool calls. We do not run overnight or 2am emergency crews.' },
   { q: 'What training do you provide?', a: 'In-house ride-alongs, Carrier / Trane / Lennox factory schools, Manual-J classes, low-GWP refrigerant handling, OSHA 10, and EPA 608 prep. All on the clock. See the <a class="underline" href="#training">training section above</a>.' },
   { q: 'How does scheduling work? Will I be on call at 2am?', a: 'No. Dispatch routes your day the night before and adjusts in the morning. Saturday urgent calls are a rotation — roughly one Saturday every 4-5 weeks — and always with a paid on-call stipend. Sundays and holidays are off unless you volunteer.' },
   { q: 'Do I need my own tools?', a: 'Bring your boots. We provide the rest — gauges, recovery, vacuum pump, torch kit, meters, iPad, uniforms. Personal hand tools are welcome but not required on day one.' },
@@ -149,7 +123,7 @@ const heroImage = '/images/ICAC%20Team%281%29.webp';
 ---
 <BaseLayout
   title="HVAC Jobs Wesley Chapel FL | I Care Air Care Careers"
-  description="Now hiring HVAC techs, installers, apprentices and dispatchers in Wesley Chapel, FL. Family-run, no commission quotas, paid training, weekly pay."
+  description="Now hiring experienced HVAC service & install technicians in Wesley Chapel, FL. Competitive commission, install bonuses, paid factory training, weekly pay."
   breadcrumbs={[
     {name:'Home',url:'https://www.icareaircare.com/'},
     {name:'Careers',url:'https://www.icareaircare.com/careers/'},
@@ -158,7 +132,7 @@ const heroImage = '/images/ICAC%20Team%281%29.webp';
   <Hero
     eyebrow="Now Hiring"
     title={`HVAC Jobs in Wesley Chapel,<br/>built around the people doing the work.`}
-    subtitle={`Tim Hawk's family-run Wesley Chapel HVAC team is hiring service techs, install techs, apprentices and a dispatcher. Predictable schedule, paid training, real growth path — and zero commission-driven sales pressure.`}
+    subtitle={`Tim Hawk's family-run Wesley Chapel HVAC team is hiring experienced service and install technicians. Competitive commission, install bonuses, predictable schedule, paid factory training — and zero upsell pressure on every call.`}
     image={heroImage}
     imageAlt="I Care Air Care Wesley Chapel HVAC team and service vans"
     ctaLabel="See Open Roles"
@@ -394,8 +368,6 @@ const heroImage = '/images/ICAC%20Team%281%29.webp';
                 <option value="">Select a role...</option>
                 <option value="HVAC Service Technician">HVAC Service Technician</option>
                 <option value="HVAC Install Technician">HVAC Install Technician</option>
-                <option value="Apprentice / Helper">Apprentice / Helper</option>
-                <option value="Dispatcher / Customer Experience">Dispatcher / Customer Experience</option>
                 <option value="Other">Other / general interest</option>
               </select>
             </label>
@@ -403,8 +375,6 @@ const heroImage = '/images/ICAC%20Team%281%29.webp';
               <span class="text-[12px] font-bold text-navy-700 uppercase tracking-[0.1em]">Years of HVAC experience *</span>
               <select name="experience" required class="mt-1.5 w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3.5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 text-ink">
                 <option value="">Select...</option>
-                <option value="0 (none / apprentice)">0 - none yet (apprentice / helper)</option>
-                <option value="Less than 1 year">Less than 1 year</option>
                 <option value="1-2 years">1-2 years</option>
                 <option value="3-5 years">3-5 years</option>
                 <option value="5-10 years">5-10 years</option>
