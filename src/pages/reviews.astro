@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import ReviewStrip from '../components/ReviewStrip.astro';
@@ -8,13 +8,13 @@ import { SITE } from '../lib/site';
 ---
 <BaseLayout
   title="Reviews | I Care Air Care Wesley Chapel HVAC 4.9★"
-  description="Read 600+ five-star Google reviews from Wesley Chapel, Tampa, Land O' Lakes & Pasco County homeowners who trust I Care Air Care for AC repair and HVAC service."
+  description="Read 700+ five-star Google reviews from Wesley Chapel, Tampa, Land O' Lakes & Pasco County homeowners who trust I Care Air Care for AC repair and HVAC service."
   breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'Reviews',url:'https://www.icareaircare.com/reviews/'}]}
 >
   <Hero
     eyebrow={`${SITE.rating.value}★ &middot; ${SITE.rating.count}+ Reviews`}
     title="What Wesley Chapel Homeowners Say About Us"
-    subtitle={`600+ five-star Google reviews and counting. See why Wesley Chapel, Tampa, Land O' Lakes and Pasco County homeowners choose I Care Air Care.`}
+    subtitle={`700+ five-star Google reviews and counting. See why Wesley Chapel, Tampa, Land O' Lakes and Pasco County homeowners choose I Care Air Care.`}
     image="/images/ICAC%20Team.webp"
     ctaLabel="Leave a Review"
     ctaHref={SITE.socials.google}
@@ -22,7 +22,7 @@ import { SITE } from '../lib/site';
   <ReviewStrip />
   <section class="py-16">
     <div class="container-site max-w-4xl text-center prose-icac">
-      <h2>600+ five-star reviews</h2>
+      <h2>700+ five-star reviews</h2>
       <p>Our Google Business Profile is the best place to read current customer feedback from Wesley Chapel, Land O' Lakes, Tampa, and the surrounding service area. Review themes are consistent: clear communication, practical repair advice, clean work, and written pricing before work begins.</p>
       <p><a href={SITE.socials.google} target="_blank" rel="noopener">Read all reviews on Google →</a></p>
     </div>
