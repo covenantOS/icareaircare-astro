@@ -137,26 +137,31 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const note = buildNote(data);
 
   // Housecall Pro Create Lead payload.
-  // Field names follow HCP's public API convention. Unknown fields are ignored by HCP;
-  // we include a few synonyms to hedge against schema variation.
+  // HCP requires a nested `customer` object. The address lives inside the
+  // customer as an `addresses` array (HCP's customer model allows multiple).
+  // Lead-level fields: notes, lead_source.
   const hcpPayload: Record<string, unknown> = {
-    first_name,
-    last_name,
-    name: data.name,
-    email: data.email,
-    mobile_number: mobile,
-    phone_number: mobile,
-    address: {
-      street: data.address!.street,
-      street_line_2: data.address!.unit || '',
-      city: data.address!.city,
-      state: data.address!.state || 'FL',
-      zip: data.address!.zip,
-      country: 'US',
+    customer: {
+      first_name,
+      last_name,
+      email: data.email,
+      mobile_number: mobile,
+      home_number: null,
+      notifications_enabled: true,
+      addresses: [
+        {
+          street: data.address!.street,
+          street_line_2: data.address!.unit || '',
+          city: data.address!.city,
+          state: data.address!.state || 'FL',
+          zip: data.address!.zip,
+          country: 'US',
+          type: 'service',
+        },
+      ],
     },
     notes: note,
     lead_source: 'Website (icareaircare.com)',
-    source: 'Website (icareaircare.com)',
   };
 
   // HCP public API — NO /v1 prefix. Confirmed by probing: /customers and /leads return 401 (valid route),
