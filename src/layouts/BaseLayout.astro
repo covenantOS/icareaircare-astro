@@ -33,11 +33,11 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href;
     <link rel="shortcut icon" href="/favicon-bear.png" />
     <link rel="canonical" href={canonical} />
 
-    {/* Preconnect the third-party origins we actually use so the TLS handshake happens in parallel with HTML parse */}
+    {/* Preconnect ONLY the third-party origin we actually use for critical rendering.
+        Clarity + AdvertiserReports are loaded via Partytown off the main thread, so
+        preconnect hints on them were wasted (Lighthouse flagged both). */}
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-    <link rel="preconnect" href="https://www.clarity.ms" crossorigin />
-    <link rel="preconnect" href="https://script.advertiserreports.com" crossorigin />
 
     {/* RSS feed discovery + sitemap hint */}
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} — HVAC Library`} href="/rss.xml" />
@@ -80,5 +80,42 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href;
     <main id="main" class="flex-1"><slot /></main>
     <Footer />
     <StickyMobileCTA />
+
+    {/* Defer Google Maps (and any other data-lazy-src) iframes until they scroll near the viewport.
+        Cuts ~190 KiB of unused JS from the critical path and kills the TBT cost of map embeds. */}
+    <script is:inline>
+      (function () {
+        function hydrate(frame) {
+          var src = frame.getAttribute('data-lazy-src');
+          if (!src) return;
+          frame.setAttribute('src', src);
+          frame.removeAttribute('data-lazy-src');
+        }
+        function boot() {
+          var frames = document.querySelectorAll('iframe[data-lazy-src]');
+          if (!frames.length) return;
+          if (!('IntersectionObserver' in window)) {
+            frames.forEach(hydrate);
+            return;
+          }
+          var io = new IntersectionObserver(function (entries, obs) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) {
+                hydrate(e.target);
+                obs.unobserve(e.target);
+              }
+            });
+          }, { rootMargin: '300px 0px' });
+          frames.forEach(function (f) { io.observe(f); });
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(boot, { timeout: 2000 });
+        } else if (document.readyState !== 'loading') {
+          boot();
+        } else {
+          document.addEventListener('DOMContentLoaded', boot);
+        }
+      })();
+    </script>
   </body>
 </html>

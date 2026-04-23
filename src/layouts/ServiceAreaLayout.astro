@@ -56,13 +56,32 @@ const defaultMap = geo
   : `https://www.google.com/maps?q=${encodeURIComponent(cityName + ', FL')}&z=12&output=embed`;
 const embedSrc = mapEmbed || defaultMap;
 
+// County pages should use AdministrativeArea instead of City
+const isCounty = /county/i.test(cityName);
+const areaType = isCounty ? 'AdministrativeArea' : 'City';
+
+// Verbatim local reviews → Review schema entries (E-E-A-T + rich snippet eligibility)
+const reviewSchemaItems = (reviews || []).slice(0, 5).map(r => ({
+  '@type': 'Review',
+  author: { '@type': 'Person', name: r.name },
+  reviewBody: r.body,
+  reviewRating: {
+    '@type': 'Rating',
+    ratingValue: r.rating ?? 5,
+    bestRating: 5,
+    worstRating: 1,
+  },
+  itemReviewed: { '@id': `${SITE.url}/#business` },
+  ...(r.neighborhood ? { locationCreated: { '@type': 'Place', name: `${r.neighborhood}, ${cityName}, FL` } } : {}),
+}));
+
 const areaSchema: any = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'HVAC Services',
   provider: { '@id': `${SITE.url}/#business` },
   areaServed: {
-    '@type': 'City',
+    '@type': areaType,
     name: cityName,
     containedInPlace: { '@type': 'State', name: 'Florida' },
     ...(geo ? { geo: { '@type': 'GeoCoordinates', latitude: geo.lat, longitude: geo.lng } } : {}),
@@ -77,6 +96,7 @@ const areaSchema: any = {
     reviewCount: SITE.rating.count,
     bestRating: 5,
   },
+  ...(reviewSchemaItems.length > 0 ? { review: reviewSchemaItems } : {}),
   speakable: {
     '@type': 'SpeakableSpecification',
     xpath: ['/html/head/title', '/html/body//h1', '/html/body//h2[1]', '/html/body//p[1]'],

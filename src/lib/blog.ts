@@ -52,7 +52,7 @@ const images = {
 export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "air-conditioning-not-cooling-in-tampa-fl-heres-how-to-fix-it-fast",
-    title: "Air Conditioning Not Cooling in Tampa, FL? Here Is How to Fix It Fast",
+    title: "AC Not Cooling in Tampa? How to Fix It Fast",
     description: "A Tampa homeowner checklist for a system running without cold air, including thermostat, airflow, drain, and outdoor unit checks before calling for help.",
     tag: "AC Repair",
     date: "Apr 15, 2026",
@@ -65,7 +65,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "ac-blowing-warm-air-in-tampa-heres-how-to-fix-it-fast",
-    title: "AC Blowing Warm Air in Tampa? Common Causes and Next Steps",
+    title: "AC Blowing Warm Air in Tampa: Common Causes",
     description: "Warm supply air usually points to airflow, refrigerant, electrical, or outdoor condenser trouble. Here is how Tampa homeowners can narrow it down safely.",
     tag: "AC Repair",
     date: "Apr 13, 2026",
@@ -78,7 +78,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "new-construction-hvac-guide-for-epperson-mirada-homeowners",
-    title: "New Construction HVAC Guide for Epperson and Mirada Homeowners",
+    title: "New Construction HVAC: Epperson & Mirada Guide",
     description: "Builder-grade systems in Epperson, Mirada, and nearby Wesley Chapel communities often need airflow, humidity, and thermostat adjustments after move-in.",
     tag: "New Construction",
     date: "Apr 10, 2026",
@@ -91,7 +91,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "ac-not-cooling-wesley-chapel",
-    title: "AC Not Cooling in Wesley Chapel? Troubleshooting Guide",
+    title: "AC Not Cooling in Wesley Chapel? 8 Fixes",
     description: "A Wesley Chapel-specific guide to the most common reasons a system runs but will not cool during Florida heat.",
     tag: "AC Repair",
     date: "Apr 8, 2026",
@@ -104,7 +104,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "air-duct-cleaning-wesley-chapel",
-    title: "Air Duct Cleaning in Wesley Chapel: What Homeowners Need to Know",
+    title: "Air Duct Cleaning in Wesley Chapel, FL",
     description: "When duct cleaning helps, when duct sealing matters more, and how Wesley Chapel homeowners should think about indoor air quality.",
     tag: "Indoor Air Quality",
     date: "Apr 6, 2026",
@@ -117,7 +117,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "ac-maintenance-wesley-chapel",
-    title: "AC Maintenance in Wesley Chapel: What a Good Tune-Up Should Include",
+    title: "AC Maintenance in Wesley Chapel: Tune-Up Guide",
     description: "A plain-English look at the maintenance steps that matter in Wesley Chapel heat and humidity.",
     tag: "Maintenance",
     date: "Apr 4, 2026",
@@ -130,7 +130,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "air-conditioning-installation-wesley-chapel",
-    title: "Air Conditioning Installation in Wesley Chapel: Sizing, Permits, and Comfort",
+    title: "AC Installation in Wesley Chapel: Sizing & Permits",
     description: "What to ask before replacing an AC system in Wesley Chapel, from Manual-J sizing to permit handling and humidity control.",
     tag: "Installation",
     date: "Apr 2, 2026",
@@ -156,7 +156,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "emergency-ac-repair-wesley-chapel",
-    title: "Urgent AC Repair in Wesley Chapel: What to Do When Cooling Stops",
+    title: "Urgent AC Repair in Wesley Chapel",
     description: "Safety-first steps for Wesley Chapel homes when the air conditioner stops during summer heat.",
     tag: "Urgent Repair",
     date: "Mar 28, 2026",
@@ -169,7 +169,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "hvac-installation-in-tampa-bay-complete-guide-for-homeowners",
-    title: "HVAC Installation in Tampa Bay: Complete Homeowner Guide",
+    title: "HVAC Installation in Tampa Bay: Full Guide",
     description: "A complete overview of sizing, efficiency, ductwork, permits, warranties, and financing for Tampa Bay HVAC replacement.",
     tag: "Installation",
     date: "Mar 26, 2026",
@@ -181,21 +181,8 @@ export const BLOG_POSTS: BlogPost[] = [
     checklist: ["Start with load calculation and duct evaluation.", "Compare single-stage, two-stage, and variable-speed comfort differences.", "Confirm permit handling before install day.", "Ask how warranty registration and startup data will be documented."],
   },
   {
-    slug: "air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know",
-    title: "Air Duct Cleaning in Wesley Chapel, FL: What You Need to Know",
-    description: "How to decide whether duct cleaning, duct sealing, filtration, or maintenance is the right first move.",
-    tag: "Indoor Air Quality",
-    date: "Mar 24, 2026",
-    read: "8 min",
-    image: images.ducts,
-    location: "Wesley Chapel",
-    primaryService: services.ducts,
-    related: [services.maintenance, services.thermostat, areas.wesley],
-    checklist: ["Check supply vents for gray dust trails.", "Inspect returns for gaps that pull attic dust into the system.", "Replace filters on schedule before blaming the ducts.", "Ask for photos before and after cleaning."],
-  },
-  {
     slug: "what-are-the-best-preventive-hvac-maintenance-plans-for-homeowners-in-tampa-bay-who-want-a-local-trusted-contractor",
-    title: "Best Preventive HVAC Maintenance Plans for Tampa Bay Homeowners",
+    title: "Best HVAC Maintenance Plans in Tampa Bay",
     description: "What a useful maintenance plan should include, what to skip, and how priority scheduling should be explained.",
     tag: "Maintenance",
     date: "Mar 22, 2026",
@@ -208,7 +195,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "what-does-a-residential-preventive-hvac-maintenance-visit-include-in-wesley-chapel-fl",
-    title: "What Does a Residential HVAC Maintenance Visit Include in Wesley Chapel?",
+    title: "What's in a Wesley Chapel HVAC Tune-Up?",
     description: "A service-call checklist for homeowners who want to know what technicians should actually inspect.",
     tag: "Maintenance",
     date: "Mar 20, 2026",
@@ -221,7 +208,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "evaluate-hvac-companies-tampa-bay-repair-warranty",
-    title: "How to Evaluate HVAC Companies in Tampa Bay by Their Repair Warranty",
+    title: "Evaluate Tampa Bay HVAC Repair Warranties",
     description: "Why warranty wording matters and what homeowners should ask before approving HVAC repair.",
     tag: "Hiring Guide",
     date: "Mar 18, 2026",
@@ -234,7 +221,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "which-preventive-hvac-maintenance-plans-in-tampa-bay-offer-the-best-value",
-    title: "Which Preventive HVAC Maintenance Plans in Tampa Bay Offer the Best Value?",
+    title: "Best-Value HVAC Maintenance Plans: Tampa Bay",
     description: "How to compare plan value without getting distracted by coupons or vague promises.",
     tag: "Maintenance",
     date: "Mar 16, 2026",
@@ -260,7 +247,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "how-to-book-preventive-hvac-maintenance-in-tampa-bay-with-financing-options",
-    title: "How to Book Preventive HVAC Maintenance in Tampa Bay",
+    title: "How to Book HVAC Maintenance in Tampa Bay",
     description: "How to schedule maintenance, what information to have ready, and when financing matters for larger recommendations.",
     tag: "Maintenance",
     date: "Mar 12, 2026",
@@ -286,7 +273,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "ac-blowing-warm-air-in-wesley-chapel-7-common-causes-and-how-we-fix-them",
-    title: "AC Blowing Warm Air in Wesley Chapel: Common Causes and Fixes",
+    title: "AC Blowing Warm Air in Wesley Chapel",
     description: "From capacitors to coils, here are the most common warm-air problems in Wesley Chapel homes.",
     tag: "AC Repair",
     date: "Mar 8, 2026",
@@ -299,7 +286,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "ac-repair-in-epperson-fast-reliable-cooling-for-lagoon-community-homes",
-    title: "AC Repair in Epperson: Cooling for Lagoon Community Homes",
+    title: "AC Repair in Epperson & the Crystal Lagoon",
     description: "Why Epperson homes often need airflow, humidity, and thermostat attention in addition to standard repair.",
     tag: "Local Guide",
     date: "Mar 6, 2026",
@@ -312,7 +299,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "how-to-find-reliable-heating-and-air-contractors-near-me",
-    title: "How to Find Reliable Heating and Air Contractors Near Me",
+    title: "How to Find a Reliable HVAC Contractor",
     description: "A local search checklist for finding an HVAC contractor who can explain the work and stand behind it.",
     tag: "Hiring Guide",
     date: "Mar 4, 2026",
@@ -325,7 +312,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "why-homeowners-need-reliable-air-conditioning-repair-in-tampa",
-    title: "Why Homeowners Need Reliable Air Conditioning Repair in Tampa",
+    title: "Reliable AC Repair in Tampa: Why It Matters",
     description: "Tampa heat makes delayed AC repair more than an inconvenience. Here is how to act before small issues turn expensive.",
     tag: "AC Repair",
     date: "Mar 2, 2026",
@@ -338,7 +325,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "how-to-lower-cooling-bills-in-wesley-chapel-without-overworking-your-ac",
-    title: "How to Lower Cooling Bills in Wesley Chapel Without Overworking Your AC",
+    title: "How to Lower Cooling Bills in Wesley Chapel",
     description: "Practical steps for reducing energy use while keeping humidity and comfort under control.",
     tag: "Efficiency",
     date: "Feb 28, 2026",
@@ -361,19 +348,6 @@ export const BLOG_POSTS: BlogPost[] = [
     primaryService: services.install,
     related: [services.acRepair, { href: "/financing/", label: "financing" }, areas.wesley],
     checklist: ["Age, repair cost, efficiency, and comfort all matter.", "Manual-J sizing should come before equipment selection.", "Ductwork can make or break the replacement.", "Compare warranty and maintenance options in writing."],
-  },
-  {
-    slug: "emergency-ac-repair-wesley-chapel-fl",
-    title: "Urgent AC Repair in Wesley Chapel, FL",
-    description: "What Wesley Chapel homeowners should do when cooling fails and the house starts heating up.",
-    tag: "Urgent Repair",
-    date: "Feb 24, 2026",
-    read: "7 min",
-    image: "/images/emergency-ac-repair-wesley-chapel-air-conditioning-system-diagram.webp.webp",
-    location: "Wesley Chapel",
-    primaryService: services.urgent,
-    related: [services.acRepair, services.maintenance, areas.wesley],
-    checklist: ["Check thermostat, breaker, filter, and outdoor unit first.", "Shut down a frozen system to protect the compressor.", "Move sensitive family members to a cooler place if indoor heat climbs.", "Ask for the earliest available arrival window before dispatch."],
   },
   {
     slug: "wesley-chapel-air-conditioning",
@@ -402,21 +376,8 @@ export const BLOG_POSTS: BlogPost[] = [
     checklist: ["Warm air can be electrical, airflow, or refrigerant related.", "Water near the air handler often means a drain issue.", "Short cycling should be checked before it damages the compressor.", "Noisy startup can point to motor or capacitor trouble."],
   },
   {
-    slug: "ac-not-cooling-solutions",
-    title: "AC Not Cooling? Practical Solutions Before You Call",
-    description: "Quick homeowner-safe checks for cooling problems, plus the repairs that require a licensed technician.",
-    tag: "AC Repair",
-    date: "Feb 18, 2026",
-    read: "7 min",
-    image: images.notCooling,
-    location: "Tampa Bay",
-    primaryService: services.acRepair,
-    related: [services.urgent, services.maintenance, areas.pasco],
-    checklist: ["Thermostat mode and setpoint.", "Filter, return grille, and frozen coil.", "Outdoor condenser fan and disconnect.", "Professional leak, charge, or electrical diagnostics."],
-  },
-  {
     slug: "air-filter-change-frequency",
-    title: "How Often Should You Change Your Air Filter in Florida?",
+    title: "How Often to Change Your AC Filter in FL",
     description: "Filter timing depends on pets, dust, system runtime, and filter type. Here is a Florida-friendly schedule.",
     tag: "Maintenance",
     date: "Feb 16, 2026",

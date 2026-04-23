@@ -1,19 +1,50 @@
 ---
 import { featuredBlogPosts as posts } from '../lib/blog';
+
+// Map originals to responsive gen variants (pre-generated via scripts/resize-images.mjs).
+// Falls back to the original src if no mapping is known.
+const srcsetMap: Record<string, { small: string; large: string; smallW: number; largeW: number }> = {
+  '/images/air-conditioning-not-cooling-tampa-fl-mini-split-outdoor-condenser-unit-wall-mounted.webp': {
+    small: '/images/gen/air-conditioning-not-cooling-tampa-fl-mini-split-outdoor-condenser-unit-wall-mounted-w480.webp',
+    large: '/images/gen/air-conditioning-not-cooling-tampa-fl-mini-split-outdoor-condenser-unit-wall-mounted-w640.webp',
+    smallW: 480, largeW: 640,
+  },
+  '/images/ac-blowing-warm-air-tampa-woman-relaxing-cool-comfort-mini-split-living-room.webp': {
+    small: '/images/gen/ac-blowing-warm-air-tampa-woman-relaxing-cool-comfort-mini-split-living-room-w480.webp',
+    large: '/images/gen/ac-blowing-warm-air-tampa-woman-relaxing-cool-comfort-mini-split-living-room-w640.webp',
+    smallW: 480, largeW: 640,
+  },
+  '/images/HVAC-Installation-Tampa-Bay-%E2%80%93-New-Outdoor-Condenser-Installation.webp': {
+    small: '/images/gen/HVAC-Installation-Tampa-Bay-%E2%80%93-New-Outdoor-Condenser-Installation-w320.webp',
+    large: '/images/gen/HVAC-Installation-Tampa-Bay-%E2%80%93-New-Outdoor-Condenser-Installation-w520.webp',
+    smallW: 320, largeW: 520,
+  },
+};
 ---
 <section class="relative py-16 md:py-20 overflow-hidden">
-  <div class="absolute inset-0 bg-brand-600"></div>
+  <div class="absolute inset-0 bg-brand-800"></div>
   <div class="relative container-site">
     <div class="text-center max-w-2xl mx-auto text-white">
       <h2 class="text-white text-3xl md:text-4xl title-accent">The I Care Air Care HVAC Library</h2>
-      <p class="mt-6 text-blue-50">
-        Explore expert tips, <a class="underline underline-offset-2 text-accent-400 hover:text-white" href="/services/ac-maintenance-tampa/">AC maintenance guides</a>, and answers to common heating and cooling questions — all designed to help Tampa and Wesley Chapel homeowners stay comfortable and energy-efficient year-round.
+      <p class="mt-6 text-white">
+        Explore expert tips, <a class="underline underline-offset-2 text-accent-100 hover:text-white font-semibold" href="/services/ac-maintenance-tampa/">AC maintenance guides</a>, and answers to common heating and cooling questions — all designed to help Tampa and Wesley Chapel homeowners stay comfortable and energy-efficient year-round.
       </p>
     </div>
     <div class="mt-10 grid md:grid-cols-3 gap-5">
-      {posts.map(p => (
+      {posts.map(p => {
+        const v = srcsetMap[p.image];
+        return (
         <a href={`/${p.slug}/`} class="group relative block rounded-xl overflow-hidden aspect-[4/5] shadow-[var(--shadow-soft)]">
-          <img src={p.image} alt={p.title} class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" width="400" height="500" decoding="async" />
+          {v ? (
+            <img src={v.large}
+                 srcset={`${v.small} ${v.smallW}w, ${v.large} ${v.largeW}w`}
+                 sizes="(min-width: 768px) 33vw, 100vw"
+                 alt={p.title}
+                 class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                 loading="lazy" width="400" height="500" decoding="async" />
+          ) : (
+            <img src={p.image} alt={p.title} class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" width="400" height="500" decoding="async" />
+          )}
           <div class="absolute inset-0 bg-gradient-to-t from-navy-800/85 via-navy-800/25 to-transparent"></div>
           <div class="absolute top-4 left-4 inline-flex rounded-md bg-brand-700/90 text-white text-xs font-semibold px-2.5 py-1">{p.tag}</div>
           <div class="absolute bottom-0 inset-x-0 p-5">
@@ -21,7 +52,8 @@ import { featuredBlogPosts as posts } from '../lib/blog';
             <span class="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-accent-400">Read article →</span>
           </div>
         </a>
-      ))}
+        );
+      })}
     </div>
     <div class="mt-10 text-center">
       <a href="/blogs/" class="btn-primary btn-lg">Visit The Library</a>

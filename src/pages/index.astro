@@ -34,7 +34,12 @@ const faqs = [
   title="Wesley Chapel AC Repair & HVAC | I Care Air Care"
   description="Wesley Chapel's 5-star HVAC contractor. 4.9★ · 700+ reviews · 16+ years. Serving Wesley Chapel, Tampa, Land O' Lakes & Lutz. Call (813) 395-2324."
 >
-  <link rel="preload" as="image" href="/images/ICAC%20Team%281%29.webp" slot="head" />
+  <link rel="preload" as="image"
+        href="/images/gen/ICAC%20Team%281%29-w800.webp"
+        imagesrcset="/images/gen/ICAC%20Team%281%29-w480.webp 480w, /images/gen/ICAC%20Team%281%29-w800.webp 800w, /images/gen/ICAC%20Team%281%29-w1200.webp 1200w"
+        imagesizes="100vw"
+        fetchpriority="high"
+        slot="head" />
   <Hero
     variant="home"
     showForm={true}
@@ -50,7 +55,9 @@ const faqs = [
       <div class="lg:col-span-7">
         <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200 shadow-[var(--shadow-card)] bg-slate-100 aspect-[1024/604] max-w-[1024px]">
           <img
-            src="/images/I-Care-Air-Care-HVAC-Installation-%E2%80%93-Local-Team-and-Service-AC.webp"
+            src="/images/gen/I-Care-Air-Care-HVAC-Installation-%E2%80%93-Local-Team-and-Service-AC-w800.webp"
+            srcset="/images/gen/I-Care-Air-Care-HVAC-Installation-%E2%80%93-Local-Team-and-Service-AC-w480.webp 480w, /images/gen/I-Care-Air-Care-HVAC-Installation-%E2%80%93-Local-Team-and-Service-AC-w800.webp 800w, /images/gen/I-Care-Air-Care-HVAC-Installation-%E2%80%93-Local-Team-and-Service-AC-w1024.webp 1024w"
+            sizes="(min-width: 1024px) 56vw, 100vw"
             alt="I Care Air Care local Wesley Chapel team with service vehicles"
             class="w-full h-full object-cover"
             width="1024"
@@ -61,7 +68,7 @@ const faqs = [
         </div>
       </div>
       <div class="lg:col-span-5">
-        <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Your local team</span>
+        <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-800 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Your local team</span>
         <h2 class="mt-3 text-3xl md:text-4xl title-accent">Wesley Chapel neighbors, dispatching from Foamflower Blvd.</h2>
         <p class="mt-4 text-slate-600 leading-relaxed">Every truck you see in a Wesley Chapel driveway is our crew driving minutes from home. Owner Tim Hawk and a local team of trained HVAC technicians bring personal attention to repair, maintenance, and replacement calls. <strong>4.9★ · 700+</strong> Google reviews, Florida license <strong>CAC1822037</strong>, 16+ years serving Pasco, Hillsborough &amp; Polk counties.</p>
         <div class="mt-6 flex flex-wrap gap-3">
@@ -93,14 +100,20 @@ const faqs = [
       <div class="lg:col-span-7 order-1 lg:order-2">
         <div class="grid grid-cols-2 gap-3">
           <div class="rounded-2xl overflow-hidden ring-1 ring-slate-200 shadow-[var(--shadow-card)] aspect-[3/4]">
-            <img src="/images/Tim%20Hawk%20(ICAC%20Owner).webp" alt="Tim Hawk, Owner of I Care Air Care — Master HVAC Technician" class="w-full h-full object-cover object-top" width="400" height="533" loading="lazy" decoding="async" />
+            <img src="/images/gen/Tim%20Hawk%20(ICAC%20Owner)-w500.webp"
+                 srcset="/images/gen/Tim%20Hawk%20(ICAC%20Owner)-w320.webp 320w, /images/gen/Tim%20Hawk%20(ICAC%20Owner)-w500.webp 500w"
+                 sizes="(min-width: 1024px) 235px, 50vw"
+                 alt="Tim Hawk, Owner of I Care Air Care — Master HVAC Technician" class="w-full h-full object-cover object-top" width="400" height="533" loading="lazy" decoding="async" />
           </div>
           <div class="grid grid-rows-2 gap-3">
             <div class="rounded-2xl overflow-hidden ring-1 ring-slate-200 shadow-[var(--shadow-card)]">
               <img src="/images/ICAC%20Team%284%29.webp" alt="I Care Air Care office and dispatch team in Wesley Chapel" class="w-full h-full object-cover" width="400" height="260" loading="lazy" decoding="async" />
             </div>
             <div class="rounded-2xl overflow-hidden ring-1 ring-slate-200 shadow-[var(--shadow-card)]">
-              <img src="/images/SUNDAY-2026-01-30T130107.789.webp" alt="I Care Air Care team at the Wesley Chapel office" class="w-full h-full object-cover" width="400" height="260" loading="lazy" decoding="async" />
+              <img src="/images/gen/SUNDAY-2026-01-30T130107.789-w400.webp"
+                   srcset="/images/gen/SUNDAY-2026-01-30T130107.789-w400.webp 400w, /images/gen/SUNDAY-2026-01-30T130107.789-w700.webp 700w"
+                   sizes="(min-width: 1024px) 235px, 50vw"
+                   alt="I Care Air Care team at the Wesley Chapel office" class="w-full h-full object-cover" width="400" height="260" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>

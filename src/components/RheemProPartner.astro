@@ -13,7 +13,9 @@ const { variant = 'full', showCta = true } = Astro.props;
         <div class="lg:col-span-6 relative">
           <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200 shadow-[var(--shadow-soft)] bg-white">
             <img
-              src="/images/rheem-lifestyle.jpg"
+              src="/images/gen/rheem-lifestyle-w480.webp"
+              srcset="/images/gen/rheem-lifestyle-w480.webp 480w, /images/gen/rheem-lifestyle-w800.webp 800w"
+              sizes="(min-width: 1024px) 520px, 100vw"
               alt='Rheem — "The new degree of comfort" family lifestyle image'
               width="580"
               height="400"
@@ -23,7 +25,9 @@ const { variant = 'full', showCta = true } = Astro.props;
             />
           </div>
           <div class="absolute -bottom-4 -left-4 rounded-xl bg-white p-3 shadow-[0_12px_32px_-12px_rgb(21_35_56_/_0.2)] ring-1 ring-slate-200 flex items-center gap-3">
-            <img src="/images/rheem-logo.png" alt="Rheem logo" width="52" height="52" class="w-13 h-13" loading="lazy" />
+            <img src="/images/gen/rheem-logo-w104.webp"
+                 srcset="/images/gen/rheem-logo-w104.webp 1x, /images/gen/rheem-logo-w208.webp 2x"
+                 alt="Rheem logo" width="52" height="52" class="w-13 h-13" loading="lazy" />
             <div class="text-[13px] leading-tight">
               <div class="font-bold text-navy-700">Rheem®</div>
               <div class="text-slate-600 text-[11px]">The new degree of comfort.™</div>
@@ -90,7 +94,9 @@ const { variant = 'full', showCta = true } = Astro.props;
   <section class="py-10 bg-white border-y border-slate-100">
     <div class="container-site flex flex-col sm:flex-row items-center gap-6 justify-between">
       <div class="flex items-center gap-4">
-        <img src="/images/rheem-logo.png" alt="Rheem logo" width="48" height="48" class="w-12 h-12" loading="lazy" />
+        <img src="/images/gen/rheem-logo-w104.webp"
+             srcset="/images/gen/rheem-logo-w104.webp 1x, /images/gen/rheem-logo-w208.webp 2x"
+             alt="Rheem logo" width="48" height="48" class="w-12 h-12" loading="lazy" />
         <div>
           <div class="inline-flex items-center rounded-full bg-red-50 text-red-700 px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-[0.14em] ring-1 ring-red-200">Rheem® Pro Partner</div>
           <div class="mt-1 font-bold text-navy-700 text-[15.5px]">Factory-authorized Rheem installer in Wesley Chapel.</div>

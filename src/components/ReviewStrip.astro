@@ -222,13 +222,13 @@ const firstFeatured = featured[0];
     margin-bottom: 12px;
   }
   .iac-reviews__badge svg { color: var(--color-accent-400); flex-shrink: 0; }
-  .iac-reviews__subtitle { font-size: 14px; color: var(--color-muted); }
+  .iac-reviews__subtitle { font-size: 14px; color: var(--color-ink-soft); }
   .iac-reviews__live {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     font-size: 12px;
-    color: var(--color-muted);
+    color: var(--color-ink-soft);
     margin-top: 14px;
   }
   .iac-reviews__pulse {
@@ -328,7 +328,7 @@ const firstFeatured = featured[0];
   .iac-card__avatar {
     width: 36px; height: 36px;
     border-radius: 50%;
-    background: var(--color-brand-500);
+    background: var(--color-brand-800);
     color: #fff;
     display: flex;
     align-items: center;
@@ -339,7 +339,7 @@ const firstFeatured = featured[0];
     letter-spacing: 0.02em;
   }
   .iac-card__name { font-size: 14px; font-weight: 700; color: var(--color-navy-700); }
-  .iac-card__date { font-size: 11px; color: var(--color-muted); margin-top: 1px; }
+  .iac-card__date { font-size: 11px; color: var(--color-ink-soft); margin-top: 1px; }
   .iac-card__text {
     font-size: 13px;
     color: var(--color-ink-soft);
@@ -380,7 +380,7 @@ const firstFeatured = featured[0];
   }
   .iac-featured__text::before { content: '\201C'; font-size: 32px; color: var(--color-brand-500); line-height: 0; vertical-align: -10px; margin-right: 2px; }
   .iac-featured__text::after  { content: '\201D'; font-size: 32px; color: var(--color-brand-500); line-height: 0; vertical-align: -10px; margin-left: 2px; }
-  .iac-featured__author { font-size: 13px; font-weight: 700; color: var(--color-muted); letter-spacing: 0.02em; }
+  .iac-featured__author { font-size: 13px; font-weight: 700; color: var(--color-ink-soft); letter-spacing: 0.02em; }
   .iac-featured__fade { animation: iac-featfade 0.55s ease; }
   @keyframes iac-featfade {
     0%   { opacity: 0; transform: translateY(6px); }
@@ -410,9 +410,10 @@ const firstFeatured = featured[0];
   .iac-stat__num a:hover { opacity: 0.7; }
   .iac-stat__label {
     font-size: 12px;
-    color: var(--color-muted);
+    color: var(--color-ink-soft);
     margin-top: 4px;
     letter-spacing: 0.02em;
+    /* contrast: AA on white */
   }
 
   .iac-cta {
@@ -425,7 +426,7 @@ const firstFeatured = featured[0];
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: var(--color-brand-500);
+    background: var(--color-brand-800);
     color: #fff;
     text-decoration: none;
     font-size: 14px;
@@ -438,7 +439,7 @@ const firstFeatured = featured[0];
   }
   .iac-cta__btn:hover,
   .iac-cta__btn:focus-visible {
-    background: var(--color-brand-600);
+    background: var(--color-brand-900);
     transform: translateY(-1px);
     box-shadow: var(--shadow-soft);
     outline: none;
@@ -446,8 +447,9 @@ const firstFeatured = featured[0];
   .iac-cta__sub {
     display: block;
     font-size: 12px;
-    color: var(--color-muted);
+    color: var(--color-ink-soft);
     margin-top: 12px;
+    /* contrast: AA on white */
   }
 
   .iac-reviews__google {
@@ -457,7 +459,7 @@ const firstFeatured = featured[0];
     gap: 6px;
     margin-top: 18px;
     font-size: 12px;
-    color: var(--color-muted);
+    color: var(--color-ink-soft);
   }
   .iac-reviews__google svg { width: 14px; height: 14px; }
 

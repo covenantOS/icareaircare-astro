@@ -65,7 +65,11 @@ const localBusiness = {
     reviewCount: SITE.rating.count,
     bestRating: 5,
   },
-  areaServed: SITE.serviceAreas.map(a => ({ '@type': 'City', name: a.name, containedInPlace: { '@type': 'State', name: 'Florida' } })),
+  areaServed: SITE.serviceAreas.map(a => ({
+    '@type': /county/i.test(a.name) ? 'AdministrativeArea' : 'City',
+    name: a.name,
+    containedInPlace: { '@type': 'State', name: 'Florida' },
+  })),
   sameAs: [SITE.socials.google],
   founder: { '@id': `${SITE.url}/#tim-hawk` },
   employee: { '@id': `${SITE.url}/#tim-hawk` },

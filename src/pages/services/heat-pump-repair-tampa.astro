@@ -1,0 +1,78 @@
+---
+import ServiceLayout from '../../layouts/ServiceLayout.astro';
+
+const faqs = [
+  { q: 'How much does heat pump repair cost in Tampa?', a: 'Most Tampa Bay heat pump repairs fall between $180 and $900, with a median of around $420. Reversing-valve solenoid replacement runs $220–$380, defrost control board $350–$600, TXV valve replacement $450–$750, and a full reversing-valve swap (the big one) $1,400–$2,200. A failed compressor on a heat pump is typically a replacement decision rather than a repair once the system is past year 10.' },
+  { q: 'Why is my heat pump running but not cooling?', a: 'Three common culprits in Tampa homes: (1) the reversing valve is stuck in heat mode, (2) the TXV or metering device has failed, or (3) there is a refrigerant charge or leak issue. A heat pump that runs but does not cool always needs a licensed diagnostic — we carry R-410A and R-32 gauges on every truck and can usually call it within 20 minutes.' },
+  { q: 'Why is my heat pump blowing cold air on heat mode?', a: 'The reversing valve is the most likely culprit. This valve swaps the refrigerant flow direction between heating and cooling modes; when it fails or sticks, the system physically cannot reverse. The second most common cause is a failed defrost control — the outdoor coil is iced over and the defrost cycle is not kicking in to clear it. Third cause: the thermostat is calling for emergency heat but the heat strips have failed open.' },
+  { q: 'My heat pump is making a loud banging or hissing noise — what is that?', a: 'Banging during a mode change is almost always the reversing valve cycling — that is normal on single-stage units. Continuous banging during operation is a compressor bearing or valve plate failure, shut the unit off and call. Hissing at the outdoor unit is typically refrigerant escaping from a Schrader valve cap, a line-set rub, or a pinhole in the coil. Do not add refrigerant without finding the leak.' },
+  { q: 'Do you work on all heat pump brands?', a: 'Yes — Carrier, Trane, Lennox, Rheem, Goodman, American Standard, Bryant, York, Amana, Mitsubishi (for ducted heat pumps), and Bosch. We carry the most common capacitors, contactors, defrost boards, and reversing-valve solenoids on every truck for one-trip fixes across Wesley Chapel, Tampa, Land O Lakes, Lutz, and Pasco County.' },
+  { q: 'Is it worth repairing a 10-year-old heat pump?', a: 'Depends on the repair. A $250 capacitor on a 10-year-old Carrier or Trane unit is an easy yes. A $1,600 compressor on the same unit is usually a no — at 10 years old, the coil and fan motor are also nearing their end of life, and the R-410A refrigerant is being phased out. We will walk you through a repair-versus-replace math conversation with honest numbers, not a pressure pitch.' },
+  { q: 'How long does a heat pump last in Florida?', a: 'A well-maintained heat pump in Tampa Bay typically runs 12–16 years before needing replacement — shorter than the national average of 15–20 because Florida systems log nearly 4× the runtime of a system in Minnesota. Salt-air corrosion closer to the Gulf (Clearwater, St. Pete) shortens that to 10–12 years unless the coil is coated. Regular maintenance adds 3–5 years on the back end.' },
+  { q: 'What is the difference between a heat pump and a regular AC?', a: 'A heat pump is an AC that can also run in reverse to provide heating. The refrigerant circuit is essentially the same as a cooling-only system, with a reversing valve that swaps the flow direction. In Tampa Bay the heat pump mode runs about 20–45 days a year (vs. cooling for 220+), which is why when a heat pump fails on heat-mode, most homeowners do not notice until a 38° January morning.' },
+];
+
+const related = [
+  { href: '/services/ac-repair-tampa/', label: 'AC Repair' },
+  { href: '/services/heating-services-tampa/', label: 'Heating Services' },
+  { href: '/services/hvac-installation-tampa/', label: 'HVAC Installation' },
+  { href: '/services/ac-maintenance-tampa/', label: 'AC Maintenance' },
+];
+---
+<ServiceLayout
+  slug="heat-pump-repair-tampa"
+  title="Heat Pump Repair in Wesley Chapel & Tampa, FL"
+  description="Wesley Chapel heat pump repair — reversing valves, defrost boards, TXVs, compressors. All brands. Licensed CAC1822037. Call (813) 395-2324."
+  h1="Heat Pump Repair in Wesley Chapel & Tampa Bay"
+  eyebrow="Heat Pump Repair · Wesley Chapel"
+  subtitle={`Heat pumps in Florida work harder than heat pumps almost anywhere — <span class="text-accent-400 font-semibold">2,200+ cooling hours a year plus the January cold snaps that stress every reversing valve</span>. We diagnose the actual failure, fix it right, and back the repair with a 1-year parts-and-labor warranty.`}
+  heroImage="/images/ac-not-cooling-i-care-air-care-technician-refrigerant-diagnostics-wesley-chapel.webp"
+  serviceName="Heat Pump Repair in Tampa"
+  faqs={faqs}
+  related={related}
+>
+  <h2>How Tampa Bay heat pumps actually fail</h2>
+  <p>A Wesley Chapel or Tampa heat pump logs more runtime in any given July than a Minneapolis furnace logs in an entire heating season. That means the failure patterns here are specific, predictable, and repeatable across the eight manufacturers we work on the most. Over the last twelve months our trucks have diagnosed roughly 400 heat pump calls across Pasco, Hillsborough, and Polk counties — these are the five failure modes that account for most of them, in order of frequency.</p>
+
+  <h2>1. Failed run capacitor (≈35% of calls)</h2>
+  <p>The run capacitor gives the compressor and outdoor fan motor the kick they need to start, then keeps them running at the right phase angle. Florida heat kills capacitors faster than almost any other part — a 45/5 μF rated for 105°F is running at ambient 100°F plus another 40°F of cabinet heat for six months a year. Symptoms: outdoor fan is dead, compressor humming but not starting, or the whole unit is silent while the indoor blower runs. Diagnostic takes about 10 minutes with a meter; repair is $180–$320 parts and labor.</p>
+
+  <h2>2. Contactor burnout (≈18% of calls)</h2>
+  <p>The contactor is the relay that closes to send 240V to the compressor and fan. Years of micro-arcing on every start cycle pit the contacts until they either weld shut (unit runs continuously, cooling constantly) or fail open (nothing starts at all). Symptoms on the welded-shut version are the scariest — the system runs even after you turn the thermostat off — and will destroy a compressor in about 72 hours if not caught. Repair is $180–$350.</p>
+
+  <h2>3. Reversing valve failure (≈12% of calls)</h2>
+  <p>This is the part that makes a heat pump a heat pump — it switches the refrigerant flow direction between cooling and heating modes. Two failure modes: the pilot solenoid fails (fix is $220–$380 for the solenoid alone), or the valve itself sticks internally and cannot physically slide the piston (much bigger repair at $1,400–$2,200 because the refrigerant has to be recovered, the valve cut out and brazed in, vacuum pulled, and charge weighed back). Symptoms: blows cold on heat mode, or blows warm on cool mode, or stuck in defrost. The solenoid version is a same-day fix most of the time.</p>
+
+  <h2>4. Defrost control board failure (≈10% of calls)</h2>
+  <p>Tampa Bay only sees 20–45 hours a year of actual freezing conditions, but that is enough to ice an outdoor coil. The defrost control board runs a short reverse-cycle every 30–90 minutes during heat-mode operation below 40° to melt that ice. When the board fails, the coil ices over completely and the system shuts itself off on safety. Symptoms: heat pump works fine above 50° but stops working in the morning after a cold January night. Repair runs $350–$600 depending on brand.</p>
+
+  <h2>5. Refrigerant leak (≈9% of calls)</h2>
+  <p>Refrigerant does not get "used up" during normal operation. If the system is low, there is a leak. Common Florida leak locations: the outdoor coil (salt-air pitting accelerates this near the Gulf), the indoor evaporator coil (formicary corrosion from formaldehyde in new homes is more common than people think), and the flare fittings on mini-split line sets. Leak searches use electronic detectors, UV dye, or nitrogen pressure testing. Cost to find and repair: $450–$1,200 typical; more on an inaccessible indoor coil.</p>
+
+  <h2>When to shut the system down immediately</h2>
+  <p>Two symptoms mean stop running it and call. First: ice visibly forming on the copper suction line (the larger of the two copper lines at the outdoor unit). Continuing to run the system in this state will slug liquid refrigerant back to the compressor and turn a $300 repair into a $2,000 compressor replacement. Second: a breaker that trips and immediately trips again when reset. Something downstream is shorted and a forced reset can damage the control board or the compressor winding.</p>
+
+  <h2>What a proper heat pump diagnostic covers</h2>
+  <p>A $89 or $99 diagnostic call should include, at minimum: dual-port gauge reading of high-side and low-side pressure, superheat and subcool calculation, amp-draw measurement on compressor and fan, capacitor test under load (not just a static meter read), contactor inspection, visual refrigerant leak check with UV or electronic detector where indicated, and a written summary of findings with repair options and pricing. If a tech is in and out in 15 minutes with a "needs a new compressor" diagnosis and no pressure readings on paper, get a second opinion.</p>
+
+  <h2>Repair pricing you can count on</h2>
+  <p>These are our 2026 Tampa Bay flat-rate ranges — the actual number depends on brand, access, and part availability, but we quote upfront before turning a wrench:</p>
+  <ul>
+    <li><strong>Run capacitor replacement:</strong> $180–$320</li>
+    <li><strong>Contactor replacement:</strong> $180–$350</li>
+    <li><strong>Defrost control board:</strong> $350–$600</li>
+    <li><strong>Reversing valve solenoid:</strong> $220–$380</li>
+    <li><strong>TXV replacement:</strong> $450–$750</li>
+    <li><strong>Condenser fan motor:</strong> $450–$850</li>
+    <li><strong>Full reversing valve swap:</strong> $1,400–$2,200</li>
+    <li><strong>Refrigerant leak repair + recharge:</strong> $450–$1,200</li>
+    <li><strong>Compressor replacement (if still under warranty, labor only):</strong> $900–$1,800</li>
+    <li><strong>Compressor replacement (out of warranty, parts + labor):</strong> $2,200–$3,800</li>
+  </ul>
+  <p>Every repair comes with a 1-year parts-and-labor warranty. If the same part fails in year two, we often still cover it — we keep notes on every repair in Housecall Pro and we will work with you.</p>
+
+  <h2>Repair vs. replace — honest math</h2>
+  <p>When the repair quote lands above $1,500 on a system past year 10, it is worth pausing to do the replacement math. The rule we use on Tampa Bay heat pumps: if the repair cost exceeds 35% of a like-for-like replacement cost AND the system is older than 10 years, replacement usually wins on a 5-year operating-cost basis. Below that threshold, the repair is almost always the better choice. We will show you both numbers on the same invoice so you can decide.</p>
+
+  <p>Heat pump acting up? Call Tim and the team at <a href="tel:+18133952324">(813) 395-2324</a> or <a href="/contact/">book a diagnostic online</a>. We dispatch from Foamflower Blvd and cover <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>, <a href="/service-areas/pasco-county-ac-repair/">Pasco County</a>, <a href="/service-areas/hillsborough-county-hvac-company/">Tampa and Hillsborough County</a>, and <a href="/service-areas/polk-county-residential-ac-repair/">Polk County</a>.</p>
+</ServiceLayout>
