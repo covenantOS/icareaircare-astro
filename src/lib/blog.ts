@@ -51,6 +51,25 @@ const images = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "10-most-common-ac-problems-wesley-chapel-homes",
+    title: "10 Most Common AC Problems in Wesley Chapel Homes",
+    description: "The ten failure modes Wesley Chapel AC systems hit most often, ranked by frequency, with 2026 repair pricing and when each one means call a tech.",
+    tag: "AC Repair",
+    date: "Apr 23, 2026",
+    read: "10 min",
+    image: images.repair,
+    imageAlt: "Wesley Chapel AC repair technician diagnosing outdoor condenser unit — I Care Air Care",
+    location: "Wesley Chapel",
+    primaryService: services.acRepair,
+    related: [services.maintenance, services.urgent, areas.wesley],
+    checklist: [
+      "Start with filter, thermostat setpoint, and breaker before assuming the worst.",
+      "A humming outdoor unit that won't spin is almost always a failed capacitor — $180–$320 fix.",
+      "Ice on the copper line means shut the system off and call before compressor damage sets in.",
+      "Repair cost × system age above $5,000 means replacement usually wins on 5-year cost.",
+    ],
+  },
+  {
     slug: "air-conditioning-not-cooling-in-tampa-fl-heres-how-to-fix-it-fast",
     title: "AC Not Cooling in Tampa? How to Fix It Fast",
     description: "A Tampa homeowner checklist for a system running without cold air, including thermostat, airflow, drain, and outdoor unit checks before calling for help.",

@@ -46,6 +46,8 @@ export const SITE = {
     { slug: 'hvac-installation-tampa', name: 'HVAC Installation' },
     { slug: 'air-duct-cleaning-tampa', name: 'Air Duct Cleaning' },
     { slug: 'heating-services-tampa', name: 'Heating Services' },
+    { slug: 'ac-installation-wesley-chapel', name: 'AC Installation Wesley Chapel' },
+    { slug: 'ac-replacement-tampa', name: 'AC Replacement' },
     { slug: 'heat-pump-repair-tampa', name: 'Heat Pump Repair' },
     { slug: 'mini-split-installation-tampa', name: 'Mini-Split Installation' },
     { slug: 'indoor-air-quality-tampa', name: 'Indoor Air Quality' },
