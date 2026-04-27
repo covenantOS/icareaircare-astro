@@ -1,39 +1,21 @@
 # =============================================================================
 # I Care Air Care — Redirect map
-# Order matters: more specific rules first, catch-alls last (first match wins).
-# Rebuild history: Squarespace → Duda → WordPress → Astro (current, 2026-04).
+# Cloudflare Pages enforces a soft cap on redirect rules processed and
+# evaluates rules with "longer static prefix wins" precedence. Strategy:
+#   1. Critical / evidence-based rules first (so they never get clipped)
+#   2. Year-prefixed WP date redirects (NOT a generic catch-all — that one
+#      greedily ate /category/ac-maintenance/page/2/ → /2/)
+#   3. Catch-alls last
+# Site rebuild history: Squarespace → Duda → WordPress → Astro (2026-04).
 # =============================================================================
 
 # -----------------------------------------------------------------------------
-# 1. Canonical domain — apex → www (301)
+# 1. Canonical domain — apex → www
 # -----------------------------------------------------------------------------
 https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 
 # -----------------------------------------------------------------------------
-# 2. Site-internal slug consolidations (existing)
-# -----------------------------------------------------------------------------
-/our-team /about-us/#team 301
-/our-team/ /about-us/#team 301
-/contact-us /contact/ 301
-/contact-us/ /contact/ 301
-/hvac-services /services/ 301
-/hvac-services/ /services/ 301
-/service-area /service-areas/ 301
-/service-area/ /service-areas/ 301
-/ac-installation-tampa /services/hvac-installation-tampa/ 301
-/ac-installation-tampa/ /services/hvac-installation-tampa/ 301
-
-# -----------------------------------------------------------------------------
-# 3. Keyword-cannibalization consolidations (existing)
-# -----------------------------------------------------------------------------
-/emergency-ac-repair-wesley-chapel-fl/ /emergency-ac-repair-wesley-chapel/ 301
-/air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/ /air-duct-cleaning-wesley-chapel/ 301
-/ac-not-cooling-solutions/ /ac-not-cooling-wesley-chapel/ 301
-
-# -----------------------------------------------------------------------------
-# 4. Lead/booking page slugs that ads + social campaigns still link to
-#    GA4 (week of 2026-04-20) shows /request-appointment-form took 6 sessions
-#    from Facebook organic-social and 404'd every single one.
+# 2. Lead-form orphans (Facebook organic-social was bleeding here)
 # -----------------------------------------------------------------------------
 /request-appointment-form /book/ 301
 /request-appointment-form/ /book/ 301
@@ -53,107 +35,77 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 /quote/ /contact/ 301
 /free-estimate /contact/ 301
 /free-estimate/ /contact/ 301
-/estimate /contact/ 301
-/estimate/ /contact/ 301
 
 # -----------------------------------------------------------------------------
-# 5. Legacy WordPress date-permalinks → flat slugs (existing, verified ranking)
-#    DataForSEO 2026-04-27: /2025/12/09/wesley-chapel-air-conditioning/ ranks #17
-#    for "ac repair in wesley chapel" (vol 480) — must keep this 301 working
+# 3. WordPress category archives (high-value: /category/ac-repair/ ranks
+#    #97 for "best air conditioning repair near me", vol 1,600)
+#    Must come BEFORE the year-permalink rules so they win on /category/.../page/N/
 # -----------------------------------------------------------------------------
-/2026/02/11/air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/ /air-duct-cleaning-wesley-chapel/ 301
-/2025/12/09/wesley-chapel-air-conditioning/ /wesley-chapel-air-conditioning/ 301
-/2025/03/31/air-filter-change-frequency/ /air-filter-change-frequency/ 301
-
-# Catch-all for any remaining WordPress /YYYY/MM/DD/slug/ permalinks
-/:year/:month/:day/:slug/ /:slug/ 301
-
-# -----------------------------------------------------------------------------
-# 6. WordPress category / tag / author archive pages
-#    DataForSEO 2026-04-27: /category/ac-repair/ ranks #97 for "best air
-#    conditioning repair near me" (vol 1,600) — currently 404, redirecting to
-#    the closest topical service page so we keep the equity.
-# -----------------------------------------------------------------------------
-/category/ac-repair /services/ac-repair-tampa/ 301
-/category/ac-repair/ /services/ac-repair-tampa/ 301
 /category/ac-repair/* /services/ac-repair-tampa/ 301
-/category/ac-maintenance /services/ac-maintenance-tampa/ 301
-/category/ac-maintenance/ /services/ac-maintenance-tampa/ 301
+/category/ac-repair/ /services/ac-repair-tampa/ 301
+/category/ac-repair /services/ac-repair-tampa/ 301
 /category/ac-maintenance/* /services/ac-maintenance-tampa/ 301
-/category/ac-installation /services/hvac-installation-tampa/ 301
-/category/ac-installation/ /services/hvac-installation-tampa/ 301
+/category/ac-maintenance/ /services/ac-maintenance-tampa/ 301
+/category/ac-maintenance /services/ac-maintenance-tampa/ 301
 /category/ac-installation/* /services/hvac-installation-tampa/ 301
-/category/ac-replacement /services/ac-replacement-tampa/ 301
-/category/ac-replacement/ /services/ac-replacement-tampa/ 301
+/category/ac-installation/ /services/hvac-installation-tampa/ 301
 /category/ac-replacement/* /services/ac-replacement-tampa/ 301
-/category/heating /services/heating-services-tampa/ 301
-/category/heating/ /services/heating-services-tampa/ 301
+/category/ac-replacement/ /services/ac-replacement-tampa/ 301
 /category/heating/* /services/heating-services-tampa/ 301
-/category/duct-cleaning /services/air-duct-cleaning-tampa/ 301
-/category/duct-cleaning/ /services/air-duct-cleaning-tampa/ 301
+/category/heating/ /services/heating-services-tampa/ 301
 /category/duct-cleaning/* /services/air-duct-cleaning-tampa/ 301
-/category/heat-pump /services/heat-pump-repair-tampa/ 301
-/category/heat-pump/ /services/heat-pump-repair-tampa/ 301
+/category/duct-cleaning/ /services/air-duct-cleaning-tampa/ 301
 /category/heat-pump/* /services/heat-pump-repair-tampa/ 301
-/category/thermostat /services/thermostat-installation-tampa/ 301
-/category/thermostat/ /services/thermostat-installation-tampa/ 301
+/category/heat-pump/ /services/heat-pump-repair-tampa/ 301
 /category/thermostat/* /services/thermostat-installation-tampa/ 301
-/category/indoor-air-quality /services/indoor-air-quality-tampa/ 301
-/category/indoor-air-quality/ /services/indoor-air-quality-tampa/ 301
+/category/thermostat/ /services/thermostat-installation-tampa/ 301
 /category/indoor-air-quality/* /services/indoor-air-quality-tampa/ 301
-/category/refrigeration /services/refrigeration-repair-tampa/ 301
-/category/refrigeration/ /services/refrigeration-repair-tampa/ 301
+/category/indoor-air-quality/ /services/indoor-air-quality-tampa/ 301
 /category/refrigeration/* /services/refrigeration-repair-tampa/ 301
-/category/wesley-chapel /service-areas/wesley-chapel-ac-repair/ 301
-/category/wesley-chapel/ /service-areas/wesley-chapel-ac-repair/ 301
+/category/refrigeration/ /services/refrigeration-repair-tampa/ 301
 /category/wesley-chapel/* /service-areas/wesley-chapel-ac-repair/ 301
-/category/tampa /service-areas/hillsborough-county-hvac-company/ 301
-/category/tampa/ /service-areas/hillsborough-county-hvac-company/ 301
+/category/wesley-chapel/ /service-areas/wesley-chapel-ac-repair/ 301
 /category/tampa/* /service-areas/hillsborough-county-hvac-company/ 301
-# Generic WP archive catch-alls (fall-through to blog hub)
+/category/tampa/ /service-areas/hillsborough-county-hvac-company/ 301
 /category/* /blogs/ 301
+/category/ /blogs/ 301
 /tag/* /blogs/ 301
 /author/* /about-us/ 301
-/page/* /blogs/ 301
 
 # -----------------------------------------------------------------------------
-# 7. Squarespace legacy blog URLs
-#    Format observed in Google: /blog/category/{cat}/{numeric-id}[/MM/DD/YYYY]/{slug}
-#    Categories seen indexed: hvac, home-performance, passive-house,
-#    home-improvement, plumbing, sustainable-living, gardening, landscaping,
-#    central-florida, air-conditioning. All 404 today.
-#    GA4 (2026-04-20→26) shows 4+ distinct Squarespace URLs still pulling
-#    referral and direct traffic. 100% of those sessions are bouncing.
+# 4. Squarespace legacy blog URLs
+#    Format: /blog/category/{cat}/{numeric-id}[/MM/DD/YYYY]/{slug}
+#    Topical mapping for HVAC-adjacent categories, /blogs/ for off-topic
 # -----------------------------------------------------------------------------
-# Topical Squarespace categories → closest live service page
-/blog/category/hvac/* /blogs/ 301
-/blog/category/air-conditioning/* /blogs/ 301
 /blog/category/heating/* /services/heating-services-tampa/ 301
 /blog/category/duct-cleaning/* /services/air-duct-cleaning-tampa/ 301
 /blog/category/indoor-air-quality/* /services/indoor-air-quality-tampa/ 301
-# Off-topic Squarespace categories from the legacy site → blog hub (lowest equity)
-/blog/category/home-performance/* /blogs/ 301
-/blog/category/passive-house/* /blogs/ 301
-/blog/category/home-improvement/* /blogs/ 301
-/blog/category/plumbing/* /blogs/ 301
-/blog/category/sustainable-living/* /blogs/ 301
-/blog/category/gardening/* /blogs/ 301
-/blog/category/landscaping/* /blogs/ 301
-/blog/category/central-florida/* /blogs/ 301
-/blog/category/family-health/* /blogs/ 301
-/blog/category/icareaircare/* /blogs/ 301
 /blog/category/underfloor-heating/* /services/heating-services-tampa/ 301
-# Catch-all for any other Squarespace category we haven't enumerated
 /blog/category/* /blogs/ 301
-# Squarespace blog hubs themselves
+/blog/* /blogs/ 301
 /blog /blogs/ 301
 /blog/ /blogs/ 301
-/blog/* /blogs/ 301
 
 # -----------------------------------------------------------------------------
-# 8. Orphan slugs found 404'ing in Google's index (April 2026 site: searches)
+# 5. Existing site-internal slug consolidations
 # -----------------------------------------------------------------------------
-# Service area variant Google indexed but doesn't exist on Astro
+/our-team /about-us/#team 301
+/our-team/ /about-us/#team 301
+/contact-us /contact/ 301
+/contact-us/ /contact/ 301
+/hvac-services /services/ 301
+/hvac-services/ /services/ 301
+/service-area /service-areas/ 301
+/service-area/ /service-areas/ 301
+/ac-installation-tampa /services/hvac-installation-tampa/ 301
+/ac-installation-tampa/ /services/hvac-installation-tampa/ 301
+/emergency-ac-repair-wesley-chapel-fl/ /emergency-ac-repair-wesley-chapel/ 301
+/air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/ /air-duct-cleaning-wesley-chapel/ 301
+/ac-not-cooling-solutions/ /ac-not-cooling-wesley-chapel/ 301
+
+# -----------------------------------------------------------------------------
+# 6. Service-area orphan variants (Google indexed shorter forms)
+# -----------------------------------------------------------------------------
 /service-areas/wesley-chapel /service-areas/wesley-chapel-ac-repair/ 301
 /service-areas/wesley-chapel/ /service-areas/wesley-chapel-ac-repair/ 301
 /service-areas/tampa /service-areas/hillsborough-county-hvac-company/ 301
@@ -165,7 +117,9 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 /service-areas/hillsborough /service-areas/hillsborough-county-hvac-company/ 301
 /service-areas/hillsborough/ /service-areas/hillsborough-county-hvac-company/ 301
 
-# Legacy WP service slugs (without /services/ prefix)
+# -----------------------------------------------------------------------------
+# 7. Service-slug orphans (legacy WP/Duda paths without /services/ prefix)
+# -----------------------------------------------------------------------------
 /ac-repair /services/ac-repair-tampa/ 301
 /ac-repair/ /services/ac-repair-tampa/ 301
 /ac-installation /services/hvac-installation-tampa/ 301
@@ -213,29 +167,21 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 /24-hour /services/emergency-ac-repair-tampa/ 301
 /24-hour/ /services/emergency-ac-repair-tampa/ 301
 
-# Common Duda / WordPress page slugs
+# -----------------------------------------------------------------------------
+# 8. Common Duda/WP page slugs
+# -----------------------------------------------------------------------------
 /about /about-us/ 301
 /about/ /about-us/ 301
 /team /about-us/#team 301
 /team/ /about-us/#team 301
-/our-story /about-us/ 301
-/our-story/ /about-us/ 301
-/why-choose-us /about-us/ 301
-/why-choose-us/ /about-us/ 301
 /jobs /careers/ 301
 /jobs/ /careers/ 301
 /employment /careers/ 301
 /employment/ /careers/ 301
-/careers-at-icac /careers/ 301
-/careers-at-icac/ /careers/ 301
-/financing-options /financing/ 301
-/financing-options/ /financing/ 301
 /specials /financing/ 301
 /specials/ /financing/ 301
 /coupons /financing/ 301
 /coupons/ /financing/ 301
-/promotions /financing/ 301
-/promotions/ /financing/ 301
 /testimonials /reviews/ 301
 /testimonials/ /reviews/ 301
 /customer-reviews /reviews/ 301
@@ -244,7 +190,27 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 /google-reviews/ /reviews/ 301
 
 # -----------------------------------------------------------------------------
-# 9. Safety nets (must come last)
+# 9. WordPress date-permalinks → flat slugs (year-prefixed, NOT a generic
+#    catch-all — generic /:year/:month/:day/:slug/ would greedily match
+#    /category/ac-maintenance/page/2/ as if it were a date URL)
+# -----------------------------------------------------------------------------
+# Specific high-value redirects (DataForSEO confirmed ranking)
+/2026/02/11/air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/ /air-duct-cleaning-wesley-chapel/ 301
+/2025/12/09/wesley-chapel-air-conditioning/ /wesley-chapel-air-conditioning/ 301
+/2025/03/31/air-filter-change-frequency/ /air-filter-change-frequency/ 301
+# Year-prefixed catch-alls — only fires when first segment is a real year
+/2026/:month/:day/:slug/ /:slug/ 301
+/2025/:month/:day/:slug/ /:slug/ 301
+/2024/:month/:day/:slug/ /:slug/ 301
+/2023/:month/:day/:slug/ /:slug/ 301
+/2022/:month/:day/:slug/ /:slug/ 301
+/2021/:month/:day/:slug/ /:slug/ 301
+/2020/:month/:day/:slug/ /:slug/ 301
+/2019/:month/:day/:slug/ /:slug/ 301
+/2018/:month/:day/:slug/ /:slug/ 301
+
+# -----------------------------------------------------------------------------
+# 10. Safety net (keep last)
 # -----------------------------------------------------------------------------
 # Blog posts live at root /slug/, not /blogs/slug/
 /blogs/:slug/ /:slug/ 301
