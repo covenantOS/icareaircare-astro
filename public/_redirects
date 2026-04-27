@@ -9,12 +9,17 @@
 # 1. Canonical domain — apex → www
 https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 
-# 2. Lead-form orphans (Facebook organic-social was bleeding here in GA4)
+# 2. Lead-form orphans (Facebook organic-social was bleeding here in GA4).
+#    CF Pages does not auto-normalize trailing slashes — both forms listed
+#    where evidence shows traffic on the slashed variant.
 /request-appointment-form /book/ 301
+/request-appointment-form/ /book/ 301
 /request-appointment /book/ 301
 /booking /book/ 301
+/booking/ /book/ 301
 /schedule-service /book/ 301
 /schedule /book/ 301
+/schedule/ /book/ 301
 /book-now /book/ 301
 /get-quote /contact/ 301
 /quote /contact/ 301
@@ -63,7 +68,9 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 
 # 5. Existing site-internal slug consolidations
 /our-team /about-us/#team 301
+/our-team/ /about-us/#team 301
 /contact-us /contact/ 301
+/contact-us/ /contact/ 301
 /hvac-services /services/ 301
 /service-area /service-areas/ 301
 /ac-installation-tampa /services/hvac-installation-tampa/ 301
@@ -71,12 +78,17 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 /air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/ /air-duct-cleaning-wesley-chapel/ 301
 /ac-not-cooling-solutions/ /ac-not-cooling-wesley-chapel/ 301
 
-# 6. Service-area orphan variants (Google indexed shorter forms)
+# 6. Service-area orphan variants (Google indexed shorter forms with slash)
 /service-areas/wesley-chapel /service-areas/wesley-chapel-ac-repair/ 301
+/service-areas/wesley-chapel/ /service-areas/wesley-chapel-ac-repair/ 301
 /service-areas/tampa /service-areas/hillsborough-county-hvac-company/ 301
+/service-areas/tampa/ /service-areas/hillsborough-county-hvac-company/ 301
 /service-areas/pasco /service-areas/pasco-county-ac-repair/ 301
+/service-areas/pasco/ /service-areas/pasco-county-ac-repair/ 301
 /service-areas/polk /service-areas/polk-county-residential-ac-repair/ 301
+/service-areas/polk/ /service-areas/polk-county-residential-ac-repair/ 301
 /service-areas/hillsborough /service-areas/hillsborough-county-hvac-company/ 301
+/service-areas/hillsborough/ /service-areas/hillsborough-county-hvac-company/ 301
 
 # 7. Service-slug orphans (legacy WP/Duda paths without /services/ prefix)
 /ac-repair /services/ac-repair-tampa/ 301
@@ -106,8 +118,11 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 
 # 8. Common Duda/WP page slugs
 /about /about-us/ 301
+/about/ /about-us/ 301
 /team /about-us/#team 301
+/team/ /about-us/#team 301
 /jobs /careers/ 301
+/jobs/ /careers/ 301
 /employment /careers/ 301
 /specials /financing/ 301
 /coupons /financing/ 301

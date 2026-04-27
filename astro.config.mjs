@@ -9,7 +9,6 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) =>
-        !page.includes('/our-team/') &&
         !page.includes('/privacy-policy/') &&
         !page.includes('/terms-of-use/') &&
         !page.includes('/thank-you/') &&
