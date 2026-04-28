@@ -1,21 +1,34 @@
 ---
 import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import Schema from '../../components/Schema.astro';
+import { SITE } from '../../lib/site';
 
+// Lead with definitive 1-sentence answer; ~50 words per FAQ for AI Overview citation.
 const faqs = [
-  { q: 'How often should I service my AC in Tampa?', a: 'Twice a year for Tampa climates — once before the summer cooling load (March/April) and once before the winter heating season (October). Single-visit homes still see real benefits, but twice-a-year is the sweet spot in Florida humidity.' },
-  { q: 'What\'s included in your AC tune-up?', a: 'Our 21-point tune-up covers coil cleaning, refrigerant pressure & superheat/subcool verification, capacitor microfarad test, contactor inspection, blower amp draw and wheel balance, condensate drain flush, thermostat calibration, electrical tightening, ductwork static pressure, and a full written system report.' },
-  { q: 'How much does an AC tune-up cost in Tampa?', a: 'Single visits run $99–$149 for most residential systems. Our maintenance plan bundles two seasonal visits plus priority dispatch and a 15% parts discount — it pays for itself if you need even one minor repair.' },
-  { q: 'Will AC maintenance actually lower my electric bill?', a: 'Yes — measurably. A dirty coil and low refrigerant can drop cooling efficiency by 20–30%. We routinely see Tampa homeowners save $30–$60/month in summer after a tune-up, and catch $400+ repairs before they happen.' },
-  { q: 'Do you offer a maintenance plan?', a: 'Yes. Our plan includes two scheduled visits per year, priority service during heat waves, a 15% discount on any needed repair, and no after-hours dispatch fees for members.' },
-  { q: 'Does maintenance cover warranty requirements?', a: 'Most manufacturer warranties (Carrier, Trane, Lennox, Goodman, Rheem) require documented annual maintenance to stay valid. We provide a dated written report you can file for warranty claims.' },
+  { q: 'How much does an AC tune-up cost in Wesley Chapel & Tampa?', a: 'Single 21-point tune-ups run <strong>$99–$159 in 2026</strong>. The annual plan bundles two seasonal visits plus priority dispatch, 15% repair discount, and no-cost diagnostics for $189–$249/yr — it pays for itself if you need even one minor repair.' },
+  { q: 'How often should I service my AC in Tampa?', a: 'Twice a year. Once before cooling season (March/April) and once before heating season (October). Tampa Bay AC systems run 2,200+ hours per year against constant humidity — about 4× the load of northern climates — so a single annual visit isn\'t enough.' },
+  { q: 'What\'s included in your 21-point AC tune-up?', a: 'Coil wash, refrigerant superheat/subcool, capacitor microfarad test, contactor inspection, blower amp draw, condensate drain flush, thermostat calibration, electrical tightening, static pressure check, temperature split, and a full written report with photos.' },
+  { q: 'Will AC maintenance actually lower my electric bill?', a: 'Yes — measurably. A dirty coil and low refrigerant can drop efficiency 20–30%. We routinely see Wesley Chapel homeowners save $30–$60 per month in summer after a tune-up, and catch $400+ repairs before they happen.' },
+  { q: 'Does maintenance cover warranty requirements?', a: 'Yes. Most manufacturer warranties (Carrier, Trane, Lennox, Goodman, Rheem) require documented annual maintenance to stay valid. We provide a dated photographic report you can file for warranty claims.' },
+  { q: 'Do you offer a maintenance plan?', a: 'Yes — two scheduled visits per year, priority dispatch during heat waves, 15% off any parts/repairs, waived after-hours fees, and a documented service history. $189–$249 per year depending on system count.' },
 ];
 
 const related = [
-  { href: '/services/ac-repair-tampa/', label: 'AC Repair' },
-  { href: '/services/air-duct-cleaning-tampa/', label: 'Air Duct Cleaning' },
-  { href: '/services/thermostat-installation-tampa/', label: 'Smart Thermostat Upgrade' },
-  { href: '/services/hvac-installation-tampa/', label: 'When It\'s Time to Replace' },
+  { href: '/services/ac-repair-tampa/', label: 'Same-day AC repair' },
+  { href: '/services/air-duct-cleaning-tampa/', label: 'Air duct cleaning' },
+  { href: '/services/thermostat-installation-tampa/', label: 'Smart thermostat upgrade' },
+  { href: '/services/hvac-installation-tampa/', label: 'When it\'s time to replace' },
 ];
+
+const areaLinks = [
+  { href: '/service-areas/wesley-chapel-ac-repair/', label: 'AC tune-ups in Wesley Chapel', note: 'Foamflower Blvd HQ' },
+  { href: '/service-areas/lutz-home-air-conditioning-service/', label: 'AC tune-ups in Lutz', note: 'Avila · Cheval' },
+  { href: '/service-areas/odessa-emergency-ac-repair/', label: 'AC tune-ups in Odessa', note: 'Keystone · Starkey Ranch' },
+];
+
+const maintenancePrices = SITE.priceList.filter(p =>
+  p.item.includes('tune-up') || p.item.includes('Annual')
+);
 ---
 <ServiceLayout
   slug="ac-maintenance-tampa"
@@ -25,9 +38,11 @@ const related = [
   eyebrow="Preventive Maintenance · Wesley Chapel"
   subtitle={`Tampa Bay humidity, salt-air corrosion, and near-year-round runtime wear Wesley Chapel and Tampa HVAC systems faster than anywhere else in the country. A proper <span class="text-accent-400 font-semibold">preventive tune-up twice a year</span> is the single best thing you can do for comfort and energy bills.`}
   heroImage="/images/HVAC-Services-in-Tampa-FL-%E2%80%93-AC-Refrigerant-Pressure-Testing.webp"
-  serviceName="AC Maintenance in Tampa"
+  serviceName="AC Maintenance"
   faqs={faqs}
   related={related}
+  areaLinks={areaLinks}
+  priceRange="$99-$249"
 >
   <h2>Why Wesley Chapel AC systems need more maintenance than most</h2>
   <p>A Minnesota AC runs maybe 600 hours a year. A Wesley Chapel or Tampa AC runs <strong>2,200+ hours a year</strong>. Combine that with constant 70–95% humidity, salt aerosol drifting inland from the Gulf, and the pollen loads of Pasco County's pine and oak canopy that clog coils twice as fast as drier climates, and you have a system working harder and dirtier than the industry average. Contractors who sell you an annual tune-up schedule built for Georgia are doing you a disservice.</p>
@@ -67,4 +82,26 @@ const related = [
   <p>For homeowners who want it handled: our annual plan bundles both seasonal tune-ups, priority dispatch during heat waves, 15% off any parts/repairs you ever need, waived after-hours fees, and a documented service history for manufacturer warranties. Members also get first-in-line scheduling the week after a major storm — when we're otherwise booked 5 days out.</p>
 
   <p>Ready to set it and forget it? <a href="/contact/">Enroll online</a> or call <a href="tel:+18133952324">(813) 395-2324</a> — we'll schedule your first visit this week.</p>
+
+  <h2>2026 maintenance pricing — what to expect</h2>
+  <div class="not-prose my-6 overflow-hidden rounded-xl ring-1 ring-slate-200">
+    <table class="w-full text-sm">
+      <thead class="bg-surface text-navy-700">
+        <tr><th class="text-left py-2 px-4 font-semibold">Service</th><th class="text-left py-2 px-4 font-semibold">2026 flat-rate</th></tr>
+      </thead>
+      <tbody class="text-slate-700">
+        {maintenancePrices.map(p => (
+          <tr class="border-t border-slate-100"><td class="py-2 px-4">{p.item}</td><td class="py-2 px-4 font-mono">${p.min}{p.max !== p.min ? `–$${p.max}` : ''}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <Schema
+    slot="extraSchema"
+    type="PriceSpecificationList"
+    prices={maintenancePrices}
+    pageId={`${SITE.url}/services/ac-maintenance-tampa/`}
+    data={{ name: '2026 AC maintenance pricing in Wesley Chapel & Tampa Bay' }}
+  />
 </ServiceLayout>

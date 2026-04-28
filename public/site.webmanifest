@@ -1,0 +1,13 @@
+{
+  "name": "I Care Air Care",
+  "short_name": "I Care Air Care",
+  "description": "Wesley Chapel's family-run HVAC contractor since 2010. AC repair, installation, maintenance.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a2e45",
+  "theme_color": "#1a2e45",
+  "icons": [
+    { "src": "/favicon-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/favicon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

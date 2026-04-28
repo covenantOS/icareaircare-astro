@@ -1,22 +1,82 @@
 ---
 import { SITE } from '../lib/site';
+
+type SchemaType =
+  | 'LocalBusiness'
+  | 'Service'
+  | 'FAQPage'
+  | 'BreadcrumbList'
+  | 'Article'
+  | 'HowTo'
+  | 'Reviews'
+  | 'PriceSpecificationList';
+
+interface Step { name: string; text: string; image?: string; }
+interface ReviewItem { author: string; rating?: number; body: string; date?: string; }
+interface PriceItem { item: string; min: number; max: number; }
+
 interface Props {
-  type?: 'LocalBusiness' | 'Service' | 'FAQPage' | 'BreadcrumbList' | 'Article';
+  type?: SchemaType;
   data?: Record<string, any>;
   faqs?: { q: string; a: string }[];
   breadcrumbs?: { name: string; url: string }[];
+  steps?: Step[];
+  reviews?: ReviewItem[];
+  prices?: PriceItem[];
+  pageId?: string;
 }
-const { type = 'LocalBusiness', data = {}, faqs, breadcrumbs } = Astro.props;
+
+const {
+  type = 'LocalBusiness',
+  data = {},
+  faqs,
+  breadcrumbs,
+  steps,
+  reviews,
+  prices,
+  pageId,
+} = Astro.props;
+
+const founderId = `${SITE.url}/about-us/#tim-hawk`;
+const founder = {
+  '@type': 'Person',
+  '@id': founderId,
+  name: SITE.founder.name,
+  jobTitle: SITE.founder.jobTitle,
+  image: `${SITE.url}${SITE.founder.image}`,
+  worksFor: { '@id': `${SITE.url}/#business` },
+  knowsAbout: [
+    'Residential HVAC repair',
+    'Heat pump installation',
+    'Refrigerant handling',
+    'Air duct cleaning',
+    'Florida HVAC permitting',
+  ],
+  hasCredential: SITE.founder.credentials.map((c) => ({
+    '@type': 'EducationalOccupationalCredential',
+    name: c.name,
+    credentialCategory: c.credentialCategory,
+    recognizedBy: { '@type': 'Organization', name: c.issuer },
+  })),
+  sameAs: SITE.founder.sameAs,
+};
 
 const localBusiness = {
   '@context': 'https://schema.org',
   '@type': 'HVACBusiness',
   '@id': `${SITE.url}/#business`,
   name: SITE.name,
+  legalName: SITE.legalName,
+  description: SITE.brandSentence,
   image: `${SITE.url}/images/ICAC%20Full%20Logo.webp`,
+  logo: `${SITE.url}/images/ICAC%20Full%20Logo.webp`,
   url: SITE.url,
   telephone: SITE.phone,
+  email: SITE.email,
   priceRange: '$$',
+  foundingDate: `${SITE.foundedYear}-01-01`,
+  founder: founder,
+  employee: [founder],
   address: {
     '@type': 'PostalAddress',
     streetAddress: SITE.address.street,
@@ -26,27 +86,154 @@ const localBusiness = {
     addressCountry: SITE.address.country,
   },
   geo: { '@type': 'GeoCoordinates', latitude: SITE.geo.latitude, longitude: SITE.geo.longitude },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '08:00', closes: '18:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '10:00', closes: '16:00' },
+  ],
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: SITE.rating.value,
     reviewCount: SITE.rating.count,
+    bestRating: 5,
+    worstRating: 1,
   },
-  areaServed: SITE.serviceAreas.map(a => a.name),
+  areaServed: SITE.serviceAreas.map(a => ({ '@type': 'City', name: a.name, containedInPlace: { '@type': 'State', name: 'Florida' } })),
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'HVAC Services',
+    itemListElement: SITE.services.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: s.name,
+        url: `${SITE.url}/services/${s.slug}/`,
+      },
+    })),
+  },
+  identifier: [
+    { '@type': 'PropertyValue', propertyID: 'Florida HVAC License', value: SITE.license },
+  ],
   sameAs: [SITE.socials.google],
 };
 
 let json: any = localBusiness;
-if (type === 'Service') json = { '@context': 'https://schema.org', '@type': 'Service', provider: { '@id': `${SITE.url}/#business` }, ...data };
-if (type === 'Article') json = { '@context': 'https://schema.org', '@type': 'Article', ...data };
-if (type === 'FAQPage' && faqs) json = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-};
-if (type === 'BreadcrumbList' && breadcrumbs) json = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: breadcrumbs.map((b, i) => ({ '@type': 'ListItem', position: i + 1, name: b.name, item: b.url })),
-};
+
+if (type === 'Service') {
+  json = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    provider: { '@id': `${SITE.url}/#business` },
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'USD',
+      priceRange: data.priceRange || '$89-$14500',
+      availability: 'https://schema.org/InStock',
+      availableChannel: {
+        '@type': 'ServiceChannel',
+        servicePhone: SITE.phone,
+        serviceUrl: `${SITE.url}${SITE.bookPath}`,
+      },
+    },
+    ...data,
+  };
+}
+
+if (type === 'Article') {
+  // If author isn't supplied, default to Tim Hawk Person + I Care Air Care publisher.
+  const author = data.author ?? founder;
+  const publisher = data.publisher ?? {
+    '@type': 'Organization',
+    name: SITE.name,
+    logo: { '@type': 'ImageObject', url: `${SITE.url}/images/ICAC%20Full%20Logo.webp` },
+  };
+  json = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    author,
+    publisher,
+    ...data,
+  };
+}
+
+if (type === 'FAQPage' && faqs) {
+  json = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  };
+}
+
+if (type === 'BreadcrumbList' && breadcrumbs) {
+  json = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbs.map((b, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: b.name,
+      item: b.url,
+    })),
+  };
+}
+
+if (type === 'HowTo' && steps) {
+  json = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: data.name || 'I Care Air Care AC repair visit',
+    description: data.description,
+    totalTime: data.totalTime || 'PT1H',
+    tool: data.tool || ['Manifold gauges','Multimeter','Thermal imager','Capacitor tester'],
+    step: steps.map((s, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      name: s.name,
+      text: s.text,
+      ...(s.image ? { image: s.image } : {}),
+    })),
+    ...data,
+  };
+}
+
+if (type === 'Reviews' && reviews && reviews.length > 0) {
+  json = reviews.map((r) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Review',
+    itemReviewed: { '@id': `${SITE.url}/#business` },
+    author: { '@type': 'Person', name: r.author },
+    reviewRating: { '@type': 'Rating', ratingValue: r.rating ?? 5, bestRating: 5, worstRating: 1 },
+    reviewBody: r.body,
+    ...(r.date ? { datePublished: r.date } : {}),
+  }));
+}
+
+if (type === 'PriceSpecificationList' && prices && prices.length > 0) {
+  json = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': pageId ? `${pageId}#prices` : undefined,
+    name: data.name || 'I Care Air Care 2026 flat-rate pricing',
+    itemListElement: prices.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Service',
+        name: p.item,
+        provider: { '@id': `${SITE.url}/#business` },
+        offers: {
+          '@type': 'AggregateOffer',
+          priceCurrency: 'USD',
+          lowPrice: p.min,
+          highPrice: p.max,
+          offerCount: 1,
+        },
+      },
+    })),
+  };
+}
 ---
 <script type="application/ld+json" set:html={JSON.stringify(json)} />

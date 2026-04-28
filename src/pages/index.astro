@@ -13,33 +13,38 @@ import FAQ from '../components/FAQ.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import Schema from '../components/Schema.astro';
+import { SITE } from '../lib/site';
 
+// Lead with a definitive 1-sentence answer + 1-2 sentences of context.
+// Aim ~50-60 words per answer for AI-Overview citation friendliness.
 const faqs = [
-  { q: 'How do I schedule a consultation?', a: "You can book <strong>AC repair</strong> or any HVAC service online or call us directly. We confirm your appointment fast — same-day availability is often possible across Wesley Chapel, Land O' Lakes and Pasco County." },
-  { q: 'How do I choose the best HVAC contractor in Wesley Chapel?', a: 'Look for a Florida-licensed contractor (ours is CAC1816515), 5-star Google reviews, upfront written estimates, and warranty-backed work. I Care Air Care hits all four with 600+ Wesley Chapel-area reviews and a 1-year repair warranty.' },
-  { q: 'What areas do you serve?', a: "We're based in <strong>Wesley Chapel</strong> and serve New Tampa, Land O' Lakes, Lutz, Odessa, Zephyrhills, and all of Pasco, Hillsborough and Polk counties. <a class=\"underline\" href=\"/service-areas/\">See the full service-area map</a>." },
-  { q: 'Do you offer emergency repair services in Wesley Chapel?', a: 'Yes — we prioritize <a class="underline" href="/services/emergency-ac-repair-tampa/">urgent AC repair</a> from our Wesley Chapel base when cooling is not working. Call for the earliest available appointment and a realistic ETA.' },
-  { q: 'How quickly can you come out for service?', a: "Most Wesley Chapel, Land O' Lakes, and New Tampa service calls are handled same-day when route availability allows. Call (813) 395-2324 and we'll give you the earliest available arrival window." },
-  { q: 'How much does HVAC repair cost in Wesley Chapel?', a: 'Typical AC repair runs $150–$600 depending on the part. Diagnostic visits are quoted upfront — no surprise fees. Complex issues like compressor replacement or refrigerant leaks are priced separately with written estimates.' },
-  { q: 'Are you licensed and insured?', a: 'Yes. I Care Air Care is licensed (Florida CAC1816515), bonded and insured, with trained technicians in marked service vehicles.' },
-  { q: 'When should I call an AC contractor for repair?', a: 'Call when you notice warm air, weak airflow, strange noises, water leaks, ice on the coil, or rising energy bills. Early diagnosis usually prevents a larger repair.' },
-  { q: 'Do you provide financing or special offers?', a: 'We offer flexible financing through Synchrony for qualified Wesley Chapel homeowners — see our <a class="underline" href="/financing/">financing page</a> for current terms and monthly-payment estimates.' },
-  { q: 'What is included in an AC tune-up in Wesley Chapel?', a: 'Our <a class="underline" href="/services/ac-maintenance-tampa/">21-point AC tune-up</a> includes coil cleaning, refrigerant check, electrical inspection, thermostat calibration, blower motor test, condensate drain flush, and a full written system report.' },
-  { q: 'What does an AC contractor in Wesley Chapel do?', a: 'We diagnose and repair air conditioning systems, install new high-efficiency equipment, clean air ducts, maintain existing systems, and service commercial refrigeration — all from one licensed local team headquartered on Foamflower Blvd.' },
-  { q: 'Do you offer refrigeration repair for businesses?', a: 'Yes. We service walk-in coolers, reach-in freezers, and light-commercial refrigeration for restaurants and small businesses across Wesley Chapel and the greater Tampa Bay area.' },
+  { q: 'How much does AC repair cost in Wesley Chapel?', a: 'Most Wesley Chapel AC repairs run <strong>$150–$600 in 2026</strong>. Capacitor swaps are $180–$260, contactor replacements $180–$300, condenser fan motors $400–$650, refrigerant recharge with leak check $350–$750. Diagnostic visit is a flat $89, credited toward the repair if you move forward with us.' },
+  { q: 'How fast can you come out for service?', a: 'Most Wesley Chapel, Land O\' Lakes, and New Tampa calls get same-day windows when route availability allows — we dispatch from Foamflower Blvd. Call <a href="tel:+18133952324">(813) 395-2324</a> and we\'ll give you the earliest available arrival time before we hang up.' },
+  { q: 'Do you offer urgent / emergency AC repair?', a: 'Yes. We prioritize <a class="underline" href="/services/emergency-ac-repair-tampa/">no-cool homes</a> during heat waves — especially when infants, elderly residents, medical equipment, or pets are involved. Realistic ETA quoted before dispatch.' },
+  { q: 'Are you licensed and insured in Florida?', a: 'Yes. Florida HVAC license <strong>CAC1816515</strong>, fully bonded and insured. Owner Tim Hawk is EPA Section 608 Universal certified with 30+ years in the Tampa Bay HVAC trade.' },
+  { q: 'What HVAC services do you provide?', a: '<a class="underline" href="/services/ac-repair-tampa/">AC repair</a>, <a class="underline" href="/services/emergency-ac-repair-tampa/">emergency repair</a>, <a class="underline" href="/services/ac-maintenance-tampa/">21-point maintenance</a>, full <a class="underline" href="/services/hvac-installation-tampa/">HVAC installation</a>, <a class="underline" href="/services/air-duct-cleaning-tampa/">air duct cleaning</a>, <a class="underline" href="/services/heating-services-tampa/">heat pump and furnace service</a>, light-commercial <a class="underline" href="/services/refrigeration-repair-tampa/">refrigeration repair</a>, and <a class="underline" href="/services/thermostat-installation-tampa/">smart thermostat installation</a>.' },
+  { q: 'What areas do you serve?', a: 'We\'re based in Wesley Chapel and serve all of Pasco, Hillsborough, and Polk counties — including New Tampa, Land O\' Lakes, Lutz, Odessa, Zephyrhills, Tampa, and Lakeland. <a class="underline" href="/service-areas/">See the full service-area map</a>.' },
+  { q: 'How much does HVAC installation cost?', a: 'Most 2–4 ton residential replacements run <strong>$6,500–$13,500 in 2026</strong> depending on tonnage, SEER2 rating, duct condition, and permit jurisdiction. Variable-speed inverter heat pumps run $11,500–$14,500. Every quote is flat-rate in writing with itemized options.' },
+  { q: 'Do you offer financing?', a: 'Yes — <a class="underline" href="/financing/">Synchrony financing</a> with approved credit. Many customers qualify for 0% introductory rates or 10+ year fixed-rate terms on full system replacement.' },
+  { q: 'What\'s included in your 21-point AC tune-up?', a: 'Coil wash, condenser clearance check, refrigerant superheat/subcool measurement, capacitor microfarad reading, electrical inspection, blower amp test, condensate drain flush, thermostat calibration, temp-split test, and a written report. $99–$159 single visit; annual plan $189–$249.' },
+  { q: 'Should I repair or replace my AC?', a: 'Under 10 years old with a working compressor and the repair is <30% of replacement cost — repair. Past 12 years on R-22 or with a failing compressor — replacement almost always wins on efficiency and warranty. We give you the math both ways before you decide.' },
+  { q: 'Do you warranty your repairs?', a: 'Every repair carries a <strong>1-year parts-and-labor workmanship warranty</strong>, stacked on top of the manufacturer\'s coverage (typically 5–10 years on major components when registered correctly).' },
+  { q: 'Do you service light-commercial refrigeration?', a: 'Yes. Walk-in coolers, reach-in freezers, ice machines, and light-commercial refrigeration for Tampa Bay restaurants, medical offices, and small businesses across Wesley Chapel, Tampa, and Lakeland.' },
 ];
+const homeImage = '/images/ICAC%20Team%281%29.webp';
 ---
 <BaseLayout
-  title="Wesley Chapel HVAC Contractor | AC Repair & Installation | I Care Air Care"
-  description="Wesley Chapel's 5-star HVAC contractor — serving Wesley Chapel, New Tampa, Land O' Lakes, Lutz & all Tampa Bay. 4.9★ · 600+ Google reviews · 15+ years. Same-day AC repair. Call (813) 395-2324."
+  title="Wesley Chapel AC Repair & HVAC Contractor | I Care Air Care"
+  description="I Care Air Care (one company, founded 2010 by Tim Hawk in Wesley Chapel, FL) — the family-run, 4.9★ HVAC contractor for Wesley Chapel, New Tampa, Land O' Lakes & all Tampa Bay. Florida CAC1816515 · 600+ Google reviews · same-day AC repair. Call (813) 395-2324."
+  heroPreload={homeImage}
 >
   <Hero
     variant="home"
     showForm={true}
-    eyebrow="15+ Years of Service"
-    title={`Wesley Chapel's #1<br/>HVAC Contractor`}
-    subtitle={`Trusted local <span class="text-accent-400 font-semibold">AC repair</span> experts serving <span class="text-accent-400 font-semibold">Wesley Chapel</span>, New Tampa, Land O' Lakes &amp; all of Tampa Bay for 15 years with fast, reliable <span class="text-accent-400 font-semibold">HVAC service</span> plus heating, cooling &amp; <span class="text-accent-400 font-semibold">air duct cleaning</span>.`}
-    image="/images/ICAC%20Team%281%29.webp"
+    eyebrow="Family-run since 2010"
+    title={`Wesley Chapel AC Repair & HVAC<br/><span class="text-accent-400">— Tim Hawk's family team since 2010</span>`}
+    subtitle={`Honest <span class="text-accent-400 font-semibold">AC repair</span>, <span class="text-accent-400 font-semibold">21-point tune-ups</span>, and <span class="text-accent-400 font-semibold">full system installation</span> across Wesley Chapel, New Tampa, Land O' Lakes &amp; Tampa Bay. Trucks dispatch from Foamflower Blvd; quotes are flat-rate in writing before any work begins.`}
+    image={homeImage}
   />
 
   <!-- Local team + vans band (crisp, natural aspect, no upscaling) -->
@@ -53,19 +58,18 @@ const faqs = [
             class="w-full h-full object-cover"
             width="1024"
             height="604"
-            loading="eager"
+            loading="lazy"
             decoding="async"
-            fetchpriority="high"
           />
         </div>
       </div>
       <div class="lg:col-span-5">
         <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Your local team</span>
         <h2 class="mt-3 text-3xl md:text-4xl title-accent">Wesley Chapel neighbors, dispatching from Foamflower Blvd.</h2>
-        <p class="mt-4 text-slate-600 leading-relaxed">Every truck you see in a Wesley Chapel driveway is our crew driving minutes from home. Owner Tim Hawk and a local team of trained HVAC technicians bring personal attention to repair, maintenance, and replacement calls. <strong>4.9★ · 600+</strong> Google reviews, Florida license <strong>CAC1816515</strong>, 15+ years serving Pasco, Hillsborough &amp; Polk counties.</p>
+        <p class="mt-4 text-slate-600 leading-relaxed">Every truck you see in a Wesley Chapel driveway is our crew driving minutes from home. Owner Tim Hawk and a local team of trained HVAC technicians bring personal attention to repair, maintenance, and replacement calls. <strong>4.9★ · 600+</strong> Google reviews, Florida license <strong>CAC1816515</strong>, in our second decade serving Pasco, Hillsborough &amp; Polk counties.</p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a href="/about-us/" class="btn-primary">Meet the team</a>
-          <a href="tel:+18133952324" class="btn-outline" style="color:var(--color-navy-700);border-color:var(--color-navy-300);">(813) 395-2324</a>
+          <a href={SITE.phoneHref} class="btn-outline" style="color:var(--color-navy-700);border-color:var(--color-navy-300);" aria-label={`Call our Wesley Chapel team at ${SITE.phone}`}>Call our Wesley Chapel team</a>
         </div>
       </div>
     </div>
@@ -74,14 +78,30 @@ const faqs = [
   <BrandBand />
   <ServiceGrid />
   <IntroBand />
+
+  <!-- Hidden-but-crawlable 2026 flat-rate pricing for AI engines & schema parsers. -->
+  <section aria-label="2026 flat-rate pricing reference" class="sr-only">
+    <h2>I Care Air Care 2026 flat-rate pricing in Wesley Chapel & Tampa Bay</h2>
+    <table>
+      <caption>Common HVAC repair and installation prices, updated for 2026</caption>
+      <thead><tr><th scope="col">Service</th><th scope="col">Low</th><th scope="col">High</th></tr></thead>
+      <tbody>
+        {SITE.priceList.map((p) => (
+          <tr><th scope="row">{p.item}</th><td>${p.min}</td><td>${p.max}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+
   <AreaGrid />
   <WhyChooseUs />
   <ReviewStrip />
   <ThreeStep />
   <FinalCTA />
   <BlogStrip />
-  <FAQ title="Frequently Asked Questions — AC Repair & HVAC Services in Wesley Chapel & Tampa" items={faqs} />
+  <FAQ title="AC repair, maintenance & installation FAQs — Wesley Chapel & Tampa Bay" items={faqs} />
   <ContactFormSection />
 
   <Schema type="FAQPage" faqs={faqs.map(f => ({ q: f.q, a: f.a.replace(/<[^>]*>/g,'') }))} />
+  <Schema type="PriceSpecificationList" prices={SITE.priceList} pageId={SITE.url + '/'} />
 </BaseLayout>

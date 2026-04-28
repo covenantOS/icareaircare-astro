@@ -2,19 +2,25 @@
 import ServiceLayout from '../../layouts/ServiceLayout.astro';
 
 const faqs = [
-  { q: 'Do you handle urgent no-cool AC repair?', a: 'Yes. Call (813) 395-2324 and we will tell you the earliest available appointment before dispatch. During heat waves we prioritize homes without working cooling, especially when safety is a concern.' },
-  { q: 'How fast can you get to my house?', a: 'Response depends on the day, weather, route load, and parts needed. Our team dispatches from Wesley Chapel and gives a realistic ETA before sending a technician.' },
-  { q: 'What counts as an AC emergency?', a: 'No cooling during summer heat (especially with infants, elderly residents, or pets), water leaks actively damaging flooring or drywall, electrical smells or smoke from the air handler, or a completely dead system in a storm-damaged home.' },
-  { q: 'How much does urgent AC repair cost?', a: 'Service pricing depends on diagnostics and the repair needed. We quote the full number before any work — no meter-running hourly billing.' },
-  { q: 'What if it\'s just the thermostat or a tripped breaker?', a: 'We check the simple stuff first. Honest diagnosis is how we\'ve built a 4.9-star reputation with hundreds of Google reviews.' },
-  { q: 'Do you service both AC and heating emergencies?', a: 'Yes — we handle heat pump failures, furnace lockouts, and air handler problems year-round. Cold snaps in January are almost as busy for us as July heat.' },
+  { q: 'Do you handle urgent no-cool AC repair?', a: 'Yes. Call (813) 395-2324 and we give the earliest available appointment before dispatch. During heat waves we prioritize homes without working cooling — especially when infants, elderly residents, medical equipment, or pets are involved.' },
+  { q: 'How much does urgent AC repair cost in Wesley Chapel?', a: 'Standard 2026 flat-rate pricing applies — capacitor $180–$260, contactor $180–$300, fan motor $400–$650, refrigerant recharge $350–$750. There\'s no after-hours surcharge during business hours and no meter-running hourly billing.' },
+  { q: 'How fast can you get to my house?', a: 'Wesley Chapel, Land O\' Lakes, New Tampa, and Lutz calls are usually the quickest because we dispatch from Foamflower Blvd. We give you a realistic ETA before sending a technician — never a vague four-hour window.' },
+  { q: 'What counts as an AC emergency?', a: 'No cooling during summer heat with infants, elderly residents, or pets in the home; water actively damaging flooring or drywall; electrical smells or smoke from the air handler; or a dead system in a storm-damaged home.' },
+  { q: 'What if it\'s just the thermostat or a tripped breaker?', a: 'We check the simple stuff first — fresh thermostat batteries, a single breaker reset, a clogged filter. Honest diagnosis (not pressure to upsell) is how we\'ve earned 600+ 5-star Google reviews.' },
+  { q: 'Do you handle storm-damaged condensers?', a: 'Yes. Wesley Chapel hurricane season runs June–November and we respond to wind-damaged condensers and lightning-struck control boards every year. Flip the disconnect at the unit, flip the breaker, then call — do not try to restart a flooded or damaged unit.' },
 ];
 
 const related = [
-  { href: '/services/ac-repair-tampa/', label: 'Standard AC Repair' },
-  { href: '/services/ac-maintenance-tampa/', label: 'AC Maintenance (Prevent the Emergency)' },
-  { href: '/services/heating-services-tampa/', label: 'Heating Emergency Service' },
-  { href: '/service-areas/wesley-chapel-ac-repair/', label: 'Wesley Chapel Emergency' },
+  { href: '/services/ac-repair-tampa/', label: 'Standard AC repair' },
+  { href: '/services/ac-maintenance-tampa/', label: 'AC maintenance (prevent the emergency)' },
+  { href: '/services/heating-services-tampa/', label: 'Heating emergency service' },
+  { href: '/service-areas/wesley-chapel-ac-repair/', label: 'Wesley Chapel emergency dispatch' },
+];
+
+const areaLinks = [
+  { href: '/service-areas/wesley-chapel-ac-repair/', label: 'Emergency AC repair in Wesley Chapel', note: 'Closest to dispatch · in-town' },
+  { href: '/service-areas/land-o-lakes-hvac-services/', label: "Emergency AC repair in Land O' Lakes", note: '~10 min from HQ' },
+  { href: '/service-areas/odessa-emergency-ac-repair/', label: 'Emergency AC repair in Odessa', note: 'Keystone · Starkey Ranch' },
 ];
 ---
 <ServiceLayout
@@ -25,9 +31,11 @@ const related = [
   eyebrow="Emergency Service · Wesley Chapel"
   subtitle={`When the Florida heat turns dangerous and your air conditioning quits, every hour matters. Our <span class="text-accent-400 font-semibold">Wesley Chapel team</span> prioritizes urgent no-cool calls across Pasco, Hillsborough &amp; Polk and gives you a realistic ETA before dispatch.`}
   heroImage="/images/Outdoor-AC-Condenser-Installation-HVAC-Contractor-Near-Me.webp"
-  serviceName="Emergency AC Repair in Tampa"
+  serviceName="Emergency AC Repair"
   faqs={faqs}
   related={related}
+  areaLinks={areaLinks}
+  priceRange="$89-$3200"
 >
   <h2>Don't wait it out — call now</h2>
   <p>Indoor temperatures in Wesley Chapel and Tampa Bay homes can climb from comfortable to unsafe in under two hours once the air conditioning stops. Infants, the elderly, anyone with respiratory conditions, and pets are at real risk. The first and most important thing to do: call <a href="tel:+18133952324">(813) 395-2324</a>. We'll get a licensed technician rolling while you handle the simple safety steps below.</p>

@@ -1,42 +1,69 @@
 ---
 import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import Schema from '../../components/Schema.astro';
+import { SITE } from '../../lib/site';
 
+// Each FAQ answer leads with a definitive 1-sentence answer (with the number) so AI engines
+// can quote it cleanly. Most stay between 40 and 60 words.
 const faqs = [
-  { q: 'How much does AC repair cost in Tampa?', a: 'Most Tampa AC repairs fall between $150 and $600 depending on the part. A capacitor or thermostat swap is on the lower end; refrigerant leak repair, evaporator coil or blower motor replacement is higher. We give every customer an upfront flat-rate quote before any work begins — no diagnostic surprises.' },
-  { q: 'Can you repair my AC the same day?', a: 'Yes — we keep common parts (capacitors, contactors, fan motors, thermostats, standard refrigerant) on our Wesley Chapel service vans so most repairs are one-trip, same-day fixes. Specialty parts may take one business day to source.' },
-  { q: 'What brands of AC do you service?', a: 'We service every major residential and light-commercial brand sold in Tampa Bay: Carrier, Trane, Lennox, Rheem, Goodman, American Standard, York, Amana, Bryant, Heil, Daikin and mini-split systems from Mitsubishi, LG and Fujitsu.' },
-  { q: 'My AC is frozen — can I keep running it?', a: 'No. Shut it off and run the fan-only mode for 1–2 hours to thaw the coil, then call us. A frozen evaporator is almost always caused by low refrigerant, a dirty filter, or airflow blockage. Running a frozen system damages the compressor — the most expensive component.' },
-  { q: 'Should I repair or replace my AC?', a: 'A good rule: if your system is under 10 years old and the repair is less than 30% of replacement cost, repair. Over 12 years old with a major failure (compressor, coil) — replacement almost always wins on SEER efficiency and warranty. We\'ll give you honest numbers both ways.' },
-  { q: 'Do you warranty your AC repairs?', a: 'Every repair we make is backed by a 1-year parts-and-labor warranty on our workmanship. Manufacturer part warranties run on top of that — typically 5 years on most major components.' },
+  { q: 'How much does AC repair cost in Wesley Chapel & Tampa?', a: 'Most Tampa Bay AC repairs run <strong>$150–$600 in 2026</strong>. Capacitor swap is $180–$260, contactor $180–$300, condenser fan motor $400–$650, refrigerant recharge with leak check $350–$750. Diagnostic visit is a flat $89, credited toward the repair if you move forward.' },
+  { q: 'Can you repair my AC the same day?', a: 'Yes — most repairs are one-trip same-day fixes when route availability allows. Our Wesley Chapel trucks stock common parts (capacitors, contactors, fan motors, thermostats, current refrigerants). Specialty parts may take one business day to source.' },
+  { q: 'What brands of AC do you service?', a: 'We service every major residential and light-commercial brand sold in Tampa Bay: Carrier, Trane, Lennox, Rheem, Goodman, American Standard, York, Amana, Bryant, Heil, Daikin, plus mini-splits from Mitsubishi, LG, and Fujitsu.' },
+  { q: 'My AC is frozen — can I keep running it?', a: 'No. Shut it off and run fan-only mode for 1–2 hours to thaw the coil, then call us. A frozen evaporator usually means low refrigerant, dirty filter, or airflow blockage. Running it frozen damages the compressor — the most expensive component to replace.' },
+  { q: 'Should I repair or replace my AC?', a: 'Under 10 years old with a working compressor and the repair is <30% of replacement cost — repair. Past 12 years on R-22 or with a major failure (compressor, coil) — replacement almost always wins on SEER2 efficiency and warranty. We give you the math both ways.' },
+  { q: 'Do you warranty your AC repairs?', a: 'Every repair carries a <strong>1-year parts-and-labor workmanship warranty</strong> on top of manufacturer part warranties (typically 5+ years on major components when registered correctly).' },
+  { q: 'Do you pull permits for major Tampa Bay repairs?', a: 'Yes. Florida HVAC license CAC1816515 — we pull mechanical permits in Pasco, Hillsborough, and Polk counties for refrigerant-circuit changes, condenser replacements, and electrical-panel work, then close them out so you have a permit PDF for resale.' },
 ];
 
 const related = [
-  { href: '/services/emergency-ac-repair-tampa/', label: 'Urgent AC Repair' },
-  { href: '/services/ac-maintenance-tampa/', label: 'AC Tune-Ups & Maintenance' },
-  { href: '/services/hvac-installation-tampa/', label: 'New HVAC Installation' },
-  { href: '/services/thermostat-installation-tampa/', label: 'Smart Thermostat Installation' },
-  { href: '/service-areas/wesley-chapel-ac-repair/', label: 'Wesley Chapel AC Repair' },
+  { href: '/services/emergency-ac-repair-tampa/', label: 'Same-day urgent AC repair' },
+  { href: '/services/ac-maintenance-tampa/', label: '21-point AC tune-ups' },
+  { href: '/services/hvac-installation-tampa/', label: 'Replacement system installation' },
+  { href: '/services/thermostat-installation-tampa/', label: 'Smart thermostat installation' },
+  { href: '/financing/', label: 'Synchrony financing' },
 ];
+
+const areaLinks = [
+  { href: '/service-areas/wesley-chapel-ac-repair/', label: 'AC repair in Wesley Chapel', note: 'Foamflower Blvd HQ · Seven Oaks · Meadow Pointe' },
+  { href: '/service-areas/new-tampa-heating-and-cooling/', label: 'AC repair in New Tampa', note: 'Tampa Palms · K-Bar Ranch · Cory Lake Isles' },
+  { href: '/service-areas/land-o-lakes-hvac-services/', label: "AC repair in Land O' Lakes", note: 'Bexley · Connerton · Lake Padgett' },
+];
+
+// 5-step diagnostic process — also surfaced as HowTo schema below.
+const visitSteps = [
+  { name: 'Arrival window confirmed by text', text: 'You get an exact arrival time before the technician leaves Wesley Chapel — not a four-hour window. Photo and name of the tech included.' },
+  { name: 'Full system diagnostic', text: 'Refrigerant superheat/subcool, capacitor microfarads, contactor pitting, blower amps, temp-split across the coil, and thermostat signal. Photos taken of anything relevant.' },
+  { name: 'Flat-rate written quote', text: 'You see the line item, part, and total before any repair begins. The $89 diagnostic is credited toward the repair if you move forward.' },
+  { name: 'The repair', text: 'OEM or manufacturer-approved parts whenever possible. Most fixes are completed in one trip from the Wesley Chapel-stocked van.' },
+  { name: 'Verification & cleanup', text: 'We confirm the system is running within spec, clean the work area, and email you a full service report for warranty and resale records.' },
+];
+
+// 2026 flat-rate pricing for AC repair specifically (subset of SITE.priceList).
+const repairPrices = SITE.priceList.filter(p =>
+  ['Diagnostic','Capacitor','Contactor','Condenser fan','Refrigerant','Evaporator','Compressor'].some(k => p.item.includes(k))
+);
 ---
 <ServiceLayout
   slug="ac-repair-tampa"
-  title="AC Repair in Wesley Chapel & Tampa FL | Same-Day Service | I Care Air Care"
-  description="Wesley Chapel's 5-star AC repair contractor — also serving Tampa, New Tampa, Land O' Lakes & Lutz. Flat-rate pricing, 1-year warranty, 4.9★ · 600+ reviews. Call (813) 395-2324."
-  h1="AC Repair in Wesley Chapel & Tampa, FL — Done Right the First Time"
+  title="AC Repair in Wesley Chapel & Tampa, FL — Flat-Rate, Same-Day | I Care Air Care"
+  description="I Care Air Care — Wesley Chapel's family-run AC repair contractor since 2010. Flat-rate quotes, $89 diagnostic credited toward repair, 1-year warranty. 4.9★ · 600+ Google reviews. Florida CAC1816515. Call (813) 395-2324."
+  h1="AC Repair in Wesley Chapel & Tampa, FL — Flat-Rate, Same-Day"
   eyebrow="Wesley Chapel · Tampa Bay"
-  subtitle={`When your AC quits in the Florida heat, you need a <span class="text-accent-400 font-semibold">trusted Wesley Chapel AC repair contractor</span> who actually shows up, diagnoses clearly, and fixes it same-day. That's us.`}
+  subtitle={`When your AC quits in the Florida heat, you need a <span class="text-accent-400 font-semibold">trusted Wesley Chapel AC repair contractor</span> who actually shows up, diagnoses clearly, and fixes it same-day. That's us — Tim Hawk's family team since 2010.`}
   heroImage="/images/HVAC-Services-in-Tampa-FL-%E2%80%93-Outdoor-AC-Unit-Repair-Man.webp"
-  serviceName="AC Repair in Tampa"
+  serviceName="AC Repair"
   faqs={faqs}
   related={related}
+  areaLinks={areaLinks}
+  priceRange="$89-$3200"
 >
   <h2>Why Wesley Chapel homeowners call I Care Air Care first</h2>
-  <p>I Care Air Care is a family-run <strong>HVAC contractor headquartered on Foamflower Blvd in Wesley Chapel</strong>, serving Wesley Chapel, Seven Oaks, Meadow Pointe, Wiregrass, Epperson, Mirada, New Tampa, Land O' Lakes, Lutz and the greater Tampa Bay area for more than fifteen years. When you're sitting in an 88° living room in Wesley Chapel wondering who to call, we've earned a <strong>4.9-star reputation with 600+ Google reviews</strong> by doing three things differently: answering the phone, quoting honestly, and finishing the job the first visit.</p>
+  <p>I Care Air Care is a family-run <strong>HVAC contractor headquartered on Foamflower Blvd in Wesley Chapel</strong>, serving Wesley Chapel, Seven Oaks, Meadow Pointe, Wiregrass, Epperson, Mirada, New Tampa, Land O' Lakes, Lutz and the greater Tampa Bay area since 2010. When you're sitting in an 88° living room wondering who to call, our <strong>4.9-star reputation across 600+ Google reviews</strong> comes from doing three things differently: answering the phone, quoting honestly, and finishing the job the first visit.</p>
 
-  <p>Our repair trucks roll out of Wesley Chapel stocked with the parts that fail most often in Tampa Bay heat — capacitors, contactors, condenser fan motors, thermostats, and refrigerants used in current equipment. Many Wesley Chapel calls can be diagnosed, quoted, and repaired in a single stop when the needed part is on the truck.</p>
+  <p>Our repair trucks roll out of Wesley Chapel stocked with the parts that fail most often in Tampa Bay heat — capacitors, contactors, condenser fan motors, thermostats, and refrigerants used in current equipment. Many calls can be diagnosed, quoted, and fixed in a single stop when the needed part is on the truck.</p>
 
   <h2>Common AC problems we fix every week in Wesley Chapel &amp; Tampa</h2>
-  <p>Tampa Bay's humidity and near-constant summer runtime put residential AC systems under harder stress than almost anywhere else in the country. The problems we see most often in Wesley Chapel and the surrounding neighborhoods:</p>
+  <p>Tampa Bay's humidity and near-constant summer runtime put residential AC systems under harder stress than almost anywhere else in the country. The problems we see most often:</p>
   <ul>
     <li><strong>AC blowing warm air.</strong> Usually a low-refrigerant leak, failed capacitor, or frozen evaporator coil. <a href="/ac-blowing-warm-air-in-tampa-heres-how-to-fix-it-fast/">Full troubleshooting guide →</a></li>
     <li><strong>System runs but won't cool.</strong> Almost always a dirty condenser coil, refrigerant charge issue, or a failing compressor. <a href="/air-conditioning-not-cooling-in-tampa-fl-heres-how-to-fix-it-fast/">See our Tampa guide →</a></li>
@@ -46,21 +73,53 @@ const related = [
     <li><strong>High electric bills with no cooling change.</strong> Typically a dying compressor pulling locked-rotor amps, a dirty coil, or refrigerant undercharge.</li>
   </ul>
 
-  <h2>What our AC repair visit actually looks like</h2>
-  <p>Every I Care Air Care repair call follows the same structure because transparency is the fastest way to earn repeat customers:</p>
+  <h2>How much does AC repair cost in Wesley Chapel & Tampa? (2026 flat-rate)</h2>
+  <p>Every repair is quoted flat-rate in writing before any work begins. Below are the most common 2026 ranges we see across Wesley Chapel, New Tampa, Land O' Lakes, and Tampa Bay homes. Final number depends on the specific part, equipment age, and access difficulty:</p>
+  <div class="not-prose my-6 overflow-hidden rounded-xl ring-1 ring-slate-200">
+    <table class="w-full text-sm">
+      <thead class="bg-surface text-navy-700">
+        <tr><th class="text-left py-2 px-4 font-semibold">Repair</th><th class="text-left py-2 px-4 font-semibold">2026 flat-rate range</th></tr>
+      </thead>
+      <tbody class="text-slate-700">
+        {repairPrices.map(p => (
+          <tr class="border-t border-slate-100"><td class="py-2 px-4">{p.item}</td><td class="py-2 px-4 font-mono">${p.min}{p.max !== p.min ? `–$${p.max}` : ''}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p>Diagnostic is a flat $89 — credited back toward the repair if you move forward with us. Every repair is backed by a 1-year parts-and-labor workmanship warranty.</p>
+
+  <h2 id="visit-walkthrough">What our AC repair visit actually looks like</h2>
+  <p>Every I Care Air Care repair call follows the same 5-step structure because transparency is the fastest way to earn repeat customers:</p>
   <ol class="list-decimal pl-5 space-y-2 text-slate-700 mt-4">
-    <li><strong>Arrival window confirmed by text.</strong> You know exactly when the tech is coming — not a 4-hour window.</li>
-    <li><strong>Full system diagnostic.</strong> We check refrigerant pressures, superheat/subcool, capacitor microfarads, contactor pitting, blower amps, temp-split across the coil, and thermostat signal. We take photos of anything relevant.</li>
-    <li><strong>Flat-rate written quote.</strong> You see the price before any repair begins. No per-hour surprises.</li>
-    <li><strong>The repair.</strong> OEM or manufacturer-approved parts whenever possible.</li>
-    <li><strong>Verification & cleanup.</strong> We confirm the system is running within spec, clean up, and email you a full service report.</li>
+    {visitSteps.map(s => (
+      <li><strong>{s.name}.</strong> {s.text}</li>
+    ))}
   </ol>
 
   <h2>When AC repair is the right call (and when it isn't)</h2>
   <p>We never push replacement on a repair call. If your system is under 10 years old, has a working compressor, and the repair cost is less than about 30% of a comparable new install, repairing is usually the better economic move. Once you're past 12 years with an R-22 system or a failing compressor, the math flips hard toward <a href="/services/hvac-installation-tampa/">a high-efficiency replacement</a> — especially with 2026 refrigerant regulations phasing out older equipment.</p>
 
-  <p>If replacement is the right call, we'll tell you, show you the numbers, and offer <a href="/financing/">financing options</a>. Either way, the diagnostic fee is waived if you move forward with us.</p>
+  <p>If replacement is the right call, we'll tell you, show you the numbers, and offer <a href="/financing/">Synchrony financing</a>. Either way, the diagnostic fee is waived if you move forward with us.</p>
 
   <h2>Serving every Tampa Bay neighborhood</h2>
-  <p>Our Wesley Chapel dispatch covers <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>, <a href="/service-areas/new-tampa-heating-and-cooling/">New Tampa</a>, <a href="/service-areas/land-o-lakes-hvac-services/">Land O' Lakes</a>, <a href="/service-areas/lutz-home-air-conditioning-service/">Lutz</a>, <a href="/service-areas/odessa-emergency-ac-repair/">Odessa</a>, <a href="/service-areas/air-conditioning-repair-zephyrhills-fl-i-care-air-care/">Zephyrhills</a>, and all of <a href="/service-areas/pasco-county-ac-repair/">Pasco</a>, <a href="/service-areas/hillsborough-county-hvac-company/">Hillsborough</a> and <a href="/service-areas/polk-county-residential-ac-repair/">Polk counties</a>. Call (813) 395-2324 and we'll confirm an arrival window before we hang up.</p>
+  <p>Our Wesley Chapel dispatch covers <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>, <a href="/service-areas/new-tampa-heating-and-cooling/">New Tampa</a>, <a href="/service-areas/land-o-lakes-hvac-services/">Land O' Lakes</a>, <a href="/service-areas/lutz-home-air-conditioning-service/">Lutz</a>, <a href="/service-areas/odessa-emergency-ac-repair/">Odessa</a>, <a href="/service-areas/air-conditioning-repair-zephyrhills-fl-i-care-air-care/">Zephyrhills</a>, and all of <a href="/service-areas/pasco-county-ac-repair/">Pasco</a>, <a href="/service-areas/hillsborough-county-hvac-company/">Hillsborough</a> and <a href="/service-areas/polk-county-residential-ac-repair/">Polk counties</a>. Call <a href={SITE.phoneHref}>(813) 395-2324</a> and we'll confirm an arrival window before we hang up.</p>
+
+  <Schema
+    slot="extraSchema"
+    type="HowTo"
+    steps={visitSteps}
+    data={{
+      name: 'How an I Care Air Care AC repair visit works',
+      description: 'The 5-step diagnostic and repair process every I Care Air Care AC repair call follows in Wesley Chapel and Tampa Bay.',
+      totalTime: 'PT1H30M',
+    }}
+  />
+  <Schema
+    slot="extraSchema"
+    type="PriceSpecificationList"
+    prices={repairPrices}
+    pageId={`${SITE.url}/services/ac-repair-tampa/`}
+    data={{ name: '2026 AC repair flat-rate pricing in Wesley Chapel & Tampa Bay' }}
+  />
 </ServiceLayout>

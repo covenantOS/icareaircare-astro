@@ -1,18 +1,36 @@
 ---
 import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import Schema from '../../components/Schema.astro';
+import { SITE } from '../../lib/site';
+
+const refrigPrices = [
+  { item: 'Diagnostic visit (commercial, business hours)', min: 129, max: 169 },
+  { item: 'Walk-in condenser fan motor', min: 480, max: 880 },
+  { item: 'Reach-in compressor relay / start kit', min: 220, max: 380 },
+  { item: 'Door gasket replacement (per door)', min: 180, max: 320 },
+  { item: 'Ice machine cleaning + descaling', min: 280, max: 520 },
+  { item: 'Quarterly preventive maintenance contract', min: 320, max: 640 },
+];
 
 const faqs = [
-  { q: 'What commercial refrigeration equipment do you service?', a: 'Walk-in coolers and freezers, reach-in refrigerators and freezers, undercounter units, prep tables, ice machines, beverage coolers, and light-commercial display cases. We service restaurants, cafés, convenience stores, small grocers, florists, and medical/lab facilities across Tampa Bay.' },
-  { q: 'Do you handle urgent refrigeration calls?', a: 'Yes. Commercial refrigeration failures cost money every minute, so we prioritize urgent business calls and give a realistic ETA before dispatch.' },
-  { q: 'Will you sign a preventive maintenance agreement?', a: 'Yes. Most of our commercial clients run on quarterly or monthly PM agreements that include coil cleaning, temperature calibration, door-gasket inspection, condensate management, and refrigerant leak checks.' },
-  { q: 'Do you work on ice machines?', a: 'We service Manitowoc, Hoshizaki, Scotsman, Ice-O-Matic, and other commercial ice machines — cleaning cycles, water filtration, refrigerant issues, control board replacements.' },
-  { q: 'What refrigerants do you handle?', a: 'R-404A, R-134a, R-407A, R-448A, R-449A, R-513A, and the newer lower-GWP replacements (R-454C, R-455A) being adopted under current EPA SNAP regulations. All our refrigeration techs are EPA 608 Universal certified.' },
-  { q: 'Can you retrofit an older R-404A system?', a: 'In many cases yes — either with a drop-in low-GWP replacement or with a planned compressor change. We\'ll inspect, recommend, and quote honestly.' },
+  { q: 'How much does commercial refrigeration repair cost?', a: 'Commercial diagnostic is $129–$169. Common 2026 repairs: walk-in condenser fan motor $480–$880; reach-in compressor relay $220–$380; door gasket replacement $180–$320 per door; ice machine cleaning + descaling $280–$520. Quotes are flat-rate before work begins.' },
+  { q: 'What commercial refrigeration equipment do you service?', a: 'Walk-in coolers and freezers, reach-in refrigerators, undercounter units, prep tables, ice machines, beverage coolers, and light-commercial display cases. We serve restaurants, cafés, convenience stores, small grocers, florists, and medical/lab facilities across Tampa Bay.' },
+  { q: 'Do you handle urgent refrigeration calls?', a: 'Yes. Walk-in failures cost product every minute, so we prioritize operating businesses ahead of routine work when urgent calls come in. We give a realistic ETA before dispatch.' },
+  { q: 'Will you sign a preventive maintenance agreement?', a: 'Yes — quarterly or monthly PM contracts ($320–$640 per quarter depending on equipment count) include coil cleaning, defrost cycle verification, door-gasket inspection, drain flushing, temperature calibration, refrigerant leak scan, and a health-inspector-ready written report.' },
+  { q: 'Do you work on ice machines?', a: 'Yes. Manitowoc, Hoshizaki, Scotsman, Ice-O-Matic, Follett, and other commercial ice machines — cleaning cycles, water filtration, refrigerant issues, control board replacements.' },
+  { q: 'What refrigerants do you handle?', a: 'R-404A, R-134a, R-407A, R-448A, R-449A, R-513A, and lower-GWP replacements (R-454C, R-455A) being adopted under current EPA SNAP regulations. All techs are EPA 608 Universal certified.' },
+  { q: 'Can you retrofit an older R-404A system?', a: 'In many cases yes — either a drop-in low-GWP replacement or a planned compressor change. R-404A service refrigerant has climbed sharply, so retrofit math often favors action before a major failure forces a rushed decision.' },
 ];
 
 const related = [
-  { href: '/services/ac-repair-tampa/', label: 'Commercial AC Repair' },
-  { href: '/services/hvac-installation-tampa/', label: 'Light-Commercial HVAC' },
+  { href: '/services/ac-repair-tampa/', label: 'Commercial AC repair' },
+  { href: '/services/hvac-installation-tampa/', label: 'Light-commercial HVAC' },
+];
+
+const areaLinks = [
+  { href: '/service-areas/wesley-chapel-ac-repair/', label: 'Refrigeration repair in Wesley Chapel', note: 'Wiregrass · SR-54 retail corridor' },
+  { href: '/service-areas/hillsborough-county-hvac-company/', label: 'Refrigeration repair in Tampa', note: 'Restaurants · convenience stores' },
+  { href: '/service-areas/polk-county-residential-ac-repair/', label: 'Refrigeration repair in Polk County', note: 'Lakeland · Davenport hospitality' },
 ];
 ---
 <ServiceLayout
@@ -23,9 +41,11 @@ const related = [
   eyebrow="Commercial Refrigeration · Wesley Chapel"
   subtitle={`When the walk-in goes down, revenue stops and product spoils. Our Wesley Chapel–based team services <span class="text-accent-400 font-semibold">commercial refrigeration across Tampa Bay</span> with fast emergency response and EPA-certified refrigerant work.`}
   heroImage="/images/HVAC-Services-in-Tampa-FL-%E2%80%93-Commercial-AC-Condenser-Systems.webp"
-  serviceName="Commercial Refrigeration Repair in Tampa"
+  serviceName="Commercial Refrigeration Repair"
   faqs={faqs}
   related={related}
+  areaLinks={areaLinks}
+  priceRange="$129-$880"
 >
   <h2>Commercial refrigeration isn't just a bigger household fridge</h2>
   <p>Walk-in coolers, ice machines, and reach-ins run on different refrigerants, different control systems, and different duty cycles than residential equipment. A failed condenser fan on a restaurant walk-in isn't a $300 home repair — it's a $3,000 product loss if the wrong tech takes six hours diagnosing it. Our commercial techs are <strong>EPA 608 Universal certified</strong> and experienced on the equipment brands Tampa Bay businesses actually run.</p>
@@ -60,4 +80,26 @@ const related = [
   <p>The EPA's continued phase-down of high-GWP refrigerants is hitting commercial refrigeration hard in 2026. R-404A is largely phased out in new equipment and its service refrigerant cost has climbed significantly. If you're running equipment over 10 years old on R-404A, it's worth a conversation about <strong>retrofit options or scheduled replacement</strong> before a major failure forces a rushed decision. We'll give you honest numbers and timeline recommendations.</p>
 
   <p>Commercial refrigeration problem? <a href="tel:+18133952324">Call (813) 395-2324</a> and ask for the earliest available refrigeration appointment.</p>
+
+  <h2>2026 commercial refrigeration pricing in Tampa Bay</h2>
+  <div class="not-prose my-6 overflow-hidden rounded-xl ring-1 ring-slate-200">
+    <table class="w-full text-sm">
+      <thead class="bg-surface text-navy-700">
+        <tr><th class="text-left py-2 px-4 font-semibold">Service</th><th class="text-left py-2 px-4 font-semibold">2026 flat-rate</th></tr>
+      </thead>
+      <tbody class="text-slate-700">
+        {refrigPrices.map(p => (
+          <tr class="border-t border-slate-100"><td class="py-2 px-4">{p.item}</td><td class="py-2 px-4 font-mono">${p.min.toLocaleString()}{p.max !== p.min ? `–$${p.max.toLocaleString()}` : ''}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <Schema
+    slot="extraSchema"
+    type="PriceSpecificationList"
+    prices={refrigPrices}
+    pageId={`${SITE.url}/services/refrigeration-repair-tampa/`}
+    data={{ name: '2026 commercial refrigeration repair pricing in Tampa Bay' }}
+  />
 </ServiceLayout>

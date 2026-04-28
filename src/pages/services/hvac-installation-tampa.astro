@@ -1,23 +1,36 @@
 ---
 import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import Schema from '../../components/Schema.astro';
+import { SITE } from '../../lib/site';
 
+// Lead with definitive 1-sentence answer; ~50 words per FAQ for AI Overview citation.
 const faqs = [
-  { q: 'How much does HVAC installation cost in Tampa?', a: 'A complete residential HVAC install in Tampa Bay typically ranges $6,500–$14,000 depending on tonnage, SEER2 rating, ductwork condition, and whether a heat pump, straight-cool + electric heat, or full variable-speed system is used. Financing brings that to monthly payments often lower than the efficiency savings.' },
-  { q: 'What\'s the best HVAC brand for Florida?', a: 'We install Carrier, Trane, Lennox, Rheem, Goodman, and American Standard — all reliable in the Florida climate when sized and installed correctly. "Best brand" matters less than correct Manual-J sizing, sealed ductwork, and proper refrigerant charge. A Carrier installed wrong will underperform a Goodman installed right.' },
-  { q: 'What SEER2 rating should I get?', a: 'The 2026 Florida minimum is 15.2 SEER2. The sweet spot for most Tampa homes is 16–18 SEER2 — the ROI beyond that gets diminishing. Variable-speed (20 SEER2+) systems make sense for larger homes, allergy-sensitive families, or anyone who\'ll live in the home 10+ years.' },
-  { q: 'Do you handle permits and inspections?', a: 'Yes — we pull every permit and schedule the county inspection. You never have to deal with Pasco, Hillsborough or Polk permitting directly.' },
-  { q: 'How long does a new HVAC install take?', a: 'A standard same-tonnage changeout is usually one day. Ductwork replacement, line-set upgrades, or new-construction work can add 1–2 days.' },
-  { q: 'What refrigerant comes in new systems in 2026?', a: 'Many current residential systems use lower-GWP refrigerants such as R-454B or R-32 instead of R-410A. These systems require updated tools, procedures, and safety practices, so we review the equipment details during your proposal.' },
-  { q: 'Do you offer financing for HVAC installation?', a: 'Yes — through our Synchrony partnership with approved credit. Many customers qualify for 0% introductory rates or 10+ year fixed-rate terms. See our financing page for current offers.' },
+  { q: 'How much does HVAC installation cost in Wesley Chapel & Tampa?', a: 'Most 2–4 ton residential replacements run <strong>$6,500–$13,500 in 2026</strong>. Standard SEER2 single-stage $6,500–$9,500; two-stage high-efficiency $9,000–$11,500; variable-speed inverter heat pump $11,500–$14,500. Mini-split single-zone $4,200–$6,800. Synchrony financing brings most installs to monthly payments under the efficiency savings.' },
+  { q: 'What SEER2 rating should I get in Florida?', a: 'The 2026 Florida minimum is 15.2 SEER2. The sweet spot for most Tampa Bay homes is 16–18 SEER2. Variable-speed (20+ SEER2) systems make sense for larger homes, allergy-sensitive families, or anyone planning to stay 10+ years in the home.' },
+  { q: 'What\'s the best HVAC brand for Florida?', a: '"Best brand" matters less than correct Manual-J sizing, sealed ductwork, and proper refrigerant charge. We install Carrier, Trane, Lennox, Rheem, Goodman, American Standard, Bryant, and Mitsubishi mini-splits. A Carrier installed wrong underperforms a Goodman installed right.' },
+  { q: 'Do you handle permits and inspections?', a: 'Yes. Florida HVAC license CAC1816515 — we pull every Pasco, Hillsborough, or Polk County mechanical permit and schedule the inspection. You receive a closed-permit PDF for warranty and resale records.' },
+  { q: 'How long does a new HVAC install take?', a: 'A standard same-tonnage changeout is one day. Ductwork modifications, line-set upgrades, or new-construction work add 1–2 days. We confirm the timeline in writing before scheduling.' },
+  { q: 'What refrigerant comes in new systems in 2026?', a: 'Most new residential systems use lower-GWP refrigerants like R-454B or R-32 instead of R-410A. These A2L refrigerants are mildly flammable and require updated tools, leak detection, and jobsite safety steps. We review the equipment details during your proposal.' },
+  { q: 'Do you offer financing for HVAC installation?', a: 'Yes — Synchrony financing with approved credit. Many customers qualify for 0% introductory rates or 10+ year fixed-rate terms. See our <a class="underline" href="/financing/">financing page</a> for current offers and instant soft-credit pre-approval.' },
 ];
 
 const related = [
-  { href: '/services/ac-repair-tampa/', label: 'AC Repair' },
-  { href: '/services/ac-maintenance-tampa/', label: 'Maintenance Plans for New Systems' },
-  { href: '/services/thermostat-installation-tampa/', label: 'Smart Thermostat Add-On' },
-  { href: '/services/air-duct-cleaning-tampa/', label: 'Duct Cleaning Before Install' },
-  { href: '/financing/', label: 'HVAC Financing Options' },
+  { href: '/services/ac-repair-tampa/', label: 'AC repair' },
+  { href: '/services/ac-maintenance-tampa/', label: 'Maintenance plans for new systems' },
+  { href: '/services/thermostat-installation-tampa/', label: 'Smart thermostat add-on' },
+  { href: '/services/air-duct-cleaning-tampa/', label: 'Duct cleaning before install' },
+  { href: '/financing/', label: 'HVAC financing options' },
 ];
+
+const areaLinks = [
+  { href: '/service-areas/wesley-chapel-ac-repair/', label: 'HVAC installation in Wesley Chapel', note: 'Epperson · Mirada · Watergrass new builds' },
+  { href: '/service-areas/polk-county-residential-ac-repair/', label: 'HVAC installation in Polk County', note: 'Lakeland · Davenport · ChampionsGate' },
+  { href: '/service-areas/hillsborough-county-hvac-company/', label: 'HVAC installation in Hillsborough', note: 'Tampa · Carrollwood · Plant City' },
+];
+
+const installPrices = SITE.priceList.filter(p =>
+  p.item.includes('replacement') || p.item.includes('install') || p.item.includes('Variable-speed') || p.item.includes('Standard AC')
+);
 ---
 <ServiceLayout
   slug="hvac-installation-tampa"
@@ -27,9 +40,11 @@ const related = [
   eyebrow="New System Installation · Wesley Chapel"
   subtitle={`A new HVAC system is one of the largest home investments you'll make in the Wesley Chapel climate. We size it right with a full Manual-J load calc, install it to <span class="text-accent-400 font-semibold">manufacturer spec</span>, and stand behind the work.`}
   heroImage="/images/HVAC-Installation-Tampa-Bay-%E2%80%93-New-Outdoor-Condenser-Installation.webp"
-  serviceName="HVAC Installation in Tampa"
+  serviceName="HVAC Installation"
   faqs={faqs}
   related={related}
+  areaLinks={areaLinks}
+  priceRange="$4200-$18000"
 >
   <h2>Why installation quality matters more than brand</h2>
   <p>Industry data is consistent: <strong>70% of new HVAC systems in the U.S. are installed incorrectly</strong> — wrong size, wrong refrigerant charge, or leaky ductwork. The result is a homeowner paying for a high-SEER2 system but running at closer to mid-teens efficiency, with shorter equipment life and bigger repair bills. The brand on the outside is the smallest part of the equation.</p>
@@ -67,4 +82,27 @@ const related = [
   <p>Replacing a system is a big decision. We partner with Synchrony to offer <a href="/financing/">HVAC financing options</a> including 0% promotional rates, 10+ year fixed terms, and instant soft-credit pre-approval. Many customers find their monthly payment is less than the monthly savings on their electric bill from a high-efficiency system.</p>
 
   <p>Ready for a free in-home estimate? <a href="/contact/">Book a consultation</a> or call <a href="tel:+18133952324">(813) 395-2324</a>.</p>
+
+  <h2>2026 HVAC installation pricing in Wesley Chapel & Tampa Bay</h2>
+  <div class="not-prose my-6 overflow-hidden rounded-xl ring-1 ring-slate-200">
+    <table class="w-full text-sm">
+      <thead class="bg-surface text-navy-700">
+        <tr><th class="text-left py-2 px-4 font-semibold">System type</th><th class="text-left py-2 px-4 font-semibold">2026 install range</th></tr>
+      </thead>
+      <tbody class="text-slate-700">
+        {installPrices.map(p => (
+          <tr class="border-t border-slate-100"><td class="py-2 px-4">{p.item}</td><td class="py-2 px-4 font-mono">${p.min.toLocaleString()}{p.max !== p.min ? `–$${p.max.toLocaleString()}` : ''}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p>Mini-split single-zone installs run $4,200–$6,800; multi-zone (2–4 head) systems $9,500–$18,000. Ductwork modifications and sealing, when needed, add $800–$3,500. Every quote is itemized in writing with three equipment tiers (good/better/best) and a Synchrony monthly payment option in the same view.</p>
+
+  <Schema
+    slot="extraSchema"
+    type="PriceSpecificationList"
+    prices={installPrices}
+    pageId={`${SITE.url}/services/hvac-installation-tampa/`}
+    data={{ name: '2026 HVAC installation pricing in Wesley Chapel & Tampa Bay' }}
+  />
 </ServiceLayout>

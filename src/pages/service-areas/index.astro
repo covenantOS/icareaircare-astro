@@ -2,18 +2,72 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AreaGrid from '../../components/AreaGrid.astro';
 import CTABand from '../../components/CTABand.astro';
+import WhyChooseUs from '../../components/WhyChooseUs.astro';
+import ReviewStrip from '../../components/ReviewStrip.astro';
+import FAQ from '../../components/FAQ.astro';
+import ContactFormSection from '../../components/ContactFormSection.astro';
+import { SITE } from '../../lib/site';
+
+const areaCards = [
+  { slug: 'wesley-chapel-ac-repair', name: 'Wesley Chapel', note: 'HQ on Foamflower Blvd · 33543/33544/33545', drive: 'In-town · closest to dispatch', neighborhoods: 'Seven Oaks, Meadow Pointe, Wiregrass, Epperson, Mirada' },
+  { slug: 'land-o-lakes-hvac-services', name: "Land O' Lakes", note: 'Bexley · Connerton · Lake Padgett', drive: '~10 min south', neighborhoods: 'Bexley, Connerton, Asturia, Suncoast Meadows' },
+  { slug: 'lutz-home-air-conditioning-service', name: 'Lutz', note: 'Avila · Cheval · older 1950s–80s homes', drive: '~18 min southwest', neighborhoods: 'Avila, Cheval, Calusa Trace' },
+  { slug: 'new-tampa-heating-and-cooling', name: 'New Tampa', note: 'Tampa Palms · K-Bar Ranch · USF area', drive: '~15 min south', neighborhoods: 'Tampa Palms, Cross Creek, Cory Lake Isles, Hunter\'s Green, Heritage Isles' },
+  { slug: 'odessa-emergency-ac-repair', name: 'Odessa', note: 'Keystone · Starkey Ranch', drive: '~25 min west', neighborhoods: 'Keystone, Starkey Ranch, Eagle Ridge, Crescent Lake' },
+  { slug: 'air-conditioning-repair-zephyrhills-fl-i-care-air-care', name: 'Zephyrhills', note: 'Silverado · Betmar · Skydive City', drive: '~12 min east', neighborhoods: 'Silverado, Betmar Acres, Colony Hills' },
+  { slug: 'pasco-county-ac-repair', name: 'Pasco County', note: 'Wesley Chapel through Trinity, Hudson, Dade City', drive: 'County-wide', neighborhoods: 'Wesley Chapel, Land O\' Lakes, Lutz, Zephyrhills, Trinity, Hudson, San Antonio, Dade City' },
+  { slug: 'hillsborough-county-hvac-company', name: 'Hillsborough County', note: 'Tampa, Carrollwood, Brandon, Plant City', drive: 'County-wide', neighborhoods: 'Tampa, Carrollwood, Brandon, Plant City, Riverview, Westchase' },
+  { slug: 'polk-county-residential-ac-repair', name: 'Polk County', note: 'Lakeland, Davenport, ChampionsGate', drive: 'County-wide', neighborhoods: 'Lakeland, Winter Haven, Bartow, Davenport, Poinciana' },
+];
+
+const faqs = [
+  { q: 'Where is I Care Air Care based?', a: 'Our HQ and dispatch center is at <strong>27022 Foamflower Blvd, Wesley Chapel, FL 33544</strong>. Trucks roll out from there every weekday morning, so the closest communities — Wesley Chapel, Land O\' Lakes, New Tampa, Lutz, Odessa, Zephyrhills — get the quickest scheduling.' },
+  { q: 'Do you charge a trip fee outside Wesley Chapel?', a: 'No. We don\'t charge by ZIP. Diagnostic is a flat $89 anywhere we serve in Pasco, Hillsborough, or Polk counties — credited toward the repair if you move forward.' },
+  { q: 'Which counties do you cover?', a: 'All of <strong>Pasco, Hillsborough, and Polk counties</strong>. We pull permits in each and stay current on the differences in mechanical-permit requirements between them.' },
+  { q: 'How do I find out if I\'m in your service area?', a: 'Call <a class="underline" href="tel:+18133952324">(813) 395-2324</a> with your ZIP. If we can\'t get there, we\'ll tell you who can — we won\'t waste your time on a trip we can\'t commit to.' },
+];
 ---
 <BaseLayout
-  title="Service Areas | I Care Air Care"
-  description="We serve Wesley Chapel, Tampa, Land O Lakes, Lutz, New Tampa, Odessa, Zephyrhills, Pasco, Hillsborough & Polk counties."
+  title="Service Areas — Wesley Chapel, Tampa Bay & Polk County | I Care Air Care"
+  description="I Care Air Care serves Wesley Chapel, New Tampa, Land O' Lakes, Lutz, Odessa, Zephyrhills and all of Pasco, Hillsborough & Polk counties — dispatched from Foamflower Blvd. Florida CAC1816515. Call (813) 395-2324."
   breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'Service Areas',url:'https://www.icareaircare.com/service-areas/'}]}
 >
-  <section class="bg-brand-800 text-white py-14">
+  <section class="bg-gradient-to-br from-navy-900 via-navy-800 to-brand-800 text-white py-14 md:py-20">
     <div class="container-site">
       <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-200">Where we work</p>
-      <h1 class="mt-2 text-4xl md:text-5xl font-bold text-white">Service areas across Tampa Bay</h1>
+      <h1 class="mt-2 text-4xl md:text-5xl font-bold text-white">9 Tampa Bay service areas, dispatched from one Wesley Chapel HQ</h1>
+      <p class="mt-5 text-blue-100 text-[17px] max-w-3xl leading-relaxed">Every truck you see in a Tampa Bay driveway rolls out of <strong class="text-white">27022 Foamflower Blvd in Wesley Chapel</strong>. We cover all of Pasco, Hillsborough, and Polk counties — same diagnostic fee, same flat-rate quotes, same {SITE.rating.value}★ family team in every neighborhood.</p>
     </div>
   </section>
+
+  <section class="py-14 md:py-18 bg-white">
+    <div class="container-site">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Cities & counties</span>
+        <h2 class="mt-3 text-3xl md:text-4xl">Click your community for hyper-local HVAC details</h2>
+        <p class="mt-3 text-slate-600 text-[17px]">Each area page covers neighborhoods, ZIP codes, climate quirks, common builder-grade issues, permit jurisdiction, and example homes we've worked on. Real local knowledge beats a generic "we serve Tampa Bay" pin on a map.</p>
+      </div>
+      <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {areaCards.map(a => (
+          <a href={`/service-areas/${a.slug}/`} class="group rounded-2xl bg-surface ring-1 ring-slate-200 hover:ring-brand-300 hover:shadow-[var(--shadow-card)] p-6 transition">
+            <div class="flex items-center gap-2 text-brand-600">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 10a3 3 0 110-6 3 3 0 010 6z"/></svg>
+              <span class="text-[11px] uppercase tracking-[0.14em] font-bold">{a.drive}</span>
+            </div>
+            <div class="mt-2 text-xl font-bold text-navy-700 group-hover:text-brand-700">{a.name}</div>
+            <p class="mt-1 text-[13px] text-slate-500">{a.note}</p>
+            <p class="mt-3 text-[13px] text-slate-600">Includes <span class="text-navy-700">{a.neighborhoods}</span></p>
+            <div class="mt-4 text-sm text-accent-500 font-semibold">View {a.name} HVAC page →</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <AreaGrid />
+  <WhyChooseUs />
+  <ReviewStrip />
+  <FAQ title="Service-area FAQs" items={faqs} />
   <CTABand />
+  <ContactFormSection />
 </BaseLayout>

@@ -1,4 +1,48 @@
+# I Care Air Care
+# We welcome AI search and answer engines so homeowners can find us
+# whether they search Google, ChatGPT, Claude, Perplexity, or anything else.
+
 User-agent: *
+Allow: /
+
+# Explicit allow for major AI training & answer-engine crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: cohere-ai
 Allow: /
 
 Sitemap: https://www.icareaircare.com/sitemap-index.xml

@@ -1,8 +1,17 @@
 ---
 import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import Schema from '../../components/Schema.astro';
+import { SITE } from '../../lib/site';
+
+const ductPrices = [
+  { item: 'Whole-home duct cleaning (1,500–3,500 sqft)', min: 399, max: 799 },
+  { item: 'Add evaporator coil deep clean', min: 150, max: 250 },
+  { item: 'Add dryer vent cleaning', min: 120, max: 180 },
+  { item: 'Duct sealing pass (when leaks found)', min: 800, max: 1800 },
+];
 
 const faqs = [
-  { q: 'How much does air duct cleaning cost in Tampa?', a: 'Most single-family Tampa homes run $350–$650 depending on home size, number of vents, and duct condition. We quote flat-rate by the home, not by the vent — so there\'s no runaway cost. A true 7-step NADCA-standard cleaning is worth far more than a $99 "special" that just vacuums a few inches into each register.' },
+  { q: 'How much does air duct cleaning cost in Wesley Chapel & Tampa?', a: 'Most single-family Tampa Bay homes run <strong>$399–$799 in 2026</strong> for whole-home cleaning (1,500–3,500 sqft). Coil deep clean adds $150–$250; dryer vent cleaning adds $120–$180. We quote flat-rate by the home, not by the vent.' },
   { q: 'How often should Tampa homes get duct cleaning?', a: 'Every 3–5 years for most Tampa homes. More often if you have pets, smokers, recent construction/remodeling, or a family member with asthma or allergies. After any water damage, mold event, or rodent intrusion — don\'t wait.' },
   { q: 'Can dirty ducts make me sick?', a: 'Dirty ducts don\'t typically cause illness by themselves, but they can amplify existing conditions — asthma, allergies, sinus issues. More importantly, heavy duct contamination (mold, rodent droppings, biofilm) absolutely affects indoor air quality and should be cleaned.' },
   { q: 'Will duct cleaning lower my energy bill?', a: 'Yes — modestly. A heavy buildup of dust and debris restricts airflow, making your blower work harder and reducing heat transfer at the coil. Most customers see a 5–15% efficiency improvement after a thorough cleaning combined with filter replacement.' },
@@ -11,9 +20,15 @@ const faqs = [
 ];
 
 const related = [
-  { href: '/services/ac-maintenance-tampa/', label: 'AC Maintenance' },
-  { href: '/services/thermostat-installation-tampa/', label: 'Smart Thermostat Upgrade' },
-  { href: '/services/ac-repair-tampa/', label: 'AC Repair' },
+  { href: '/services/ac-maintenance-tampa/', label: 'AC maintenance' },
+  { href: '/services/thermostat-installation-tampa/', label: 'Smart thermostat upgrade' },
+  { href: '/services/ac-repair-tampa/', label: 'AC repair' },
+];
+
+const areaLinks = [
+  { href: '/service-areas/wesley-chapel-ac-repair/', label: 'Air duct cleaning in Wesley Chapel', note: 'Epperson · Mirada new-build dust' },
+  { href: '/service-areas/new-tampa-heating-and-cooling/', label: 'Air duct cleaning in New Tampa', note: 'Tampa Palms · Heritage Isles' },
+  { href: '/service-areas/lutz-home-air-conditioning-service/', label: 'Air duct cleaning in Lutz', note: 'Older homes with attic ductwork' },
 ];
 ---
 <ServiceLayout
@@ -24,9 +39,11 @@ const related = [
   eyebrow="Indoor Air Quality · Wesley Chapel"
   subtitle={`Florida humidity turns HVAC ducts into the dirtiest part of most Wesley Chapel and Tampa Bay homes. Our 7-step HEPA cleaning removes years of dust, allergens, mold spores, and biological contaminants — and leaves a measurable <span class="text-accent-400 font-semibold">indoor air quality</span> improvement.`}
   heroImage="/images/air-duct-cleaning-wesley-chapel-metal-ductwork-supply-vent-register.webp"
-  serviceName="Air Duct Cleaning in Tampa"
+  serviceName="Air Duct Cleaning"
   faqs={faqs}
   related={related}
+  areaLinks={areaLinks}
+  priceRange="$399-$1800"
 >
   <h2>Why Wesley Chapel duct systems get dirtier than the national average</h2>
   <p>Every time your AC runs, it pulls air through returns, across a damp evaporator coil, and back through supply runs that have been sweating condensation for years. In Wesley Chapel and Tampa Bay's high-humidity climate, that combination of cellulose dust, pet dander, pollen, and moisture creates <strong>ideal conditions for biofilm</strong> — the slick mold and bacterial layer that coats the inside of HVAC ductwork.</p>
@@ -63,4 +80,26 @@ const related = [
   <p>Ducts stay cleaner longer when you run the right filter and change it on schedule. For Tampa homes we generally recommend a MERV 8–11 pleated filter changed every 60–90 days — MERV 13 only if your system is designed for the extra static pressure. High-MERV filters in undersized return systems are one of the most common causes of coil freezing and blower failure we see.</p>
 
   <p>Ready for measurably cleaner air? <a href="/contact/">Book your cleaning</a> or call <a href="tel:+18133952324">(813) 395-2324</a>.</p>
+
+  <h2>2026 air duct cleaning pricing in Wesley Chapel & Tampa Bay</h2>
+  <div class="not-prose my-6 overflow-hidden rounded-xl ring-1 ring-slate-200">
+    <table class="w-full text-sm">
+      <thead class="bg-surface text-navy-700">
+        <tr><th class="text-left py-2 px-4 font-semibold">Service</th><th class="text-left py-2 px-4 font-semibold">2026 flat-rate</th></tr>
+      </thead>
+      <tbody class="text-slate-700">
+        {ductPrices.map(p => (
+          <tr class="border-t border-slate-100"><td class="py-2 px-4">{p.item}</td><td class="py-2 px-4 font-mono">${p.min.toLocaleString()}{p.max !== p.min ? `–$${p.max.toLocaleString()}` : ''}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <Schema
+    slot="extraSchema"
+    type="PriceSpecificationList"
+    prices={ductPrices}
+    pageId={`${SITE.url}/services/air-duct-cleaning-tampa/`}
+    data={{ name: '2026 air duct cleaning pricing in Wesley Chapel & Tampa Bay' }}
+  />
 </ServiceLayout>

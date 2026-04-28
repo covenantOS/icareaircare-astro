@@ -1,8 +1,21 @@
 ---
 import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import Schema from '../../components/Schema.astro';
+import { SITE } from '../../lib/site';
+
+const heatingPrices = [
+  { item: 'Heat pump tune-up (fall)', min: 99, max: 159 },
+  { item: 'Heat strip element replacement', min: 350, max: 650 },
+  { item: 'Sequencer / contactor (heat strips)', min: 280, max: 460 },
+  { item: 'Defrost control board', min: 280, max: 520 },
+  { item: 'Reversing valve solenoid', min: 320, max: 620 },
+  { item: 'Gas furnace ignitor or flame sensor', min: 200, max: 420 },
+  { item: 'Variable-speed heat pump replacement', min: 11500, max: 14500 },
+];
 
 const faqs = [
-  { q: 'Do Tampa homes even need reliable heating?', a: 'Yes — Tampa sees 5–15 nights per year below 40°F and has had hard freezes in January that dropped homes below 30°F inside when heating failed. Most Tampa homes run a heat pump or a heat-strip air handler, and both need annual service to stay reliable on the few nights they actually matter.' },
+  { q: 'How much does heat pump or heat strip repair cost in Wesley Chapel?', a: 'Most heat pump repairs run <strong>$280–$650 in 2026</strong>. Heat strip element replacement $350–$650, sequencer $280–$460, defrost board $280–$520, reversing valve solenoid $320–$620, gas furnace ignitor or flame sensor $200–$420. Diagnostic is a flat $89 credited toward repair.' },
+  { q: 'Do Tampa homes even need reliable heating?', a: 'Yes. Wesley Chapel sees 5–15 nights below 40°F per year, with occasional hard freezes that drop indoor temps below 30°F when heating fails. Most Tampa Bay homes use a heat pump or heat-strip air handler and need annual service to stay reliable on the cold nights that matter.' },
   { q: 'What\'s the difference between a heat pump and a furnace?', a: 'A heat pump uses the same refrigerant cycle as your AC — just reversed — to move warmth into the home, very efficiently down to about 35°F ambient. Below that, most Tampa heat pumps switch on electric-resistance heat strips as backup. Furnaces (gas or propane) are rare in Florida and only used in some northern-Tampa Bay new-construction areas.' },
   { q: 'Why is my heat pump running but blowing cool air?', a: 'Most often: reversing valve stuck, low refrigerant charge, defrost cycle triggered, or the heat strips didn\'t engage as backup. A quick diagnostic separates which of those is happening — don\'t run the system in emergency heat for more than a day or your electric bill will jump sharply.' },
   { q: 'How often should I service my heat pump in Florida?', a: 'Twice yearly — cooling prep in spring and heating prep in fall. The fall visit catches reversing valve issues, heat strip element failures, and defrost control problems before the first cold snap.' },
@@ -11,10 +24,16 @@ const faqs = [
 ];
 
 const related = [
-  { href: '/services/ac-repair-tampa/', label: 'AC Repair' },
-  { href: '/services/hvac-installation-tampa/', label: 'New Heat Pump Installation' },
-  { href: '/services/ac-maintenance-tampa/', label: 'Dual-Season Maintenance' },
-  { href: '/services/thermostat-installation-tampa/', label: 'Smart Thermostat with Heat Mode' },
+  { href: '/services/ac-repair-tampa/', label: 'AC repair' },
+  { href: '/services/hvac-installation-tampa/', label: 'New heat pump installation' },
+  { href: '/services/ac-maintenance-tampa/', label: 'Dual-season maintenance' },
+  { href: '/services/thermostat-installation-tampa/', label: 'Smart thermostat with heat mode' },
+];
+
+const areaLinks = [
+  { href: '/service-areas/polk-county-residential-ac-repair/', label: 'Heating service in Polk County', note: '2–5 freeze events per year (citrus belt)' },
+  { href: '/service-areas/air-conditioning-repair-zephyrhills-fl-i-care-air-care/', label: 'Heating service in Zephyrhills', note: 'East Pasco design days' },
+  { href: '/service-areas/wesley-chapel-ac-repair/', label: 'Heating service in Wesley Chapel', note: 'Heat pump tune-ups before winter' },
 ];
 ---
 <ServiceLayout
@@ -25,9 +44,11 @@ const related = [
   eyebrow="Heating Services · Wesley Chapel"
   subtitle={`Wesley Chapel winters are short — but cold nights below 40°F are when heating failures show up. We service <span class="text-accent-400 font-semibold">every major heating system type</span> used in Florida homes, from heat pumps to heat-strip air handlers to the occasional gas furnace.`}
   heroImage="/images/Heating-Services-ICAC.webp"
-  serviceName="Heating Services in Tampa"
+  serviceName="Heating Services"
   faqs={faqs}
   related={related}
+  areaLinks={areaLinks}
+  priceRange="$99-$14500"
 >
   <h2>Wesley Chapel heating: mostly heat pumps, rarely furnaces</h2>
   <p>About 85% of Wesley Chapel and Tampa Bay residential heating is delivered by <strong>heat pumps</strong> — the same outdoor unit that cools you in summer reversing its refrigerant flow to pull heat into the home in winter. The remaining 15% is split between <strong>electric-resistance heat strips</strong> (the coil-shaped heaters inside the air handler) and, less commonly, <strong>natural gas or propane furnaces</strong> in newer upscale developments.</p>
@@ -58,4 +79,26 @@ const related = [
   <p>The single most valuable thing you can do each fall: run your heater for 15 minutes in October. If you smell something burning (usually just dust on the heat strips), that's normal. If you get cool air, a burnt smell that lingers, tripped breakers, or no airflow — <strong>call us now, not during the first cold snap</strong> when our schedule is packed. A $99 fall tune-up in October is vastly cheaper than an emergency call the night the temperature hits 32°F.</p>
 
   <p>Ready to winterize your system? <a href="/contact/">Schedule a heating tune-up</a> or call <a href="tel:+18133952324">(813) 395-2324</a>.</p>
+
+  <h2>2026 heating repair & install pricing in Wesley Chapel</h2>
+  <div class="not-prose my-6 overflow-hidden rounded-xl ring-1 ring-slate-200">
+    <table class="w-full text-sm">
+      <thead class="bg-surface text-navy-700">
+        <tr><th class="text-left py-2 px-4 font-semibold">Service</th><th class="text-left py-2 px-4 font-semibold">2026 flat-rate</th></tr>
+      </thead>
+      <tbody class="text-slate-700">
+        {heatingPrices.map(p => (
+          <tr class="border-t border-slate-100"><td class="py-2 px-4">{p.item}</td><td class="py-2 px-4 font-mono">${p.min.toLocaleString()}{p.max !== p.min ? `–$${p.max.toLocaleString()}` : ''}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <Schema
+    slot="extraSchema"
+    type="PriceSpecificationList"
+    prices={heatingPrices}
+    pageId={`${SITE.url}/services/heating-services-tampa/`}
+    data={{ name: '2026 heating service pricing in Wesley Chapel & Tampa Bay' }}
+  />
 </ServiceLayout>

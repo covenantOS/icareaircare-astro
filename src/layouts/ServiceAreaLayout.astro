@@ -9,7 +9,7 @@ import ContactFormSection from '../components/ContactFormSection.astro';
 import FAQ from '../components/FAQ.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import Schema from '../components/Schema.astro';
-import { SITE } from '../lib/site';
+import { SITE, formatToday } from '../lib/site';
 
 interface LocalReview { name: string; neighborhood?: string; body: string; rating?: number; }
 interface Landmark { name: string; note?: string; }
@@ -70,9 +70,22 @@ const areaSchema: any = {
   name: `HVAC Services in ${cityName}, FL`,
   description,
   url: `${SITE.url}/service-areas/${slug}/`,
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'USD',
+    priceRange: '$89-$14500',
+    availability: 'https://schema.org/InStock',
+    availableChannel: {
+      '@type': 'ServiceChannel',
+      servicePhone: SITE.phone,
+      serviceUrl: `${SITE.url}${SITE.bookPath}`,
+    },
+  },
 };
+
+const today = formatToday();
 ---
-<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs}>
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} heroPreload={heroImage}>
   <Hero
     eyebrow={eyebrow || `${cityName}, FL`}
     title={h1}
@@ -132,7 +145,16 @@ const areaSchema: any = {
   <section class="py-14 md:py-20 bg-surface">
     <div class="container-site grid lg:grid-cols-12 gap-10">
       <article class="lg:col-span-8 prose-icac bg-white rounded-2xl ring-1 ring-slate-200 p-6 md:p-8 shadow-[var(--shadow-card)]">
+        <div class="not-prose flex flex-wrap items-center gap-3 text-sm text-slate-500 mb-6 border-b border-slate-100 pb-4">
+          <span class="inline-flex items-center gap-2">
+            <img src="/images/tim-hawk-owner.webp" alt="Tim Hawk, Owner of I Care Air Care" class="w-7 h-7 rounded-full object-cover ring-1 ring-slate-200" width="28" height="28" loading="lazy" />
+            <span><span class="text-slate-400">Reviewed by</span> <a class="text-navy-700 font-semibold hover:text-brand-600" href="/about-us/#tim-hawk">Tim Hawk</a> <span class="text-slate-400">— Owner & Master HVAC Tech, FL {SITE.license}</span></span>
+          </span>
+          <span class="text-slate-300">·</span>
+          <span><span class="text-slate-400">Updated</span> {today}</span>
+        </div>
         <slot />
+        <p class="not-prose mt-12 text-sm text-slate-500 italic">Page reviewed and updated {today} by Tim Hawk, owner of I Care Air Care, Florida HVAC license {SITE.license}.</p>
       </article>
       <aside class="lg:col-span-4 space-y-6">
         <div class="rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 text-white p-6 shadow-[var(--shadow-soft)]">
@@ -142,7 +164,7 @@ const areaSchema: any = {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
             {SITE.phone}
           </a>
-          <a href={SITE.bookUrl} target="_blank" rel="noopener" class="mt-2 inline-flex w-full justify-center items-center gap-2 rounded-md bg-white/10 border border-white/30 hover:bg-white/20 text-white font-semibold px-4 py-3">Book Online</a>
+          <a href={SITE.bookPath} class="mt-2 inline-flex w-full justify-center items-center gap-2 rounded-md bg-white/10 border border-white/30 hover:bg-white/20 text-white font-semibold px-4 py-3">Book Online</a>
           <ul class="mt-5 space-y-2 text-sm text-blue-50">
             <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> Licensed · CAC1816515</li>
             <li class="flex items-center gap-2"><span class="text-accent-400">✓</span> 1-year repair warranty</li>
@@ -230,7 +252,7 @@ const areaSchema: any = {
   <ServiceGrid />
   <WhyChooseUs />
   <ThreeStep />
-  <ReviewStrip />
+  <ReviewStrip reviews={reviews.length > 0 ? reviews.map(r => ({ author: r.name, body: r.body, rating: r.rating ?? 5, neighborhood: r.neighborhood })) : undefined} />
   <FAQ title={`${cityName} HVAC FAQs`} items={faqs} />
 
   <!-- Related areas -->

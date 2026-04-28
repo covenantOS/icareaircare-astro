@@ -8,3 +8,8 @@
 /service-area/ /service-areas/ 301
 /ac-installation-tampa /services/hvac-installation-tampa/ 301
 /ac-installation-tampa/ /services/hvac-installation-tampa/ 301
+
+# Branded short link for Housecall Pro booking — keeps shareable URLs clean
+# and lets us swap providers without changing every CTA on the site.
+/book https://book.housecallpro.com/book/I-Care-Air-Care/cb3eaa8c 302
+/book/ https://book.housecallpro.com/book/I-Care-Air-Care/cb3eaa8c 302

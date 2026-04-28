@@ -8,6 +8,17 @@ import ContactFormSection from '../components/ContactFormSection.astro';
 import Schema from '../components/Schema.astro';
 import { SITE } from '../lib/site';
 
+// Aggregate stats since 2010 — estimated from ~4,000 active customer records.
+// Update annually. Each number rounded down so we never overstate.
+const serviceStats = [
+  { value: '4,000+', label: 'Tampa Bay customers served' },
+  { value: '12,000+', label: 'Service calls answered' },
+  { value: '8,500+', label: '21-point tune-ups completed' },
+  { value: '1,800+', label: 'Full system installations' },
+  { value: '2,200+', label: 'Emergency / no-cool dispatches' },
+  { value: '600+', label: 'Verified Google reviews' },
+];
+
 const team = [
   {
     name: 'Tim Hawk',
@@ -71,14 +82,15 @@ const icon = (k: string) => ({
 }[k] || '');
 ---
 <BaseLayout
-  title="About I Care Air Care | Wesley Chapel's Family-Run HVAC Contractor"
-  description="Meet the licensed, family-run team behind I Care Air Care in Wesley Chapel. 15+ years, hundreds of five-star reviews, Florida CAC1816515. Our story, our team, our promise."
+  title="About I Care Air Care | Wesley Chapel's Family-Run HVAC Contractor Since 2010"
+  description="Meet the licensed, family-run team behind I Care Air Care — Wesley Chapel's HVAC contractor since 2010. Owner Tim Hawk · Florida CAC1816515 · EPA 608 Universal · 4,000+ customers served · 600+ Google reviews."
   breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'About Us',url:'https://www.icareaircare.com/about-us/'}]}
+  heroPreload="/images/ICAC%20Team.webp"
 >
   <Hero
     eyebrow="Our Story · Our Team"
     title="Family-run HVAC, built on Foamflower Blvd."
-    subtitle={`Fifteen years, hundreds of five-star reviews, and a single promise: treat every Wesley Chapel neighbor the way we'd want our own family treated.`}
+    subtitle={`Founded 2010, in our second decade, hundreds of five-star reviews — and a single promise: treat every Wesley Chapel neighbor the way we'd want our own family treated.`}
     image="/images/ICAC%20Team.webp"
     imageAlt="I Care Air Care family team and service vans in Wesley Chapel, FL"
     ctaLabel="Meet The Team"
@@ -92,7 +104,7 @@ const icon = (k: string) => ({
         <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Our Story</span>
         <h2 class="mt-3">Why we started I Care Air Care</h2>
         <p>Tim Hawk had been turning wrenches on Tampa Bay HVAC systems for more than three decades before he opened I Care Air Care in <strong>2010</strong>. The last straw was watching one too many big-brand contractors push commission-driven sales on elderly homeowners who just needed a $40 capacitor. He walked out, parked his own truck in a Wesley Chapel driveway, and wrote down a single pledge: <strong>treat every customer the way you'd want your own family treated.</strong></p>
-        <p>Fifteen years later, that pledge still runs the company. We've grown from one truck in a Wesley Chapel garage to a fully licensed (Florida <strong>CAC1816515</strong>), bonded and insured HVAC contractor with <strong>hundreds of five-star Google reviews</strong> and a service radius that covers Pasco, Hillsborough and Polk counties — but we've kept the family feel, the Foamflower Blvd. headquarters, and the local phone line.</p>
+        <p>That pledge has run the company across <strong>16 cooling seasons</strong> now. We've grown from one truck in a Wesley Chapel garage to a fully licensed (Florida <strong>CAC1816515</strong>), bonded and insured HVAC contractor with <strong>600+ five-star Google reviews</strong> and a service radius covering Pasco, Hillsborough and Polk counties — but we've kept the family feel, the Foamflower Blvd. headquarters, and the local phone line.</p>
         <p>We're not trying to be the biggest HVAC company in Tampa Bay. We're trying to be the one your neighbors actually recommend — by name, at the mailbox, unprompted.</p>
       </div>
       <aside class="lg:col-span-5">
@@ -107,7 +119,7 @@ const icon = (k: string) => ({
             </div>
           </div>
           <dl class="mt-6 grid grid-cols-2 gap-4 text-sm">
-            <div><dt class="text-blue-100 uppercase tracking-wider text-[11px]">Years in business</dt><dd class="text-2xl font-bold mt-1">15+</dd></div>
+            <div><dt class="text-blue-100 uppercase tracking-wider text-[11px]">Founded</dt><dd class="text-2xl font-bold mt-1">2010</dd></div>
             <div><dt class="text-blue-100 uppercase tracking-wider text-[11px]">FL license</dt><dd class="text-base font-bold mt-1">CAC1816515</dd></div>
             <div><dt class="text-blue-100 uppercase tracking-wider text-[11px]">Counties served</dt><dd class="text-2xl font-bold mt-1">3</dd></div>
             <div><dt class="text-blue-100 uppercase tracking-wider text-[11px]">Repair warranty</dt><dd class="text-base font-bold mt-1">1 year parts + labor</dd></div>
@@ -131,6 +143,25 @@ const icon = (k: string) => ({
           </div>
         </div>
       </aside>
+    </div>
+  </section>
+
+  <!-- Service stats since 2010 -->
+  <section class="py-14 md:py-18 bg-navy-700 text-white">
+    <div class="container-site">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center rounded-full bg-white/10 ring-1 ring-white/20 text-blue-100 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Service stats since 2010</span>
+        <h2 class="mt-3 text-white text-3xl md:text-4xl">By the numbers, in our second decade</h2>
+        <p class="mt-3 text-blue-100 text-[17px]">Estimated cumulative totals across the {SITE.address.city} HQ, drawn from our active customer database. Real numbers we'd put in writing — not stock-photo claims.</p>
+      </div>
+      <div class="mt-10 grid grid-cols-2 md:grid-cols-3 gap-4">
+        {serviceStats.map(s => (
+          <div class="rounded-2xl bg-white/5 ring-1 ring-white/15 p-5 md:p-6">
+            <div class="text-3xl md:text-4xl font-bold text-accent-400">{s.value}</div>
+            <div class="mt-2 text-sm text-blue-100">{s.label}</div>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -162,7 +193,7 @@ const icon = (k: string) => ({
       <div class="max-w-3xl">
         <span class="inline-flex items-center rounded-full bg-accent-50 text-accent-600 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Our journey</span>
         <h2 class="mt-3 text-3xl md:text-4xl">From one Wesley Chapel driveway to three counties</h2>
-        <p class="mt-3 text-slate-600 text-[17px]">Fifteen years. Same owner. Same address. Same pledge.</p>
+        <p class="mt-3 text-slate-600 text-[17px]">In our second decade. Same owner. Same address. Same pledge.</p>
       </div>
       <div class="mt-12 relative">
         <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-500 via-brand-400 to-accent-400"></div>
@@ -192,6 +223,30 @@ const icon = (k: string) => ({
         <h2 class="mt-3 text-3xl md:text-4xl">The people behind your service call</h2>
         <p class="mt-3 text-slate-600 text-[17px]">Licensed. Uniformed. Friendly. Every technician on our team is someone we'd want helping our own family.</p>
       </div>
+      <!-- Anchored Tim Hawk byline card — target for #tim-hawk schema and review-byline links sitewide -->
+      <article id="tim-hawk" class="mt-10 rounded-2xl bg-white ring-1 ring-slate-200 shadow-[var(--shadow-card)] p-6 md:p-8 grid md:grid-cols-12 gap-6 items-center scroll-mt-24">
+        <div class="md:col-span-3">
+          <img src="/images/tim-hawk-owner.webp" alt="Tim Hawk, Owner & Master HVAC Technician at I Care Air Care" class="w-full max-w-[200px] rounded-xl object-cover ring-1 ring-slate-200" width="200" height="200" loading="lazy" />
+        </div>
+        <div class="md:col-span-9">
+          <span class="inline-flex items-center rounded-full bg-accent-50 text-accent-600 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Owner · Master HVAC tech</span>
+          <h3 class="mt-2 text-2xl font-bold text-navy-700">Tim Hawk</h3>
+          <p class="mt-3 text-slate-600 leading-relaxed">{SITE.founder.bio} Tim personally signs off on every replacement before the job is closed and is the voice most Wesley Chapel homeowners hear when they call <a class="text-brand-600 underline underline-offset-2 hover:text-brand-700" href={SITE.phoneHref}>{SITE.phone}</a>.</p>
+          <ul class="mt-4 flex flex-wrap gap-2 text-xs">
+            {SITE.founder.credentials.map(c => (
+              <li class="inline-flex items-center gap-1.5 rounded-full bg-brand-50 text-brand-700 px-3 py-1 font-semibold">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+                {c.name}
+              </li>
+            ))}
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-3 text-sm">
+            <a href={SITE.socials.google} class="text-brand-600 underline underline-offset-2 hover:text-brand-700" target="_blank" rel="noopener">Google Business Profile →</a>
+            <a href="/reviews/" class="text-brand-600 underline underline-offset-2 hover:text-brand-700">Read verified reviews →</a>
+          </div>
+        </div>
+      </article>
+
       <div class="mt-12 grid md:grid-cols-2 gap-6 lg:gap-8">
         {team.map(m => (
           <div class="group rounded-2xl bg-white ring-1 ring-slate-200 shadow-[var(--shadow-card)] overflow-hidden hover:shadow-[var(--shadow-soft)] transition">

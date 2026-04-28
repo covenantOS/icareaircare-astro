@@ -1,8 +1,17 @@
 ---
 import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import Schema from '../../components/Schema.astro';
+import { SITE } from '../../lib/site';
+
+const thermoPrices = [
+  { item: 'Smart thermostat install (customer-supplied)', min: 169, max: 249 },
+  { item: 'Smart thermostat + supply (Ecobee / Nest / Honeywell)', min: 329, max: 499 },
+  { item: 'Add C-wire adapter (PEK or equivalent)', min: 75, max: 150 },
+  { item: 'Whole-home zoned controller setup', min: 850, max: 1800 },
+];
 
 const faqs = [
-  { q: 'How much does smart thermostat installation cost in Tampa?', a: 'Installation-only service (you provide the thermostat) is typically $149–$199. A complete supply-and-install of an Ecobee, Nest, or Honeywell T9 runs $300–$500 depending on model and any C-wire adapter work needed.' },
+  { q: 'How much does smart thermostat installation cost in Wesley Chapel?', a: 'Installation-only (customer-supplied thermostat) runs <strong>$169–$249 in 2026</strong>. Supply-and-install of an Ecobee, Nest, or Honeywell T9/T10 is $329–$499 depending on model. C-wire adapter, when needed, adds $75–$150.' },
   { q: 'What\'s the best smart thermostat for a Florida home?', a: 'Ecobee Premium and Honeywell T10 lead our recommendation list for multi-stage heat pumps (the most common Tampa setup). Google Nest Learning works beautifully for single-stage systems. Every model we install supports humidity control — critical in Tampa.' },
   { q: 'My system doesn\'t have a C-wire — can I still upgrade?', a: 'Almost always yes. We install a C-wire adapter (PEK or similar) at the air handler or run a new thermostat cable if the wall cavity allows. About 70% of Tampa homes we retrofit need some form of C-wire solution.' },
   { q: 'Can a smart thermostat actually save me money?', a: 'Ecobee and Google both publish independent third-party verified data showing 23% average cooling savings vs. manual thermostats. Real Tampa homes often see $15–$40/month summer savings once humidity-aware scheduling is dialed in.' },
@@ -11,9 +20,15 @@ const faqs = [
 ];
 
 const related = [
-  { href: '/services/hvac-installation-tampa/', label: 'New HVAC Installation' },
-  { href: '/services/ac-maintenance-tampa/', label: 'AC Maintenance' },
-  { href: '/services/heating-services-tampa/', label: 'Heating Services' },
+  { href: '/services/hvac-installation-tampa/', label: 'New HVAC installation' },
+  { href: '/services/ac-maintenance-tampa/', label: 'AC maintenance' },
+  { href: '/services/heating-services-tampa/', label: 'Heating services' },
+];
+
+const areaLinks = [
+  { href: '/service-areas/wesley-chapel-ac-repair/', label: 'Smart thermostat install in Wesley Chapel', note: 'Heat pump-specific configuration' },
+  { href: '/service-areas/new-tampa-heating-and-cooling/', label: 'Smart thermostat install in New Tampa', note: 'Two-story zoning setups' },
+  { href: '/service-areas/lutz-home-air-conditioning-service/', label: 'Smart thermostat install in Lutz', note: 'Older homes needing C-wire' },
 ];
 ---
 <ServiceLayout
@@ -24,9 +39,11 @@ const related = [
   eyebrow="Thermostat Installation · Wesley Chapel"
   subtitle={`A smart thermostat is only smart if it's wired and configured right for <span class="text-accent-400 font-semibold">your heat pump, your heat strips, and Wesley Chapel's humidity</span>. We handle the install and the commissioning — not just the wall mount.`}
   heroImage="/images/Presentation-t-14.webp"
-  serviceName="Thermostat Installation in Tampa"
+  serviceName="Smart Thermostat Installation"
   faqs={faqs}
   related={related}
+  areaLinks={areaLinks}
+  priceRange="$169-$1800"
 >
   <h2>Why DIY thermostat installs go wrong in Florida</h2>
   <p>Online tutorials make a smart thermostat install look like a 15-minute job. For a single-stage gas furnace in Illinois, maybe. For a typical Wesley Chapel or Tampa heat pump with electric-strip backup, humidity-critical setpoints, and often a missing C-wire? We see the aftermath every month: systems stuck in emergency heat, strips running in 75° weather, dehumidifier mode disabled, compressor short-cycling, and one memorable case where a homeowner shorted R to 24V common and fried the air handler's control board.</p>
@@ -67,4 +84,26 @@ const related = [
   <p>A new thermostat is the perfect time to do a full <a href="/services/ac-maintenance-tampa/">AC tune-up</a>. We offer a bundle price when installing a thermostat at the same visit — you get the benefit of the new controls running on a fully dialed-in system.</p>
 
   <p>Ready for a real smart home upgrade? <a href="/contact/">Book your install</a> or call <a href="tel:+18133952324">(813) 395-2324</a>.</p>
+
+  <h2>2026 thermostat installation pricing in Wesley Chapel</h2>
+  <div class="not-prose my-6 overflow-hidden rounded-xl ring-1 ring-slate-200">
+    <table class="w-full text-sm">
+      <thead class="bg-surface text-navy-700">
+        <tr><th class="text-left py-2 px-4 font-semibold">Service</th><th class="text-left py-2 px-4 font-semibold">2026 flat-rate</th></tr>
+      </thead>
+      <tbody class="text-slate-700">
+        {thermoPrices.map(p => (
+          <tr class="border-t border-slate-100"><td class="py-2 px-4">{p.item}</td><td class="py-2 px-4 font-mono">${p.min.toLocaleString()}{p.max !== p.min ? `–$${p.max.toLocaleString()}` : ''}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <Schema
+    slot="extraSchema"
+    type="PriceSpecificationList"
+    prices={thermoPrices}
+    pageId={`${SITE.url}/services/thermostat-installation-tampa/`}
+    data={{ name: '2026 smart thermostat installation pricing in Wesley Chapel' }}
+  />
 </ServiceLayout>

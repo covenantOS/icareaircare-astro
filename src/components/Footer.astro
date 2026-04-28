@@ -67,7 +67,7 @@ const mapEmbed = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14061.8!
         <div>
           <h4 class="text-white font-bold uppercase tracking-wide text-sm mb-3">Areas</h4>
           <ul class="space-y-1.5">
-            {SITE.serviceAreas.slice(0,6).map(a => <li><a class="text-white/90 hover:text-white" href={`/service-areas/${a.slug}/`}>{a.name}</a></li>)}
+            {SITE.serviceAreas.map(a => <li><a class="text-white/90 hover:text-white" href={`/service-areas/${a.slug}/`}>{a.name}</a></li>)}
           </ul>
         </div>
       </div>
