@@ -1,0 +1,229 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import ContactFormSection from '../components/ContactFormSection.astro';
+import TrustBadgeStrip from '../components/TrustBadgeStrip.astro';
+import Schema from '../components/Schema.astro';
+import { SITE } from '../lib/site';
+import { BLOG_POSTS } from '../lib/blog';
+
+const breadcrumbs = [
+  { name: 'Home', url: `${SITE.url}/` },
+  { name: 'About Us', url: `${SITE.url}/about-us/` },
+  { name: 'Tim Hawk', url: `${SITE.url}/tim-hawk/` },
+];
+
+// Every blog post on the site is reviewed by Tim — surfaced here as proof
+// of authorial expertise. The Article schema in [slug].astro already sets
+// reviewedBy → tim-hawk @id, so this list is the visible counterpart.
+const reviewedArticles = BLOG_POSTS.slice(0, 12);
+
+// Equipment brands Tim's team installs and services (factual — same list
+// surfaced on the HVAC installation page FAQ).
+const brands = [
+  'Carrier', 'Trane', 'Lennox', 'Rheem', 'Goodman',
+  'American Standard', 'Bryant', 'Ruud', 'Heil', 'Amana',
+  'Mitsubishi Electric', 'LG', 'Fujitsu', 'Daikin',
+];
+
+// Person-specific Article-page-style schema, plus an entity that AI engines
+// can resolve directly to /tim-hawk/ as the canonical URL.
+const profilePageSchema = {
+  '@type': 'ProfilePage',
+  '@id': `${SITE.url}/tim-hawk/#profile`,
+  url: `${SITE.url}/tim-hawk/`,
+  mainEntity: { '@id': `${SITE.url}/#tim-hawk` },
+  about: { '@id': `${SITE.url}/#tim-hawk` },
+  inLanguage: 'en-US',
+  isPartOf: { '@id': `${SITE.url}/#website` },
+};
+---
+<BaseLayout
+  title="Tim Hawk — Owner & Master HVAC Technician | I Care Air Care"
+  description="Meet Tim Hawk — Florida-licensed master HVAC technician (CAC1822037), EPA 608 Universal certified, and owner of I Care Air Care. 30+ years in the Tampa Bay HVAC trade. Founded the company in Wesley Chapel in 2010."
+  breadcrumbs={breadcrumbs}
+  image={`${SITE.url}/images/Tim%20Hawk%20(ICAC%20Owner).webp`}
+>
+  <!-- Hero — solid navy, focused on Tim, no marketing distractions -->
+  <section class="bg-gradient-to-br from-navy-900 via-navy-800 to-brand-800 text-white py-16 md:py-20">
+    <div class="container-site grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-7">
+        <span class="inline-flex items-center rounded-full bg-white/10 ring-1 ring-white/25 text-blue-100 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Owner · Master HVAC Technician</span>
+        <h1 class="mt-4 text-4xl md:text-5xl font-bold leading-[1.05]">
+          Tim Hawk — the licensed Wesley Chapel HVAC contractor your neighbors call by name
+        </h1>
+        <p class="mt-5 text-blue-50 text-[17px] leading-relaxed max-w-2xl">
+          Florida master HVAC contractor (license <a href={SITE.licenseVerificationUrl} target="_blank" rel="noopener" class="text-accent-300 underline underline-offset-2 hover:text-accent-200">CAC1822037</a>),
+          EPA Section 608 Universal certified, and the founder of I Care Air Care.
+          More than three decades on Tampa Bay rooftops and in Florida attics.
+          When you call <a href={SITE.phoneHref} class="text-accent-300 underline underline-offset-2 hover:text-accent-200">{SITE.phone}</a>,
+          there's a real chance Tim picks up.
+        </p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href={SITE.phoneHref} class="btn-primary btn-lg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+            Call Tim · {SITE.phone}
+          </a>
+          <a href="https://www.linkedin.com/in/tim-hawk-0bba6352" target="_blank" rel="noopener" class="btn-outline btn-lg">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.8 0-5 2.2-5 5v14c0 2.8 2.2 5 5 5h14c2.8 0 5-2.2 5-5v-14c0-2.8-2.2-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.3c-1 0-1.7-.7-1.7-1.6s.7-1.6 1.8-1.6c1 0 1.7.7 1.7 1.6s-.7 1.6-1.8 1.6zm13.5 12.3h-3v-5.6c0-1.4-.5-2.4-1.8-2.4-1 0-1.6.7-1.9 1.3-.1.2-.1.6-.1.9v5.8h-3v-11h3v1.6c.4-.6 1.2-1.5 2.8-1.5 2 0 3.5 1.4 3.5 4.2v6.7z"/></svg>
+            Connect on LinkedIn
+          </a>
+        </div>
+      </div>
+      <div class="lg:col-span-5">
+        <div class="relative">
+          <div class="absolute -inset-4 rounded-3xl bg-accent-500/15 blur-2xl"></div>
+          <div class="relative rounded-2xl overflow-hidden ring-1 ring-white/30 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.55)] aspect-[4/5] bg-white/5">
+            <img
+              src="/images/Tim%20Hawk%20(ICAC%20Owner).webp"
+              alt="Tim Hawk, Owner and Master HVAC Technician at I Care Air Care, Wesley Chapel FL"
+              class="w-full h-full object-cover object-top"
+              width="800" height="1000" loading="eager" decoding="async" fetchpriority="high"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick credentials bar -->
+  <section class="bg-white border-b border-slate-100">
+    <div class="container-site py-6 grid grid-cols-2 md:grid-cols-4 gap-5">
+      <div>
+        <div class="text-[11px] uppercase tracking-[0.14em] text-slate-500">Founded I Care Air Care</div>
+        <div class="font-bold text-navy-700 text-base mt-0.5">2010 · Wesley Chapel, FL</div>
+      </div>
+      <div>
+        <div class="text-[11px] uppercase tracking-[0.14em] text-slate-500">Years in HVAC trade</div>
+        <div class="font-bold text-navy-700 text-base mt-0.5">30+</div>
+      </div>
+      <div>
+        <div class="text-[11px] uppercase tracking-[0.14em] text-slate-500">Florida license</div>
+        <div class="font-bold text-navy-700 text-base mt-0.5">
+          <a href={SITE.licenseVerificationUrl} target="_blank" rel="noopener" class="hover:text-brand-700 underline underline-offset-2">{SITE.license} ↗</a>
+        </div>
+      </div>
+      <div>
+        <div class="text-[11px] uppercase tracking-[0.14em] text-slate-500">EPA certification</div>
+        <div class="font-bold text-navy-700 text-base mt-0.5">Section 608 Universal</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Tim — long-form bio -->
+  <section class="py-16 md:py-20 bg-white">
+    <div class="container-site grid lg:grid-cols-12 gap-10 items-start">
+      <article class="lg:col-span-8 prose-icac">
+        <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-800 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">About Tim</span>
+        <h2 class="mt-3">Three decades on Tampa Bay rooftops, then one Wesley Chapel garage</h2>
+        <p>Tim Hawk turned his first wrench on a Tampa Bay air-conditioning system in the early 1990s. He spent the next three-plus decades doing the unglamorous work that makes a Florida HVAC tech actually competent: capacitors in 105°F attics, refrigerant work on equipment older than the homeowner, hurricane-recovery service calls in subdivisions where every fifth condenser was under water, walk-in cooler emergencies in Tampa Bay restaurants where the product clock was ticking.</p>
+        <p>By 2010 he'd seen enough commission-driven HVAC sales to walk out and start over. The story he tells is a specific one: an elderly Wesley Chapel homeowner who'd been quoted a full system replacement when the actual fix was a $40 capacitor. Tim drove to her house, swapped the part, charged her the part cost, and went home. The next morning he parked his own truck at <strong>27022 Foamflower Blvd.</strong> and started I Care Air Care with a one-line pledge: <em>treat every customer the way you'd want your own family treated.</em></p>
+        <p>Sixteen years later, that pledge still runs the company. The address is the same. The phone number is the same. The owner answers it when he can.</p>
+
+        <h3>What Tim actually does on a normal Tuesday</h3>
+        <p>The job has shifted as the company has grown. Tim still rolls on calls — particularly emergency no-cools and any installation that's a customer referral — but most weekdays he's running quality control on the install crew, sizing replacement systems with full Manual-J load calculations, reviewing duct static-pressure readings before sign-off, and pulling Pasco / Hillsborough / Polk county permits. <strong>Every install gets walked by Tim before the job is closed.</strong> If something is off, the crew goes back. That's not marketing copy — it's why warranty callbacks on ICAC installs are well below the industry average.</p>
+
+        <p>The other thing Tim does is answer the phone. Customers who've been with I Care Air Care for years know the cadence: call, ask for Tim, and you usually get him within a ring or two. New customers calling for the first time often think it's a fluke. It isn't. The phone is on Tim's desk on Foamflower Blvd. Wesley Chapel homeowners who've called <a href={SITE.phoneHref}>{SITE.phone}</a> in the last 16 years recognize his voice.</p>
+
+        <h3>Tim's philosophy on repair vs. replace</h3>
+        <p>Tim is unusual in this trade because he'll tell homeowners <em>not</em> to replace systems that don't need it. The math he uses on every repair-vs-replace call is the same one he taught the rest of the team: multiply the system's age in years by the repair cost. If that number is under $5,000, repair almost always wins. Over $5,000 — and especially if the system is past 12 years on R-22 — the replacement math flips. The point is: the homeowner gets the math, in writing, before any decision. No commission, no upsell, no pressure to "just go ahead and replace it."</p>
+        <p>The corollary: when replacement <em>is</em> the right call, Tim's team is methodical about getting it right. Manual-J before tonnage selection. Duct evaluation before equipment selection. Static pressure verified before sign-off. Refrigerant charged to manufacturer subcool spec, not eyeballed. Permit pulled and closed by us, with the closed-permit PDF delivered to the homeowner for resale records. Most installations in Wesley Chapel run 14 cooling seasons or more when sized and installed correctly. Tim's installs hit that bar.</p>
+
+        <h3>Equipment Tim's team is current on</h3>
+        <p>Wesley Chapel homeowners run a full mix of equipment, and Tim's team is current on all of it. Major residential and light-commercial brands installed and serviced:</p>
+        <div class="not-prose mt-4 flex flex-wrap gap-2">
+          {brands.map(b => (
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-surface ring-1 ring-slate-200 text-navy-700 px-3 py-1 text-xs font-semibold">{b}</span>
+          ))}
+        </div>
+        <p class="mt-5">I Care Air Care is also a <a href="https://icareaircare.rheempropartner.com/" target="_blank" rel="noopener">Rheem Pro Partner</a> — the manufacturer-certified status Rheem awards to contractors who meet training, install-quality, and customer-experience standards. That gets ICAC customers Rheem's extended warranties registered correctly and same-day access to Rheem-specific parts on the truck.</p>
+
+        <h3>What Tim is current on for 2026</h3>
+        <p>Florida HVAC has shifted hard in 2025–2026 around lower-GWP refrigerants. Tim and the install crew are current on the procedural, safety, and equipment changes:</p>
+        <ul>
+          <li><strong>R-454B and R-32 systems.</strong> Both are A2L-classified (mildly flammable) and require updated leak detection, tool kits, brazing procedures, and jobsite ventilation steps. Tim's crew runs them as standard.</li>
+          <li><strong>R-410A wind-down.</strong> Still legal to repair and recharge, but service refrigerant cost is climbing. Tim's repair-vs-replace math now factors that explicitly for systems past year 10.</li>
+          <li><strong>Florida SEER2 minimum 15.2.</strong> The 2026 sweet spot for most Wesley Chapel homes is 16–18 SEER2; variable-speed (20+ SEER2) for larger or humidity-sensitive houses.</li>
+          <li><strong>Manual-J for new construction in Epperson, Mirada, Watergrass, Persimmon Park.</strong> Builder-grade tonnage in lagoon-community new builds is routinely undersized once families fill them out. Tim does free post-warranty Manual-J reviews for ICAC customers in those neighborhoods.</li>
+        </ul>
+      </article>
+
+      <aside class="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
+        <!-- Verified profiles card -->
+        <div class="rounded-2xl bg-surface ring-1 ring-slate-200 p-6">
+          <span class="inline-flex items-center rounded-full bg-white text-brand-800 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] ring-1 ring-slate-200">Verify Tim & I Care Air Care</span>
+          <h3 class="mt-3 text-lg font-bold text-navy-700">Independent third-party profiles</h3>
+          <p class="mt-2 text-sm text-slate-600">Click any of these to verify the license or read reviews directly with the source.</p>
+          <ul class="mt-4 space-y-2 text-sm">
+            <li><a href={SITE.licenseVerificationUrl} target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Florida DBPR — License {SITE.license} ↗</a></li>
+            <li><a href="https://maps.app.goo.gl/2iCjuu1yf3GAbvSS8" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Google Business Profile — {SITE.rating.value}★ · {SITE.rating.count}+ reviews ↗</a></li>
+            <li><a href="https://www.bbb.org/us/fl/wesley-chapel/profile/air-conditioning-contractor/i-care-air-care-llc-0653-90109276" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Better Business Bureau — Wesley Chapel profile ↗</a></li>
+            <li><a href="https://icareaircare.rheempropartner.com/" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Rheem Pro Partner — manufacturer page ↗</a></li>
+            <li><a href="https://www.linkedin.com/in/tim-hawk-0bba6352" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">LinkedIn — Tim Hawk ↗</a></li>
+            <li><a href="https://www.facebook.com/icareaircare/" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Facebook — @icareaircare ↗</a></li>
+            <li><a href="https://www.yelp.com/biz/i-care-air-care-wesley-chapel-2" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Yelp — Wesley Chapel ↗</a></li>
+            <li><a href="https://www.angi.com/companylist/us/fl/wesley-chapel/i-care-air-care-reviews-6298982.htm" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Angi — reviews ↗</a></li>
+            <li><a href="https://www.homeadvisor.com/rated.ICareAirCareLLC.25490578.html" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">HomeAdvisor — rated profile ↗</a></li>
+          </ul>
+        </div>
+
+        <!-- Direct contact card -->
+        <div class="rounded-2xl bg-gradient-to-br from-brand-700 to-brand-900 text-white p-6 shadow-[var(--shadow-soft)]">
+          <h3 class="text-white font-bold text-lg">Talk to Tim's team</h3>
+          <p class="mt-2 text-blue-50 text-sm leading-relaxed">Same-day windows when route allows. Diagnostic is a flat $89, credited toward the repair if you move forward.</p>
+          <a href={SITE.phoneHref} class="mt-4 inline-flex w-full justify-center items-center gap-2 rounded-md bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-3" aria-label={`Call Tim's Wesley Chapel team at ${SITE.phone}`}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+            Call · {SITE.phone}
+          </a>
+          <a href="/contact/" class="mt-2 inline-flex w-full justify-center items-center gap-2 rounded-md bg-white/10 border border-white/30 hover:bg-white/20 text-white font-semibold px-4 py-3">Send a message</a>
+          <p class="mt-4 text-[11px] text-blue-100">Email Tim directly: <a href={`mailto:${SITE.email}`} class="text-white hover:text-accent-200 underline underline-offset-2">{SITE.email}</a></p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Articles reviewed by Tim — auto-listed from BLOG_POSTS -->
+  <section class="py-16 md:py-20 bg-surface">
+    <div class="container-site">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center rounded-full bg-white text-brand-800 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] ring-1 ring-slate-200">Editorial review</span>
+        <h2 class="mt-3 text-3xl md:text-4xl">Articles Tim has reviewed for accuracy</h2>
+        <p class="mt-3 text-slate-600 text-[17px]">Every homeowner guide on this site is reviewed by Tim before publication for HVAC accuracy, Florida-specific code compliance, and cost-range realism. The full reviewedBy chain shows up in each post's schema; here's the visible list.</p>
+      </div>
+      <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {reviewedArticles.map(post => (
+          <a href={`/${post.slug}/`} class="group rounded-xl bg-white ring-1 ring-slate-200 hover:ring-brand-300 hover:shadow-[var(--shadow-card)] p-5 transition">
+            <div class="text-[11px] font-bold uppercase tracking-[0.12em] text-brand-700">{post.tag} · {post.location}</div>
+            <h3 class="mt-2 text-[16.5px] font-bold text-navy-700 group-hover:text-brand-700 leading-snug">{post.title}</h3>
+            <p class="mt-2 text-[13.5px] text-slate-600 leading-relaxed">{post.description}</p>
+            <span class="mt-4 inline-flex text-sm font-semibold text-accent-500">Read article →</span>
+          </a>
+        ))}
+      </div>
+      <div class="mt-8 text-center">
+        <a href="/blogs/" class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-slate-200 hover:ring-brand-400 px-5 py-2.5 text-sm font-semibold text-navy-700 hover:text-brand-700 transition">
+          See the full HVAC library
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust strip -->
+  <section class="py-12 bg-white">
+    <div class="container-site max-w-5xl">
+      <div class="rounded-2xl bg-surface ring-1 ring-slate-200 p-6">
+        <div class="text-center mb-5">
+          <span class="inline-flex items-center rounded-full bg-white text-brand-800 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] ring-1 ring-slate-200">Verified</span>
+          <p class="mt-2 text-sm text-slate-600">Tim's credentials, reviews, and manufacturer status — all clickable to the source.</p>
+        </div>
+        <TrustBadgeStrip variant="card" />
+      </div>
+    </div>
+  </section>
+
+  <FinalCTA />
+  <ContactFormSection />
+
+  <script type="application/ld+json" set:html={JSON.stringify(profilePageSchema)} />
+</BaseLayout>

@@ -104,7 +104,7 @@ const postFAQs = [
       <article class="lg:col-span-8 prose-icac">
         <div class="not-prose flex flex-wrap items-center gap-3 text-sm text-slate-500 mb-6">
           <span class="inline-flex rounded-md bg-brand-50 text-brand-700 text-xs font-semibold px-2.5 py-1">{post.tag}</span>
-          <span>By <strong class="text-navy-700">{SITE.owner}</strong>, Licensed HVAC Contractor · {SITE.license}</span>
+          <span>By <a href="/tim-hawk/" class="font-bold text-navy-700 hover:text-brand-700">{SITE.owner}</a>, Licensed HVAC Contractor · {SITE.license}</span>
           <span>•</span>
           <span>{post.date}</span>
           <span>•</span>
@@ -147,11 +147,14 @@ const postFAQs = [
 
         <!-- Author bio -->
         <div class="not-prose mt-10 rounded-xl bg-surface ring-1 ring-slate-200 p-5 flex items-start gap-4">
-          <img src="/images/Tim%20Hawk%20(ICAC%20Owner).webp" alt="Tim Hawk, Owner of I Care Air Care" class="w-14 h-14 rounded-full ring-2 ring-brand-200 object-cover shrink-0" width="56" height="56" loading="lazy" />
+          <a href="/tim-hawk/" class="shrink-0">
+            <img src="/images/Tim%20Hawk%20(ICAC%20Owner).webp" alt="Tim Hawk, Owner of I Care Air Care" class="w-14 h-14 rounded-full ring-2 ring-brand-200 object-cover" width="56" height="56" loading="lazy" />
+          </a>
           <div>
-            <div class="font-bold text-navy-700">{SITE.owner}</div>
+            <div class="font-bold text-navy-700"><a href="/tim-hawk/" class="hover:text-brand-700">{SITE.owner}</a></div>
             <div class="text-xs text-brand-600 font-semibold uppercase tracking-wide">Owner &amp; Master HVAC Technician · Florida License {SITE.license}</div>
             <p class="mt-2 text-[14px] text-slate-600 leading-relaxed">Tim founded I Care Air Care in 2010 after 30+ years in the Tampa Bay HVAC trade. EPA Universal certified. The source for all technical guidance published on this site.</p>
+            <a href="/tim-hawk/" class="mt-2 inline-block text-[13px] font-semibold text-brand-700 hover:text-brand-800">Read Tim's full profile →</a>
           </div>
         </div>
 
@@ -176,15 +179,15 @@ const postFAQs = [
 
         <!-- 2. Author / E-E-A-T card -->
         <div class="rounded-xl bg-white ring-1 ring-slate-200 p-5 shadow-[var(--shadow-card)]">
-          <div class="flex items-center gap-3">
+          <a href="/tim-hawk/" class="flex items-center gap-3 group">
             <img src="/images/Tim%20Hawk%20(ICAC%20Owner).webp" alt="Tim Hawk, Owner" class="w-12 h-12 rounded-full ring-2 ring-brand-200 object-cover object-top shrink-0" width="48" height="48" loading="lazy" />
             <div>
-              <div class="font-bold text-navy-700 text-sm">{SITE.owner}</div>
+              <div class="font-bold text-navy-700 text-sm group-hover:text-brand-700">{SITE.owner}</div>
               <div class="text-[11px] text-brand-600 font-semibold uppercase tracking-wide">Owner · Master Tech</div>
             </div>
-          </div>
+          </a>
           <p class="mt-3 text-[13px] text-slate-600 leading-relaxed">Florida HVAC License <strong class="text-navy-700">{SITE.license}</strong> · EPA Universal certified · 16+ years serving Wesley Chapel.</p>
-          <a href="/about-us/" class="mt-3 inline-block text-brand-600 text-[13px] font-semibold hover:text-brand-700">Meet the team →</a>
+          <a href="/tim-hawk/" class="mt-3 inline-block text-brand-700 text-[13px] font-semibold hover:text-brand-800">Tim's full profile →</a>
         </div>
 
         <!-- 3. Popular next steps -->

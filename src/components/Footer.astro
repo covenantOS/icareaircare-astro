@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../lib/site';
+import TrustBadgeStrip from './TrustBadgeStrip.astro';
 const mapEmbed = 'https://www.google.com/maps?q=27022+Foamflower+Blvd+Wesley+Chapel+FL+33544&output=embed';
 ---
 <footer>
@@ -73,6 +74,15 @@ const mapEmbed = 'https://www.google.com/maps?q=27022+Foamflower+Blvd+Wesley+Cha
             {SITE.serviceAreas.slice(0,6).map(a => <li><a class="text-white hover:underline" href={`/service-areas/${a.slug}/`}>{a.name}</a></li>)}
           </ul>
         </div>
+      </div>
+    </div>
+
+    <!-- Verified-by strip — sitewide trust signal so every page bottom shows
+         the same third-party corroboration that's in <head> as sameAs. -->
+    <div class="border-t border-white/25">
+      <div class="container-site py-5 flex flex-col md:flex-row items-center justify-center md:justify-between gap-3 text-[12px]">
+        <span class="text-white/90 font-semibold uppercase tracking-wide shrink-0">Verified by</span>
+        <TrustBadgeStrip variant="compact" theme="dark" />
       </div>
     </div>
 

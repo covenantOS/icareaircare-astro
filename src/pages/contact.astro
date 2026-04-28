@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
 import FinalCTA from '../components/FinalCTA.astro';
+import TrustBadgeStrip from '../components/TrustBadgeStrip.astro';
 import { SITE } from '../lib/site';
 const mapEmbed = 'https://www.google.com/maps?q=27022+Foamflower+Blvd+Wesley+Chapel+FL+33544&output=embed';
 ---
@@ -53,6 +54,19 @@ const mapEmbed = 'https://www.google.com/maps?q=27022+Foamflower+Blvd+Wesley+Cha
         </p>
       </div>
     </div>
+    <!-- Trust strip — last-mile reassurance before the map / form below.
+         Highest-intent visitors are on Contact; verified third-party
+         badges remove the "is this contractor real?" concern. -->
+    <div class="container-site max-w-5xl mt-10">
+      <div class="rounded-2xl bg-surface ring-1 ring-slate-200 p-5 md:p-6">
+        <div class="text-center mb-4">
+          <span class="inline-flex items-center rounded-full bg-white text-brand-800 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] ring-1 ring-slate-200">Verified by third parties</span>
+          <p class="mt-2 text-sm text-slate-600">Click any badge to verify the license, read reviews, or check our manufacturer status before you call.</p>
+        </div>
+        <TrustBadgeStrip variant="card" />
+      </div>
+    </div>
+
     <div class="container-site max-w-5xl mt-8">
       <div class="rounded-2xl overflow-hidden shadow-[var(--shadow-soft)] ring-1 ring-slate-200 h-[360px]">
         <iframe src={mapEmbed} width="100%" height="100%" style="border:0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="I Care Air Care location"></iframe>
