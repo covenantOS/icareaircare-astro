@@ -31,9 +31,29 @@ const tim = {
     'Indoor air quality',
   ],
   hasCredential: [
-    { '@type': 'EducationalOccupationalCredential', credentialCategory: 'license', name: `Florida HVAC License ${SITE.license}` },
-    { '@type': 'EducationalOccupationalCredential', credentialCategory: 'certification', name: 'EPA Section 608 Universal' },
+    {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'license',
+      name: `Florida HVAC License ${SITE.license}`,
+      recognizedBy: {
+        '@type': 'GovernmentOrganization',
+        name: 'Florida Department of Business and Professional Regulation',
+        url: 'https://www2.myfloridalicense.com/',
+      },
+      url: SITE.licenseVerificationUrl,
+    },
+    {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'certification',
+      name: 'EPA Section 608 Universal',
+      recognizedBy: {
+        '@type': 'GovernmentOrganization',
+        name: 'United States Environmental Protection Agency',
+        url: 'https://www.epa.gov/section608',
+      },
+    },
   ],
+  sameAs: SITE.founderProfiles,
 };
 
 const localBusiness = {
@@ -70,7 +90,7 @@ const localBusiness = {
     name: a.name,
     containedInPlace: { '@type': 'State', name: 'Florida' },
   })),
-  sameAs: [SITE.socials.google],
+  sameAs: SITE.externalProfiles,
   founder: { '@id': `${SITE.url}/#tim-hawk` },
   employee: { '@id': `${SITE.url}/#tim-hawk` },
   makesOffer: SITE.services.map(s => ({

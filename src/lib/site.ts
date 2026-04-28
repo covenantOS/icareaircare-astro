@@ -28,6 +28,27 @@ export const SITE = {
   socials: {
     google: 'https://maps.app.goo.gl/2iCjuu1yf3GAbvSS8',
   },
+  // External profiles that corroborate the business identity. Anything in this
+  // list lands in the LocalBusiness schema's `sameAs` array — Google reads it
+  // as third-party verification of the entity (E-E-A-T lever).
+  externalProfiles: [
+    'https://maps.app.goo.gl/2iCjuu1yf3GAbvSS8',
+    'https://www.facebook.com/icareaircare/',
+    'https://www.bbb.org/us/fl/wesley-chapel/profile/air-conditioning-contractor/i-care-air-care-llc-0653-90109276',
+    'https://icareaircare.rheempropartner.com/',
+    'https://www.angi.com/companylist/us/fl/wesley-chapel/i-care-air-care-reviews-6298982.htm',
+    'https://www.homeadvisor.com/rated.ICareAirCareLLC.25490578.html',
+    'https://www.yelp.com/biz/i-care-air-care-wesley-chapel-2',
+    'https://www.manta.com/c/mrsxx5j/i-care-air-care',
+  ],
+  // Tim Hawk's individual external profiles. These corroborate the Person
+  // entity in schema (founder/author E-E-A-T signal).
+  founderProfiles: [
+    'https://www.linkedin.com/in/tim-hawk-0bba6352',
+  ],
+  // Florida DBPR public license verification. Stable deep-link to the
+  // CAC1822037 license record so AI engines can verify Tim's credential.
+  licenseVerificationUrl: 'https://www.myfloridalicense.com/LicenseDetail.asp?SID=&id=CAC1822037',
   serviceAreas: [
     { slug: 'wesley-chapel-ac-repair', name: 'Wesley Chapel' },
     { slug: 'pasco-county-ac-repair', name: 'Pasco County' },

@@ -60,9 +60,6 @@ const lastVerified = new Date().toLocaleDateString('en-US', {
   year: 'numeric',
 });
 
-// Duplicate array for seamless marquee
-const marqueeCards = [...reviews, ...reviews];
-
 // Pick first featured for SSR
 const firstFeatured = featured[0];
 ---
@@ -116,11 +113,13 @@ const firstFeatured = featured[0];
       <div class="iac-featured__author" data-feat-author>— {firstFeatured.a}</div>
     </div>
 
-    <!-- Marquee review track -->
+    <!-- Marquee review track. Cards render once in HTML; the duplicate set
+         needed for the seamless CSS scroll is JS-cloned after first paint and
+         marked aria-hidden so screen readers + Google see only one set. -->
     <div class="iac-reviews__track-wrap">
       <div class="iac-reviews__track" data-track>
-        {marqueeCards.map((r, i) => (
-          <div class="iac-card" aria-hidden={i >= reviews.length ? 'true' : undefined}>
+        {reviews.map((r) => (
+          <div class="iac-card">
             <div class="iac-card__top">
               <div class="iac-card__avatar" aria-hidden="true">{initials(r.n)}</div>
               <div>
@@ -501,5 +500,37 @@ const firstFeatured = featured[0];
     // Start at index 1 since index 0 is already SSR'd
     i = 1;
     setInterval(show, duration);
+  })();
+</script>
+
+<script is:inline>
+  /* Marquee clone — the seamless CSS scroll needs the cards visible twice in
+     a row, but emitting them twice in HTML doubles the page weight and shows
+     Google duplicate review text on every URL. Cards render once in source;
+     we clone the set after first paint, marked aria-hidden so it's purely
+     decorative for AT and crawlers. */
+  (function () {
+    function cloneTrack() {
+      var track = document.querySelector('[data-track]');
+      if (!track || track.dataset.cloned === '1') return;
+      var cards = Array.prototype.slice.call(track.children);
+      if (!cards.length) return;
+      var frag = document.createDocumentFragment();
+      cards.forEach(function (card) {
+        var copy = card.cloneNode(true);
+        copy.setAttribute('aria-hidden', 'true');
+        copy.setAttribute('data-clone', 'true');
+        frag.appendChild(copy);
+      });
+      track.appendChild(frag);
+      track.dataset.cloned = '1';
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(cloneTrack, { timeout: 1500 });
+    } else if (document.readyState !== 'loading') {
+      cloneTrack();
+    } else {
+      document.addEventListener('DOMContentLoaded', cloneTrack);
+    }
   })();
 </script>
