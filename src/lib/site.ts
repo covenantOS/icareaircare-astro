@@ -27,10 +27,13 @@ export const SITE = {
   owner: 'Tim Hawk',
   socials: {
     google: 'https://maps.app.goo.gl/2iCjuu1yf3GAbvSS8',
+    yelp: 'https://www.yelp.com/biz/i-care-air-care-zephyrhills',
   },
   // External profiles that corroborate the business identity. Anything in this
   // list lands in the LocalBusiness schema's `sameAs` array — Google reads it
   // as third-party verification of the entity (E-E-A-T lever).
+  // Yelp listing per Will (2026-04-29): the Zephyrhills URL is the canonical
+  // one we want both UI links and schema sameAs to point at.
   externalProfiles: [
     'https://maps.app.goo.gl/2iCjuu1yf3GAbvSS8',
     'https://www.facebook.com/icareaircare/',
@@ -38,7 +41,7 @@ export const SITE = {
     'https://icareaircare.rheempropartner.com/',
     'https://www.angi.com/companylist/us/fl/wesley-chapel/i-care-air-care-reviews-6298982.htm',
     'https://www.homeadvisor.com/rated.ICareAirCareLLC.25490578.html',
-    'https://www.yelp.com/biz/i-care-air-care-wesley-chapel-2',
+    'https://www.yelp.com/biz/i-care-air-care-zephyrhills',
     'https://www.manta.com/c/mrsxx5j/i-care-air-care',
   ],
   // Tim Hawk's individual external profiles. These corroborate the Person
@@ -49,16 +52,18 @@ export const SITE = {
   // Florida DBPR public license verification. Stable deep-link to the
   // CAC1822037 license record so AI engines can verify Tim's credential.
   licenseVerificationUrl: 'https://www.myfloridalicense.com/LicenseDetail.asp?SID=&id=CAC1822037',
+  // Each area's geo centroid — used by ServiceAreaLayout to recenter the map
+  // iframe on the actual area instead of the HQ pin.
   serviceAreas: [
-    { slug: 'wesley-chapel-ac-repair', name: 'Wesley Chapel' },
-    { slug: 'pasco-county-ac-repair', name: 'Pasco County' },
-    { slug: 'hillsborough-county-hvac-company', name: 'Hillsborough County' },
-    { slug: 'polk-county-residential-ac-repair', name: 'Polk County' },
-    { slug: 'land-o-lakes-hvac-services', name: "Land O' Lakes" },
-    { slug: 'lutz-home-air-conditioning-service', name: 'Lutz' },
-    { slug: 'new-tampa-heating-and-cooling', name: 'New Tampa' },
-    { slug: 'odessa-emergency-ac-repair', name: 'Odessa' },
-    { slug: 'air-conditioning-repair-zephyrhills-fl-i-care-air-care', name: 'Zephyrhills' },
+    { slug: 'wesley-chapel-ac-repair', name: 'Wesley Chapel', geo: { lat: 28.2426914, lng: -82.3726776 } },
+    { slug: 'pasco-county-ac-repair', name: 'Pasco County', geo: { lat: 28.3232, lng: -82.4319 } },
+    { slug: 'hillsborough-county-hvac-company', name: 'Hillsborough County', geo: { lat: 27.9069, lng: -82.3018 } },
+    { slug: 'polk-county-residential-ac-repair', name: 'Polk County', geo: { lat: 27.9659, lng: -81.6985 } },
+    { slug: 'land-o-lakes-hvac-services', name: "Land O' Lakes", geo: { lat: 28.2191, lng: -82.4598 } },
+    { slug: 'lutz-home-air-conditioning-service', name: 'Lutz', geo: { lat: 28.1508, lng: -82.4631 } },
+    { slug: 'new-tampa-heating-and-cooling', name: 'New Tampa', geo: { lat: 28.1206, lng: -82.3457 } },
+    { slug: 'odessa-emergency-ac-repair', name: 'Odessa', geo: { lat: 28.1936, lng: -82.5917 } },
+    { slug: 'air-conditioning-repair-zephyrhills-fl-i-care-air-care', name: 'Zephyrhills', geo: { lat: 28.2336, lng: -82.1812 } },
   ],
   services: [
     { slug: 'ac-repair-tampa', name: 'AC Repair' },

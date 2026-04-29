@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import ChatCallWidgets from '../components/ChatCallWidgets.astro';
 import Schema from '../components/Schema.astro';
 import { SITE } from '../lib/site';
 
@@ -80,6 +81,7 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href;
     <main id="main" class="flex-1"><slot /></main>
     <Footer />
     <StickyMobileCTA />
+    <ChatCallWidgets />
 
     {/* Defer Google Maps (and any other data-lazy-src) iframes until they scroll near the viewport.
         Cuts ~190 KiB of unused JS from the critical path and kills the TBT cost of map embeds. */}

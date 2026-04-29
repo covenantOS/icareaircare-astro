@@ -375,7 +375,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tag: "Local Guide",
     date: "Feb 22, 2026",
     read: "8 min",
-    image: "/images/ICAC%20Team%281%29.webp",
+    image: "/images/i-care-air-care-wesley-chapel-hvac-team.webp",
     location: "Wesley Chapel",
     primaryService: services.acRepair,
     related: [services.maintenance, services.install, areas.wesley],

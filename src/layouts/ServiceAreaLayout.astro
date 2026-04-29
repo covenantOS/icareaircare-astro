@@ -51,8 +51,13 @@ const breadcrumbs = [
   { name: cityName, url: `${SITE.url}/service-areas/${slug}/` },
 ];
 
-const defaultMap = geo
-  ? `https://www.google.com/maps?q=${geo.lat},${geo.lng}&z=12&output=embed`
+// Pull the area's centroid from SITE.serviceAreas if no explicit `geo` prop was
+// passed. This keeps the map iframe centered on the area being viewed (Pasco
+// County, Lutz, etc.) instead of falling back to the Wesley Chapel HQ pin.
+const siteArea = SITE.serviceAreas.find(a => a.slug === slug);
+const effectiveGeo = geo || siteArea?.geo;
+const defaultMap = effectiveGeo
+  ? `https://www.google.com/maps?q=${effectiveGeo.lat},${effectiveGeo.lng}&z=12&output=embed`
   : `https://www.google.com/maps?q=${encodeURIComponent(cityName + ', FL')}&z=12&output=embed`;
 const embedSrc = mapEmbed || defaultMap;
 
@@ -84,7 +89,7 @@ const areaSchema: any = {
     '@type': areaType,
     name: cityName,
     containedInPlace: { '@type': 'State', name: 'Florida' },
-    ...(geo ? { geo: { '@type': 'GeoCoordinates', latitude: geo.lat, longitude: geo.lng } } : {}),
+    ...(effectiveGeo ? { geo: { '@type': 'GeoCoordinates', latitude: effectiveGeo.lat, longitude: effectiveGeo.lng } } : {}),
   },
   name: `HVAC Services in ${cityName}, FL`,
   description,

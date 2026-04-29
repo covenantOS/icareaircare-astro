@@ -49,9 +49,12 @@ const articleSchema = {
   keywords: [post.tag, post.location, 'HVAC', 'Wesley Chapel', 'Tampa Bay'].filter(Boolean).join(', '),
 };
 
-// HowTo schema for fix-it / troubleshooting posts. The checklist becomes HowTo steps.
+// HowTo schema for fix-it / troubleshooting / how-to posts. The checklist
+// becomes HowTo steps. We're conservative: only mark up posts whose body
+// content is genuinely step-by-step procedural — Google penalizes thin
+// procedural content, so we don't apply it broadly.
 const isHowTo =
-  /ac-not-cooling|warm-air|filter-change|how-to-lower|fix-it-fast|emergency-ac-repair/.test(post.slug) &&
+  /ac-not-cooling|warm-air|filter-change|how-to-lower|how-to-find|how-to-book|how-to-choose|fix-it-fast|emergency-ac-repair|running-but-not-cooling/.test(post.slug) &&
   post.checklist && post.checklist.length > 0;
 const howToData = isHowTo ? {
   name: post.title,
