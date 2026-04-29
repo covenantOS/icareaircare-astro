@@ -103,7 +103,7 @@ Focus areas:
 
 #### 10. Business-specific
 - NAP (name/address/phone) consistency: verify "I Care Air Care" / "27022 Foamflower Blvd, Wesley Chapel, FL 33544" / "(813) 395-2324" appears identically across every page, Schema, Footer, Contact — spot any variation.
-- License `CAC1822037` — appears correctly everywhere? Any legacy references to old licenses?
+- License `CAC1816515` — appears correctly everywhere? Any legacy references to old licenses?
 - Rating "700+ reviews / 4.9★" — consistent?
 - Business hours `Mon–Fri 8a-6p, Sat 10a-4p` — consistent in text + structured data?
 - Any residual "24/7" claims (business does NOT offer 24/7)?

@@ -8,7 +8,7 @@ export const SITE = {
   bookUrl: 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4ca7c48c3bbcf2e13316f44e8?v2=true&lead_source=google&merchant_id=20299a14-5630-423e-86f1-4e7f59c7f1c8&rwg_token=AFd1xnGAsHVZNInJGvpu38195sGp79l7PNwlA7p5bjxGrC4HxCnMJhyim0v8UUckWrmgMBm9R6IfC7pHAG2eizmJtX7s7KiAvw%3D%3D',
   bookUrlExternal: 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4ca7c48c3bbcf2e13316f44e8?v2=true&lead_source=google&merchant_id=20299a14-5630-423e-86f1-4e7f59c7f1c8&rwg_token=AFd1xnGAsHVZNInJGvpu38195sGp79l7PNwlA7p5bjxGrC4HxCnMJhyim0v8UUckWrmgMBm9R6IfC7pHAG2eizmJtX7s7KiAvw%3D%3D',
   email: 'tim@icareaircare.com',
-  license: 'CAC1822037',
+  license: 'CAC1816515',
   address: {
     street: '27022 Foamflower Blvd',
     city: 'Wesley Chapel',
@@ -55,8 +55,8 @@ export const SITE = {
     'https://www.linkedin.com/in/tim-hawk-0bba6352',
   ],
   // Florida DBPR public license verification. Stable deep-link to the
-  // CAC1822037 license record so AI engines can verify Tim's credential.
-  licenseVerificationUrl: 'https://www.myfloridalicense.com/LicenseDetail.asp?SID=&id=CAC1822037',
+  // CAC1816515 license record so AI engines can verify Tim's credential.
+  licenseVerificationUrl: 'https://www.myfloridalicense.com/wl11.asp?mode=0&SID=&brd=&typ=N',
   // Each area's geo centroid — used by ServiceAreaLayout to recenter the map
   // iframe on the actual area instead of the HQ pin.
   serviceAreas: [

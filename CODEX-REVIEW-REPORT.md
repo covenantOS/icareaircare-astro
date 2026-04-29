@@ -229,7 +229,7 @@ The site asks for the right actions: call, book, finance, contact. The conversio
 ## Confirmed Strengths
 
 - The build passes.
-- Source-of-truth business info in `src/lib/site.ts` is current: `CAC1822037`, `(813) 395-2324`, Foamflower Blvd. address, 4.9 rating, 700 review count, 16 years.
+- Source-of-truth business info in `src/lib/site.ts` is current: `CAC1816515`, `(813) 395-2324`, Foamflower Blvd. address, 4.9 rating, 700 review count, 16 years.
 - The built site did not expose the HCP API key in text assets.
 - Service and service-area templates include visible reviewer/license/EPA credential blocks.
 - JSON-LD parsed in static checks.

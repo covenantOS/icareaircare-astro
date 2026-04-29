@@ -251,7 +251,7 @@ Be honest: these are real competitive moats the competitors don't have. Don't sa
 3. **Named verbatim reviews with neighborhood + Review schema** — competitors use generic carousel reviews; ICAC has Person-authored reviews with locationCreated.
 4. **Transparent pricing ranges on every repair type** — only Cool Today gets into this, and thinly. ICAC's service pages have detailed dollar ranges.
 5. **Florida-specific climate specifics** — 94°F design day, 78°F dew point, 2,200-hour annual cooling runtime. None of the competitors cite specific numbers.
-6. **Named owner + credentials on every page** — Tim Hawk + CAC1822037 + EPA 608. One Hour and Cool Today hide behind corporate brand.
+6. **Named owner + credentials on every page** — Tim Hawk + CAC1816515 + EPA 608. One Hour and Cool Today hide behind corporate brand.
 7. **Dedicated Person schema (`@id`)** — EEAT win none of these sites have.
 8. **llms.txt + llms-full.txt** — only ICAC has AI-crawler-optimized content.
 9. **Astro static rendering** — no JS-dependent content for crawlers (Cool Today, One Hour both have JS-heavy DOM).

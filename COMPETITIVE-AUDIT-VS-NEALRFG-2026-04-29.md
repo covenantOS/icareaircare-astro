@@ -81,7 +81,7 @@ Nealrfg's hero pairs *"4.9★ · 800+ customers"* with *"50-YEAR PRODUCT WARRANT
 
 **Action:** ICAC already has the components — repackage them as a dual badge:
 - **Badge A**: "4.9★ · 700+ Google reviews"
-- **Badge B**: "10-Year Manufacturer Warranty + 1-Year Workmanship"  *(or)*  "Florida CAC1822037 · 16+ years"  *(or)*  "Rheem Pro Partner — Tampa Bay's Authorized Dealer"
+- **Badge B**: "10-Year Manufacturer Warranty + 1-Year Workmanship"  *(or)*  "Florida CAC1816515 · 16+ years"  *(or)*  "Rheem Pro Partner — Tampa Bay's Authorized Dealer"
 
 Display together, repeat through page (hero, mid-page, FAQ section, before CTA). The repetition is the point — Stryker is teaching Google + visitors what to associate with the brand.
 
@@ -140,7 +140,7 @@ These rank for "X vs Y" and informational queries that ICAC's blog touches but d
 | **Chat + Call floating widgets** (shipped today) | Both tracked via GTM; nealrfg has neither |
 | **Manufacturer dealer status displayed** (Rheem Pro Partner, 8 brand mentions) | Nealrfg doesn't display any manufacturer authorizations |
 | **Booking widget embedded** (Housecall Pro) | Nealrfg has form-only |
-| **License # displayed prominently** (CAC1822037) | Nealrfg displays CCC1332869 too — tie. Both winning here. |
+| **License # displayed prominently** (CAC1816515) | Nealrfg displays CCC1332869 too — tie. Both winning here. |
 
 ---
 
@@ -168,7 +168,7 @@ These rank for "X vs Y" and informational queries that ICAC's blog touches but d
 | 2 | **Find one local award/feature** to display ("Best of Pasco 2026", BBB Torch nominee, Angi Super Service Award year, Tampa Chamber member) — one badge on homepage hero | 30 min owner side, 30 min implement |
 | 3 | **"Real-time tracking" copy** on homepage + service pages — messages Housecall Pro capability as a moat | 30 min |
 | 4 | **`OfferCatalog` schema wrap** in `Schema.astro` makesOffer | 15 min |
-| 5 | **Dual-badge hero** — pair "4.9★ · 700+ reviews" with "Rheem Pro Partner" or "16 yrs · CAC1822037" as a single visual unit, repeat 3× through page | 1 hour |
+| 5 | **Dual-badge hero** — pair "4.9★ · 700+ reviews" with "Rheem Pro Partner" or "16 yrs · CAC1816515" as a single visual unit, repeat 3× through page | 1 hour |
 | 6 | **Find proprietary moat statement** — pick ONE: "Tampa Bay's #X Rheem dealer," "80+ SKUs on every truck," "Direct wholesale = parts today, not next week" | Owner conversation; 30 min implement |
 | 7 | **"As seen on" band** — only ship if Tim has any media features. Otherwise schedule press push (separate workstream) | gated on owner side |
 | 8 | **Equipment-comparison landing pages** (heat-pump vs AC, Carrier vs Trane vs Rheem) — programmatic SEO | 3-4 hrs each, 1 page/day |

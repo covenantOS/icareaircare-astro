@@ -79,7 +79,7 @@ Target range: 50–60 characters. Google truncates display at ~60 chars (580px p
 All meta descriptions are unique (no duplicates confirmed). Most are well-crafted with keyword + CTA + phone. One issue found:
 
 **About Us page** (`src/pages/about-us.astro` line 74):
-> "Meet the licensed, family-run team behind I Care Air Care in Wesley Chapel. 16+ years, **hundreds of five-star reviews**, Florida CAC1822037. Our story, our team, our promise."
+> "Meet the licensed, family-run team behind I Care Air Care in Wesley Chapel. 16+ years, **hundreds of five-star reviews**, Florida CAC1816515. Our story, our team, our promise."
 
 "Hundreds of five-star reviews" is inconsistent with the 700+ stated everywhere else. This is the only page in the entire codebase that still uses the vague "hundreds" phrasing (all others say "700+").
 
@@ -476,7 +476,7 @@ Social proof appears at:
 
 | Signal | Where Visible |
 |--------|--------------|
-| Florida License CAC1822037 | Homepage body, About, every service page sidebar, footer, FAQ schema answers |
+| Florida License CAC1816515 | Homepage body, About, every service page sidebar, footer, FAQ schema answers |
 | "Fully bonded and insured" | About, service pages |
 | EPA Section 608 Universal | About page team section, credentials strip |
 | 1-year repair warranty | Every service page sidebar, FinalCTA, Review section |
@@ -601,7 +601,7 @@ The prior audit corrected "30+ years," wrong license, "400+" reviews, and "24/7"
 | E-E-A-T Signal | Implementation |
 |----------------|---------------|
 | Named author (Tim Hawk) | Blog author bio on every post ✅ |
-| Author credentials | "Florida License CAC1822037 · EPA Universal" in bio ✅ |
+| Author credentials | "Florida License CAC1816515 · EPA Universal" in bio ✅ |
 | Author photo | Tim's photo on author bio ✅ |
 | Business address | Physical address on About, Contact, Footer, Schema ✅ |
 | License visible | Multiple page placements ✅ |
@@ -675,7 +675,7 @@ These require minimal effort and fix significant issues:
 - ✅ Review objects in schema (named reviewers)
 - ✅ Sticky mobile CTA working (slides up after 200px scroll)
 - ✅ Call CTA above fold on every page
-- ✅ License CAC1822037 correct everywhere (fixed in prior audit)
+- ✅ License CAC1816515 correct everywhere (fixed in prior audit)
 - ✅ "16+ years" consistent everywhere (fixed in prior audit)
 - ✅ "700+" review count consistent everywhere (about-us meta desc excepted — see finding #7)
 - ✅ No 24/7 claims (removed in prior audit)

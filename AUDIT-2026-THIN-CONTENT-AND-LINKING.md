@@ -264,7 +264,7 @@ Referencing Google Search Central updates through early 2026 (helpful-content sy
 **Strengths:**
 
 - Tim Hawk named by first name across most pages. ✓
-- Florida license `CAC1822037` appears in footer + ServiceLayout sidebar + schema + blog post author block. ✓
+- Florida license `CAC1816515` appears in footer + ServiceLayout sidebar + schema + blog post author block. ✓
 - `/about-us/` has 1,975 words — story, team, credentials, map. ✓
 - Blog posts include an inline author bio on `[slug].astro` with license number and "EPA Universal certified". ✓
 - `Article` schema includes `author.@type=Person` with Tim's name, jobTitle, and a license-number description. ✓
@@ -272,7 +272,7 @@ Referencing Google Search Central updates through early 2026 (helpful-content sy
 **Gaps:**
 
 - **Author `Person` schema is inlined on `Article` JSON but there's no standalone `Person` entity at `/about-us/#tim` or `/team/tim-hawk/` with `sameAs` (LinkedIn, GBP, etc.).** Creating a canonical `Person` entity increases AI-Overview and Knowledge-Graph likelihood.
-- **Service pages and service-area pages have no "Author" or "Reviewed by" line.** Per Google's Quality Rater Guidelines (Dec 2022, still cited in 2026), YMYL-adjacent pages (home services are borderline) benefit from a visible author or reviewer. Add a short "Reviewed by Tim Hawk, Florida CAC1822037 · Updated [date]" near each service page H1.
+- **Service pages and service-area pages have no "Author" or "Reviewed by" line.** Per Google's Quality Rater Guidelines (Dec 2022, still cited in 2026), YMYL-adjacent pages (home services are borderline) benefit from a visible author or reviewer. Add a short "Reviewed by Tim Hawk, Florida CAC1816515 · Updated [date]" near each service page H1.
 - **No external author links (LinkedIn, industry association bios, NATE, Florida DBPR).** These build off-domain authority for Tim as a named entity. Recommend adding `sameAs` inside `Person` schema pointing to DBPR license lookup, LinkedIn, and any trade-association profiles.
 - **"About us" has no photos with EXIF or `datePublished`/`dateModified` meta.** Not deal-breakers, but `dateModified` is a simple content-freshness signal.
 
@@ -343,7 +343,7 @@ Inspected `dist/index.html`, `dist/services/ac-repair-tampa/index.html`, `dist/s
 - `/services/refrigeration-repair-tampa/` — add "typical commercial refrigeration repair cost Tampa" Q&A block.
 - `/financing/` — add "Can I finance HVAC with bad credit in Florida?" / "What APR does I Care Air Care offer?" / "How long are Synchrony HVAC loans in Florida?" Q&As.
 - `/careers/` — add "Does I Care Air Care pay for NATE certification?" / "How much do HVAC techs make in Wesley Chapel?" Q&As.
-- `/about-us/` — add entity-rich Q&A: "Who owns I Care Air Care?" → "Tim Hawk, Florida CAC1822037, founded the company in 2010 after 30+ years in Tampa Bay HVAC."
+- `/about-us/` — add entity-rich Q&A: "Who owns I Care Air Care?" → "Tim Hawk, Florida CAC1816515, founded the company in 2010 after 30+ years in Tampa Bay HVAC."
 
 ### 3F. Local SEO depth
 
@@ -391,7 +391,7 @@ Service-area pages use `ServiceAreaLayout` which accepts `zipCodes`, `neighborho
 
 Ran a quick content scan:
 
-- License `CAC1822037` appears **~80 times across 62 built pages** (via footer, sidebar, schema). Very high density. ✓
+- License `CAC1816515` appears **~80 times across 62 built pages** (via footer, sidebar, schema). Very high density. ✓
 - `4.9` or `700` appears ~50 times via ReviewStrip + sidebar. ✓
 - Named customer reviews: 10 hand-curated reviews embedded in home-page LocalBusiness schema. ✓
 - ReviewStrip renders a strip on home, service pages, area pages, reviews, blogs. ✓
@@ -469,9 +469,9 @@ No major friction.
 Near every Call/Book CTA:
 
 - Header phone → no trust row adjacent on mobile. Consider moving the "4.9★ · 700+ reviews" strip into the header on md+ screens.
-- Service sidebar CTA has: "✓ Licensed & insured · CAC1822037 / ✓ 1-year repair warranty / ✓ Upfront flat-rate pricing / ✓ 4.9★ · 700+ Google reviews". ✓ Excellent.
+- Service sidebar CTA has: "✓ Licensed & insured · CAC1816515 / ✓ 1-year repair warranty / ✓ Upfront flat-rate pricing / ✓ 4.9★ · 700+ Google reviews". ✓ Excellent.
 - Blog post sidebar has the same pattern plus author card. ✓
-- `/book/` page has one trust line at the bottom: "4.9★ · 700+ Google reviews · Florida license CAC1822037 · Family-owned in Wesley Chapel". Good but buried after a 6-step form. Surface the same row above the form or inside step 1.
+- `/book/` page has one trust line at the bottom: "4.9★ · 700+ Google reviews · Florida license CAC1816515 · Family-owned in Wesley Chapel". Good but buried after a 6-step form. Surface the same row above the form or inside step 1.
 
 ### 4H. Dead-end pages
 
@@ -508,7 +508,7 @@ Ranked by expected impact × effort efficiency. Effort: **S** = under 2 hrs, **M
 | 4 | High | Content | Consolidate 3 "preventive maintenance plans" thin posts into 1 pillar page; 301 the other two | `src/lib/blog-bodies.ts`, `src/lib/blog.ts`, `dist/_redirects` | M |
 | 5 | High | SEO | Rewrite the two worst "headline salad" posts (`ac-blowing-warm-air-in-tampa-heres-how-to-fix-it-fast`, `air-conditioning-not-cooling-in-tampa-fl-heres-how-to-fix-it-fast`) — merge sentence-level headings into paragraphs under proper H2s | `src/lib/blog-bodies.ts` | M |
 | 6 | High | Linking | `/contact/` is a dead-end (1 outbound). Add body-content links to `/services/`, `/service-areas/`, `/reviews/`, `/about-us/` | `src/pages/contact.astro` | S |
-| 7 | High | E-E-A-T | Add "Reviewed by Tim Hawk · Florida CAC1822037 · Updated [date]" micro-author byline near H1 on every `/services/*` and `/service-areas/*` page | `src/layouts/ServiceLayout.astro`, `src/layouts/ServiceAreaLayout.astro` | S |
+| 7 | High | E-E-A-T | Add "Reviewed by Tim Hawk · Florida CAC1816515 · Updated [date]" micro-author byline near H1 on every `/services/*` and `/service-areas/*` page | `src/layouts/ServiceLayout.astro`, `src/layouts/ServiceAreaLayout.astro` | S |
 | 8 | High | SEO | Standalone `Person` schema for Tim at `/about-us/#tim` with `sameAs` (DBPR license lookup, LinkedIn if any, Google Business Profile) | `src/components/Schema.astro` (add `Person` type), `src/pages/about-us.astro` | S |
 | 9 | High | CRO | Add pricing / repair-vs-replace decision box to every `/services/*` page (HTML table, no JS) | `src/pages/services/*.astro` | M |
 | 10 | High | Local SEO | Verify and enrich the three "still to rebuild" service areas — spot-check for Tampa Palms, Cross Creek, Keystone, Starkey Ranch, Silverado, Betmar Acres mentions. Add HOA-specific content where missing. | `src/pages/service-areas/new-tampa-heating-and-cooling.astro`, `odessa-emergency-ac-repair.astro`, `air-conditioning-repair-zephyrhills-fl-i-care-air-care.astro` | L |

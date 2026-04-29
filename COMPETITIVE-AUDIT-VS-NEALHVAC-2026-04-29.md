@@ -49,7 +49,7 @@ These are bugs in their build that benefit ICAC by default — listing them so y
 1. **`/about/` and `/contact/` 301-redirect to `/`** — destroys deep-link equity. Both Google and citation directories expect these as canonical pages. Anyone linking to `nealhvac.com/about` lands on the homepage with the wrong canonical signal.
 2. **`/reviews/` returns HTTP 500** — broken page. Active harm to crawl budget and trust.
 3. **`/testimonials/` and `/financing/` return 404** — they have neither.
-4. **No license number anywhere** — Texas requires HVAC contractors to display TACLA/TACLB#. ICAC displays CAC1822037 prominently. Legal compliance + trust signal.
+4. **No license number anywhere** — Texas requires HVAC contractors to display TACLA/TACLB#. ICAC displays CAC1816515 prominently. Legal compliance + trust signal.
 5. **No NATE / EPA 608 / BBB / manufacturer dealer badges** — verified zero matches in HTML for Trane, Carrier, Lennox, Goodman, Rheem, York, Bryant, Mitsubishi, Daikin, NATE, EPA 608.
 6. **Generic `Organization` schema** (not LocalBusiness/HVACBusiness) — no openingHoursSpecification, no GeoCoordinates, no areaServed list. ICAC's `HVACBusiness` schema is a documented Google subtype.
 7. **Identical Google Maps embed across all pages** — Sun City, Teravista, and Georgetown pages all embed the same Rivery Blvd HQ pin instead of recentering on each area's geo. (ICAC has this same flaw — see Gap #4 below.)

@@ -115,7 +115,7 @@ Ranked by impact × effort. Skim and flag what's worth doing.
 - AI Overviews and ChatGPT cite content differently than Google SERP ranks it. The highest-impact content for GEO:
   - Clear Q&A structure (your service pages have FAQs — good)
   - Specific numbers ("$150–$600" beats "affordable")
-  - Named entities with consistent relationships (Tim Hawk → I Care Air Care → Wesley Chapel → Florida license CAC1822037)
+  - Named entities with consistent relationships (Tim Hawk → I Care Air Care → Wesley Chapel → Florida license CAC1816515)
   - Original data / unique insights (e.g., "Florida HVAC runs 2,200 hrs/yr vs. Minnesota's 600" — you have this)
 - Your llms.txt + llms-full.txt do a lot of this work already.
 
