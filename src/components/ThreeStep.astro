@@ -16,6 +16,24 @@ const steps = [
     <p class="mt-5 max-w-2xl mx-auto text-blue-100">
       Getting <a class="underline underline-offset-2 hover:text-white" href="/services/ac-repair-tampa/">AC repair</a> or HVAC service near you has never been easier — fast, transparent, stress-free.
     </p>
+    <!-- Live-tracking + human-on-phone reassurance band — surfaces capabilities
+         we already have via Housecall Pro instead of leaving them invisible. -->
+    <div class="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px] font-semibold tracking-wide">
+      <span class="inline-flex items-center gap-1.5 text-white">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400 shrink-0" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5h-2v6l5 3 1-1.7-4-2.3V7z"/></svg>
+        Live updates
+      </span>
+      <span class="text-white/30 hidden sm:inline" aria-hidden="true">·</span>
+      <span class="inline-flex items-center gap-1.5 text-white">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400 shrink-0" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H6l-4 4V6c0-1.1.9-2 2-2zm2 4v2h12V8H6zm0 4v2h8v-2H6z"/></svg>
+        "Tech on the way" texts
+      </span>
+      <span class="text-white/30 hidden sm:inline" aria-hidden="true">·</span>
+      <span class="inline-flex items-center gap-1.5 text-white">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400 shrink-0" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+        Real humans answer the phone
+      </span>
+    </div>
     <div class="mt-12 grid md:grid-cols-3 gap-8 md:gap-10">
       {steps.map(s => (
         <div class="flex flex-col items-center">

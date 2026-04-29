@@ -24,6 +24,11 @@ export const SITE = {
   ],
   rating: { value: 4.9, count: 700 },
   yearsInBusiness: 16,
+  // Customer database / homes-served stat. Conservative number based on
+  // ~4k unique customers in the CRM as of 2026-04-29; we display "4,000+"
+  // as a defensible homes-served claim.
+  customersServed: '4,000+',
+  customersServedNum: 4000,
   owner: 'Tim Hawk',
   socials: {
     google: 'https://maps.app.goo.gl/2iCjuu1yf3GAbvSS8',

@@ -94,14 +94,27 @@ const localBusiness = {
   sameAs: SITE.externalProfiles,
   founder: { '@id': `${SITE.url}/#tim-hawk` },
   employee: { '@id': `${SITE.url}/#tim-hawk` },
-  makesOffer: SITE.services.map(s => ({
-    '@type': 'Offer',
-    itemOffered: {
-      '@type': 'Service',
-      name: s.name,
+  // hasOfferCatalog wraps the service offers — Stryker-agency pattern observed
+  // on nealrfg.com. More idiomatic than makesOffer for surfacing a service menu
+  // and gives Google a clean root for product-style rich results.
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: `${SITE.name} HVAC Services`,
+    itemListElement: SITE.services.map(s => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: s.name,
+        url: `${SITE.url}/services/${s.slug}/`,
+        provider: { '@id': `${SITE.url}/#business` },
+        areaServed: SITE.serviceAreas.map(a => ({
+          '@type': /county/i.test(a.name) ? 'AdministrativeArea' : 'City',
+          name: a.name,
+        })),
+      },
       url: `${SITE.url}/services/${s.slug}/`,
-    },
-  })),
+    })),
+  },
   hasCredential: { '@type': 'EducationalOccupationalCredential', credentialCategory: 'license', name: `Florida HVAC License ${SITE.license}` },
   openingHoursSpecification: [
     {

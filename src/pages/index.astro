@@ -13,6 +13,7 @@ import FAQ from '../components/FAQ.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import RheemProPartner from '../components/RheemProPartner.astro';
+import TrustBadgeStrip from '../components/TrustBadgeStrip.astro';
 import Schema from '../components/Schema.astro';
 
 const faqs = [
@@ -48,6 +49,17 @@ const faqs = [
     subtitle={`Trusted local <span class="text-accent-400 font-semibold">AC repair</span> experts serving <span class="text-accent-400 font-semibold">Wesley Chapel</span>, New Tampa, Land O' Lakes &amp; all of Tampa Bay for 16+ years with fast, reliable <span class="text-accent-400 font-semibold">HVAC service</span> plus heating, cooling &amp; <span class="text-accent-400 font-semibold">air duct cleaning</span>.`}
     image="/images/i-care-air-care-wesley-chapel-hvac-team.webp"
   />
+
+  <!-- Trust-badge band — surfaces Google / FL license / BBB / Rheem as
+       clickable verification cards. Stryker-agency pattern: pair the
+       rating badge in the hero with a second visible-trust band right
+       below so visitors see the corroboration before scrolling further. -->
+  <section class="bg-white border-b border-slate-100 py-6 md:py-8">
+    <div class="container-site">
+      <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500 text-center mb-4">Verified by</p>
+      <TrustBadgeStrip variant="card" theme="light" />
+    </div>
+  </section>
 
   <!-- Local team + vans band (crisp, natural aspect, no upscaling) -->
   <section class="relative bg-white">
