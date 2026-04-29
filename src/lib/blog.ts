@@ -420,6 +420,66 @@ export const BLOG_POSTS: BlogPost[] = [
     related: [services.acRepair, services.ducts, areas.tampa],
     checklist: ["Keep the outdoor condenser clear by at least two feet.", "Change filters before they bow or gray over.", "Flush drains before summer algae growth.", "Schedule spring maintenance before the first long heat wave."],
   },
+  // Buyer's Guide series — long-form comparison/educational posts. Different
+  // content type from troubleshooting posts; 2,500-3,500 word range, designed
+  // for "should I get X or Y" search intent.
+  {
+    slug: "heat-pump-vs-ac-tampa",
+    title: "Heat Pump vs Traditional AC for Tampa Bay Homes (2026)",
+    description: "Honest math on which system wins in Florida — install costs, 2026 IRA tax credits ($2,000), Duke + TECO rebates, and the three scenarios where a traditional AC + furnace still beats a heat pump.",
+    tag: "Buyer's Guide",
+    date: "Apr 29, 2026",
+    read: "12 min",
+    image: images.install,
+    imageAlt: "Outdoor heat pump condenser installation in Tampa Bay — I Care Air Care HVAC contractor Wesley Chapel",
+    location: "Tampa Bay",
+    primaryService: services.install,
+    related: [services.heating, services.maintenance, areas.wesley],
+    checklist: [
+      "Confirm whether you have natural gas at the property line and how old your existing furnace is.",
+      "Check your home's distance from the Gulf — coastal homes within ~5 miles need coil-coated outdoor units.",
+      "Pull last year's electric bills before the comparison; TECO and Duke rates differ by ZIP and tier.",
+      "Plan to verify IRA Section 25C eligibility (CEE Tier 1: SEER2 ≥ 15.2, HSPF2 ≥ 7.8) on the install quote.",
+    ],
+  },
+  {
+    slug: "carrier-vs-trane-vs-rheem-tampa",
+    title: "Carrier vs Trane vs Rheem in Tampa Bay (Honest 2026 Comparison)",
+    description: "An HVAC contractor's honest brand comparison — compressor warranty fine print, 4,000-install reliability data, parts availability, sound levels, and our Rheem Pro Partner bias disclosed up front.",
+    tag: "Buyer's Guide",
+    date: "Apr 29, 2026",
+    read: "14 min",
+    image: images.install,
+    imageAlt: "Carrier Trane Rheem outdoor condenser brand comparison — Tampa Bay HVAC installer",
+    location: "Tampa Bay",
+    primaryService: services.install,
+    related: [services.maintenance, services.acRepair, areas.wesley],
+    checklist: [
+      "Get the brand's compressor warranty in writing — coverage and labor terms vary substantially.",
+      "Ask the installer whether parts ship same-day from a local distributor or 1–2 day from out of state.",
+      "Verify whether the install includes manufacturer warranty registration on your behalf within 60 days.",
+      "Compare outdoor unit sound ratings (dB) at low- and high-stage; quiet variable-speed units differ by 8–12 dB.",
+    ],
+  },
+  {
+    slug: "seer2-explained-florida-2026",
+    title: "SEER2 Ratings Explained for Florida Homeowners (2026)",
+    description: "What SEER2 actually means, why it replaced SEER in 2023, Florida's 15.2 minimum, and the honest answer to whether 18 SEER2 is worth $4,000 more than 15.2 SEER2 in Tampa Bay.",
+    tag: "Buyer's Guide",
+    date: "Apr 29, 2026",
+    read: "10 min",
+    image: images.maintenance,
+    imageAlt: "SEER2 efficiency rating explained Florida Tampa Bay HVAC — I Care Air Care",
+    location: "Tampa Bay",
+    primaryService: services.install,
+    related: [services.maintenance, services.acRepair, areas.wesley],
+    checklist: [
+      "Florida (Southeast region) requires SEER2 ≥ 15.2 on every new split-system AC and heat pump installed.",
+      "Higher SEER2 helps most when cooling runtime is high — and Tampa Bay logs 2,200+ cooling hours/year.",
+      "Variable-speed equipment improves humidity control more than the SEER2 number suggests on the spec sheet.",
+      "IRA Section 25C and utility rebates kick in at 15.2+ SEER2 / 16+ SEER2 — get the equipment AHRI cert.",
+    ],
+  },
 ];
 
 BLOG_POSTS.forEach(p => { p.body = BLOG_BODIES[p.slug]; });

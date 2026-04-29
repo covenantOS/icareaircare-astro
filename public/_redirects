@@ -71,6 +71,9 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 /our-team/ /about-us/#team 301
 /contact-us /contact/ 301
 /contact-us/ /contact/ 301
+# Buyer's Guide migrated from /services/ to root blog post (Apr 29 2026)
+/services/heat-pump-vs-ac-tampa /heat-pump-vs-ac-tampa/ 301
+/services/heat-pump-vs-ac-tampa/ /heat-pump-vs-ac-tampa/ 301
 /hvac-services /services/ 301
 /service-area /service-areas/ 301
 /ac-installation-tampa /services/hvac-installation-tampa/ 301
