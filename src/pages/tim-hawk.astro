@@ -56,12 +56,11 @@ const profilePageSchema = {
           Florida CAC1816515. Owner of I Care Air Care.
         </h1>
         <p class="mt-5 text-blue-50 text-[17px] leading-relaxed max-w-2xl">
-          Master HVAC technician, EPA Section 608 Universal certified, and the guy who
-          founded I Care Air Care in a Wesley Chapel garage in 2010. Three-plus decades
-          of capacitors in 105° attics, hurricane-recovery service calls, and walk-in
-          coolers in Tampa restaurants where the product clock was ticking.
+          Master HVAC technician, EPA Section 608 Universal certified, and the founder
+          of I Care Air Care — the Wesley Chapel HVAC contractor with 700+ five-star
+          Google reviews and a Florida CAC license verifiable on the state DBPR registry.
           Call <a href={SITE.phoneHref} class="text-accent-300 font-semibold underline underline-offset-2 hover:text-accent-200">{SITE.phone}</a> —
-          a real human picks up, and on a normal Tuesday it's often me.
+          a real human answers, and it's often Tim.
         </p>
         <p class="mt-3 text-blue-100 text-[14px] leading-relaxed max-w-2xl">
           License verifiable with the <a href={SITE.licenseVerificationUrl} target="_blank" rel="noopener" class="text-accent-300 underline underline-offset-2 hover:text-accent-200">Florida DBPR</a> ·
@@ -124,36 +123,39 @@ const profilePageSchema = {
     <div class="container-site grid lg:grid-cols-12 gap-10 items-start">
       <article class="lg:col-span-8 prose-icac">
         <span class="inline-flex items-center rounded-full bg-brand-50 text-brand-800 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">About Tim</span>
-        <h2 class="mt-3">Three decades on Tampa Bay rooftops, then one Wesley Chapel garage</h2>
-        <p>Tim Hawk turned his first wrench on a Tampa Bay air-conditioning system in the early 1990s. He spent the next three-plus decades doing the unglamorous work that makes a Florida HVAC tech actually competent: capacitors in 105°F attics, refrigerant work on equipment older than the homeowner, hurricane-recovery service calls in subdivisions where every fifth condenser was under water, walk-in cooler emergencies in Tampa Bay restaurants where the product clock was ticking.</p>
-        <p>By 2010 he'd seen enough commission-driven HVAC sales to walk out and start over. The story he tells is a specific one: an elderly Wesley Chapel homeowner who'd been quoted a full system replacement when the actual fix was a $40 capacitor. Tim drove to her house, swapped the part, charged her the part cost, and went home. The next morning he parked his own truck at <strong>27022 Foamflower Blvd.</strong> and started I Care Air Care with a one-line pledge: <em>treat every customer the way you'd want your own family treated.</em></p>
-        <p>Sixteen years later, that pledge still runs the company. The address is the same. The phone number is the same. The owner answers it when he can.</p>
+        <h2 class="mt-3">Founder of I Care Air Care · Wesley Chapel HVAC contractor</h2>
+        <p>Tim Hawk founded I Care Air Care in Wesley Chapel in 2010 and has run the business at <strong>27022 Foamflower Blvd.</strong> ever since. The phone number, the address, and the ownership are the same as the day the doors opened. The company is licensed under Florida CAC <strong>{SITE.license}</strong> (publicly verifiable on the FL DBPR registry) and Tim is EPA Section 608 Universal certified.</p>
+        <p>The pledge that started I Care Air Care still runs the company sixteen years later: <em>treat every customer the way you'd want your own family treated.</em> No commission-driven sales reps. No "your system is shot, replace it" pitch on the first visit. Written estimates before any work begins, a 1-year workmanship warranty on every repair, and a real human who answers <a href={SITE.phoneHref}>{SITE.phone}</a> when you call.</p>
 
-        <h3>What Tim actually does on a normal Tuesday</h3>
-        <p>The job has shifted as the company has grown. Tim still rolls on calls — particularly emergency no-cools and any installation that's a customer referral — but most weekdays he's running quality control on the install crew, sizing replacement systems with full Manual-J load calculations, reviewing duct static-pressure readings before sign-off, and pulling Pasco / Hillsborough / Polk county permits. <strong>Every install gets walked by Tim before the job is closed.</strong> If something is off, the crew goes back. That's not marketing copy — it's why warranty callbacks on ICAC installs are well below the industry average.</p>
+        <h3>What you can expect from I Care Air Care</h3>
+        <p>The promises in writing on every invoice and quote we send:</p>
+        <ul>
+          <li><strong>Florida-licensed contractor.</strong> CAC <a href={SITE.licenseVerificationUrl} target="_blank" rel="noopener">{SITE.license}</a> verifiable on the state DBPR registry, EPA Section 608 Universal on every refrigerant-handling tech, bonded and insured.</li>
+          <li><strong>Written, flat-rate pricing before work begins.</strong> Diagnostic visits are quoted upfront. Repair quotes are flat-rate, not hourly with a surprise. If the scope changes mid-job, you get a new written number before we keep going.</li>
+          <li><strong>1-year workmanship warranty on repairs.</strong> If the same part fails inside 12 months, we come back without a trip charge.</li>
+          <li><strong>Manufacturer warranty registered on your behalf at install.</strong> Most brands cut the warranty from 10 years to 5 if the homeowner doesn't register within the manufacturer's window. We handle it.</li>
+          <li><strong>Permits pulled and closed by us</strong> on every installation in Pasco, Hillsborough, and Polk counties.</li>
+        </ul>
 
-        <p>The other thing Tim does is answer the phone. Customers who've been with I Care Air Care for years know the cadence: call, ask for Tim, and you usually get him within a ring or two. New customers calling for the first time often think it's a fluke. It isn't. The phone is on Tim's desk on Foamflower Blvd. Wesley Chapel homeowners who've called <a href={SITE.phoneHref}>{SITE.phone}</a> in the last 16 years recognize his voice.</p>
+        <h3>Repair vs. replace — the math we use</h3>
+        <p>The rule of thumb: multiply the system's age in years by the estimated repair cost. If that number is under $5,000, repair usually wins on a multi-year cost basis. Over $5,000 — and especially if the system is past 12 years or running on a refrigerant that's being phased out — replacement often makes sense. We show you both numbers in writing so you can decide. No pressure, no commission, no "just go ahead and replace it."</p>
+        <p>When replacement <em>is</em> the right call, modern Florida HVAC code requires a Manual-J load calculation before tonnage selection, ductwork evaluation as part of the install spec, refrigerant charged to manufacturer subcool spec, and a closed permit on file. Those are the standards we work to.</p>
 
-        <h3>Tim's philosophy on repair vs. replace</h3>
-        <p>Tim is unusual in this trade because he'll tell homeowners <em>not</em> to replace systems that don't need it. The math he uses on every repair-vs-replace call is the same one he taught the rest of the team: multiply the system's age in years by the repair cost. If that number is under $5,000, repair almost always wins. Over $5,000 — and especially if the system is past 12 years on R-22 — the replacement math flips. The point is: the homeowner gets the math, in writing, before any decision. No commission, no upsell, no pressure to "just go ahead and replace it."</p>
-        <p>The corollary: when replacement <em>is</em> the right call, Tim's team is methodical about getting it right. Manual-J before tonnage selection. Duct evaluation before equipment selection. Static pressure verified before sign-off. Refrigerant charged to manufacturer subcool spec, not eyeballed. Permit pulled and closed by us, with the closed-permit PDF delivered to the homeowner for resale records. Most installations in Wesley Chapel run 14 cooling seasons or more when sized and installed correctly. Tim's installs hit that bar.</p>
-
-        <h3>Equipment Tim's team is current on</h3>
-        <p>Wesley Chapel homeowners run a full mix of equipment, and Tim's team is current on all of it. Major residential and light-commercial brands installed and serviced:</p>
+        <h3>Equipment we install and service</h3>
+        <p>Major residential and light-commercial brands we install and service:</p>
         <div class="not-prose mt-4 flex flex-wrap gap-2">
           {brands.map(b => (
             <span class="inline-flex items-center gap-1.5 rounded-full bg-surface ring-1 ring-slate-200 text-navy-700 px-3 py-1 text-xs font-semibold">{b}</span>
           ))}
         </div>
-        <p class="mt-5">I Care Air Care is also a <a href="https://icareaircare.rheempropartner.com/" target="_blank" rel="noopener">Rheem Pro Partner</a> — the manufacturer-certified status Rheem awards to contractors who meet training, install-quality, and customer-experience standards. That gets ICAC customers Rheem's extended warranties registered correctly and same-day access to Rheem-specific parts on the truck.</p>
+        <p class="mt-5">I Care Air Care is a factory-authorized <a href="https://icareaircare.rheempropartner.com/" target="_blank" rel="noopener">Rheem Pro Partner</a> — Rheem's manufacturer-certified status for contractors who meet training and install-quality standards. That gives ICAC customers Rheem's extended warranties registered correctly and same-day local parts access on Rheem equipment.</p>
 
-        <h3>What Tim is current on for 2026</h3>
-        <p>Florida HVAC has shifted hard in 2025–2026 around lower-GWP refrigerants. Tim and the install crew are current on the procedural, safety, and equipment changes:</p>
+        <h3>2026 Florida HVAC — what's changing</h3>
+        <p>The trade has shifted hard around lower-GWP refrigerants in 2025–2026. Here's what affects Tampa Bay homeowners:</p>
         <ul>
-          <li><strong>R-454B and R-32 systems.</strong> Both are A2L-classified (mildly flammable) and require updated leak detection, tool kits, brazing procedures, and jobsite ventilation steps. Tim's crew runs them as standard.</li>
-          <li><strong>R-410A wind-down.</strong> Still legal to repair and recharge, but service refrigerant cost is climbing. Tim's repair-vs-replace math now factors that explicitly for systems past year 10.</li>
+          <li><strong>R-454B and R-32 systems.</strong> Both are A2L-classified (mildly flammable) and require updated leak detection, tools, brazing procedures, and jobsite ventilation. Standard on every new install in 2026.</li>
+          <li><strong>R-410A wind-down.</strong> Still legal to repair and recharge, but service refrigerant cost is climbing. Worth factoring into the repair-vs-replace decision on systems past year 10.</li>
           <li><strong>Florida SEER2 minimum 15.2.</strong> The 2026 sweet spot for most Wesley Chapel homes is 16–18 SEER2; variable-speed (20+ SEER2) for larger or humidity-sensitive houses.</li>
-          <li><strong>Manual-J for new construction in Epperson, Mirada, Watergrass, Persimmon Park.</strong> Builder-grade tonnage in lagoon-community new builds is routinely undersized once families fill them out. Tim does free post-warranty Manual-J reviews for ICAC customers in those neighborhoods.</li>
         </ul>
       </article>
 

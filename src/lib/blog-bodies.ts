@@ -1163,7 +1163,7 @@ export const BLOG_BODIES: Record<string, string> = {
 <p>An AC + gas furnace requires the same cooling-mode tune-up plus a separate gas-furnace tune-up that includes burner inspection, heat-exchanger crack check, gas pressure measurement, CO testing at the registers, and venting-system inspection. The combustion-side work is required by code and by your home insurer.</p>
 
 <h2>Our recommendation, by home type</h2>
-<p>The 80/20 rule on this comparison, after roughly 4,000 Tampa Bay installs over 16 years:</p>
+<p>The 80/20 rule on this comparison, based on what we recommend across Tampa Bay:</p>
 <ul>
 <li><strong>Post-2000 single-family home with electric furnace, no gas at meter:</strong> heat pump. 90% of cases.</li>
 <li><strong>Post-2000 home with existing working gas furnace less than 8 years old:</strong> AC-only replacement matched to existing furnace. 75% of cases.</li>
@@ -1175,7 +1175,7 @@ export const BLOG_BODIES: Record<string, string> = {
 <p>Want the comparison run on your home? Call Tim and the team at <a href="tel:+18133952324">(813) 395-2324</a> or <a href="/contact/">request a no-obligation in-home consultation</a>. We dispatch from Foamflower Blvd in Wesley Chapel and cover <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>, <a href="/service-areas/pasco-county-ac-repair/">Pasco County</a>, <a href="/service-areas/hillsborough-county-hvac-company/">Tampa and Hillsborough County</a>, and <a href="/service-areas/polk-county-residential-ac-repair/">Polk County</a>.</p>`,
 
   "carrier-vs-trane-vs-rheem-tampa": `<h2>The bias disclosure first — because we owe you that</h2>
-<p>I Care Air Care is a factory-authorized <strong>Rheem Pro Partner</strong>. That means we get same-day Rheem parts from Mingledorff's in Tampa, our techs have direct factory training on Rheem-specific equipment, and we get pricing tiers on Rheem equipment that other contractors don't. That's a real bias and you should know it before reading this. We've also installed roughly 4,000 Carrier and Trane units across Wesley Chapel, Tampa, Land O' Lakes, Lutz, and Pasco County over 16 years — so the comparison data below is based on actual repair-and-install history, not marketing decks.</p>
+<p>I Care Air Care is a factory-authorized <strong>Rheem Pro Partner</strong>. That means we get same-day Rheem parts from Mingledorff's in Tampa, our techs have direct factory training on Rheem-specific equipment, and we get pricing tiers on Rheem equipment that other contractors don't. That's a real bias and you should know it before reading this.</p>
 <p>Here's the honest take, with the bias acknowledged: in 2026 Tampa Bay HVAC, all three brands make excellent equipment. The differences that matter to a homeowner aren't the brand — they're the installer and the local parts ecosystem. We'll cover that below, and we'll tell you specifically when Carrier or Trane is the better recommendation for your home, even though it costs us more to install.</p>
 
 <h2>The big-three Tampa Bay reality</h2>
@@ -1189,19 +1189,18 @@ export const BLOG_BODIES: Record<string, string> = {
 <li><strong>Trane:</strong> 10-year compressor warranty, parts only, similar to Carrier. American Standard (same equipment) has identical terms. Trane offers a "12 Years Full Coverage" optional warranty on Platinum-tier equipment that includes labor — $800–$1,500 add-on at install. Registration required within 60 days.</li>
 <li><strong>Rheem:</strong> 10-year limited parts warranty on the compressor on standard Classic-series; Prestige and Endeavor variable-speed series carry 10/10/3 (10 parts, 10 compressor, 3 labor) which means Rheem covers the labor for the first 3 years where Carrier and Trane do not. Registration window is 60 days.</li>
 </ul>
-<p>The labor coverage gap is real money. A compressor replacement at year 7 on a Carrier or Trane unit out of labor warranty costs the homeowner $1,400–$2,200 in labor on a part that ships free. The same failure on a Rheem 3-year-labor unit at year 2 costs you nothing. Past the included labor period, all three brands look the same — your repair contractor's labor rate, parts shipped free under warranty.</p>
-<p>Practical advice: <strong>register every system at install</strong>, regardless of brand. We do it on your behalf at every install — manufacturer model, serial, date, your name, your email — and we keep the registration confirmation on file in Housecall Pro for 12 years. Skipping registration drops the warranty to 5 years on every brand we sell. About 30% of homeowners who buy from a different installer never get this done.</p>
+<p>The labor coverage gap is real money. A compressor replacement at year 7 on a Carrier or Trane unit out of labor warranty costs the homeowner roughly $1,400–$2,200 in labor on a part that ships free. The same failure on a Rheem 3-year-labor unit at year 2 costs you nothing. Past the included labor period, all three brands look the same — your repair contractor's labor rate, parts shipped free under warranty.</p>
+<p>Practical advice: <strong>register every system at install</strong>, regardless of brand. We do it on your behalf at every install — manufacturer model, serial, date, your name, your email. Skipping registration drops the warranty to 5 years on most brands. It's the cheapest way to lose half your manufacturer coverage.</p>
 
-<h2>Reliability — what 4,000 Tampa Bay installs actually show</h2>
-<p>This is the data we have that brand catalogs don't: the 10-year repair history on systems we've installed in Pasco, Hillsborough, and Polk counties since 2010. Every system below was installed by our team and serviced by our team for 10+ years.</p>
+<h2>Reliability — what to expect across the three brands</h2>
+<p>Manufacturer reliability data isn't published in a homeowner-friendly way, but here's what's broadly understood across the residential HVAC trade in 2026:</p>
 <ul>
-<li><strong>Average repair cost over 10 years (parts + labor, owner-paid after warranty):</strong> Carrier $1,180. Trane $1,090. Rheem $1,240. American Standard $1,090. The Rheem number is slightly higher because the Classic-series outdoor fan motors we installed in 2014–2017 had a known issue that we replaced under our 1-year workmanship warranty for the first wave — but the second-fail rate is lower.</li>
-<li><strong>Compressor failure rate within 10 years:</strong> Carrier 4.1%. Trane 3.8%. Rheem 4.4%. All three are within the normal industry range (3–6%). Trane's slight edge here matches its premium-tier reputation, especially on the XR16 and XV20i lines.</li>
-<li><strong>Capacitor + contactor failure rate:</strong> roughly 22–28% in years 4–7 across all brands. This is dominated by Florida heat, not brand engineering.</li>
-<li><strong>Refrigerant leak rate within 5 years:</strong> Carrier 1.8%. Trane 1.4%. Rheem 2.1%. Trane has the longest reputation for braze quality and coil tightness; this is real but small.</li>
-<li><strong>Indoor coil corrosion (formicary) at 8 years:</strong> Carrier 2.2%. Trane 1.6%. Rheem 2.4%. The Trane edge here is mostly because Trane was first to switch to all-aluminum indoor coils in 2014; Carrier and Rheem followed within 2 years.</li>
+<li><strong>Compressor failures within 10 years</strong> sit in the low single-digit percent range across all three brands when systems are properly installed and maintained. None of the three is meaningfully more reliable than the others on the compressor; the variable that actually matters is install quality (vacuum pull depth, refrigerant charge accuracy, electrical tightness).</li>
+<li><strong>Capacitor and contactor failures in years 4–7</strong> are common across every brand sold in Florida. Florida heat is the dominant factor, not brand engineering. Plan for one capacitor replacement during the equipment's life regardless of what's on the cabinet.</li>
+<li><strong>Refrigerant leak rates</strong> are low across all three brands within the first 5 years; Trane has historically had a slight edge on coil tightness and braze quality, but the gap is small.</li>
+<li><strong>Indoor coil corrosion</strong> (formicary) shows up in the 8–10 year window on a small fraction of systems regardless of brand. Trane was first to all-aluminum coils in 2014; Carrier and Rheem followed within a couple of years, so the brand gap on coil corrosion has narrowed.</li>
 </ul>
-<p>The honest summary: across 4,000 installs, all three brands deliver within a small margin. The biggest variable is installer quality — vacuum pull depth, line-set leak check, refrigerant charge accuracy, and electrical tightness. A poorly-installed Trane will fail before a properly-installed Rheem.</p>
+<p>Honest summary: all three brands deliver within a small margin. The biggest variable is installer quality, not brand. A poorly-installed Trane will fail before a properly-installed Rheem.</p>
 
 <h2>Local parts availability — the moat that matters</h2>
 <p>This is where the Rheem Pro Partner relationship genuinely changes the math. When a part fails on your system, the question is "how fast can the contractor get the right part?" not "what brand is on the cabinet?"</p>
@@ -1352,7 +1351,7 @@ export const BLOG_BODIES: Record<string, string> = {
 <p>Stacking matters. A $14,000 18 SEER2 heat pump install nets out to roughly $11,000 after a $2,000 IRA credit and a $1,000 utility rebate. The same-tier 18 SEER2 base AC (no heat pump, electric strip heat backup) gets roughly the $1,000 utility rebate but no IRA credit, netting to about $13,000. The heat pump's tax-advantage gap over a same-tier AC is roughly $2,000.</p>
 
 <h2>The Florida-specific recommendation framework</h2>
-<p>After 4,000 installs in Wesley Chapel, Tampa, Land O' Lakes, and Pasco/Hillsborough/Polk counties, here's how we actually recommend SEER2 tier for our customers:</p>
+<p>After installing systems in Wesley Chapel, Tampa, Land O' Lakes, and across Pasco, Hillsborough, and Polk counties, here's how we typically recommend SEER2 tier for our customers:</p>
 <ul>
 <li><strong>Rental property, vacant home, low-occupancy:</strong> 15.2 SEER2 single-stage. Cheapest install, meets code, sufficient comfort.</li>
 <li><strong>Owner-occupied home, average use, no allergies, budget-conscious:</strong> 15.2 SEER2 single-stage or 16 SEER2 two-stage. The two-stage upgrade is small money for noticeable comfort improvement.</li>
