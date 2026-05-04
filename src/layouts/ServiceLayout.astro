@@ -10,7 +10,8 @@ import FAQ from '../components/FAQ.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import Schema from '../components/Schema.astro';
 import { SITE } from '../lib/site';
-import { BLOG_POSTS } from '../lib/blog';
+import { getAllPosts } from '../lib/blog';
+const BLOG_POSTS = await getAllPosts();
 
 interface Props {
   slug: string;

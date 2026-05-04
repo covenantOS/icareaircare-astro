@@ -4,17 +4,22 @@ import Hero from '../components/Hero.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
 import Schema from '../components/Schema.astro';
-import { BLOG_POSTS, type BlogPost } from '../lib/blog';
+import { getAllEntries, type BlogEntry, type BlogPost } from '../lib/blog';
+import { render } from 'astro:content';
 import { SITE } from '../lib/site';
 
-export function getStaticPaths() {
-  return BLOG_POSTS.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
+export async function getStaticPaths() {
+  const entries = await getAllEntries();
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
   }));
 }
 
-const { post } = Astro.props as { post: BlogPost };
+const { entry } = Astro.props as { entry: BlogEntry };
+const post: BlogPost = { slug: entry.id, ...entry.data };
+const { Content } = await render(entry);
+const BLOG_POSTS = (await getAllEntries()).map((e) => ({ slug: e.id, ...e.data }));
 const url = `${SITE.url}/${post.slug}/`;
 const breadcrumbs = [
   { name: 'Home', url: `${SITE.url}/` },
@@ -135,8 +140,8 @@ const postFAQs = [
           <a href="tel:+18133952324" class="shrink-0 rounded-md bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-2.5 text-sm">(813) 395-2324</a>
         </div>
 
-        {post.body
-          ? <Fragment set:html={post.body} />
+        {Content
+          ? <Content />
           : (
             <>
               <h2>What this usually means in {post.location}</h2>

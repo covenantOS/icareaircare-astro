@@ -5,7 +5,8 @@ import ContactFormSection from '../components/ContactFormSection.astro';
 import TrustBadgeStrip from '../components/TrustBadgeStrip.astro';
 import Schema from '../components/Schema.astro';
 import { SITE } from '../lib/site';
-import { BLOG_POSTS } from '../lib/blog';
+import { getAllPosts } from '../lib/blog';
+const BLOG_POSTS = await getAllPosts();
 
 const breadcrumbs = [
   { name: 'Home', url: `${SITE.url}/` },

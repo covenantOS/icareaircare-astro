@@ -3,7 +3,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
-import { BLOG_POSTS as allPosts } from '../lib/blog';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('blog', ({ data }) => !data.draft));
+// Sort by date descending — same order the previous TS array used (newest first)
+entries.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const allPosts = entries.map((e) => ({ ...e.data, slug: e.id }));
 
 const PER_PAGE = 9;
 const totalPages = Math.ceil(allPosts.length / PER_PAGE);

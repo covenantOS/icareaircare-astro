@@ -1,5 +1,6 @@
 ---
-import { featuredBlogPosts as posts } from '../lib/blog';
+import { getFeaturedPosts } from '../lib/blog';
+const posts = await getFeaturedPosts();
 
 // Map originals to responsive gen variants (pre-generated via scripts/resize-images.mjs).
 // Falls back to the original src if no mapping is known.
