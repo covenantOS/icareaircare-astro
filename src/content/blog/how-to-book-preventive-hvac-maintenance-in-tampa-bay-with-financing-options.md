@@ -38,7 +38,7 @@ checklist:
 
 <h2>Why booking through a local contractor beats big-box aggregators</h2>
 <p>Aggregator sites and big-box referral programs mark up prices 15-30% to cover their lead fees, and the techs rotate so you rarely get the same person twice. A local Wesley Chapel team building a long-term relationship with your system knows which specific capacitor model failed last time, which duct run was sealed at install, whether your coil had formicary corrosion, and what filter brand fits your air handler without trimming. That continuity is the actual value of a maintenance plan — not the 15% repair discount.</p>
-<p>We've been answering the Wesley Chapel phone since 2010 under the same ownership. Tim Hawk is the voice most homeowners hear when they call. License CAC1816515, 700+ Google reviews, 16+ years. Read through <a href="/which-preventive-hvac-maintenance-plans-in-tampa-bay-offer-the-best-value/">our plan comparison</a> to see which tier fits, or <a href="/what-does-a-residential-preventive-hvac-maintenance-visit-include-in-wesley-chapel-fl/">what's in a typical visit</a> if you've never had formal maintenance before.</p>
+<p>We've been answering the Wesley Chapel phone since 2010 under the same ownership. Tim Hawk is the voice most homeowners hear when they call. License CAC1816515, 700+ Google reviews, 16+ years. Read through <a href="/blogs/which-preventive-hvac-maintenance-plans-in-tampa-bay-offer-the-best-value/">our plan comparison</a> to see which tier fits, or <a href="/blogs/what-does-a-residential-preventive-hvac-maintenance-visit-include-in-wesley-chapel-fl/">what's in a typical visit</a> if you've never had formal maintenance before.</p>
 
 <h2>What to have ready before the tech arrives</h2>
 <ul>
@@ -49,4 +49,4 @@ checklist:
 <li>Your thermostat accessible for the tech to check settings and calibration</li>
 </ul>
 
-<p>If you're ready to schedule, call <a href="tel:+18133952324">(813) 395-2324</a>, use the <a href="/book/">online form</a>, or read <a href="/how-to-choose-the-right-hvac-team-for-your-home/">how to choose the right HVAC team</a> if you're still comparing contractors. Tim and the team answer the phone personally during business hours and will give you a straight answer on scheduling, pricing, and which plan makes sense for your home.</p>
+<p>If you're ready to schedule, call <a href="tel:+18133952324">(813) 395-2324</a>, use the <a href="/book/">online form</a>, or read <a href="/blogs/how-to-choose-the-right-hvac-team-for-your-home/">how to choose the right HVAC team</a> if you're still comparing contractors. Tim and the team answer the phone personally during business hours and will give you a straight answer on scheduling, pricing, and which plan makes sense for your home.</p>

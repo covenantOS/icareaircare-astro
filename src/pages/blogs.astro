@@ -44,7 +44,7 @@ const allTags = Array.from(new Set(allPosts.map(p => p.tag)));
       <div id="blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {allPosts.map((p, i) => (
           <a
-            href={`/${p.slug}/`}
+            href={`/blogs/${p.slug}/`}
             class="blog-card group block rounded-2xl bg-white ring-1 ring-slate-100 shadow-[var(--shadow-card)] overflow-hidden hover:shadow-[var(--shadow-soft)] hover:-translate-y-0.5 transition"
             data-tag={p.tag}
             data-idx={i}

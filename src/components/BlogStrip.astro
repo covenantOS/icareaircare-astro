@@ -35,7 +35,7 @@ const srcsetMap: Record<string, { small: string; large: string; smallW: number; 
       {posts.map(p => {
         const v = srcsetMap[p.image];
         return (
-        <a href={`/${p.slug}/`} class="group relative block rounded-xl overflow-hidden aspect-[4/5] shadow-[var(--shadow-soft)]">
+        <a href={`/blogs/${p.slug}/`} class="group relative block rounded-xl overflow-hidden aspect-[4/5] shadow-[var(--shadow-soft)]">
           {v ? (
             <img src={v.large}
                  srcset={`${v.small} ${v.smallW}w, ${v.large} ${v.largeW}w`}

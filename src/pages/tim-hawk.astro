@@ -204,7 +204,7 @@ const profilePageSchema = {
       </div>
       <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
         {reviewedArticles.map(post => (
-          <a href={`/${post.slug}/`} class="group rounded-xl bg-white ring-1 ring-slate-200 hover:ring-brand-300 hover:shadow-[var(--shadow-card)] p-5 transition">
+          <a href={`/blogs/${post.slug}/`} class="group rounded-xl bg-white ring-1 ring-slate-200 hover:ring-brand-300 hover:shadow-[var(--shadow-card)] p-5 transition">
             <div class="text-[11px] font-bold uppercase tracking-[0.12em] text-brand-700">{post.tag} · {post.location}</div>
             <h3 class="mt-2 text-[16.5px] font-bold text-navy-700 group-hover:text-brand-700 leading-snug">{post.title}</h3>
             <p class="mt-2 text-[13.5px] text-slate-600 leading-relaxed">{post.description}</p>

@@ -32,7 +32,7 @@ export const GET: APIRoute = async () => {
     .filter(p => !EXCLUDE.has(p.slug))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .map(p => {
-      const url = `${SITE.url}/${p.slug}/`;
+      const url = `${SITE.url}/blogs/${p.slug}/`;
       return `
     <item>
       <title>${esc(p.title)}</title>

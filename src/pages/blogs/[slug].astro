@@ -1,12 +1,12 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
-import FinalCTA from '../components/FinalCTA.astro';
-import ContactFormSection from '../components/ContactFormSection.astro';
-import Schema from '../components/Schema.astro';
-import { getAllEntries, type BlogEntry, type BlogPost } from '../lib/blog';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import FinalCTA from '../../components/FinalCTA.astro';
+import ContactFormSection from '../../components/ContactFormSection.astro';
+import Schema from '../../components/Schema.astro';
+import { getAllEntries, type BlogEntry, type BlogPost } from '../../lib/blog';
 import { render } from 'astro:content';
-import { SITE } from '../lib/site';
+import { SITE } from '../../lib/site';
 
 export async function getStaticPaths() {
   const entries = await getAllEntries();
@@ -20,7 +20,7 @@ const { entry } = Astro.props as { entry: BlogEntry };
 const post: BlogPost = { slug: entry.id, ...entry.data };
 const { Content } = await render(entry);
 const BLOG_POSTS = (await getAllEntries()).map((e) => ({ slug: e.id, ...e.data }));
-const url = `${SITE.url}/${post.slug}/`;
+const url = `${SITE.url}/blogs/${post.slug}/`;
 const breadcrumbs = [
   { name: 'Home', url: `${SITE.url}/` },
   { name: 'Blog', url: `${SITE.url}/blogs/` },
@@ -227,7 +227,7 @@ const postFAQs = [
           <ul class="mt-3 space-y-3">
             {relatedPosts.map((p) => (
               <li>
-                <a href={`/${p.slug}/`} class="group flex gap-3">
+                <a href={`/blogs/${p.slug}/`} class="group flex gap-3">
                   <div class="w-14 h-14 rounded-md overflow-hidden bg-slate-100 shrink-0">
                     <img src={p.image} alt="" class="w-full h-full object-cover" width="56" height="56" loading="lazy" />
                   </div>
