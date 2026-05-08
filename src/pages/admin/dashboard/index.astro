@@ -387,14 +387,36 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     async function runSync() {
       const btn = document.getElementById('sync-btn');
       btn.disabled = true;
-      btn.textContent = 'Syncing…';
-      toast('Pulling data from Housecall Pro — this may take 30-90 seconds.');
+      // Cloudflare Workers (free plan) caps each function invocation at 50
+      // subrequests. ICAC's customers page out at 43 pages alone, so we
+      // sync in 3 separate invocations to keep each within budget.
+      const phases = [
+        { name: 'employees', label: 'Pulling techs',     body: { endpoints: ['employees'] } },
+        { name: 'customers', label: 'Pulling customers', body: { endpoints: ['customers'] } },
+        { name: 'jobs',      label: 'Pulling jobs',      body: { endpoints: ['jobs'], daysBack: 90 } },
+      ];
+      let totalTechs = 0, totalCustomers = 0, totalJobs = 0;
+      const errors = [];
       try {
-        const r = await api('/api/sync/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ daysBack: 90 }) });
-        toast(r.success
-          ? `Synced ${r.jobs_synced} jobs · ${r.customers_synced} customers · ${r.techs_synced} techs`
-          : `Sync had errors: ${(r.errors || []).join('; ').slice(0, 120)}`,
-          r.success ? 'ok' : 'error');
+        for (const p of phases) {
+          btn.textContent = p.label + '…';
+          toast(p.label + ' from Housecall Pro…');
+          const r = await api('/api/sync/run', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(p.body),
+          });
+          totalTechs     += r.techs_synced || 0;
+          totalCustomers += r.customers_synced || 0;
+          totalJobs      += r.jobs_synced || 0;
+          if (r.errors && r.errors.length) errors.push(...r.errors);
+        }
+        if (errors.length) {
+          toast(`Synced w/ warnings: ${totalJobs} jobs · ${totalCustomers} customers · ${totalTechs} techs · ${errors.length} error(s)`, 'error');
+          console.warn('Sync errors:', errors);
+        } else {
+          toast(`Synced ${totalJobs} jobs · ${totalCustomers} customers · ${totalTechs} techs`, 'ok');
+        }
         await loadAll();
       } catch (e) {
         toast(e.message || 'Sync failed', 'error');
