@@ -4,7 +4,7 @@
 // only the async task pattern. Workflow:
 //   1. POST /v3/business_data/google/reviews/task_post   (~$0.00075/task)
 //   2. Wait 30-90 seconds while DataForSEO scrapes Google
-//   3. GET  /v3/business_data/google/reviews/task_get/advanced/{id}
+//   3. GET  /v3/business_data/google/reviews/task_get/{id}
 // Tasks stay available for 7 days; we cache the latest result in D1 so the
 // dashboard reads from D1 (free, fast) and only re-syncs on demand or cron.
 //
@@ -210,7 +210,7 @@ export async function fetchGoogleReviews(env: DataForSEOEnv, params: FetchReview
 
   while (Date.now() < deadline) {
     await new Promise((r) => setTimeout(r, interval));
-    const got = await dfsGet(env, `/v3/business_data/google/reviews/task_get/advanced/${taskId}`);
+    const got = await dfsGet(env, `/v3/business_data/google/reviews/task_get/${taskId}`);
     if (!got.ok) {
       lastError = got.text.slice(0, 300);
       continue;
@@ -249,7 +249,7 @@ export async function fetchGoogleReviews(env: DataForSEOEnv, params: FetchReview
 // a result that was still pending on the previous sync attempt.
 export async function getReviewsTask(env: DataForSEOEnv, taskId: string): Promise<FetchReviewsResult> {
   const start = Date.now();
-  const got = await dfsGet(env, `/v3/business_data/google/reviews/task_get/advanced/${taskId}`);
+  const got = await dfsGet(env, `/v3/business_data/google/reviews/task_get/${taskId}`);
   if (!got.ok) {
     return { ok: false, status: got.status, duration_ms: Date.now() - start, error: got.text.slice(0, 500), task_id: taskId };
   }
