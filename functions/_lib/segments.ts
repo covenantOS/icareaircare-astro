@@ -19,14 +19,21 @@ export interface SegmentRow {
 function rowToSegment(r: Record<string, unknown>): SegmentRow {
   const last = (r.last_job_at as string) || null;
   const days = last ? Math.floor((Date.now() - Date.parse(last)) / 86400_000) : null;
+  // Display name fallback chain: First+Last → Company → email-username →
+  // phone digits → trimmed hcp_id. Some HCP customer records are leads
+  // where the name was never captured; we should still show something
+  // human-readable.
+  const fnln = [r.first_name, r.last_name].filter(Boolean).join(' ').trim();
+  const email = (r.email as string) || '';
+  const phone = (r.mobile_number as string) || (r.home_number as string) || '';
+  const emailUser = email.includes('@') ? email.split('@')[0] : '';
+  const fallbackId = String(r.hcp_id || '').replace(/^cus_/, '').slice(0, 8);
+  const name = fnln || (r.company as string) || emailUser || phone || fallbackId;
   return {
     hcp_id: r.hcp_id as string,
-    name:
-      [r.first_name, r.last_name].filter(Boolean).join(' ').trim() ||
-      (r.company as string) ||
-      (r.hcp_id as string),
-    email: (r.email as string) || null,
-    phone: (r.mobile_number as string) || (r.home_number as string) || null,
+    name,
+    email: email || null,
+    phone: phone || null,
     zip: (r.zip as string) || null,
     city: (r.city as string) || null,
     is_member: (r.is_member as number) || 0,
@@ -39,12 +46,9 @@ function rowToSegment(r: Record<string, unknown>): SegmentRow {
 }
 
 // Customers Tim hasn't seen in 1+ year (still inside HCP's 3-yr marketing cap).
-// Two signal paths:
-//   (A) We have an old completed job in D1 → last_job_at between 1 and 3 yrs old.
-//   (B) Sync window doesn't go back that far → fall back on HCP customer
-//       creation date (hcp_created_at) > 1 yr ago AND no recent job in our window.
-// Sorted by lifetime value desc; only emits rows that have an email or phone
-// (so the list is actually actionable for re-engagement).
+// Definition: customer has been known to HCP for >365 days AND has no
+// completed-OR-scheduled job in our DB within the last year. Requires
+// email or phone so the list is actionable. Sorted by lifetime value.
 export async function dormant12mo(db: D1Database, limit = 100): Promise<SegmentRow[]> {
   const now = new Date();
   const oneYrAgo = new Date(now.getTime() - 365 * 86400_000).toISOString();
@@ -52,22 +56,28 @@ export async function dormant12mo(db: D1Database, limit = 100): Promise<SegmentR
   const res = await db
     .prepare(
       `SELECT hcp_id, first_name, last_name, company, email, mobile_number, home_number, zip, city,
-              is_member, member_plan, total_jobs, lifetime_value_cents, last_job_at
+              is_member, member_plan, total_jobs, lifetime_value_cents, last_job_at, hcp_created_at
        FROM customers
        WHERE (email IS NOT NULL OR mobile_number IS NOT NULL)
-         AND (
-           (last_job_at IS NOT NULL AND last_job_at < ? AND last_job_at > ?)
-           OR
-           (last_job_at IS NULL AND hcp_created_at IS NOT NULL AND hcp_created_at < ? AND hcp_created_at > ?)
+         AND hcp_created_at IS NOT NULL
+         AND hcp_created_at < ?
+         AND hcp_created_at > ?
+         AND NOT EXISTS (
+           SELECT 1 FROM jobs j
+           WHERE j.customer_hcp_id = customers.hcp_id
+             AND (
+               (j.completed_at IS NOT NULL AND j.completed_at >= ?)
+               OR (j.scheduled_start IS NOT NULL AND j.scheduled_start >= ?)
+             )
          )
        ORDER BY
          CASE WHEN lifetime_value_cents > 0 THEN 0 ELSE 1 END,
          lifetime_value_cents DESC,
          total_jobs DESC,
-         last_job_at DESC
+         hcp_created_at DESC
        LIMIT ?`,
     )
-    .bind(oneYrAgo, threeYrAgo, oneYrAgo, threeYrAgo, limit)
+    .bind(oneYrAgo, threeYrAgo, oneYrAgo, oneYrAgo, limit)
     .all<Record<string, unknown>>();
   return (res.results || []).map(rowToSegment);
 }
