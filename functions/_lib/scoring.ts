@@ -24,13 +24,18 @@ export interface ScoreTargets {
   volume: { zero: number; hundred: number };
 }
 
+// Re-tuned 2026-05-08 after Will reviewed real-world output. Close rate is
+// the strongest signal of a quality service tech (Erick at 50% close ≫ Cesar
+// at 31%); revenue alone over-rewards install-heavy techs vs balanced service
+// techs. Reviews lowered because text-match attribution is imperfect and we
+// don't want it to swing the score.
 export const DEFAULT_WEIGHTS: ScoreWeights = {
-  revenue_per_day: 0.25,
+  revenue_per_day: 0.20,            // was 0.25
   avg_ticket: 0.15,
-  close_rate: 0.15,
+  close_rate: 0.25,                 // was 0.15 — biggest single signal
   membership_conversion: 0.10,
   callback_rate_inverted: 0.10,
-  review_rate: 0.10,
+  review_rate: 0.05,                // was 0.10 — attribution imperfect
   utilization: 0.10,
   volume: 0.05,
 };

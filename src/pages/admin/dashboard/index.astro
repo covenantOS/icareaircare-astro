@@ -618,9 +618,12 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       // Way more meaningful for Tim than "how do we compare to industry top
       // quartile" since his tune-up techs aren't expected to do install-tech
       // numbers, but they SHOULD be measured against each other.
+      // Defaults retuned 2026-05-08: close rate up (strongest signal), revenue
+      // down slightly (was over-rewarding install-only techs), reviews down
+      // (text-match attribution still imperfect).
       const w = (configCache && configCache.weights) || {
-        revenue_per_day:0.25, avg_ticket:0.15, close_rate:0.15, membership_conversion:0.10,
-        callback_rate_inverted:0.10, review_rate:0.10, utilization:0.10, volume:0.05
+        revenue_per_day:0.20, avg_ticket:0.15, close_rate:0.25, membership_conversion:0.10,
+        callback_rate_inverted:0.10, review_rate:0.05, utilization:0.10, volume:0.05
       };
       // Components measurable right now. review_rate flipped to true now
       // that we attribute Google reviews to techs via reviewer-name → HCP-customer

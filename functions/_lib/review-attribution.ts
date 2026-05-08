@@ -190,3 +190,63 @@ export async function attributeReviews(db: D1Database, opts?: { reattribute?: bo
   if (writes.length) await db.batch(writes);
   return result;
 }
+
+// SECOND-PASS attribution: many reviewers don't have an exact HCP customer
+// name match, but they NAME the tech in the review text ("Kleber was wonderful",
+// "Tim came out today and..."). Scan unattributed reviews for tech first names.
+// This often catches what name-matching missed.
+//
+// Confidence: high if ONE tech's first name appears, medium if MULTIPLE techs
+// match (we pick the longest/most-specific name).
+export interface TextAttributionResult {
+  considered: number;
+  newly_attributed: number;
+  ambiguous: number;
+  details: Array<{ review_id: string; tech: string; first_name: string }>;
+}
+
+export async function attributeReviewsByText(db: D1Database): Promise<TextAttributionResult> {
+  const result: TextAttributionResult = { considered: 0, newly_attributed: 0, ambiguous: 0, details: [] };
+
+  // Load techs with first names (active field techs preferred but include all
+  // since older reviews may name retired techs)
+  const techs = await db
+    .prepare(`SELECT hcp_id, first_name FROM techs WHERE first_name IS NOT NULL AND length(first_name) >= 3`)
+    .all<{ hcp_id: string; first_name: string }>();
+  const techList = (techs.results || []).map((t) => ({
+    hcp_id: t.hcp_id,
+    first_name: t.first_name,
+    re: new RegExp(`\\b${t.first_name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i'),
+  }));
+  if (!techList.length) return result;
+
+  // Walk all unattributed reviews with text
+  const reviews = await db
+    .prepare(
+      `SELECT review_id, text FROM reviews
+       WHERE attributed_tech_hcp_id IS NULL AND text IS NOT NULL AND length(text) > 10`,
+    )
+    .all<{ review_id: string; text: string }>();
+
+  const writes: D1PreparedStatement[] = [];
+  for (const r of reviews.results || []) {
+    result.considered++;
+    const matches = techList.filter((t) => t.re.test(r.text));
+    if (matches.length === 0) continue;
+    // Pick the most specific match (longest first name) to disambiguate
+    // common-name overlaps. If still ambiguous, pick first.
+    matches.sort((a, b) => b.first_name.length - a.first_name.length);
+    const best = matches[0];
+    const ambiguous = matches.length > 1;
+    if (ambiguous) result.ambiguous++;
+    writes.push(
+      db.prepare(
+        `UPDATE reviews SET attributed_tech_hcp_id = ?, attribution_method = ? WHERE review_id = ?`,
+      ).bind(best.hcp_id, ambiguous ? 'text_match:medium' : 'text_match:high', r.review_id),
+    );
+    result.newly_attributed++;
+    result.details.push({ review_id: r.review_id, tech: best.hcp_id, first_name: best.first_name });
+  }
+  if (writes.length) await db.batch(writes);
+  return result;
+}

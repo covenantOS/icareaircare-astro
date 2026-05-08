@@ -15,13 +15,16 @@ const DEFAULT_THRESHOLDS = {
 };
 
 // Formula A from the industry research — Balanced Service-Tech Score.
+// Re-tuned 2026-05-08: close rate weight increased (strongest quality signal),
+// revenue weight reduced (was over-rewarding install-only techs), review
+// weight reduced (text-match attribution still imperfect).
 const DEFAULT_WEIGHTS = {
-  revenue_per_day: 0.25,
+  revenue_per_day: 0.20,
   avg_ticket: 0.15,
-  close_rate: 0.15,
+  close_rate: 0.25,
   membership_conversion: 0.10,
   callback_rate_inverted: 0.10,
-  review_rate: 0.10,
+  review_rate: 0.05,
   utilization: 0.10,
   volume: 0.05,
 };
