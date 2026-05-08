@@ -22,10 +22,27 @@ const handler: PagesFunction<Env> = async ({ request, env }) => {
   }
 
   const url = new URL(request.url);
-  const depth = Math.min(700, Math.max(50, parseInt(url.searchParams.get('depth') || '200', 10) || 200));
+  const depth = Math.min(700, Math.max(10, parseInt(url.searchParams.get('depth') || '50', 10) || 50));
   const keyword = url.searchParams.get('keyword') || BUSINESS_KEYWORD;
+  const cid = url.searchParams.get('cid') || undefined;
 
-  const r = await fetchGoogleReviews(env, { keyword, depth });
+  const r = await fetchGoogleReviews(env, {
+    keyword: cid ? undefined : keyword,
+    cid,
+    location_name: 'Wesley Chapel,Florida,United States',
+    language_name: 'English',
+    depth,
+    max_wait_ms: 45000,    // up to 45s polling
+  });
+  if (!r.ok && r.pending) {
+    return jsonResponse({
+      success: false,
+      pending: true,
+      task_id: r.task_id,
+      message: r.error,
+      duration_ms: r.duration_ms,
+    }, 202);
+  }
   if (!r.ok) {
     return jsonResponse({
       error: r.error || 'DataForSEO fetch failed',
