@@ -302,38 +302,104 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     </main>
   </div>
 
-  <!-- SETTINGS DRAWER -->
+  <!-- SETTINGS DRAWER (Phase 3 redesign) -->
   <div id="settings-drawer" class="fixed inset-0 z-40 hidden" aria-modal="true">
     <div id="settings-backdrop" class="absolute inset-0 bg-black/40"></div>
-    <div class="absolute right-0 top-0 bottom-0 w-full sm:max-w-md bg-white shadow-xl overflow-y-auto">
-      <div class="p-5 border-b border-line flex items-center justify-between">
+    <div class="absolute right-0 top-0 bottom-0 w-full sm:max-w-lg bg-white shadow-xl overflow-y-auto">
+      <div class="p-5 border-b border-line flex items-center justify-between sticky top-0 bg-white z-10">
         <h2 class="text-lg font-bold text-navy-700">Settings</h2>
         <button id="settings-close" class="btn-ghost-admin">✕</button>
       </div>
       <div class="p-5 space-y-6">
+
+        <!-- THRESHOLDS -->
         <div>
-          <h3 class="font-semibold text-navy-700 mb-2">Thresholds</h3>
-          <p class="text-xs text-slate-500 mb-3">Tim's stated values. Below sold threshold = "didn't close". Below min ticket = highlighted in tables.</p>
+          <h3 class="font-semibold text-navy-700 mb-1 flex items-center gap-2">
+            <span class="section-icon bg-brand-50 text-brand-700 w-5 h-5 text-xs">$</span>
+            Thresholds
+          </h3>
+          <p class="text-xs text-slate-500 mb-3">When does a job count as "sold"? When is a ticket "good enough"?</p>
           <div class="space-y-3">
-            <label class="block text-sm">Tune-up sold threshold ($)
-              <input id="set-sold-tu" type="number" class="block w-full mt-1 px-3 py-2 border border-line rounded" />
+            <label class="block text-sm">
+              <div class="flex justify-between"><span>Tune-up sold threshold</span><span class="text-xs text-slate-500">below this = unsold</span></div>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="text-slate-500">$</span>
+                <input id="set-sold-tu" type="number" class="flex-1 px-3 py-2 border border-line rounded" />
+              </div>
             </label>
-            <label class="block text-sm">Tune-up minimum ticket ($)
-              <input id="set-min-tu" type="number" class="block w-full mt-1 px-3 py-2 border border-line rounded" />
+            <label class="block text-sm">
+              <div class="flex justify-between"><span>Tune-up minimum ticket</span><span class="text-xs text-slate-500">flag below in red</span></div>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="text-slate-500">$</span>
+                <input id="set-min-tu" type="number" class="flex-1 px-3 py-2 border border-line rounded" />
+              </div>
             </label>
-            <label class="block text-sm">Diagnostic minimum ticket ($)
-              <input id="set-min-diag" type="number" class="block w-full mt-1 px-3 py-2 border border-line rounded" />
+            <label class="block text-sm">
+              <div class="flex justify-between"><span>Diagnostic minimum ticket</span><span class="text-xs text-slate-500">flag below in red</span></div>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="text-slate-500">$</span>
+                <input id="set-min-diag" type="number" class="flex-1 px-3 py-2 border border-line rounded" />
+              </div>
             </label>
           </div>
         </div>
+
+        <!-- SCORE PRESETS -->
         <div>
-          <h3 class="font-semibold text-navy-700 mb-2">Score weights</h3>
-          <p class="text-xs text-slate-500 mb-3">Must sum to 1.00. Auto-normalized on save.</p>
+          <h3 class="font-semibold text-navy-700 mb-1 flex items-center gap-2">
+            <span class="section-icon bg-accent-100 text-accent-700 w-5 h-5 text-xs">★</span>
+            Score formula
+          </h3>
+          <p class="text-xs text-slate-500 mb-3">How much each factor counts toward the A-F grade. Pick a preset or hand-tune.</p>
+          <div class="grid grid-cols-2 gap-2 mb-4" id="preset-buttons">
+            <button type="button" data-preset="balanced" class="btn-ghost-admin text-xs">⚖️ Balanced</button>
+            <button type="button" data-preset="service" class="btn-ghost-admin text-xs">🔧 Service-tech</button>
+            <button type="button" data-preset="install" class="btn-ghost-admin text-xs">🏠 Install-tech</button>
+            <button type="button" data-preset="quality" class="btn-ghost-admin text-xs">⭐ Quality-first</button>
+          </div>
           <div id="weight-sliders" class="space-y-3"></div>
+
+          <!-- LIVE WHAT-IF PREVIEW -->
+          <div class="mt-4 card-quiet" style="background:#f8fafc">
+            <div class="text-xs font-bold uppercase tracking-wide text-slate-600 mb-2">Live preview · how grades shift</div>
+            <div id="settings-preview" class="space-y-1 text-xs"></div>
+          </div>
         </div>
-        <div class="flex gap-2 pt-2">
-          <button id="settings-save" class="btn-admin flex-1">Save & re-score</button>
-          <button id="settings-reset" class="btn-ghost-admin">Reset to defaults</button>
+
+        <!-- GOALS (Phase 8) -->
+        <div>
+          <h3 class="font-semibold text-navy-700 mb-1 flex items-center gap-2">
+            <span class="section-icon bg-emerald-100 text-emerald-700 w-5 h-5 text-xs">🎯</span>
+            Performance goals
+          </h3>
+          <p class="text-xs text-slate-500 mb-3">Targets for the shop. Each tech is graded against these on the dashboard.</p>
+          <div class="space-y-3" id="goals-fields">
+            <label class="block text-sm">
+              <div class="flex justify-between"><span>Revenue per tech / month</span><span id="g-rev-disp" class="text-xs font-semibold text-navy-700">$15,000</span></div>
+              <input id="g-rev" type="range" min="3000" max="50000" step="500" value="15000" class="w-full mt-1" />
+            </label>
+            <label class="block text-sm">
+              <div class="flex justify-between"><span>Close rate</span><span id="g-close-disp" class="text-xs font-semibold text-navy-700">55%</span></div>
+              <input id="g-close" type="range" min="30" max="90" step="1" value="55" class="w-full mt-1" />
+            </label>
+            <label class="block text-sm">
+              <div class="flex justify-between"><span>Average ticket</span><span id="g-ticket-disp" class="text-xs font-semibold text-navy-700">$400</span></div>
+              <input id="g-ticket" type="range" min="100" max="1500" step="25" value="400" class="w-full mt-1" />
+            </label>
+            <label class="block text-sm">
+              <div class="flex justify-between"><span>Callback rate (max)</span><span id="g-cb-disp" class="text-xs font-semibold text-navy-700">3%</span></div>
+              <input id="g-cb" type="range" min="0" max="10" step="0.5" value="3" class="w-full mt-1" />
+            </label>
+            <label class="block text-sm">
+              <div class="flex justify-between"><span>Reviews per 100 jobs</span><span id="g-rev-rate-disp" class="text-xs font-semibold text-navy-700">15</span></div>
+              <input id="g-rev-rate" type="range" min="0" max="40" step="1" value="15" class="w-full mt-1" />
+            </label>
+          </div>
+        </div>
+
+        <div class="flex gap-2 pt-2 sticky bottom-0 bg-white pb-1">
+          <button id="settings-save" class="btn-admin flex-1">Save & apply</button>
+          <button id="settings-reset" class="btn-ghost-admin">Reset</button>
         </div>
       </div>
     </div>
@@ -597,6 +663,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
     function renderTechs(data) {
       const all = (data.techs || []).filter(t => t.jobs > 0);
+      // Stash for the settings drawer's live preview
+      lastTechsForPreview = all;
       if (!all.length) {
         document.getElementById('tech-rows').innerHTML =
           `<tr><td colspan="8" class="text-center text-slate-400 py-6">No tech data.</td></tr>`;
@@ -958,7 +1026,98 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       finally { btn.disabled = false; btn.textContent = 'Sync now'; }
     }
 
-    // ─── SETTINGS DRAWER ────────────────────────────────────────────
+    // ─── SETTINGS DRAWER (Phase 3 redesign) ─────────────────────────
+    // Score-formula presets — one-click weight sets.
+    const PRESETS = {
+      balanced: { revenue_per_day:0.20, avg_ticket:0.15, close_rate:0.25, membership_conversion:0.10, callback_rate_inverted:0.10, review_rate:0.05, utilization:0.10, volume:0.05 },
+      service:  { revenue_per_day:0.15, avg_ticket:0.10, close_rate:0.30, membership_conversion:0.15, callback_rate_inverted:0.10, review_rate:0.05, utilization:0.10, volume:0.05 },
+      install:  { revenue_per_day:0.35, avg_ticket:0.25, close_rate:0.15, membership_conversion:0.05, callback_rate_inverted:0.05, review_rate:0.05, utilization:0.05, volume:0.05 },
+      quality:  { revenue_per_day:0.10, avg_ticket:0.10, close_rate:0.20, membership_conversion:0.10, callback_rate_inverted:0.20, review_rate:0.15, utilization:0.10, volume:0.05 },
+    };
+    const WEIGHT_LABELS = {
+      revenue_per_day: { name: 'Revenue / day', why: 'Higher = rewards techs who bring in more $ per work day.' },
+      avg_ticket: { name: 'Average ticket', why: 'Higher = rewards techs who close bigger jobs (good for install / sales).' },
+      close_rate: { name: 'Close rate', why: 'Higher = rewards techs who actually convert work, not just spin wheels.' },
+      membership_conversion: { name: 'Memberships sold', why: 'Higher = rewards techs who pitch and sell care plans.' },
+      callback_rate_inverted: { name: 'Low callbacks', why: 'Higher = rewards techs whose work HOLDS — quality signal.' },
+      review_rate: { name: 'Reviews generated', why: 'Higher = rewards techs whose customers actually leave Google reviews. Currently lower-weighted because attribution is imperfect.' },
+      utilization: { name: 'Billable hours %', why: 'Higher = rewards efficient techs (less drive, more on-site). Pending Timesheets ingest.' },
+      volume: { name: 'Job volume', why: 'Higher = rewards techs who push more jobs. Keep low or quality drops.' },
+    };
+    let lastTechsForPreview = [];
+
+    function readSlidersAsWeights() {
+      const w = {};
+      document.querySelectorAll('input[data-w-input]').forEach(inp => {
+        w[inp.getAttribute('data-w-input')] = (parseFloat(inp.value) || 0) / 100;
+      });
+      return w;
+    }
+    function renderWeightSliders(weights) {
+      const html = Object.entries(weights).map(([k, v]) => {
+        const lbl = WEIGHT_LABELS[k] || { name: k, why: '' };
+        return `<div>
+          <div class="flex justify-between text-sm">
+            <span title="${esc(lbl.why)}" style="cursor:help">${esc(lbl.name)} <span class="text-slate-400 text-xs">ⓘ</span></span>
+            <span class="num font-semibold"><span data-w-display="${k}">${(v*100).toFixed(0)}</span>%</span>
+          </div>
+          <input type="range" min="0" max="50" step="1" value="${(v*100).toFixed(0)}" data-w-input="${k}" class="w-full" />
+          <div class="text-[10px] text-slate-500 mt-0.5">${esc(lbl.why)}</div>
+        </div>`;
+      }).join('');
+      document.getElementById('weight-sliders').innerHTML = html;
+      document.querySelectorAll('input[data-w-input]').forEach(inp => {
+        inp.addEventListener('input', () => {
+          const k = inp.getAttribute('data-w-input');
+          document.querySelector(`[data-w-display="${k}"]`).textContent = inp.value;
+          updateLivePreview();
+        });
+      });
+    }
+    function updateLivePreview() {
+      // Recompute scores using current slider weights against the current tech
+      // leaderboard data — show top-3 grades shift in real time.
+      if (!lastTechsForPreview.length) {
+        document.getElementById('settings-preview').innerHTML = '<div class="text-slate-400 italic">Click "Sync now" first to load tech data.</div>';
+        return;
+      }
+      const w = readSlidersAsWeights();
+      const tg = (configCache && configCache.targets) || {
+        revenue_per_day:{zero:1000,hundred:2400}, avg_ticket:{zero:200,hundred:550},
+        close_rate:{zero:50,hundred:90}, membership_conversion:{zero:10,hundred:35},
+        callback_rate_inverted:{zero:5,hundred:0}, review_rate:{zero:5,hundred:30},
+        utilization:{zero:50,hundred:75}, volume:{zero:2,hundred:5}
+      };
+      const measured = { revenue_per_day:1, avg_ticket:1, close_rate:1, membership_conversion:0, callback_rate_inverted:1, review_rate:1, utilization:0, volume:1 };
+      let mw = 0; for (const k of Object.keys(w)) if (measured[k]) mw += w[k];
+      if (mw === 0) mw = 1;
+      const norm = (val, t) => { if (t.zero === t.hundred) return 50; const c = n => Math.max(0, Math.min(100, n)); return t.zero < t.hundred ? c(((val - t.zero) / (t.hundred - t.zero)) * 100) : c(((t.zero - val) / (t.zero - t.hundred)) * 100); };
+      const grade = n => n>=90?'A':n>=80?'B':n>=70?'C':n>=60?'D':'F';
+      const days = currentRange;
+      const scored = lastTechsForPreview.map(t => {
+        const inp = { revenue_per_day: t.revenue/days, avg_ticket: t.avg_ticket, close_rate: t.close_rate_pct, membership_conversion: 0, callback_rate_inverted: -t.callback_rate_pct, review_rate: t.review_rate_pct||0, utilization: 0, volume: t.jobs/days };
+        // For preview, use absolute normalization (not peer percentile) — directionally same, simpler.
+        let total = 0;
+        for (const k of Object.keys(w)) { if (!measured[k]) continue; total += norm(inp[k]||0, tg[k]) * (w[k]/mw); }
+        return { name: t.tech_name, score: Math.round(total*10)/10, grade: grade(total) };
+      }).sort((a,b) => b.score - a.score);
+      document.getElementById('settings-preview').innerHTML = scored.slice(0, 6).map(s => {
+        const c = { A:'#15803d', B:'#10b981', C:'#b45309', D:'#dc2626', F:'#991b1b' }[s.grade] || '#64748b';
+        return `<div class="flex items-center justify-between gap-2">
+          <span class="truncate flex-1">${esc(s.name)}</span>
+          <span style="display:inline-block;width:18px;height:18px;border-radius:4px;background:${c};color:#fff;font-weight:700;text-align:center;font-size:10px;line-height:18px">${s.grade}</span>
+          <span class="num text-slate-600 text-xs w-7 text-right">${s.score.toFixed(0)}</span>
+        </div>`;
+      }).join('');
+    }
+    function applyPreset(presetName) {
+      const w = PRESETS[presetName];
+      if (!w) return;
+      renderWeightSliders(w);
+      updateLivePreview();
+      toast(`Preset applied: ${presetName}`, 'ok');
+    }
+
     function openSettings() {
       const d = document.getElementById('settings-drawer'); d.classList.remove('hidden');
       const t = (configCache && configCache.thresholds) || {};
@@ -966,19 +1125,26 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       document.getElementById('set-min-tu').value   = (t.minTicket && t.minTicket.tune_up) || 175;
       document.getElementById('set-min-diag').value = (t.minTicket && t.minTicket.diagnostic) || 275;
 
-      const w = (configCache && configCache.weights) || {};
-      const labels = { revenue_per_day:'Revenue/day', avg_ticket:'Avg ticket', close_rate:'Close rate', membership_conversion:'Memberships', callback_rate_inverted:'Callbacks (inverted)', review_rate:'Review rate', utilization:'Utilization', volume:'Volume' };
-      document.getElementById('weight-sliders').innerHTML = Object.entries(w).map(([k, v]) => `
-        <div>
-          <div class="flex justify-between text-sm"><span>${labels[k]}</span><span class="num font-semibold"><span data-w-display="${k}">${(v*100).toFixed(0)}</span>%</span></div>
-          <input type="range" min="0" max="50" step="1" value="${(v*100).toFixed(0)}" data-w-input="${k}" class="w-full" />
-        </div>`).join('');
-      document.querySelectorAll('input[data-w-input]').forEach(inp => {
-        inp.addEventListener('input', () => {
-          const k = inp.getAttribute('data-w-input');
-          document.querySelector(`[data-w-display="${k}"]`).textContent = inp.value;
-        });
-      });
+      const w = (configCache && configCache.weights) || PRESETS.balanced;
+      renderWeightSliders(w);
+
+      // Goals: read from configCache (or defaults)
+      const goals = (configCache && configCache.goals) || { revenue_monthly: 15000, close_rate: 55, avg_ticket: 400, callback_rate: 3, review_rate: 15 };
+      document.getElementById('g-rev').value = goals.revenue_monthly;
+      document.getElementById('g-close').value = goals.close_rate;
+      document.getElementById('g-ticket').value = goals.avg_ticket;
+      document.getElementById('g-cb').value = goals.callback_rate;
+      document.getElementById('g-rev-rate').value = goals.review_rate;
+      updateGoalDisplays();
+
+      updateLivePreview();
+    }
+    function updateGoalDisplays() {
+      document.getElementById('g-rev-disp').textContent = '$' + parseInt(document.getElementById('g-rev').value).toLocaleString();
+      document.getElementById('g-close-disp').textContent = document.getElementById('g-close').value + '%';
+      document.getElementById('g-ticket-disp').textContent = '$' + parseInt(document.getElementById('g-ticket').value).toLocaleString();
+      document.getElementById('g-cb-disp').textContent = document.getElementById('g-cb').value + '%';
+      document.getElementById('g-rev-rate-disp').textContent = document.getElementById('g-rev-rate').value;
     }
     function closeSettings() { document.getElementById('settings-drawer').classList.add('hidden'); }
 
@@ -995,6 +1161,15 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       });
       // normalize to sum=1
       if (total > 0) for (const k of Object.keys(weights)) weights[k] = weights[k] / total;
+
+      const goals = {
+        revenue_monthly: Number(document.getElementById('g-rev').value),
+        close_rate: Number(document.getElementById('g-close').value),
+        avg_ticket: Number(document.getElementById('g-ticket').value),
+        callback_rate: Number(document.getElementById('g-cb').value),
+        review_rate: Number(document.getElementById('g-rev-rate').value),
+      };
+
       try {
         await api('/api/kpis/config', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -1004,9 +1179,10 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
               minTicket: { default: minTu, tune_up: minTu, diagnostic: minDi, estimate: minTu },
             },
             weights,
+            goals,
           }),
         });
-        toast('Settings saved · re-syncing', 'ok');
+        toast('Settings saved · refreshing', 'ok');
         await loadConfig();
         await loadAll();
         closeSettings();
@@ -1030,6 +1206,15 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     document.getElementById('settings-close').addEventListener('click', closeSettings);
     document.getElementById('settings-backdrop').addEventListener('click', closeSettings);
     document.getElementById('settings-save').addEventListener('click', saveSettings);
+    // Preset buttons
+    document.querySelectorAll('button[data-preset]').forEach(b => {
+      b.addEventListener('click', () => applyPreset(b.getAttribute('data-preset')));
+    });
+    // Goal slider live displays
+    ['g-rev','g-close','g-ticket','g-cb','g-rev-rate'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', updateGoalDisplays);
+    });
     document.getElementById('settings-reset').addEventListener('click', async () => {
       if (!confirm('Reset thresholds and weights to defaults?')) return;
       try {
