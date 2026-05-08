@@ -1070,14 +1070,26 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       }
     });
 
-    // Boot
+    // Boot. Picks up auth from (1) ?key= URL param (auto-stored to sessionStorage),
+    // (2) sessionStorage PIN, (3) CF Access cookie.
     (async () => {
+      const urlKey = new URL(location.href).searchParams.get('key');
+      if (urlKey) setKey(urlKey);
+
+      const startDashboard = async () => {
+        show('dash');
+        await loadConfig();
+        await loadAll();
+        loadAI(false);
+        loadReviews(false);
+      };
+
       if (getKey()) {
-        try { await api('/api/kpis/summary'); show('dash'); await loadConfig(); await loadAll(); loadAI(false); return; } catch {}
+        try { await api('/api/kpis/summary'); await startDashboard(); return; } catch {}
       }
       try {
         const r = await fetch('/api/kpis/summary', { credentials: 'include' });
-        if (r.ok) { show('dash'); await loadConfig(); await loadAll(); loadAI(false); return; }
+        if (r.ok) { await startDashboard(); return; }
       } catch {}
       show('login');
     })();
