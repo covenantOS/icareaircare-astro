@@ -17,24 +17,52 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
   <!-- DASHBOARD -->
   <div id="dashboard" hidden>
-    <header class="bg-white border-b border-line">
-      <div class="container-site py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div>
-          <h1 class="text-lg sm:text-2xl font-bold text-navy-700">I Care Air Care · KPI Dashboard</h1>
-          <div id="sync-status" class="text-xs text-slate-500 mt-1">Loading sync status…</div>
+    <!-- CONTROL-CENTER STICKY NAV -->
+    <header id="control-nav" class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-line">
+      <div class="container-site py-2 sm:py-3 flex items-center justify-between gap-3 flex-wrap">
+        <div class="flex items-center gap-3 min-w-0 flex-1">
+          <div class="hidden sm:flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 text-white font-bold text-sm flex-shrink-0">IC</div>
+          <div class="min-w-0">
+            <h1 class="text-sm sm:text-base font-bold text-navy-700 truncate">I Care Air Care · Control Center</h1>
+            <div id="sync-status" class="text-[10px] sm:text-xs text-slate-500 truncate">Loading…</div>
+          </div>
         </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <button id="settings-btn" class="btn-ghost-admin" type="button" aria-label="Settings">⚙ Settings</button>
-          <button id="sync-btn" class="btn-admin" type="button">Sync now</button>
-          <button id="logout-btn" class="btn-ghost-admin" type="button">Sign out</button>
+        <nav id="section-nav" class="hidden lg:flex items-center gap-1 text-xs font-semibold flex-shrink-0" aria-label="Sections">
+          <a href="#sec-insights" data-nav="sec-insights" class="nav-pill">AI</a>
+          <a href="#sec-kpis" data-nav="sec-kpis" class="nav-pill">KPIs</a>
+          <a href="#sec-leaderboard" data-nav="sec-leaderboard" class="nav-pill">Techs</a>
+          <a href="#sec-goals" data-nav="sec-goals" class="nav-pill">Goals</a>
+          <a href="#sec-reviews" data-nav="sec-reviews" class="nav-pill">Reviews</a>
+          <a href="#sec-segments" data-nav="sec-segments" class="nav-pill">Segments</a>
+        </nav>
+        <div class="flex flex-wrap items-center gap-1.5 flex-shrink-0">
+          <button id="chat-open-btn" class="btn-ghost-admin text-xs py-1.5 px-2.5" type="button" aria-label="Ask the dashboard" title="Ask the dashboard a question">
+            <span class="hidden sm:inline">💬 Ask</span><span class="sm:hidden">💬</span>
+          </button>
+          <button id="settings-btn" class="btn-ghost-admin text-xs py-1.5 px-2.5" type="button" aria-label="Settings">
+            <span class="hidden sm:inline">⚙ Settings</span><span class="sm:hidden">⚙</span>
+          </button>
+          <button id="sync-btn" class="btn-admin text-xs py-1.5 px-3" type="button">Sync</button>
+          <button id="logout-btn" class="btn-ghost-admin text-xs py-1.5 px-2" type="button" aria-label="Sign out">Out</button>
         </div>
       </div>
+      <!-- Mobile section pills (hidden on lg+) -->
+      <nav class="lg:hidden border-t border-line overflow-x-auto" aria-label="Sections (mobile)">
+        <div class="flex gap-1 px-3 py-1.5 text-[11px] font-semibold whitespace-nowrap">
+          <a href="#sec-insights" data-nav="sec-insights" class="nav-pill">AI</a>
+          <a href="#sec-kpis" data-nav="sec-kpis" class="nav-pill">KPIs</a>
+          <a href="#sec-leaderboard" data-nav="sec-leaderboard" class="nav-pill">Techs</a>
+          <a href="#sec-goals" data-nav="sec-goals" class="nav-pill">Goals</a>
+          <a href="#sec-reviews" data-nav="sec-reviews" class="nav-pill">Reviews</a>
+          <a href="#sec-segments" data-nav="sec-segments" class="nav-pill">Segs</a>
+        </div>
+      </nav>
     </header>
 
     <main class="container-site py-4 sm:py-6 space-y-5">
 
       <!-- AI INSIGHTS — structured visual rendering -->
-      <section id="ai-insights" class="card relative overflow-hidden fade-up" style="background:linear-gradient(135deg, #fff 0%, #f0f7fa 100%); --i:0">
+      <section id="sec-insights" class="card relative overflow-hidden fade-up" data-card="ai" style="background:linear-gradient(135deg, #fff 0%, #f0f7fa 100%); --i:0">
         <div class="absolute top-0 right-0 w-40 h-40 -mt-12 -mr-12 rounded-full pulse-soft" style="background:radial-gradient(circle, rgba(232,138,56,0.16), transparent 70%)"></div>
         <div class="flex items-start justify-between gap-3 relative">
           <div class="flex items-center gap-3 min-w-0">
@@ -113,7 +141,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </div>
 
       <!-- HEADLINE KPI CARDS WITH SPARKLINES + BENCHMARKS -->
-      <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <section id="sec-kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <article class="card hover-lift fade-up" style="--i:1; border-left:3px solid var(--color-brand-500)">
           <div class="flex items-center justify-between"><div class="stat-label">Call Volume</div><div id="kv-bench" class="text-[10px]"></div></div>
           <div id="kpi-volume" class="stat-value" data-count="0">—</div>
@@ -141,7 +169,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </section>
 
       <!-- BY CALL TYPE -->
-      <section class="card">
+      <section id="sec-bytype" class="card">
         <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
           <h2 class="text-lg font-bold text-navy-700">By call type</h2>
           <span class="text-xs text-slate-500">sold ≥ <span id="thr-sold-tu">$110</span> · min TU <span id="thr-min-tu">$175</span> / Diag <span id="thr-min-diag">$275</span></span>
@@ -166,7 +194,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </section>
 
       <!-- TECH LEADERBOARD -->
-      <section class="card">
+      <section id="sec-leaderboard" class="card">
         <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
           <h2 class="text-lg font-bold text-navy-700">Tech leaderboard</h2>
           <span class="text-xs text-slate-500">Tap a row for detail · A-F grade via Formula A</span>
@@ -193,8 +221,27 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         </div>
       </section>
 
+      <!-- GOAL PROGRESS (Phase 8) — per-tech progress vs shop goals -->
+      <section id="sec-goals" class="card">
+        <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+          <div>
+            <h2 class="text-lg font-bold text-navy-700 flex items-center gap-2">
+              <span class="section-icon bg-emerald-100 text-emerald-700 w-7 h-7 text-sm">🎯</span>
+              Goal progress
+            </h2>
+            <div id="goals-window-note" class="text-xs text-slate-500 mt-0.5">Window-prorated. Adjust shop goals in Settings.</div>
+          </div>
+          <div id="goals-summary" class="text-xs text-slate-500 text-right"></div>
+        </div>
+        <!-- Shop-rollup row -->
+        <div id="goals-shop" class="mb-4"></div>
+        <!-- Per-tech grid -->
+        <div id="goals-tech" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+        <div id="goals-empty" hidden class="text-slate-400 text-sm py-4 text-center">No tech data — click Sync now.</div>
+      </section>
+
       <!-- SEGMENTS (3-col on desktop, stack on mobile) -->
-      <section class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
+      <section id="sec-segments" class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
         <article class="card">
           <div class="flex items-center justify-between mb-2">
             <h3 class="font-bold text-navy-700">Dormant 12+ months</h3>
@@ -233,7 +280,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </section>
 
       <!-- GOOGLE REVIEWS -->
-      <section class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
+      <section id="sec-reviews" class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
         <article class="card lg:col-span-1">
           <div class="flex items-center justify-between mb-2">
             <h2 class="text-lg font-bold text-navy-700">Google Reviews</h2>
@@ -257,7 +304,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </section>
 
       <!-- CUSTOMER MIX + CALLBACKS -->
-      <section class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+      <section id="sec-mix" class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
         <article class="card">
           <h2 class="text-lg font-bold text-navy-700 mb-3">Customer mix</h2>
           <div class="space-y-3">
@@ -300,6 +347,38 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </section>
 
     </main>
+
+    <!-- FLOATING CHAT PANEL (Phase 4) -->
+    <div id="chat-panel" class="hidden fixed z-40 bg-white shadow-2xl rounded-xl border border-line flex-col" style="right:1rem; bottom:5rem; width:min(420px,calc(100vw - 2rem)); height:min(560px,70vh); display:none;">
+      <div class="flex items-center justify-between px-4 py-3 border-b border-line bg-gradient-to-r from-brand-500 to-brand-700 text-white rounded-t-xl">
+        <div class="flex items-center gap-2 min-w-0">
+          <span class="section-icon bg-white/20 text-white w-6 h-6 text-xs">💬</span>
+          <div class="min-w-0">
+            <div class="font-semibold text-sm">Ask the dashboard</div>
+            <div class="text-[10px] opacity-80 truncate" id="chat-sub">Powered by MiniMax · queries Housecall Pro data live</div>
+          </div>
+        </div>
+        <button id="chat-close-btn" type="button" class="text-white/80 hover:text-white text-lg leading-none px-1" aria-label="Close chat">✕</button>
+      </div>
+      <div id="chat-messages" class="flex-1 overflow-y-auto px-4 py-3 space-y-3 text-sm bg-surface">
+        <div class="chat-msg chat-bot">
+          <div class="font-semibold text-navy-700 text-xs mb-1">Dashboard AI</div>
+          <div>Hi — ask me anything about the data on screen. Examples:</div>
+          <div class="mt-2 grid gap-1.5 text-xs">
+            <button class="chat-suggest text-left" data-q="Who is my top revenue tech this month and why?">Who is my top revenue tech this month and why?</button>
+            <button class="chat-suggest text-left" data-q="Which techs are below the close-rate goal?">Which techs are below the close-rate goal?</button>
+            <button class="chat-suggest text-left" data-q="Show me callbacks broken down by tech.">Show me callbacks broken down by tech.</button>
+            <button class="chat-suggest text-left" data-q="What customers should I call this week?">What customers should I call this week?</button>
+          </div>
+        </div>
+      </div>
+      <form id="chat-form" class="border-t border-line p-3 flex gap-2 bg-white rounded-b-xl">
+        <input id="chat-input" type="text" autocomplete="off" placeholder="Ask about techs, jobs, customers, reviews…"
+          class="flex-1 px-3 py-2 border border-line rounded-lg text-sm focus:outline-none focus:border-brand-500" />
+        <button type="submit" class="btn-admin text-sm py-2 px-3">Send</button>
+      </form>
+    </div>
+    <button id="chat-fab" type="button" class="fixed z-30 bottom-4 right-4 rounded-full shadow-lg bg-gradient-to-br from-accent-500 to-accent-600 text-white w-14 h-14 flex items-center justify-center text-2xl hover:scale-105 transition-transform" aria-label="Open chat">💬</button>
   </div>
 
   <!-- SETTINGS DRAWER (Phase 3 redesign) -->
@@ -551,6 +630,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         ]);
         renderSummary(summary, trend);
         renderTechs(byTech);
+        renderGoals(byTech);
         renderSegments(segDormant, segRenew, segVip);
       } catch (e) {
         toast(e.message || 'Load failed', 'error');
@@ -808,6 +888,179 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           location.href = `/admin/dashboard/tech/?id=${encodeURIComponent(id)}&days=${currentRange}`;
         });
       });
+    }
+
+    // ─── PHASE 8 — GOAL PROGRESS ────────────────────────────────────
+    // Render shop-wide rollup + per-tech progress vs the goals stored in KV.
+    // Goals are monthly targets — we prorate to the active window so a 7-day
+    // view shows progress to date for that 7-day slice of the month, not the
+    // full monthly figure. This keeps "X is at 87% of his goal" honest.
+    function renderGoals(byTech) {
+      const wrapShop = document.getElementById('goals-shop');
+      const wrapTech = document.getElementById('goals-tech');
+      const empty    = document.getElementById('goals-empty');
+      const summary  = document.getElementById('goals-summary');
+      const note     = document.getElementById('goals-window-note');
+
+      const techs = (byTech && byTech.techs) ? byTech.techs.filter(t => t.jobs > 0 && !t.is_owner) : [];
+      if (!techs.length) { wrapShop.innerHTML = ''; wrapTech.innerHTML = ''; empty.hidden = false; summary.textContent = ''; return; }
+      empty.hidden = true;
+
+      const goals = (configCache && configCache.goals) || { revenue_monthly: 15000, close_rate: 55, avg_ticket: 400, callback_rate: 3, review_rate: 15 };
+      const days = currentRange;
+      // Prorate monthly revenue goal to window (30-day month basis)
+      const revGoalForWindow = goals.revenue_monthly * (days / 30);
+      note.textContent = `${days}-day window · revenue goal prorated from $${Math.round(goals.revenue_monthly).toLocaleString()}/mo to $${Math.round(revGoalForWindow).toLocaleString()}.`;
+
+      // Compute progress for one tech across all 5 goals.
+      // Returns array of {key, label, value, valDisplay, goal, goalDisplay, pct, tone, inverted}
+      // tone: 'good' >= 100% (90% for review_rate), 'warn' >= 70%, 'bad' otherwise.
+      // For inverted goals (callback_rate — lower is better), tone reverses: 'good' if at/under goal.
+      function progressFor(t) {
+        const out = [];
+        // Revenue (window-prorated)
+        const revPct = revGoalForWindow > 0 ? (t.revenue / revGoalForWindow) * 100 : 0;
+        out.push({ key:'revenue', label:'Revenue', value:t.revenue, valDisplay:fmt$(t.revenue),
+          goal:revGoalForWindow, goalDisplay:fmt$(revGoalForWindow), pct:revPct,
+          tone: revPct >= 100 ? 'good' : revPct >= 70 ? 'warn' : 'bad', inverted:false });
+        // Close rate
+        const crPct = goals.close_rate > 0 ? (t.close_rate_pct / goals.close_rate) * 100 : 0;
+        out.push({ key:'close', label:'Close rate', value:t.close_rate_pct, valDisplay:fmtP(t.close_rate_pct),
+          goal:goals.close_rate, goalDisplay:goals.close_rate + '%', pct:crPct,
+          tone: crPct >= 100 ? 'good' : crPct >= 80 ? 'warn' : 'bad', inverted:false });
+        // Avg ticket
+        const atPct = goals.avg_ticket > 0 ? (t.avg_ticket / goals.avg_ticket) * 100 : 0;
+        out.push({ key:'ticket', label:'Avg ticket', value:t.avg_ticket, valDisplay:fmt$(t.avg_ticket),
+          goal:goals.avg_ticket, goalDisplay:fmt$(goals.avg_ticket), pct:atPct,
+          tone: atPct >= 100 ? 'good' : atPct >= 75 ? 'warn' : 'bad', inverted:false });
+        // Callback rate (INVERTED — lower = better; pct shown as headroom)
+        const cbVal = t.callback_rate_pct || 0;
+        // Headroom: 100% if 0 callbacks, 0% if at/over goal cap.
+        const cbPct = goals.callback_rate > 0 ? Math.max(0, 100 - (cbVal / goals.callback_rate) * 100) : 100;
+        out.push({ key:'callbacks', label:'Callbacks', value:cbVal, valDisplay:fmtP(cbVal) + ' rate',
+          goal:goals.callback_rate, goalDisplay:'≤' + goals.callback_rate + '%', pct:cbPct,
+          tone: cbVal <= goals.callback_rate ? 'good' : cbVal <= goals.callback_rate * 1.5 ? 'warn' : 'bad', inverted:true });
+        // Review rate (per 100 jobs)
+        const rrVal = t.review_rate_pct || 0;
+        const rrPct = goals.review_rate > 0 ? (rrVal / goals.review_rate) * 100 : 0;
+        out.push({ key:'reviews', label:'Reviews', value:rrVal, valDisplay:(t.reviews_generated || 0) + ' (' + fmtP(rrVal) + ')',
+          goal:goals.review_rate, goalDisplay:goals.review_rate + ' / 100 jobs', pct:rrPct,
+          tone: rrPct >= 90 ? 'good' : rrPct >= 50 ? 'warn' : 'bad', inverted:false });
+        return out;
+      }
+
+      function barRow(p) {
+        const fillPct = Math.max(2, Math.min(100, p.pct));
+        const toneClass = 'is-' + p.tone;
+        return `<div class="goal-row">
+          <div class="flex justify-between items-baseline gap-2 text-xs mb-1">
+            <span class="font-semibold text-navy-700">${p.label}</span>
+            <span class="num text-slate-700">${p.valDisplay}</span>
+          </div>
+          <div class="goal-bar ${toneClass}"><span class="goal-fill" style="width:${fillPct.toFixed(0)}%"></span></div>
+          <div class="flex justify-between text-[10px] text-slate-500 mt-1">
+            <span>${p.pct >= 100 ? '✓ ' : ''}${Math.round(p.pct)}% of goal</span>
+            <span>Goal ${p.goalDisplay}</span>
+          </div>
+        </div>`;
+      }
+
+      // Shop rollup — average each metric across field techs, total revenue.
+      const shopMetrics = {
+        revenue: techs.reduce((s, t) => s + (t.revenue || 0), 0),
+        close_rate: avg(techs.map(t => t.close_rate_pct)),
+        avg_ticket: avg(techs.map(t => t.avg_ticket)),
+        callback_rate: avg(techs.map(t => t.callback_rate_pct)),
+        review_rate: avg(techs.map(t => t.review_rate_pct || 0)),
+      };
+      const shopGoalRev = revGoalForWindow * techs.length;
+      const shopProgress = [
+        { key:'revenue', label:'Total revenue', valDisplay:fmt$(shopMetrics.revenue), goalDisplay:fmt$(shopGoalRev),
+          pct: shopGoalRev > 0 ? (shopMetrics.revenue / shopGoalRev) * 100 : 0,
+          tone: shopMetrics.revenue >= shopGoalRev ? 'good' : shopMetrics.revenue >= shopGoalRev * 0.7 ? 'warn' : 'bad' },
+        { key:'close', label:'Avg close rate', valDisplay:fmtP(shopMetrics.close_rate), goalDisplay:goals.close_rate + '%',
+          pct: goals.close_rate > 0 ? (shopMetrics.close_rate / goals.close_rate) * 100 : 0,
+          tone: shopMetrics.close_rate >= goals.close_rate ? 'good' : shopMetrics.close_rate >= goals.close_rate * 0.8 ? 'warn' : 'bad' },
+        { key:'ticket', label:'Avg ticket', valDisplay:fmt$(shopMetrics.avg_ticket), goalDisplay:fmt$(goals.avg_ticket),
+          pct: goals.avg_ticket > 0 ? (shopMetrics.avg_ticket / goals.avg_ticket) * 100 : 0,
+          tone: shopMetrics.avg_ticket >= goals.avg_ticket ? 'good' : shopMetrics.avg_ticket >= goals.avg_ticket * 0.75 ? 'warn' : 'bad' },
+        { key:'callbacks', label:'Callback rate', valDisplay:fmtP(shopMetrics.callback_rate), goalDisplay:'≤' + goals.callback_rate + '%',
+          pct: goals.callback_rate > 0 ? Math.max(0, 100 - (shopMetrics.callback_rate / goals.callback_rate) * 100) : 100,
+          tone: shopMetrics.callback_rate <= goals.callback_rate ? 'good' : shopMetrics.callback_rate <= goals.callback_rate * 1.5 ? 'warn' : 'bad' },
+        { key:'reviews', label:'Reviews / 100 jobs', valDisplay:fmtP(shopMetrics.review_rate), goalDisplay:goals.review_rate + ' / 100',
+          pct: goals.review_rate > 0 ? (shopMetrics.review_rate / goals.review_rate) * 100 : 0,
+          tone: shopMetrics.review_rate >= goals.review_rate ? 'good' : shopMetrics.review_rate >= goals.review_rate * 0.5 ? 'warn' : 'bad' },
+      ];
+      wrapShop.innerHTML = `<div class="goal-card goal-card-shop fade-up" style="--i:0">
+        <div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
+          <div class="flex items-center gap-2">
+            <span class="section-icon bg-accent-500 text-white w-7 h-7 text-sm">🏆</span>
+            <div>
+              <div class="font-bold text-navy-700">Shop rollup · ${techs.length} field techs</div>
+              <div class="text-[11px] text-slate-500">Total + averages across the team this window</div>
+            </div>
+          </div>
+          <div class="text-xs text-slate-600">
+            <span class="num font-semibold">${shopProgress.filter(p => p.tone === 'good').length}</span>/${shopProgress.length} goals on track
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+          ${shopProgress.map(p => `
+            <div>
+              <div class="text-[10px] uppercase tracking-wide text-slate-500 font-bold">${p.label}</div>
+              <div class="num font-bold text-base text-navy-700 mt-0.5">${p.valDisplay}</div>
+              <div class="goal-bar is-${p.tone} mt-1"><span class="goal-fill" style="width:${Math.max(2, Math.min(100, p.pct)).toFixed(0)}%"></span></div>
+              <div class="text-[10px] text-slate-500 mt-1">Goal ${p.goalDisplay} · ${Math.round(p.pct)}%</div>
+            </div>`).join('')}
+        </div>
+      </div>`;
+
+      // Per-tech cards — sorted by overall goal-progress score (avg pct across goals).
+      const scored = techs.map(t => {
+        const ps = progressFor(t);
+        const avgPct = ps.reduce((s, p) => s + p.pct, 0) / ps.length;
+        return { t, ps, avgPct };
+      }).sort((a, b) => b.avgPct - a.avgPct);
+
+      wrapTech.innerHTML = scored.map((s, i) => {
+        const onTrack = s.ps.filter(p => p.tone === 'good').length;
+        const dotColor = s.avgPct >= 90 ? '#15803d' : s.avgPct >= 70 ? '#b45309' : '#b91c1c';
+        return `<article class="goal-card hover-lift fade-up" style="--i:${i+1}; cursor:pointer" data-tech-id="${esc(s.t.tech_id)}">
+          <div class="flex items-center justify-between gap-2 mb-2">
+            <div class="flex items-center gap-2 min-w-0">
+              <span style="display:inline-block;width:10px;height:10px;border-radius:999px;background:${dotColor}"></span>
+              <div class="min-w-0">
+                <div class="font-bold text-navy-700 truncate">${esc(s.t.tech_name)}</div>
+                <div class="text-[10px] text-slate-500">${s.t.jobs} jobs · ${fmt$(s.t.revenue)} window revenue</div>
+              </div>
+            </div>
+            <div class="text-right flex-shrink-0">
+              <div class="num text-base font-bold" style="color:${dotColor}">${Math.round(s.avgPct)}%</div>
+              <div class="text-[10px] text-slate-500">${onTrack}/${s.ps.length} on track</div>
+            </div>
+          </div>
+          ${s.ps.map(barRow).join('')}
+        </article>`;
+      }).join('');
+
+      // Wire click → tech detail
+      wrapTech.querySelectorAll('article[data-tech-id]').forEach(a => {
+        a.addEventListener('click', () => {
+          const id = a.getAttribute('data-tech-id');
+          location.href = `/admin/dashboard/tech/?id=${encodeURIComponent(id)}&days=${currentRange}`;
+        });
+      });
+
+      // Top-right summary
+      const topAvg = scored[0];
+      const bottom = scored[scored.length - 1];
+      summary.innerHTML = `<div>Leader: <strong>${esc(topAvg.t.tech_name)}</strong> (${Math.round(topAvg.avgPct)}%)</div>
+        <div class="text-slate-400">Most upside: <strong>${esc(bottom.t.tech_name)}</strong> (${Math.round(bottom.avgPct)}%)</div>`;
+    }
+    function avg(arr) {
+      const filtered = arr.filter(v => typeof v === 'number' && !isNaN(v));
+      if (!filtered.length) return 0;
+      return filtered.reduce((s, v) => s + v, 0) / filtered.length;
     }
 
     function renderSegments(dormant, renew, vip) {
@@ -1257,12 +1510,133 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         await loadAll();
         loadAI(false);
         loadReviews(false);
+        initSectionNav();
+        initChat();
       } catch (e) {
         document.getElementById('login-error').hidden = false;
         document.getElementById('login-error').textContent = 'Wrong PIN.';
         clearKey();
       }
     });
+
+    // ─── SCROLL-SPY NAV ─────────────────────────────────────────────
+    // Highlights the matching nav-pill as the user scrolls through sections.
+    function initSectionNav() {
+      const links = Array.from(document.querySelectorAll('a[data-nav]'));
+      if (!links.length) return;
+      const sectionIds = [...new Set(links.map(a => a.getAttribute('data-nav')))];
+      const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+      if (!sections.length) return;
+
+      const setActive = (id) => {
+        links.forEach(a => a.classList.toggle('is-active', a.getAttribute('data-nav') === id));
+      };
+
+      const io = new IntersectionObserver((entries) => {
+        // Pick the section closest to the top with at least some intersection
+        const visible = entries.filter(e => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) setActive(visible[0].target.id);
+      }, { rootMargin: '-90px 0px -55% 0px', threshold: [0, 0.2] });
+      sections.forEach(s => io.observe(s));
+
+      // Smooth scroll on click + offset for sticky header
+      links.forEach(a => {
+        a.addEventListener('click', (e) => {
+          const id = a.getAttribute('data-nav');
+          const el = document.getElementById(id);
+          if (!el) return;
+          e.preventDefault();
+          const top = el.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top, behavior: 'smooth' });
+          history.replaceState(null, '', '#' + id);
+        });
+      });
+    }
+
+    // ─── PHASE 4 — AI CHAT (ASK THE DASHBOARD) ──────────────────────
+    // Floating chat panel. Calls /api/ai/chat with the conversation; the
+    // server pre-loads HCP/D1 context (techs, goals, current window) and
+    // hands it to MiniMax along with the question. Tool-use over D1 happens
+    // server-side so the browser never sees raw rows.
+    const chatHistory = [];
+    function chatToggle(open) {
+      const panel = document.getElementById('chat-panel');
+      if (open === undefined) open = !panel.classList.contains('is-open');
+      panel.classList.toggle('is-open', open);
+      if (open) setTimeout(() => document.getElementById('chat-input').focus(), 50);
+    }
+    function chatAppend(role, text, opts) {
+      const wrap = document.getElementById('chat-messages');
+      const div = document.createElement('div');
+      div.className = 'chat-msg ' + (role === 'user' ? 'chat-user' : 'chat-bot');
+      if (role === 'assistant') {
+        div.innerHTML = `<div class="font-semibold text-navy-700 text-xs mb-1">Dashboard AI</div><div>${(opts && opts.html) ? text : esc(text).replace(/\n/g, '<br>')}</div>`;
+      } else {
+        div.textContent = text;
+      }
+      wrap.appendChild(div);
+      wrap.scrollTop = wrap.scrollHeight;
+      return div;
+    }
+    function chatThinking() {
+      const wrap = document.getElementById('chat-messages');
+      const div = document.createElement('div');
+      div.className = 'chat-msg chat-bot chat-pending';
+      div.innerHTML = `<div class="chat-thinking"><span></span><span></span><span></span></div>`;
+      wrap.appendChild(div);
+      wrap.scrollTop = wrap.scrollHeight;
+      return div;
+    }
+    async function chatSend(question) {
+      if (!question || !question.trim()) return;
+      chatAppend('user', question);
+      chatHistory.push({ role: 'user', content: question });
+      const pending = chatThinking();
+      try {
+        const w = computeWindow(currentRange);
+        const r = await api(`/api/ai/chat`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages: chatHistory.slice(-8),
+            window: w,
+            range_days: currentRange,
+          }),
+        });
+        pending.remove();
+        const answer = r.answer || r.text || 'No response.';
+        chatHistory.push({ role: 'assistant', content: answer });
+        // Render markdown-ish output (bold + bullets only)
+        chatAppend('assistant', mdToHtml(answer), { html: true });
+        // Show data sources used in subline
+        if (r.tools_used && r.tools_used.length) {
+          document.getElementById('chat-sub').textContent = 'Sources: ' + r.tools_used.join(', ');
+        }
+      } catch (e) {
+        pending.remove();
+        chatAppend('assistant', `Sorry — chat failed: ${e.message || e}`);
+      }
+    }
+
+    function initChat() {
+      document.getElementById('chat-fab').addEventListener('click', () => chatToggle(true));
+      document.getElementById('chat-open-btn').addEventListener('click', () => chatToggle(true));
+      document.getElementById('chat-close-btn').addEventListener('click', () => chatToggle(false));
+      document.getElementById('chat-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const inp = document.getElementById('chat-input');
+        const q = inp.value.trim();
+        if (!q) return;
+        inp.value = '';
+        chatSend(q);
+      });
+      document.querySelectorAll('.chat-suggest').forEach(b => {
+        b.addEventListener('click', () => chatSend(b.getAttribute('data-q')));
+      });
+      // ESC to close
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.getElementById('chat-panel').classList.contains('is-open')) chatToggle(false);
+      });
+    }
 
     // Boot. Picks up auth from (1) ?key= URL param (auto-stored to sessionStorage),
     // (2) sessionStorage PIN, (3) CF Access cookie.
@@ -1276,6 +1650,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         await loadAll();
         loadAI(false);
         loadReviews(false);
+        initSectionNav();
+        initChat();
       };
 
       if (getKey()) {
