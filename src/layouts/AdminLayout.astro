@@ -253,6 +253,11 @@ const { title, description = 'Internal — I Care Air Care KPI dashboard' } = As
         background: linear-gradient(135deg, #fffbeb, #fff);
         border-color: #fcd34d;
       }
+      /* Section anchors — leave room for the sticky control nav so the section
+         heading isn't hidden under it when a pill is clicked. */
+      #sec-insights, #sec-kpis, #sec-leaderboard, #sec-goals,
+      #sec-segments, #sec-reviews, #sec-callbacks { scroll-margin-top: 80px; }
+
       /* Chat */
       #chat-panel { display: none; flex-direction: column; }
       #chat-panel.is-open { display: flex; }

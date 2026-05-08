@@ -68,7 +68,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <div class="flex items-center gap-3 min-w-0">
             <span class="section-icon bg-accent-500 text-white text-sm font-bold flex-shrink-0">AI</span>
             <div class="min-w-0">
-              <h2 class="text-lg font-bold text-navy-700">This week, in plain English</h2>
+              <h2 class="text-lg font-bold text-navy-700" id="ai-heading">This window, in plain English</h2>
               <div id="ai-headline-summary" class="text-sm text-slate-700 mt-0.5 truncate">—</div>
             </div>
           </div>
@@ -290,7 +290,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <div class="stat-value" id="rev-avg">—</div>
             <div class="text-2xl text-amber-500" id="rev-stars">★★★★★</div>
           </div>
-          <div class="stat-sub" id="rev-count">— reviews · — 4★+ · — response rate</div>
+          <div class="stat-sub" id="rev-count">— reviews · — recent · — 4★+</div>
           <div id="rev-dist" class="mt-3 space-y-1 text-xs"></div>
           <div class="text-[10px] text-slate-400 mt-3" id="rev-meta">—</div>
         </article>
@@ -719,20 +719,24 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         ? cbRows.map(r => `<tr><td>${esc(r.tech_name)}</td><td class="text-right num">${fmtI(r.total_jobs)}</td><td class="text-right num">${fmtI(r.callbacks)}</td><td class="text-right num">${fmtP(r.rate_pct)}</td></tr>`).join('')
         : `<tr><td colspan="4" class="text-center text-slate-400 py-4">No callbacks in this window 🎉</td></tr>`;
 
-      // Sync status. Three states:
-      //   success === 1            → "Synced"
-      //   finished_at && success !=1 → "Failed"
-      //   finished_at == null      → "In progress" (started but never closed; common when CF
-      //                               worker timed out / browser closed mid-sync). Don't
-      //                               flag as Failed because the data may still be fresh.
+      // Sync status. Four states:
+      //   success === 1                        → "Synced"
+      //   finished_at && success !=1           → "Failed"
+      //   started, no finished_at, < 10 min    → "In progress" (still running)
+      //   started, no finished_at, ≥ 10 min    → "Sync stalled" (worker died
+      //                                           mid-run; data is from a prior
+      //                                           successful sync. Tim should
+      //                                           click Sync to retry.)
       if (data.last_sync) {
         const ls = data.last_sync;
         const finished = ls.finished_at || ls.started_at;
+        const ageMin = ls.started_at ? (Date.now() - new Date(ls.started_at).getTime()) / 60000 : Infinity;
+        const STALL_AFTER_MIN = 10;
         let pill, text;
         if (ls.success === 1) { pill = 'pill pill-ok'; text = 'Synced'; }
-        else if (!ls.finished_at) { pill = 'pill pill-warn'; text = 'In progress'; }
+        else if (!ls.finished_at && ageMin < STALL_AFTER_MIN) { pill = 'pill pill-warn'; text = 'In progress'; }
+        else if (!ls.finished_at) { pill = 'pill pill-err'; text = 'Sync stalled — click Sync to retry'; }
         else { pill = 'pill pill-err'; text = 'Failed'; }
-        // For an in-progress row jobs/customers counts are zero and not meaningful — hide them.
         const counts = ls.finished_at
           ? ` · ${fmtI(ls.jobs_synced)} jobs · ${fmtI(ls.customers_synced)} customers`
           : '';
@@ -915,7 +919,14 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       const summary  = document.getElementById('goals-summary');
       const note     = document.getElementById('goals-window-note');
 
-      const techs = (byTech && byTech.techs) ? byTech.techs.filter(t => t.jobs > 0 && !t.is_owner) : [];
+      // Apply the same MIN_JOBS=5 filter the leaderboard uses. A tech with 1 job
+      // is "data too thin to grade fairly" — including them here drags the shop
+      // rollup averages down AND lets them appear as "Most upside" leader, which
+      // is misleading (low jobs ≠ underperformer).
+      const MIN_JOBS_FOR_GOALS = 5;
+      const techs = (byTech && byTech.techs)
+        ? byTech.techs.filter(t => t.jobs >= MIN_JOBS_FOR_GOALS && !t.is_owner)
+        : [];
       if (!techs.length) { wrapShop.innerHTML = ''; wrapTech.innerHTML = ''; empty.hidden = false; summary.textContent = ''; return; }
       empty.hidden = true;
 
@@ -991,10 +1002,17 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         { key:'revenue', label:'Total revenue', valDisplay:fmt$(shopMetrics.revenue), goalDisplay:fmt$(shopGoalRev),
           pct: shopGoalRev > 0 ? (shopMetrics.revenue / shopGoalRev) * 100 : 0,
           tone: shopMetrics.revenue >= shopGoalRev ? 'good' : shopMetrics.revenue >= shopGoalRev * 0.7 ? 'warn' : 'bad' },
-        { key:'close', label:'Avg close rate', valDisplay:fmtP(shopMetrics.close_rate), goalDisplay:goals.close_rate + '%',
+        // NOTE: these are mean-of-per-tech-means (each tech weighted equally),
+        // NOT revenue-weighted. That's intentional — the goal is "every tech
+        // hits $400 ticket / 55% close", so a high-ticket tech shouldn't mask
+        // low-ticket teammates. But this differs from the KPI tile up top
+        // (which IS revenue-weighted), so the labels say "(per tech)" to make
+        // the math explicit. If Tim asks "why is shop avg ticket $259 here but
+        // $551 up top?", point at the label.
+        { key:'close', label:'Close rate (per tech)', valDisplay:fmtP(shopMetrics.close_rate), goalDisplay:goals.close_rate + '%',
           pct: goals.close_rate > 0 ? (shopMetrics.close_rate / goals.close_rate) * 100 : 0,
           tone: shopMetrics.close_rate >= goals.close_rate ? 'good' : shopMetrics.close_rate >= goals.close_rate * 0.8 ? 'warn' : 'bad' },
-        { key:'ticket', label:'Avg ticket', valDisplay:fmt$(shopMetrics.avg_ticket), goalDisplay:fmt$(goals.avg_ticket),
+        { key:'ticket', label:'Avg ticket (per tech)', valDisplay:fmt$(shopMetrics.avg_ticket), goalDisplay:fmt$(goals.avg_ticket),
           pct: goals.avg_ticket > 0 ? (shopMetrics.avg_ticket / goals.avg_ticket) * 100 : 0,
           tone: shopMetrics.avg_ticket >= goals.avg_ticket ? 'good' : shopMetrics.avg_ticket >= goals.avg_ticket * 0.75 ? 'warn' : 'bad' },
         { key:'callbacks', label:'Callback rate', valDisplay:fmtP(shopMetrics.callback_rate), goalDisplay:'≤' + goals.callback_rate + '%',
@@ -1077,8 +1095,15 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     }
 
     function renderSegments(dormant, renew, vip) {
+      // HCP customers without a real display_name fall back to phone in the API.
+      // Showing "6263250860" as both the name AND contact looks broken to Tim
+      // (who is reading it as "we don't know who this person is"). Detect raw
+      // phone-shaped names and substitute a placeholder; the phone is still
+      // displayed in the contact column underneath.
+      const looksLikePhone = (s) => typeof s === 'string' && /^\+?\d[\d\s\-().]{6,}$/.test(s.trim());
+      const displayName = (r) => looksLikePhone(r.name) ? '(no name on file)' : r.name;
       const fmtRow = r => `<div class="flex items-center justify-between gap-2 py-1 border-b border-line last:border-0">
-        <div class="min-w-0 flex-1"><div class="font-semibold truncate">${esc(r.name)}</div><div class="text-xs text-slate-500 truncate">${esc(r.email || r.phone || '')}</div></div>
+        <div class="min-w-0 flex-1"><div class="font-semibold truncate ${looksLikePhone(r.name) ? 'text-slate-500 italic' : ''}">${esc(displayName(r))}</div><div class="text-xs text-slate-500 truncate">${esc(r.email || r.phone || '')}</div></div>
         <div class="text-right flex-shrink-0"><div class="font-semibold num">${fmt$(r.lifetime_value)}</div><div class="text-xs text-slate-500">${r.days_since_last_job != null ? r.days_since_last_job + 'd ago' : '—'}</div></div>
       </div>`;
       document.getElementById('seg-dormant').innerHTML = (dormant.rows || []).slice(0,5).map(fmtRow).join('') || '<div class="text-slate-400 text-sm py-2">No dormant customers in pool 🎉</div>';
@@ -1110,8 +1135,14 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         const filled = Math.round((s.rating_avg || 0) * 2) / 2;
         document.getElementById('rev-stars').textContent = '★★★★★'.slice(0, Math.floor(filled)) + (filled % 1 ? '☆' : '') + '☆☆☆☆☆'.slice(0, 5 - Math.ceil(filled));
         const fivePlus = (s.count_5 || 0) + (s.count_4 || 0);
+        // Per ICAC review-attribution policy, what matters is review *generation*
+        // per tech (shown on the leaderboard + tech detail), NOT owner-side
+        // response rate. Older builds showed "0.0% response rate" here, which
+        // looked like a problem but isn't a metric Tim cares about. Replaced
+        // with the recent-window count from the per-review feed.
+        const recentCount = ((typeof r !== 'undefined' && r.recent) ? r.recent.length : 0);
         document.getElementById('rev-count').textContent =
-          `${fmtI(s.rating_count)} reviews · ${fmtI(fivePlus)} are 4★+ · ${fmtP(s.response_rate_pct || 0)} response rate`;
+          `${fmtI(s.rating_count)} reviews · ${fmtI(recentCount)} in recent feed · ${fmtI(fivePlus)} are 4★+`;
         // Distribution bars
         const total = (s.count_5 || 0) + (s.count_4 || 0) + (s.count_3 || 0) + (s.count_2 || 0) + (s.count_1 || 0) || 1;
         const buckets = [{n:5,c:s.count_5},{n:4,c:s.count_4},{n:3,c:s.count_3},{n:2,c:s.count_2},{n:1,c:s.count_1}];
@@ -1341,32 +1372,59 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       });
     }
     function updateLivePreview() {
-      // Recompute scores using current slider weights against the current tech
-      // leaderboard data — show top-3 grades shift in real time.
+      // Mirror the leaderboard's scoring exactly so the same tech shows the
+      // same grade in both places. That means: filter to field techs (>=5 jobs,
+      // not owner), build a peer-percentile distribution, score against it.
+      // Anything other than parity here will confuse Tim ("Erick is a B on one
+      // screen and an F on another?") so this MUST stay in sync with
+      // renderTechs above. If you change scoring there, update here too.
       if (!lastTechsForPreview.length) {
         document.getElementById('settings-preview').innerHTML = '<div class="text-slate-400 italic">Click "Sync now" first to load tech data.</div>';
         return;
       }
       const w = readSlidersAsWeights();
-      const tg = (configCache && configCache.targets) || {
-        revenue_per_day:{zero:1000,hundred:2400}, avg_ticket:{zero:200,hundred:550},
-        close_rate:{zero:50,hundred:90}, membership_conversion:{zero:10,hundred:35},
-        callback_rate_inverted:{zero:5,hundred:0}, review_rate:{zero:5,hundred:30},
-        utilization:{zero:50,hundred:75}, volume:{zero:2,hundred:5}
+      const measured = {
+        revenue_per_day: true, avg_ticket: true, close_rate: true,
+        membership_conversion: false, callback_rate_inverted: true,
+        review_rate: true, utilization: false, volume: true,
       };
-      const measured = { revenue_per_day:1, avg_ticket:1, close_rate:1, membership_conversion:0, callback_rate_inverted:1, review_rate:1, utilization:0, volume:1 };
       let mw = 0; for (const k of Object.keys(w)) if (measured[k]) mw += w[k];
       if (mw === 0) mw = 1;
-      const norm = (val, t) => { if (t.zero === t.hundred) return 50; const c = n => Math.max(0, Math.min(100, n)); return t.zero < t.hundred ? c(((val - t.zero) / (t.hundred - t.zero)) * 100) : c(((t.zero - val) / (t.zero - t.hundred)) * 100); };
-      const grade = n => n>=90?'A':n>=80?'B':n>=70?'C':n>=60?'D':'F';
       const days = currentRange;
-      const scored = lastTechsForPreview.map(t => {
-        const inp = { revenue_per_day: t.revenue/days, avg_ticket: t.avg_ticket, close_rate: t.close_rate_pct, membership_conversion: 0, callback_rate_inverted: -t.callback_rate_pct, review_rate: t.review_rate_pct||0, utilization: 0, volume: t.jobs/days };
-        // For preview, use absolute normalization (not peer percentile) — directionally same, simpler.
+      const inputs = (t) => ({
+        revenue_per_day: t.revenue / days, avg_ticket: t.avg_ticket, close_rate: t.close_rate_pct,
+        membership_conversion: 0, callback_rate_inverted: -t.callback_rate_pct,
+        review_rate: t.review_rate_pct || 0, utilization: 0, volume: t.jobs / days,
+      });
+      const percentile = (values, value) => {
+        if (values.length <= 1) return 50;
+        const below = values.filter(v => v < value).length;
+        const equal = values.filter(v => v === value).length;
+        return Math.round(((below + 0.5 * equal) / values.length) * 100);
+      };
+
+      // Field-tech peer group — same filter the leaderboard uses (MIN_JOBS=5, not owner).
+      const MIN_JOBS = 5;
+      const field = lastTechsForPreview.filter(t => !t.is_owner && t.jobs >= MIN_JOBS);
+      if (!field.length) {
+        document.getElementById('settings-preview').innerHTML = '<div class="text-slate-400 italic">Not enough field-tech data to grade.</div>';
+        return;
+      }
+      const fieldInputs = field.map(inputs);
+      const dists = {};
+      for (const k of Object.keys(measured)) if (measured[k]) dists[k] = fieldInputs.map(i => i[k] || 0);
+      const grade = n => n>=90?'A':n>=80?'B':n>=70?'C':n>=60?'D':'F';
+      const scored = field.map(t => {
+        const inp = inputs(t);
         let total = 0;
-        for (const k of Object.keys(w)) { if (!measured[k]) continue; total += norm(inp[k]||0, tg[k]) * (w[k]/mw); }
-        return { name: t.tech_name, score: Math.round(total*10)/10, grade: grade(total) };
-      }).sort((a,b) => b.score - a.score);
+        for (const k of Object.keys(w)) {
+          if (!measured[k]) continue;
+          const pct = percentile(dists[k] || [], inp[k] || 0);
+          total += pct * (w[k] / mw);
+        }
+        return { name: t.tech_name, score: Math.round(total * 10) / 10, grade: grade(total) };
+      }).sort((a, b) => b.score - a.score);
+
       document.getElementById('settings-preview').innerHTML = scored.slice(0, 6).map(s => {
         const c = { A:'#15803d', B:'#10b981', C:'#b45309', D:'#dc2626', F:'#991b1b' }[s.grade] || '#64748b';
         return `<div class="flex items-center justify-between gap-2">
