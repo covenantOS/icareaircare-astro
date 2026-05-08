@@ -19,5 +19,8 @@
     "astro": "^6.1.8",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.2.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260508.1"
   }
 }

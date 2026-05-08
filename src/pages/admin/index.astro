@@ -1,0 +1,22 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="Admin">
+  <main class="container-site py-12">
+    <h1 class="text-3xl font-bold mb-2">I Care Air Care · Admin</h1>
+    <p class="text-slate-600 mb-8">Internal tools for Tim & the team.</p>
+    <ul class="space-y-3">
+      <li>
+        <a href="/admin/dashboard/" class="card block hover:shadow-soft transition">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="font-semibold text-lg text-navy-700">KPI Dashboard</div>
+              <div class="text-sm text-slate-600">Weekly tech performance — call volume, close rate, average ticket, revenue, callbacks.</div>
+            </div>
+            <span class="text-accent-600 text-2xl">→</span>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </main>
+</AdminLayout>

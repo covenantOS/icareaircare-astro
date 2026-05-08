@@ -1,0 +1,469 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="KPI Dashboard">
+  <!-- LOGIN GATE — shown if no admin key in sessionStorage and CF Access isn't fronting -->
+  <div id="login-gate" hidden>
+    <div class="card login-card">
+      <h2 class="text-xl font-bold mb-1">Sign in</h2>
+      <p class="text-sm text-slate-600 mb-5">Enter the admin key to continue. (When Cloudflare Access is enabled this screen will be replaced by Google login.)</p>
+      <form id="login-form" class="space-y-3">
+        <input id="login-key" type="password" placeholder="Admin key" autocomplete="current-password" required />
+        <button type="submit" class="btn-admin w-full justify-center">Continue</button>
+      </form>
+      <p id="login-error" class="text-red-600 text-sm mt-3" hidden></p>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" hidden>
+    <header class="bg-white border-b border-line">
+      <div class="container-site py-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 class="text-xl sm:text-2xl font-bold text-navy-700">I Care Air Care · KPI Dashboard</h1>
+          <div id="sync-status" class="text-xs text-slate-500 mt-1">Loading sync status…</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="sync-btn" class="btn-ghost-admin" type="button">Sync now</button>
+          <a href="/admin/" class="btn-ghost-admin">Admin home</a>
+          <button id="logout-btn" class="btn-ghost-admin" type="button">Sign out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container-site py-6 space-y-6">
+
+      <!-- Date range tabs -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap gap-2" role="tablist" aria-label="Date range">
+          <button class="tab" data-range="7"  type="button" aria-pressed="false">Last 7 days</button>
+          <button class="tab" data-range="30" type="button" aria-pressed="true">Last 30 days</button>
+          <button class="tab" data-range="90" type="button" aria-pressed="false">Last 90 days</button>
+        </div>
+        <div class="text-xs text-slate-500" id="window-display"></div>
+      </div>
+
+      <!-- Top-row KPI cards -->
+      <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <article class="card">
+          <div class="stat-label">Call Volume</div>
+          <div id="kpi-volume" class="stat-value">—</div>
+          <div id="kpi-volume-sub" class="stat-sub">tune-ups · diagnostics · estimates</div>
+        </article>
+        <article class="card">
+          <div class="stat-label">Close Rate</div>
+          <div id="kpi-close" class="stat-value">—</div>
+          <div id="kpi-close-sub" class="stat-sub">overall (sold / completed)</div>
+        </article>
+        <article class="card">
+          <div class="stat-label">Avg Ticket</div>
+          <div id="kpi-ticket" class="stat-value">—</div>
+          <div id="kpi-ticket-sub" class="stat-sub">discounts applied</div>
+        </article>
+        <article class="card">
+          <div class="stat-label">Revenue</div>
+          <div id="kpi-revenue" class="stat-value">—</div>
+          <div id="kpi-revenue-sub" class="stat-sub">total invoiced</div>
+        </article>
+      </section>
+
+      <!-- Per-call-type breakdown -->
+      <section class="card">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-lg font-bold text-navy-700">By call type</h2>
+          <span class="text-xs text-slate-500">tune-up sold ≥ <span id="thr-sold-tu">$110</span> · min ticket TU <span id="thr-min-tu">$175</span> / Diag <span id="thr-min-diag">$275</span></span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="kpi-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th class="text-right">Calls</th>
+                <th class="text-right">Closed</th>
+                <th class="text-right">Close %</th>
+                <th class="text-right">Avg Ticket</th>
+                <th class="text-right">Revenue</th>
+              </tr>
+            </thead>
+            <tbody id="by-type-rows">
+              <tr><td colspan="6" class="text-center text-slate-400 py-6">No data yet — run a sync to populate.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Tech leaderboard -->
+      <section class="card">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-lg font-bold text-navy-700">Tech leaderboard</h2>
+          <span class="text-xs text-slate-500">Sorted by revenue</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="kpi-table">
+            <thead>
+              <tr>
+                <th>Tech</th>
+                <th class="text-right">Jobs</th>
+                <th class="text-right" title="Tune-ups · Diagnostics · Estimates">TU · Dx · Est</th>
+                <th class="text-right">Close %</th>
+                <th class="text-right">Avg Ticket</th>
+                <th class="text-right">Revenue</th>
+                <th class="text-right">Callbacks</th>
+              </tr>
+            </thead>
+            <tbody id="tech-rows">
+              <tr><td colspan="7" class="text-center text-slate-400 py-6">No data yet — run a sync to populate.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Customer mix + callbacks -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <article class="card">
+          <h2 class="text-lg font-bold text-navy-700 mb-3">Customer mix</h2>
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between text-sm mb-1"><span>New customers</span><span id="cust-new" class="num font-semibold">—</span></div>
+              <div class="progress"><span id="cust-new-bar" style="width:0%"></span></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm mb-1"><span>Existing customers</span><span id="cust-existing" class="num font-semibold">—</span></div>
+              <div class="progress"><span id="cust-existing-bar" style="width:0%"></span></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm mb-1"><span>Care-plan members</span><span id="cust-member" class="num font-semibold">—</span></div>
+              <div class="progress"><span id="cust-member-bar" style="width:0%"></span></div>
+            </div>
+          </div>
+        </article>
+        <article class="card">
+          <h2 class="text-lg font-bold text-navy-700 mb-3">Callbacks</h2>
+          <div class="flex items-baseline gap-3 mb-2">
+            <div class="stat-value" id="cb-total">—</div>
+            <div class="stat-sub">callbacks · <span id="cb-rate">—</span> rate</div>
+          </div>
+          <p class="text-xs text-slate-500 mb-3">Industry target: under 3%. Top performers under 2%.</p>
+          <div class="overflow-x-auto">
+            <table class="kpi-table">
+              <thead><tr><th>Tech</th><th class="text-right">Jobs</th><th class="text-right">Callbacks</th><th class="text-right">Rate</th></tr></thead>
+              <tbody id="cb-rows"><tr><td colspan="4" class="text-center text-slate-400 py-4">—</td></tr></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- Notes / footer -->
+      <section class="card-quiet text-xs text-slate-500 leading-relaxed">
+        <p class="mb-1"><strong>Data source:</strong> Housecall Pro API. Synced on demand or via scheduled job.</p>
+        <p class="mb-1"><strong>Hours worked / drive time</strong> aren't yet visible — HCP doesn't expose timesheets via public API. Phase 2 will ingest a weekly CSV.</p>
+        <p><strong>Reviews</strong> per tech land in Phase 2 once Google Business Profile is wired up.</p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Toasts -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50" hidden>
+    <div id="toast-body" class="bg-navy-700 text-white text-sm px-4 py-2 rounded-lg shadow-soft"></div>
+  </div>
+
+  <script is:inline>
+    // ─────────────────────────────────────────────────────────────────
+    // I Care Air Care KPI Dashboard — client logic
+    // ─────────────────────────────────────────────────────────────────
+
+    const STORAGE_KEY = 'icac_admin_key';
+    let currentRange = 30;
+    let currentWindow = computeWindow(30);
+
+    function computeWindow(days) {
+      const to = new Date();
+      const from = new Date(to.getTime() - days * 86400000);
+      return { from: from.toISOString(), to: to.toISOString() };
+    }
+
+    function getKey() { return sessionStorage.getItem(STORAGE_KEY) || ''; }
+    function setKey(k) { sessionStorage.setItem(STORAGE_KEY, k); }
+    function clearKey() { sessionStorage.removeItem(STORAGE_KEY); }
+
+    function withAuth(url) {
+      const k = getKey();
+      if (!k) return url;
+      const u = new URL(url, location.origin);
+      u.searchParams.set('key', k);
+      return u.toString();
+    }
+
+    async function api(path, init) {
+      const res = await fetch(withAuth(path), { credentials: 'include', ...init });
+      if (res.status === 401) {
+        clearKey();
+        showLogin();
+        throw new Error('Auth required');
+      }
+      if (!res.ok) {
+        const text = await res.text().catch(() => '');
+        throw new Error(`API ${path} failed: ${res.status} ${text.slice(0, 200)}`);
+      }
+      return res.json();
+    }
+
+    function showLogin() {
+      document.getElementById('login-gate').hidden = false;
+      document.getElementById('dashboard').hidden = true;
+    }
+    function showDashboard() {
+      document.getElementById('login-gate').hidden = true;
+      document.getElementById('dashboard').hidden = false;
+    }
+
+    function fmtMoney(n) {
+      if (n == null || isNaN(n)) return '—';
+      const v = Number(n);
+      return '$' + v.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+    function fmtPct(n) { if (n == null || isNaN(n)) return '—'; return Number(n).toFixed(1) + '%'; }
+    function fmtInt(n) { if (n == null || isNaN(n)) return '—'; return Number(n).toLocaleString('en-US'); }
+
+    function fmtRelTime(iso) {
+      if (!iso) return 'never';
+      const d = new Date(iso);
+      const diff = (Date.now() - d.getTime()) / 1000;
+      if (diff < 60) return Math.round(diff) + 's ago';
+      if (diff < 3600) return Math.round(diff / 60) + 'm ago';
+      if (diff < 86400) return Math.round(diff / 3600) + 'h ago';
+      return Math.round(diff / 86400) + 'd ago';
+    }
+
+    function toast(msg, kind) {
+      const t = document.getElementById('toast');
+      const b = document.getElementById('toast-body');
+      b.textContent = msg;
+      b.className = 'text-sm px-4 py-2 rounded-lg shadow-soft ' +
+        (kind === 'error' ? 'bg-red-600 text-white' : kind === 'ok' ? 'bg-emerald-600 text-white' : 'bg-navy-700 text-white');
+      t.hidden = false;
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => { t.hidden = true; }, 4000);
+    }
+
+    function renderSummary(data) {
+      const s = data.summary;
+      // Top-row cards
+      document.getElementById('kpi-volume').textContent = fmtInt(s.call_volume.total);
+      document.getElementById('kpi-volume-sub').textContent =
+        `${s.call_volume.tune_up} TU · ${s.call_volume.diagnostic} Dx · ${s.call_volume.estimate} Est`;
+      document.getElementById('kpi-close').textContent = fmtPct(s.close_rate.overall_pct);
+      document.getElementById('kpi-close-sub').textContent =
+        `${s.totals.sold_jobs} sold of ${s.totals.completed_jobs} completed`;
+      document.getElementById('kpi-ticket').textContent = fmtMoney(s.average_ticket.overall);
+      document.getElementById('kpi-revenue').textContent = fmtMoney(s.revenue.total);
+
+      // By call type rows
+      const byTypeBody = document.getElementById('by-type-rows');
+      const types = ['tune_up', 'diagnostic', 'estimate', 'install', 'other'];
+      const labels = { tune_up: 'Tune-up', diagnostic: 'Diagnostic', estimate: 'Estimate', install: 'Install', other: 'Other' };
+      const rows = [];
+      for (const t of types) {
+        const cv = s.call_volume[t] || 0;
+        if (!cv) continue;
+        const cr = s.close_rate.by_type[t] || { closed: 0, total: 0, pct: 0 };
+        const at = s.average_ticket.by_type[t] || 0;
+        const rev = s.revenue.by_type[t] || 0;
+        rows.push(`
+          <tr>
+            <td><strong>${labels[t]}</strong></td>
+            <td class="text-right num">${fmtInt(cv)}</td>
+            <td class="text-right num">${fmtInt(cr.closed)}</td>
+            <td class="text-right num">${fmtPct(cr.pct)}</td>
+            <td class="text-right num">${fmtMoney(at)}</td>
+            <td class="text-right num">${fmtMoney(rev)}</td>
+          </tr>`);
+      }
+      byTypeBody.innerHTML = rows.length ? rows.join('') :
+        `<tr><td colspan="6" class="text-center text-slate-400 py-6">No completed jobs in this window.</td></tr>`;
+
+      // Customer mix
+      const ct = s.customer_type;
+      const ctMax = Math.max(ct.new_customers, ct.existing_customers, ct.member_customers, 1);
+      document.getElementById('cust-new').textContent = fmtInt(ct.new_customers);
+      document.getElementById('cust-existing').textContent = fmtInt(ct.existing_customers);
+      document.getElementById('cust-member').textContent = fmtInt(ct.member_customers);
+      document.getElementById('cust-new-bar').style.width = (ct.new_customers / ctMax * 100) + '%';
+      document.getElementById('cust-existing-bar').style.width = (ct.existing_customers / ctMax * 100) + '%';
+      document.getElementById('cust-member-bar').style.width = (ct.member_customers / ctMax * 100) + '%';
+
+      // Callbacks
+      const cb = s.callbacks;
+      document.getElementById('cb-total').textContent = fmtInt(cb.total);
+      document.getElementById('cb-rate').textContent = fmtPct(cb.rate_pct);
+      const cbRows = (cb.by_tech || []).filter(r => r.callbacks > 0).slice(0, 8);
+      document.getElementById('cb-rows').innerHTML = cbRows.length
+        ? cbRows.map(r => `
+          <tr>
+            <td>${escapeHtml(r.tech_name)}</td>
+            <td class="text-right num">${fmtInt(r.total_jobs)}</td>
+            <td class="text-right num">${fmtInt(r.callbacks)}</td>
+            <td class="text-right num">${fmtPct(r.rate_pct)}</td>
+          </tr>`).join('')
+        : `<tr><td colspan="4" class="text-center text-slate-400 py-4">No callbacks in this window 🎉</td></tr>`;
+
+      // Sync status
+      if (data.last_sync) {
+        const ls = data.last_sync;
+        const finished = ls.finished_at || ls.started_at;
+        const successPill = ls.success === 1 ? 'pill pill-ok' : ls.success === 0 ? 'pill pill-err' : 'pill pill-warn';
+        const successText = ls.success === 1 ? 'Synced' : ls.success === 0 ? 'Failed' : 'In progress';
+        document.getElementById('sync-status').innerHTML =
+          `<span class="${successPill}">${successText}</span> ` +
+          `Last sync ${fmtRelTime(finished)} · ${fmtInt(ls.jobs_synced)} jobs · ${fmtInt(ls.customers_synced)} customers`;
+      } else {
+        document.getElementById('sync-status').innerHTML =
+          `<span class="pill pill-warn">No sync yet</span> Click "Sync now" to pull from Housecall Pro.`;
+      }
+
+      // Window display
+      const w = s.window;
+      document.getElementById('window-display').textContent =
+        `${new Date(w.from).toLocaleDateString()} → ${new Date(w.to).toLocaleDateString()}`;
+    }
+
+    function renderTechs(data) {
+      const techs = data.techs || [];
+      if (!techs.length) {
+        document.getElementById('tech-rows').innerHTML =
+          `<tr><td colspan="7" class="text-center text-slate-400 py-6">No tech data yet.</td></tr>`;
+        return;
+      }
+      document.getElementById('tech-rows').innerHTML = techs.map(t => `
+        <tr>
+          <td><strong>${escapeHtml(t.tech_name)}</strong></td>
+          <td class="text-right num">${fmtInt(t.jobs)}</td>
+          <td class="text-right num">${t.tune_ups} · ${t.diagnostics} · ${t.estimates}</td>
+          <td class="text-right num">${fmtPct(t.close_rate_pct)}</td>
+          <td class="text-right num">${fmtMoney(t.avg_ticket)}</td>
+          <td class="text-right num"><strong>${fmtMoney(t.revenue)}</strong></td>
+          <td class="text-right num">${t.callbacks} (${fmtPct(t.callback_rate_pct)})</td>
+        </tr>
+      `).join('');
+    }
+
+    function escapeHtml(s) {
+      return String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+    }
+
+    function setLoading() {
+      const skel = '<span class="skeleton inline-block h-9 w-24"></span>';
+      ['kpi-volume','kpi-close','kpi-ticket','kpi-revenue'].forEach(id => {
+        document.getElementById(id).innerHTML = skel;
+      });
+    }
+
+    async function loadConfig() {
+      try {
+        const cfg = await api('/api/kpis/config');
+        const t = cfg.thresholds || {};
+        document.getElementById('thr-sold-tu').textContent = '$' + ((t.sold && t.sold.tune_up) || 110);
+        document.getElementById('thr-min-tu').textContent  = '$' + ((t.minTicket && t.minTicket.tune_up) || 175);
+        document.getElementById('thr-min-diag').textContent= '$' + ((t.minTicket && t.minTicket.diagnostic) || 275);
+      } catch (e) { /* ignore */ }
+    }
+
+    async function loadAll() {
+      setLoading();
+      currentWindow = computeWindow(currentRange);
+      try {
+        const [summary, byTech] = await Promise.all([
+          api(`/api/kpis/summary?from=${encodeURIComponent(currentWindow.from)}&to=${encodeURIComponent(currentWindow.to)}`),
+          api(`/api/kpis/by-tech?from=${encodeURIComponent(currentWindow.from)}&to=${encodeURIComponent(currentWindow.to)}`),
+        ]);
+        renderSummary(summary);
+        renderTechs(byTech);
+      } catch (e) {
+        toast(e.message || 'Load failed', 'error');
+      }
+    }
+
+    async function runSync() {
+      const btn = document.getElementById('sync-btn');
+      btn.disabled = true;
+      btn.textContent = 'Syncing…';
+      toast('Pulling data from Housecall Pro — this may take 30-90 seconds.');
+      try {
+        const r = await api('/api/sync/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ daysBack: 90 }) });
+        toast(r.success
+          ? `Synced ${r.jobs_synced} jobs · ${r.customers_synced} customers · ${r.techs_synced} techs`
+          : `Sync had errors: ${(r.errors || []).join('; ').slice(0, 120)}`,
+          r.success ? 'ok' : 'error');
+        await loadAll();
+      } catch (e) {
+        toast(e.message || 'Sync failed', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Sync now';
+      }
+    }
+
+    // Wire up
+    document.querySelectorAll('.tab[data-range]').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('.tab[data-range]').forEach(x => x.setAttribute('aria-pressed', 'false'));
+        b.setAttribute('aria-pressed', 'true');
+        currentRange = parseInt(b.dataset.range, 10);
+        loadAll();
+      });
+    });
+
+    document.getElementById('sync-btn').addEventListener('click', runSync);
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      clearKey();
+      showLogin();
+    });
+
+    document.getElementById('login-form').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const k = document.getElementById('login-key').value.trim();
+      if (!k) return;
+      setKey(k);
+      try {
+        // Validate by hitting summary
+        await api('/api/kpis/summary');
+        document.getElementById('login-error').hidden = true;
+        showDashboard();
+        await loadConfig();
+        await loadAll();
+      } catch (e) {
+        document.getElementById('login-error').hidden = false;
+        document.getElementById('login-error').textContent = 'Wrong key or server error: ' + (e.message || '');
+        clearKey();
+      }
+    });
+
+    // Boot
+    (async () => {
+      // Try session key first
+      if (getKey()) {
+        try {
+          await api('/api/kpis/summary');
+          showDashboard();
+          await loadConfig();
+          await loadAll();
+          return;
+        } catch (e) {
+          /* fall through to login */
+        }
+      }
+      // Otherwise try CF Access session (no key needed)
+      try {
+        const r = await fetch('/api/kpis/summary', { credentials: 'include' });
+        if (r.ok) {
+          showDashboard();
+          await loadConfig();
+          await loadAll();
+          return;
+        }
+      } catch {}
+      showLogin();
+    })();
+  </script>
+</AdminLayout>

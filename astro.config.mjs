@@ -13,6 +13,8 @@ export default defineConfig({
         !page.includes('/terms-of-use/') &&
         !page.includes('/thank-you/') &&
         !page.includes('/book/') &&
+        // Internal admin / KPI dashboard — not for public indexing
+        !page.includes('/admin/') &&
         !page.endsWith('/rss.xml') &&
         // Legacy URLs that 301 to canonical versions — do not include in sitemap
         !page.includes('/emergency-ac-repair-wesley-chapel-fl/') &&

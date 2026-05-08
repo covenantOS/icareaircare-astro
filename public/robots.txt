@@ -68,5 +68,6 @@ Allow: /
 Disallow: /api/
 Disallow: /thank-you/
 Disallow: /_astro/
+Disallow: /admin/
 
 Sitemap: https://www.icareaircare.com/sitemap-index.xml

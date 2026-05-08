@@ -1,0 +1,179 @@
+---
+// Minimal layout for /admin/* pages — no public Header/Footer, no SEO bloat.
+// Brand tokens come from src/styles/global.css.
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Internal — I Care Air Care KPI dashboard' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="description" content={description} />
+    <title>{title} · I Care Air Care</title>
+    <link rel="icon" href="/favicon-bear.png" />
+    <style is:global>
+      @import "../styles/global.css";
+
+      body { background: var(--color-surface); }
+      .admin-shell { min-height: 100vh; }
+
+      .card {
+        background: #fff;
+        border: 1px solid var(--color-line);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+        padding: 1.25rem;
+      }
+      .card-quiet {
+        background: #fff;
+        border: 1px solid var(--color-line);
+        border-radius: var(--radius-lg);
+        padding: 1rem;
+      }
+      .stat-label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--color-muted);
+      }
+      .stat-value {
+        font-size: 2.25rem;
+        font-weight: 700;
+        line-height: 1.05;
+        color: var(--color-navy-700);
+        letter-spacing: -0.02em;
+      }
+      .stat-sub {
+        font-size: 0.875rem;
+        color: var(--color-ink-soft);
+        margin-top: 0.25rem;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+      .pill-ok    { background: #e0f5e9; color: #15803d; }
+      .pill-warn  { background: #fef3c7; color: #92400e; }
+      .pill-err   { background: #fee2e2; color: #991b1b; }
+      .pill-info  { background: var(--color-brand-50); color: var(--color-brand-800); }
+      .btn-admin {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.55rem 1rem;
+        background: var(--color-accent-500);
+        color: #fff;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        border: none;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .btn-admin:hover { background: var(--color-accent-600); }
+      .btn-admin[disabled] { background: #cbd5e1; cursor: not-allowed; }
+      .btn-ghost-admin {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.5rem 0.85rem;
+        background: transparent;
+        color: var(--color-navy-700);
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        border: 1px solid var(--color-line);
+        cursor: pointer;
+      }
+      .btn-ghost-admin:hover { background: var(--color-surface-2); }
+      .tab {
+        padding: 0.45rem 0.95rem;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid var(--color-line);
+        background: #fff;
+        color: var(--color-navy-700);
+      }
+      .tab[aria-pressed="true"] {
+        background: var(--color-navy-700);
+        color: #fff;
+        border-color: var(--color-navy-700);
+      }
+      table.kpi-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+      }
+      table.kpi-table th, table.kpi-table td {
+        text-align: left;
+        padding: 0.55rem 0.75rem;
+        border-bottom: 1px solid var(--color-line);
+      }
+      table.kpi-table th {
+        font-weight: 600;
+        color: var(--color-muted);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        background: var(--color-surface);
+      }
+      table.kpi-table tr:last-child td { border-bottom: none; }
+      .num { font-variant-numeric: tabular-nums; }
+      .progress {
+        height: 8px;
+        background: var(--color-line);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .progress > span {
+        display: block;
+        height: 100%;
+        background: var(--color-accent-500);
+        border-radius: 999px;
+      }
+      .skeleton {
+        background: linear-gradient(90deg, #eef3f6, #f8fafb, #eef3f6);
+        background-size: 200% 100%;
+        animation: shimmer 1.4s infinite;
+        border-radius: 6px;
+      }
+      @keyframes shimmer {
+        0%   { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      .login-card {
+        max-width: 420px;
+        margin: 4rem auto;
+        padding: 2rem;
+      }
+      .login-card input {
+        width: 100%;
+        padding: 0.7rem 0.85rem;
+        border: 1px solid var(--color-line);
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-family: inherit;
+      }
+      .login-card input:focus {
+        outline: 2px solid var(--color-brand-400);
+        border-color: var(--color-brand-500);
+      }
+    </style>
+  </head>
+  <body class="admin-shell">
+    <slot />
+  </body>
+</html>
