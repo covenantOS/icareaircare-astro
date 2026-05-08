@@ -23,3 +23,9 @@ database_id = "ea5f239d-1e38-4303-83c0-d83bff728b91"
 [[kv_namespaces]]
 binding = "KPI_CONFIG"
 id = "80194a6f0fb54d88bfb31f3d6d9247d2"
+
+# Cloudflare Workers AI binding — used as a fallback for the AI Insights
+# panel when MiniMax is unavailable. Free to run; rate-limited per
+# Cloudflare's free-tier quota. Models like @cf/meta/llama-3.3-70b-instruct-fp8-fast.
+[ai]
+binding = "AI"

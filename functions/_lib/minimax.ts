@@ -1,9 +1,14 @@
-// MiniMax API client (OpenAI-compatible).
+// MiniMax API client (OpenAI-compatible-ish — see notes below).
 //
 // Endpoint:  https://api.minimaxi.chat/v1/text/chatcompletion_v2  (international)
-//            https://api.minimax.chat/v1/text/chatcompletion_v2   (China)
-// Will's account is `sk-cp-...` which is the standard global key.
-// Model used: MiniMax-M1 (long-context reasoning) for insights/chat.
+// Will's account: confirmed working with model `MiniMax-M2.7` (reasoning).
+//
+// Reasoning-model nuance: M2.7 returns chain-of-thought in
+// `choices[0].message.reasoning_content` and the final user-facing answer
+// in `choices[0].message.content`. With a small max_tokens budget the
+// reasoning eats all the room and content comes back empty. We pass
+// large max_tokens (default 6000) and prefer `content` but fall back to
+// `reasoning_content` so the user always sees something.
 
 export interface MiniMaxEnv {
   MINIMAX_API_KEY: string;
@@ -33,7 +38,7 @@ export interface ChatResponse {
 }
 
 const DEFAULT_BASE = 'https://api.minimaxi.chat';
-const DEFAULT_MODEL = 'MiniMax-M1';
+const DEFAULT_MODEL = 'MiniMax-M2.7';
 
 export async function chat(env: MiniMaxEnv, messages: ChatMessage[], opts: ChatOptions = {}): Promise<ChatResponse> {
   const start = Date.now();
@@ -53,7 +58,9 @@ export async function chat(env: MiniMaxEnv, messages: ChatMessage[], opts: ChatO
         model,
         messages,
         temperature: opts.temperature ?? 0.3,
-        max_tokens: opts.max_tokens ?? 1500,
+        // Reasoning models (M2.x) need a generous budget so reasoning AND
+        // content both fit. Default 6000.
+        max_tokens: opts.max_tokens ?? 6000,
         ...(opts.response_format === 'json_object'
           ? { response_format: { type: 'json_object' } }
           : {}),
@@ -70,8 +77,25 @@ export async function chat(env: MiniMaxEnv, messages: ChatMessage[], opts: ChatO
         duration_ms: Date.now() - start,
       };
     }
-    const choices = (parsed?.choices as Array<{ message?: { content?: string } }>) || [];
-    const out = choices[0]?.message?.content || '';
+    // MiniMax responds with HTTP 200 even for semantic errors — check base_resp.
+    const baseResp = parsed?.base_resp as { status_code?: number; status_msg?: string } | undefined;
+    if (baseResp && baseResp.status_code && baseResp.status_code !== 0) {
+      return {
+        ok: false,
+        error: `MiniMax ${baseResp.status_code}: ${baseResp.status_msg || 'unknown'}`,
+        raw: parsed,
+        duration_ms: Date.now() - start,
+      };
+    }
+    const choices =
+      (parsed?.choices as Array<{
+        message?: { content?: string; reasoning_content?: string };
+        finish_reason?: string;
+      }>) || [];
+    const msg = choices[0]?.message;
+    // Prefer content; fall back to reasoning_content if content is empty
+    // (happens when max_tokens is too tight for the reasoning step).
+    const out = (msg?.content && msg.content.trim()) || msg?.reasoning_content || '';
     const usage = (parsed?.usage as { total_tokens?: number; prompt_tokens?: number; completion_tokens?: number }) || {};
     return {
       ok: true,
