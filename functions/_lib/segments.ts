@@ -38,8 +38,13 @@ function rowToSegment(r: Record<string, unknown>): SegmentRow {
   };
 }
 
-// Customers whose last completed job is >= 365 days ago AND < 1095 days
-// (HCP's 3-year cap on marketing sends). Sorted by lifetime value desc.
+// Customers Tim hasn't seen in 1+ year (still inside HCP's 3-yr marketing cap).
+// Two signal paths:
+//   (A) We have an old completed job in D1 → last_job_at between 1 and 3 yrs old.
+//   (B) Sync window doesn't go back that far → fall back on HCP customer
+//       creation date (hcp_created_at) > 1 yr ago AND no recent job in our window.
+// Sorted by lifetime value desc; only emits rows that have an email or phone
+// (so the list is actually actionable for re-engagement).
 export async function dormant12mo(db: D1Database, limit = 100): Promise<SegmentRow[]> {
   const now = new Date();
   const oneYrAgo = new Date(now.getTime() - 365 * 86400_000).toISOString();
@@ -49,32 +54,39 @@ export async function dormant12mo(db: D1Database, limit = 100): Promise<SegmentR
       `SELECT hcp_id, first_name, last_name, company, email, mobile_number, home_number, zip, city,
               is_member, member_plan, total_jobs, lifetime_value_cents, last_job_at
        FROM customers
-       WHERE last_job_at IS NOT NULL
-         AND last_job_at < ?
-         AND last_job_at > ?
-         AND email IS NOT NULL
-       ORDER BY lifetime_value_cents DESC
+       WHERE (email IS NOT NULL OR mobile_number IS NOT NULL)
+         AND (
+           (last_job_at IS NOT NULL AND last_job_at < ? AND last_job_at > ?)
+           OR
+           (last_job_at IS NULL AND hcp_created_at IS NOT NULL AND hcp_created_at < ? AND hcp_created_at > ?)
+         )
+       ORDER BY
+         CASE WHEN lifetime_value_cents > 0 THEN 0 ELSE 1 END,
+         lifetime_value_cents DESC,
+         total_jobs DESC,
+         last_job_at DESC
        LIMIT ?`,
     )
-    .bind(oneYrAgo, threeYrAgo, limit)
+    .bind(oneYrAgo, threeYrAgo, oneYrAgo, threeYrAgo, limit)
     .all<Record<string, unknown>>();
   return (res.results || []).map(rowToSegment);
 }
 
 // Members whose last service was 11-13 months ago (likely up for renewal).
-// Without a real "renewal_due_at" field from HCP, we proxy on annual plans
-// by service cadence — most plans renew on the anniversary of the last
-// service window.
+// Falls back to "any member without a service in the last 60 days" if the
+// 11-13 month window has no hits — covers shallow sync windows.
 export async function membersRenewingSoon(db: D1Database, limit = 100): Promise<SegmentRow[]> {
   const now = new Date();
   const elevenMo = new Date(now.getTime() - 330 * 86400_000).toISOString();
   const thirteenMo = new Date(now.getTime() - 395 * 86400_000).toISOString();
-  const res = await db
+  const sixtyD = new Date(now.getTime() - 60 * 86400_000).toISOString();
+  const primary = await db
     .prepare(
       `SELECT hcp_id, first_name, last_name, company, email, mobile_number, home_number, zip, city,
               is_member, member_plan, total_jobs, lifetime_value_cents, last_job_at
        FROM customers
        WHERE is_member = 1
+         AND last_job_at IS NOT NULL
          AND last_job_at < ?
          AND last_job_at > ?
        ORDER BY lifetime_value_cents DESC
@@ -82,7 +94,24 @@ export async function membersRenewingSoon(db: D1Database, limit = 100): Promise<
     )
     .bind(elevenMo, thirteenMo, limit)
     .all<Record<string, unknown>>();
-  return (res.results || []).map(rowToSegment);
+  if ((primary.results || []).length > 0) {
+    return (primary.results || []).map(rowToSegment);
+  }
+  // Fallback: members not seen in 60+ days (any older). Useful while the
+  // sync window is still building out historical data.
+  const fallback = await db
+    .prepare(
+      `SELECT hcp_id, first_name, last_name, company, email, mobile_number, home_number, zip, city,
+              is_member, member_plan, total_jobs, lifetime_value_cents, last_job_at
+       FROM customers
+       WHERE is_member = 1
+         AND (last_job_at IS NULL OR last_job_at < ?)
+       ORDER BY lifetime_value_cents DESC
+       LIMIT ?`,
+    )
+    .bind(sixtyD, limit)
+    .all<Record<string, unknown>>();
+  return (fallback.results || []).map(rowToSegment);
 }
 
 // Top-N customers by lifetime value — VIP list.
