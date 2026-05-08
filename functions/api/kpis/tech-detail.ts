@@ -155,7 +155,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     close_rate: true,
     membership_conversion: false,
     callback_rate_inverted: true,
-    review_rate: false,
+    review_rate: true,        // we now attribute Google reviews to techs by name match
     utilization: false,
     volume: true,
   };
@@ -165,14 +165,14 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   }
   if (measuredWeight === 0) measuredWeight = 1;
 
-  function inputsOf(t: { revenue: number; avg_ticket: number; close_rate_pct: number; jobs: number; callback_rate_pct: number }): Record<keyof ScoreWeights, number> {
+  function inputsOf(t: { revenue: number; avg_ticket: number; close_rate_pct: number; jobs: number; callback_rate_pct: number; review_rate_pct?: number }): Record<keyof ScoreWeights, number> {
     return {
       revenue_per_day: t.revenue / Math.max(1, days),
       avg_ticket: t.avg_ticket,
       close_rate: t.close_rate_pct,
       membership_conversion: 0,
       callback_rate_inverted: -t.callback_rate_pct,
-      review_rate: 0,
+      review_rate: t.review_rate_pct || 0,
       utilization: 0,
       volume: t.jobs / Math.max(1, days),
     } as Record<keyof ScoreWeights, number>;
@@ -185,12 +185,28 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     return Math.round(((below + 0.5 * equal) / values.length) * 100);
   }
 
+  // Look up this tech's review attribution count in window
+  const reviewRow = await env.DB
+    .prepare(
+      `SELECT COUNT(*) AS n FROM reviews
+       WHERE attributed_tech_hcp_id = ?
+         AND posted_at IS NOT NULL AND posted_at >= ? AND posted_at <= ?`,
+    )
+    .bind(techId, from.toISOString(), to.toISOString())
+    .first<{ n: number }>();
+  const reviewsGen = reviewRow?.n || 0;
+  const reviewRatePct = summary.jobs > 0 ? round((reviewsGen / summary.jobs) * 100, 1) : 0;
+  // Splice the review fields onto summary so the response includes them.
+  (summary as TechSummary & { reviews_generated: number; review_rate_pct: number }).reviews_generated = reviewsGen;
+  (summary as TechSummary & { reviews_generated: number; review_rate_pct: number }).review_rate_pct = reviewRatePct;
+
   const myInp = inputsOf({
     revenue: summary.revenue,
     avg_ticket: summary.avg_ticket,
     close_rate_pct: summary.close_rate_pct,
     jobs: summary.jobs,
     callback_rate_pct: summary.callback_rate_pct,
+    review_rate_pct: reviewRatePct,
   });
 
   const components: Record<keyof ScoreWeights, { raw: number; normalized: number; weighted: number; measured: boolean }> = {} as never;

@@ -260,6 +260,8 @@ export interface TechRow {
   revenue: number;
   callbacks: number;
   callback_rate_pct: number;
+  reviews_generated: number;       // Google reviews attributed to this tech in window
+  review_rate_pct: number;          // reviews_generated / jobs * 100
 }
 
 // Roles we consider "non-field" — owner/admin/office staff. These show up
@@ -296,8 +298,25 @@ export async function computeByTech(db: D1Database, window: DateWindow): Promise
       closed_jobs: number; avg_cents: number;
       revenue_cents: number; callbacks: number;
     }>();
+
+  // Per-tech review counts (Google reviews attributed via name match, posted in window)
+  const reviewRes = await db
+    .prepare(
+      `SELECT attributed_tech_hcp_id AS tech_id, COUNT(*) AS n
+       FROM reviews
+       WHERE attributed_tech_hcp_id IS NOT NULL
+         AND posted_at IS NOT NULL
+         AND posted_at >= ? AND posted_at <= ?
+       GROUP BY attributed_tech_hcp_id`,
+    )
+    .bind(from, to)
+    .all<{ tech_id: string; n: number }>();
+  const reviewsByTech = new Map<string, number>();
+  for (const r of reviewRes.results || []) reviewsByTech.set(r.tech_id, r.n);
+
   return (res.results || []).map((r) => {
     const role = (r.role || '').trim() || null;
+    const reviewsGen = reviewsByTech.get(r.tech_id) || 0;
     return {
       tech_id: r.tech_id || 'unassigned',
       tech_name: r.tech_name || 'Unassigned',
@@ -313,6 +332,8 @@ export async function computeByTech(db: D1Database, window: DateWindow): Promise
       revenue: round((r.revenue_cents || 0) / 100, 2),
       callbacks: r.callbacks || 0,
       callback_rate_pct: r.jobs > 0 ? round((r.callbacks / r.jobs) * 100, 2) : 0,
+      reviews_generated: reviewsGen,
+      review_rate_pct: r.jobs > 0 ? round((reviewsGen / r.jobs) * 100, 1) : 0,
     };
   });
 }

@@ -94,9 +94,63 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         <div id="th-peer" class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm"></div>
       </section>
 
+      <!-- AI COACHING — per-tech briefing -->
+      <section id="th-ai" class="card relative overflow-hidden" style="background:linear-gradient(135deg, #fff 0%, #f0f7fa 100%);">
+        <div class="absolute top-0 right-0 w-32 h-32 -mt-8 -mr-8 rounded-full pulse-soft" style="background:radial-gradient(circle, rgba(232,138,56,0.14), transparent 70%)"></div>
+        <div class="flex items-start justify-between gap-3 relative">
+          <div class="flex items-center gap-3 min-w-0">
+            <span class="section-icon bg-accent-500 text-white text-sm font-bold flex-shrink-0">AI</span>
+            <div class="min-w-0">
+              <h2 class="text-lg font-bold text-navy-700">Coaching briefing</h2>
+              <div id="th-ai-headline" class="text-sm text-slate-700 mt-0.5">—</div>
+            </div>
+          </div>
+          <button id="th-ai-refresh" class="btn-ghost-admin text-xs py-1 px-2" type="button" aria-label="Refresh">↻</button>
+        </div>
+
+        <div id="th-ai-loading" class="mt-3">
+          <div class="skeleton h-4 w-3/4 mb-2"></div>
+          <div class="skeleton h-4 w-full mb-2"></div>
+          <div class="skeleton h-4 w-5/6"></div>
+        </div>
+
+        <div id="th-ai-body" hidden class="mt-4 space-y-4 relative">
+          <div id="th-ai-score-reading" class="text-sm text-navy-700 italic"></div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-wide text-emerald-700 mb-2">✓ Strengths</h3>
+              <ul id="th-ai-strengths" class="space-y-2 text-sm"></ul>
+            </div>
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-wide text-amber-700 mb-2">⚠ Concerns</h3>
+              <ul id="th-ai-concerns" class="space-y-2 text-sm"></ul>
+            </div>
+          </div>
+
+          <div id="th-ai-reviews-wrap" hidden>
+            <h3 class="text-xs font-bold uppercase tracking-wide text-brand-800 mb-2">⭐ What customers are saying about this tech</h3>
+            <ul id="th-ai-reviews" class="space-y-2 text-sm"></ul>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-wide text-navy-700 mb-2">▶ Coaching actions for Tim</h3>
+            <ol id="th-ai-actions" class="space-y-2"></ol>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-wide text-slate-600 mb-2">Vs. shop peers</h3>
+            <div id="th-ai-compare" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+          </div>
+        </div>
+
+        <div id="th-ai-error" hidden class="mt-3 text-sm text-amber-700"></div>
+      </section>
+
+      <!-- Rule-based coaching prompts (kept as a quick fallback) -->
       <section class="card-quiet">
-        <h3 class="font-semibold text-navy-700 mb-1">Coaching prompts</h3>
-        <ul id="th-coach" class="text-sm text-slate-700 space-y-1 list-disc pl-5"><li>—</li></ul>
+        <h3 class="font-semibold text-navy-700 mb-1 text-sm">Quick rule-based prompts</h3>
+        <ul id="th-coach" class="text-xs text-slate-700 space-y-1 list-disc pl-5"><li>—</li></ul>
       </section>
     </main>
   </div>
@@ -108,6 +162,17 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
   <script is:inline>
     const STORAGE_KEY = 'icac_admin_key';
     const techId = new URL(location.href).searchParams.get('id') || '';
+    // If the URL passes ?days= (set by the leaderboard click), use it as the
+    // initial window value so the score on this page matches what the user
+    // saw on the dashboard when they clicked the row.
+    const urlDays = new URL(location.href).searchParams.get('days');
+    if (urlDays) {
+      const sel = document.getElementById('th-window');
+      if (sel && [...sel.options].some(o => o.value === urlDays)) sel.value = urlDays;
+    }
+    // Also persist URL ?key= → sessionStorage on first visit.
+    const urlKey = new URL(location.href).searchParams.get('key');
+    if (urlKey) sessionStorage.setItem(STORAGE_KEY, urlKey);
 
     function getKey() { return sessionStorage.getItem(STORAGE_KEY) || ''; }
     function setKey(k) { sessionStorage.setItem(STORAGE_KEY, k); }
@@ -160,6 +225,79 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </svg>`;
     }
     const gradeColor = g => ({ A:'#15803d', B:'#10b981', C:'#b45309', D:'#dc2626', F:'#991b1b' }[g] || '#64748b');
+
+    async function loadAICoaching(days, forceRefresh) {
+      const loading = document.getElementById('th-ai-loading');
+      const body = document.getElementById('th-ai-body');
+      const errBox = document.getElementById('th-ai-error');
+      loading.hidden = false; body.hidden = true; errBox.hidden = true;
+      try {
+        const url = `/api/ai/tech-coaching?id=${encodeURIComponent(techId)}&days=${days}${forceRefresh ? '&refresh=1' : ''}`;
+        const r = await api(url);
+        loading.hidden = true;
+        const b = r.briefing;
+        if (!b) { errBox.hidden = false; errBox.textContent = 'AI returned no briefing.'; return; }
+
+        document.getElementById('th-ai-headline').textContent = b.headline || '';
+        document.getElementById('th-ai-score-reading').textContent = b.score_reading || '';
+
+        const renderItem = (it, kind) => {
+          const sev = it.severity ? `<span class="chip ${it.severity === 'high' ? 'chip-bad' : it.severity === 'med' ? 'chip-warn' : 'chip-info'}">${esc(it.severity)}</span>` : '';
+          return `<li class="card-quiet ${kind === 'good' ? 'tone-good' : 'tone-warn'}">
+            <div class="font-semibold text-navy-700 text-sm">${esc(it.title || '')} ${sev}</div>
+            <div class="text-slate-700 text-[13px] mt-1">${esc(it.detail || '')}</div>
+            ${it.evidence ? `<div class="text-[11px] text-slate-500 mt-1 italic">${esc(it.evidence)}</div>` : ''}
+          </li>`;
+        };
+        document.getElementById('th-ai-strengths').innerHTML =
+          (b.strengths || []).map(it => renderItem(it, 'good')).join('') || '<li class="text-slate-400 italic">No strengths called out.</li>';
+        document.getElementById('th-ai-concerns').innerHTML =
+          (b.concerns || []).map(it => renderItem(it, 'warn')).join('') || '<li class="text-slate-400 italic">No concerns flagged 🎉</li>';
+
+        // Review signals
+        const rs = b.review_signals || [];
+        document.getElementById('th-ai-reviews-wrap').hidden = rs.length === 0;
+        document.getElementById('th-ai-reviews').innerHTML = rs.map(r => {
+          const tone = r.tone === 'good' ? 'tone-good' : r.tone === 'warn' ? 'tone-warn' : 'tone-neutral';
+          return `<li class="card-quiet ${tone}">
+            <div class="font-semibold text-navy-700 text-sm">${esc(r.reviewer || 'Anonymous')}</div>
+            <div class="text-slate-700 text-[13px] mt-1">${esc(r.takeaway || '')}</div>
+          </li>`;
+        }).join('');
+
+        // Actions
+        document.getElementById('th-ai-actions').innerHTML =
+          (b.coaching_actions || []).sort((a, x) => (a.priority || 99) - (x.priority || 99)).map((a, i) => `
+            <li class="flex gap-3 hover-lift card-quiet">
+              <span class="section-icon bg-accent-500 text-white text-sm font-bold flex-shrink-0">${a.priority || (i + 1)}</span>
+              <div class="min-w-0 flex-1">
+                <div class="font-semibold text-navy-700">${esc(a.title || '')}</div>
+                <div class="text-slate-700 text-[13px] mt-0.5">${esc(a.detail || '')}</div>
+                ${a.value_estimate ? `<div class="mt-1"><span class="chip chip-good">${esc(a.value_estimate)}</span></div>` : ''}
+              </div>
+            </li>`).join('') || '<li class="text-slate-400 italic">No actions this week.</li>';
+
+        // Compare to peers
+        document.getElementById('th-ai-compare').innerHTML =
+          (b.compare_to_peers || []).map(c => {
+            const tone = c.tone === 'good' ? 'tone-good' : c.tone === 'warn' ? 'tone-warn' : 'tone-neutral';
+            return `<div class="card-quiet ${tone}">
+              <div class="text-[10px] font-bold uppercase tracking-wide text-slate-600">${esc(c.metric || '')}</div>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span class="text-base font-bold text-navy-700">${esc(c.tech_value || '')}</span>
+                <span class="text-xs text-slate-500">vs peer ${esc(c.peer_median || '—')}</span>
+              </div>
+              ${c.gap ? `<div class="text-[11px] mt-1">${esc(c.gap)}</div>` : ''}
+            </div>`;
+          }).join('') || '<div class="text-slate-400 text-sm italic">No comparison data.</div>';
+
+        body.hidden = false;
+      } catch (e) {
+        loading.hidden = true;
+        errBox.hidden = false;
+        errBox.textContent = 'AI coaching unavailable: ' + (e.message || '');
+      }
+    }
 
     async function load() {
       if (!techId) { toast('Missing ?id=', 'error'); return; }
@@ -220,12 +358,18 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         if (s.close_rate_pct < 40 && s.tune_ups > 5) prompts.push(`Tune-up close rate ${fmtP(s.close_rate_pct)} below industry average — possibly under-diagnosing or under-quoting on tune-ups.`);
         if (s.callback_rate_pct > 3) prompts.push(`Callback rate ${fmtP(s.callback_rate_pct)} above 3% — review last 5 callbacks for root cause.`);
         if (s.revenue_per_day > 2400) prompts.push(`Revenue/day ${fmt$(s.revenue_per_day)} is top-quartile (industry $2,400+). Replicate this tech's playbook.`);
-        if (!prompts.length) prompts.push('No flags from rules. Check the AI Insights panel for qualitative observations.');
+        if (!prompts.length) prompts.push('No flags from quick rules. AI coaching panel above has the full read.');
         document.getElementById('th-coach').innerHTML = prompts.map(p => `<li>${esc(p)}</li>`).join('');
+        // Kick the AI panel after the basic data loads
+        loadAICoaching(days, false);
       } catch (e) { toast(e.message || 'Load failed', 'error'); }
     }
 
     document.getElementById('th-window').addEventListener('change', load);
+    document.getElementById('th-ai-refresh').addEventListener('click', () => {
+      const days = parseInt(document.getElementById('th-window').value, 10) || 30;
+      loadAICoaching(days, true);
+    });
     document.getElementById('login-form').addEventListener('submit', async (ev) => {
       ev.preventDefault();
       const k = document.getElementById('login-key').value.trim();
