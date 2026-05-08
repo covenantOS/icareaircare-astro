@@ -191,61 +191,89 @@ export async function attributeReviews(db: D1Database, opts?: { reattribute?: bo
   return result;
 }
 
-// SECOND-PASS attribution: many reviewers don't have an exact HCP customer
-// name match, but they NAME the tech in the review text ("Kleber was wonderful",
-// "Tim came out today and..."). Scan unattributed reviews for tech first names.
-// This often catches what name-matching missed.
+// HIGHEST-PRIORITY attribution: review text names the tech directly. When a
+// reviewer writes "Kleber was wonderful" we trust that more than the
+// reviewer-name → customer-history chain — even if that chain pointed at
+// a different tech. This pass runs FIRST and OVERRIDES any prior
+// attribution when there's exactly one tech named in the text.
 //
-// Confidence: high if ONE tech's first name appears, medium if MULTIPLE techs
-// match (we pick the longest/most-specific name).
+// Confidence: high = exactly one tech named; medium = multiple, we pick the
+// most-mentioned (or most-specific name).
 export interface TextAttributionResult {
   considered: number;
   newly_attributed: number;
+  overridden: number;     // reviews whose prior attribution was replaced
   ambiguous: number;
-  details: Array<{ review_id: string; tech: string; first_name: string }>;
+  details: Array<{ review_id: string; tech: string; first_name: string; overrode: string | null }>;
 }
 
-export async function attributeReviewsByText(db: D1Database): Promise<TextAttributionResult> {
-  const result: TextAttributionResult = { considered: 0, newly_attributed: 0, ambiguous: 0, details: [] };
+export async function attributeReviewsByText(db: D1Database, opts?: { override?: boolean }): Promise<TextAttributionResult> {
+  const allowOverride = opts?.override !== false; // default: override
+  const result: TextAttributionResult = { considered: 0, newly_attributed: 0, overridden: 0, ambiguous: 0, details: [] };
 
-  // Load techs with first names (active field techs preferred but include all
-  // since older reviews may name retired techs)
   const techs = await db
     .prepare(`SELECT hcp_id, first_name FROM techs WHERE first_name IS NOT NULL AND length(first_name) >= 3`)
     .all<{ hcp_id: string; first_name: string }>();
   const techList = (techs.results || []).map((t) => ({
     hcp_id: t.hcp_id,
     first_name: t.first_name,
-    re: new RegExp(`\\b${t.first_name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i'),
+    re: new RegExp(`\\b${t.first_name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi'),
   }));
   if (!techList.length) return result;
 
-  // Walk all unattributed reviews with text
+  // Consider ALL reviews with text (override low-confidence prior attributions)
   const reviews = await db
     .prepare(
-      `SELECT review_id, text FROM reviews
-       WHERE attributed_tech_hcp_id IS NULL AND text IS NOT NULL AND length(text) > 10`,
+      `SELECT review_id, text, attributed_tech_hcp_id, attribution_method
+       FROM reviews
+       WHERE text IS NOT NULL AND length(text) > 10`,
     )
-    .all<{ review_id: string; text: string }>();
+    .all<{ review_id: string; text: string; attributed_tech_hcp_id: string | null; attribution_method: string | null }>();
 
   const writes: D1PreparedStatement[] = [];
   for (const r of reviews.results || []) {
     result.considered++;
-    const matches = techList.filter((t) => t.re.test(r.text));
-    if (matches.length === 0) continue;
-    // Pick the most specific match (longest first name) to disambiguate
-    // common-name overlaps. If still ambiguous, pick first.
-    matches.sort((a, b) => b.first_name.length - a.first_name.length);
-    const best = matches[0];
-    const ambiguous = matches.length > 1;
+    // Count occurrences of each tech's first name. Pick the one mentioned most
+    // (or, if tied, the most-specific name).
+    const hits = techList
+      .map((t) => {
+        const matches = r.text.match(t.re);
+        return { tech: t, count: matches ? matches.length : 0 };
+      })
+      .filter((h) => h.count > 0);
+    if (hits.length === 0) continue;
+    hits.sort((a, b) => b.count - a.count || b.tech.first_name.length - a.tech.first_name.length);
+    const best = hits[0].tech;
+    const ambiguous = hits.length > 1 && hits[0].count === hits[1]?.count;
+
+    // If review already attributed to this tech via the same/higher confidence,
+    // skip the write to save D1 writes.
+    if (r.attributed_tech_hcp_id === best.hcp_id) continue;
+
+    // Override only if existing attribution was low-confidence (first_name_match
+    // or no attribution). High-confidence name_match is left alone unless
+    // explicitly forced.
+    const isLowConfidence = !r.attribution_method ||
+      r.attribution_method.includes('first_name_match') ||
+      r.attribution_method.includes(':low');
+    const shouldWrite = !r.attributed_tech_hcp_id || (allowOverride && (isLowConfidence || hits[0].count >= 2));
+    if (!shouldWrite) continue;
+
     if (ambiguous) result.ambiguous++;
+    if (r.attributed_tech_hcp_id) result.overridden++;
+    else result.newly_attributed++;
+
     writes.push(
       db.prepare(
         `UPDATE reviews SET attributed_tech_hcp_id = ?, attribution_method = ? WHERE review_id = ?`,
       ).bind(best.hcp_id, ambiguous ? 'text_match:medium' : 'text_match:high', r.review_id),
     );
-    result.newly_attributed++;
-    result.details.push({ review_id: r.review_id, tech: best.hcp_id, first_name: best.first_name });
+    result.details.push({
+      review_id: r.review_id,
+      tech: best.hcp_id,
+      first_name: best.first_name,
+      overrode: r.attributed_tech_hcp_id || null,
+    });
   }
   if (writes.length) await db.batch(writes);
   return result;

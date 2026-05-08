@@ -22,17 +22,27 @@ const handler: PagesFunction<Env> = async ({ request, env }) => {
   const url = new URL(request.url);
   const reattribute = url.searchParams.get('reattribute') === '1';
 
-  // Pass 1: name match (reviewer name → HCP customer → most recent job → primary tech)
+  // Pass 1 — NAME match (reviewer name → HCP customer → most recent job → tech).
+  // Useful when the review text doesn't name the tech.
   const namePass = await attributeReviews(env.DB, { reattribute });
-  // Pass 2: text scan — for reviews still unattributed, look for tech first
-  // names mentioned in the review text. This catches "Kleber was wonderful"
-  // even when the reviewer's name doesn't map to a customer.
-  const textPass = await attributeReviewsByText(env.DB);
+
+  // Pass 2 — TEXT match. Now allowed to OVERRIDE pass-1 attributions when
+  // pass 1 was low-confidence (first_name_match) and the review text clearly
+  // names a different tech. Catches cases like:
+  //   - Customer X had a recent job with tech A, but the review says "Kleber
+  //     came out and was great" — should attribute to Kleber, not A.
+  //   - Reviewer is named in review text mentioning a specific tech — text wins.
+  const textPass = await attributeReviewsByText(env.DB, { override: true });
+
+  // Recount attributed reviews after both passes
+  const totalRow = await env.DB
+    .prepare(`SELECT COUNT(*) AS n FROM reviews WHERE attributed_tech_hcp_id IS NOT NULL`)
+    .first<{ n: number }>();
 
   return jsonResponse({
     pass_1_name_match: namePass,
     pass_2_text_match: textPass,
-    total_attributed: namePass.attributed + textPass.newly_attributed,
+    total_attributed_after_both_passes: totalRow?.n || 0,
   });
 };
 
