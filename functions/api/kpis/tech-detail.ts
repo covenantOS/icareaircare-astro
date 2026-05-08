@@ -5,7 +5,8 @@
 
 import { authOrError, jsonResponse, type AuthEnv } from '../../_lib/auth';
 import { weeklyTrendByTech } from '../../_lib/trends';
-import { score, DEFAULT_WEIGHTS, DEFAULT_TARGETS, type ScoreWeights, type ScoreTargets } from '../../_lib/scoring';
+import { computeByTech } from '../../_lib/kpi-queries';
+import { DEFAULT_WEIGHTS, DEFAULT_TARGETS, type ScoreWeights, type ScoreTargets } from '../../_lib/scoring';
 
 interface Env extends AuthEnv {
   DB: D1Database;
@@ -136,22 +137,84 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   // 12-week sparkline
   const trend = await weeklyTrendByTech(env.DB, techId, 12);
 
-  // Score using current weights/targets
+  // Score = peer-relative percentile rank within ICAC's field techs.
+  // Industry-anchored absolute scoring penalized service techs unfairly
+  // because their revenue/day naturally sits below install-tech benchmarks.
+  // Shop-relative scoring asks "of the techs at THIS shop, how does this
+  // one compare?" — exactly the question Tim is trying to answer.
   const cfg = await readScoreConfig(env);
-  const scoreOut = score(
-    {
-      revenue_per_day: summary.revenue_per_day,
-      avg_ticket: summary.avg_ticket,
-      close_rate_pct: summary.close_rate_pct,
-      membership_conversion_pct: summary.membership_conversion_pct,
-      callback_rate_pct: summary.callback_rate_pct,
-      review_rate_pct: 0,        // pending Google Business Profile integration
-      utilization_pct: 0,        // pending Timesheets CSV ingest
-      jobs_per_day: summary.jobs_per_day,
-    },
-    cfg.weights,
-    cfg.targets,
+  const NON_FIELD_RE = /owner|admin|office|csr|dispatch|sales/i;
+  const allTechs = await computeByTech(env.DB, { from: from.toISOString(), to: to.toISOString() });
+  const peers = allTechs.filter(
+    (t) => t.jobs >= 5 && !(t.role && NON_FIELD_RE.test(t.role)),
   );
+
+  const measured: Record<keyof ScoreWeights, boolean> = {
+    revenue_per_day: true,
+    avg_ticket: true,
+    close_rate: true,
+    membership_conversion: false,
+    callback_rate_inverted: true,
+    review_rate: false,
+    utilization: false,
+    volume: true,
+  };
+  let measuredWeight = 0;
+  for (const k of Object.keys(cfg.weights) as Array<keyof ScoreWeights>) {
+    if (measured[k]) measuredWeight += cfg.weights[k];
+  }
+  if (measuredWeight === 0) measuredWeight = 1;
+
+  function inputsOf(t: { revenue: number; avg_ticket: number; close_rate_pct: number; jobs: number; callback_rate_pct: number }): Record<keyof ScoreWeights, number> {
+    return {
+      revenue_per_day: t.revenue / Math.max(1, days),
+      avg_ticket: t.avg_ticket,
+      close_rate: t.close_rate_pct,
+      membership_conversion: 0,
+      callback_rate_inverted: -t.callback_rate_pct,
+      review_rate: 0,
+      utilization: 0,
+      volume: t.jobs / Math.max(1, days),
+    } as Record<keyof ScoreWeights, number>;
+  }
+  const peerInputs = peers.map(inputsOf);
+  function pct(values: number[], v: number): number {
+    if (values.length <= 1) return 50;
+    const below = values.filter((x) => x < v).length;
+    const equal = values.filter((x) => x === v).length;
+    return Math.round(((below + 0.5 * equal) / values.length) * 100);
+  }
+
+  const myInp = inputsOf({
+    revenue: summary.revenue,
+    avg_ticket: summary.avg_ticket,
+    close_rate_pct: summary.close_rate_pct,
+    jobs: summary.jobs,
+    callback_rate_pct: summary.callback_rate_pct,
+  });
+
+  const components: Record<keyof ScoreWeights, { raw: number; normalized: number; weighted: number; measured: boolean }> = {} as never;
+  let total = 0;
+  for (const k of Object.keys(cfg.weights) as Array<keyof ScoreWeights>) {
+    const isMeasured = !!measured[k];
+    const raw = myInp[k] ?? 0;
+    const dist = peerInputs.map((p) => p[k] ?? 0);
+    const normalized = isMeasured ? pct(dist, raw) : 0;
+    const effWeight = isMeasured ? cfg.weights[k] / measuredWeight : 0;
+    const weighted = normalized * effWeight;
+    components[k] = { raw, normalized, weighted, measured: isMeasured };
+    total += weighted;
+  }
+  const grade: 'A' | 'B' | 'C' | 'D' | 'F' =
+    total >= 90 ? 'A' : total >= 80 ? 'B' : total >= 70 ? 'C' : total >= 60 ? 'D' : 'F';
+  const scoreOut = {
+    total: Math.round(total * 10) / 10,
+    grade,
+    components,
+    measured_weight: Math.round(measuredWeight * 100) / 100,
+    peer_count: peers.length,
+    peer_relative: true,
+  };
 
   // Top 5 jobs by ticket in window
   const topJobsRes = await env.DB

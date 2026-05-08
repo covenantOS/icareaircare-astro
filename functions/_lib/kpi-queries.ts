@@ -248,6 +248,8 @@ export async function computeSummary(db: D1Database, window: DateWindow): Promis
 export interface TechRow {
   tech_id: string;
   tech_name: string;
+  role: string | null;        // HCP role string — used to flag owner/CSR
+  is_owner: boolean;          // true if role looks like owner/admin
   jobs: number;
   tune_ups: number;
   diagnostics: number;
@@ -260,6 +262,11 @@ export interface TechRow {
   callback_rate_pct: number;
 }
 
+// Roles we consider "non-field" — owner/admin/office staff. These show up
+// as assigned to jobs in HCP because the office staff books them, but they
+// don't deserve to be ranked alongside actual field techs.
+const NON_FIELD_ROLE_RE = /owner|admin|office|csr|dispatch|sales/i;
+
 export async function computeByTech(db: D1Database, window: DateWindow): Promise<TechRow[]> {
   const { from, to } = window;
   const res = await db
@@ -267,6 +274,7 @@ export async function computeByTech(db: D1Database, window: DateWindow): Promise
       `SELECT
          j.primary_tech_hcp_id AS tech_id,
          COALESCE(t.first_name || ' ' || t.last_name, j.primary_tech_hcp_id, 'Unassigned') AS tech_name,
+         t.role AS role,
          COUNT(*) AS jobs,
          SUM(CASE WHEN j.job_type = 'tune_up' THEN 1 ELSE 0 END) AS tune_ups,
          SUM(CASE WHEN j.job_type = 'diagnostic' THEN 1 ELSE 0 END) AS diagnostics,
@@ -283,25 +291,30 @@ export async function computeByTech(db: D1Database, window: DateWindow): Promise
     )
     .bind(from, to)
     .all<{
-      tech_id: string; tech_name: string; jobs: number;
+      tech_id: string; tech_name: string; role: string | null; jobs: number;
       tune_ups: number; diagnostics: number; estimates: number;
       closed_jobs: number; avg_cents: number;
       revenue_cents: number; callbacks: number;
     }>();
-  return (res.results || []).map((r) => ({
-    tech_id: r.tech_id || 'unassigned',
-    tech_name: r.tech_name || 'Unassigned',
-    jobs: r.jobs || 0,
-    tune_ups: r.tune_ups || 0,
-    diagnostics: r.diagnostics || 0,
-    estimates: r.estimates || 0,
-    closed_jobs: r.closed_jobs || 0,
-    close_rate_pct: r.jobs > 0 ? round((r.closed_jobs / r.jobs) * 100, 1) : 0,
-    avg_ticket: round((r.avg_cents || 0) / 100, 2),
-    revenue: round((r.revenue_cents || 0) / 100, 2),
-    callbacks: r.callbacks || 0,
-    callback_rate_pct: r.jobs > 0 ? round((r.callbacks / r.jobs) * 100, 2) : 0,
-  }));
+  return (res.results || []).map((r) => {
+    const role = (r.role || '').trim() || null;
+    return {
+      tech_id: r.tech_id || 'unassigned',
+      tech_name: r.tech_name || 'Unassigned',
+      role,
+      is_owner: role ? NON_FIELD_ROLE_RE.test(role) : false,
+      jobs: r.jobs || 0,
+      tune_ups: r.tune_ups || 0,
+      diagnostics: r.diagnostics || 0,
+      estimates: r.estimates || 0,
+      closed_jobs: r.closed_jobs || 0,
+      close_rate_pct: r.jobs > 0 ? round((r.closed_jobs / r.jobs) * 100, 1) : 0,
+      avg_ticket: round((r.avg_cents || 0) / 100, 2),
+      revenue: round((r.revenue_cents || 0) / 100, 2),
+      callbacks: r.callbacks || 0,
+      callback_rate_pct: r.jobs > 0 ? round((r.callbacks / r.jobs) * 100, 2) : 0,
+    };
+  });
 }
 
 export async function getLastSync(db: D1Database) {
