@@ -1,5 +1,6 @@
 ---
-import { featuredBlogPosts as posts } from '../lib/blog';
+import { getFeaturedPosts } from '../lib/blog';
+const posts = await getFeaturedPosts();
 
 // Map originals to responsive gen variants (pre-generated via scripts/resize-images.mjs).
 // Falls back to the original src if no mapping is known.
@@ -34,7 +35,7 @@ const srcsetMap: Record<string, { small: string; large: string; smallW: number; 
       {posts.map(p => {
         const v = srcsetMap[p.image];
         return (
-        <a href={`/${p.slug}/`} class="group relative block rounded-xl overflow-hidden aspect-[4/5] shadow-[var(--shadow-soft)]">
+        <a href={`/blogs/${p.slug}/`} class="group relative block rounded-xl overflow-hidden aspect-[4/5] shadow-[var(--shadow-soft)]">
           {v ? (
             <img src={v.large}
                  srcset={`${v.small} ${v.smallW}w, ${v.large} ${v.largeW}w`}

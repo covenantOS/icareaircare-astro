@@ -1,0 +1,109 @@
+# Pages CMS — https://pagescms.org
+# Sign in at https://app.pagescms.org with GitHub, pick this repo, and the
+# CMS reads this config to render an editor for the blog content collection.
+# Saving a post commits a markdown file to main; Cloudflare Pages auto-deploys.
+
+media:
+  input: public/images
+  output: /images
+
+content:
+  - name: posts
+    label: Blog Posts
+    type: collection
+    path: src/content/blog
+    view:
+      fields: [title, tag, date, location, draft]
+      primary: title
+      sort:
+        - field: date
+          direction: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Meta description / excerpt
+        type: text
+        required: true
+        description: 1–2 sentences. Shows in search results, on the blog index card, and as the article's "Quick Answer".
+      - name: tag
+        label: Category
+        type: select
+        required: true
+        options:
+          values:
+            - AC Repair
+            - Maintenance
+            - Installation
+            - Indoor Air Quality
+            - New Construction
+            - Local Guide
+            - Hiring Guide
+            - Urgent Repair
+            - Efficiency
+            - Buyer's Guide
+      - name: date
+        label: Publish date
+        type: string
+        required: true
+        description: 'Format: "Mon DD, YYYY" (e.g. "Apr 23, 2026"). Newest dates show first.'
+      - name: read
+        label: Read time
+        type: string
+        required: true
+        description: 'Format: "X min" (e.g. "8 min").'
+      - name: image
+        label: Featured image
+        type: image
+        required: true
+        description: Saved to public/images and served from /images. Use a 16:10 .webp at 1280×800 or larger.
+      - name: imageAlt
+        label: Image alt text
+        type: string
+        description: Short description of the image for screen readers and SEO.
+      - name: location
+        label: Location
+        type: string
+        required: true
+        description: 'City or region the post is about (e.g. "Wesley Chapel", "Tampa Bay", "Florida").'
+      - name: primaryService
+        label: Primary service link
+        type: object
+        description: The main service this article steers readers toward.
+        fields:
+          - name: href
+            label: URL
+            type: string
+            required: true
+          - name: label
+            label: Link label
+            type: string
+            required: true
+      - name: related
+        label: Related links
+        type: object
+        list: true
+        description: Three related service or area links shown in the sidebar and footer of the post.
+        fields:
+          - name: href
+            label: URL
+            type: string
+            required: true
+          - name: label
+            label: Link label
+            type: string
+            required: true
+      - name: checklist
+        label: Quick-checklist bullets
+        type: string
+        list: true
+        description: Four short bullets shown in the "Start here before you book service" box at the top of the article.
+      - name: draft
+        label: Draft (hidden from the live site)
+        type: boolean
+        default: false
+      - name: body
+        label: Article body
+        type: rich-text

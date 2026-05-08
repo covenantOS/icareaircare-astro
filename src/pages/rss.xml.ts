@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { BLOG_POSTS } from '../lib/blog';
+import { getAllPosts } from '../lib/blog';
 import { SITE } from '../lib/site';
 
 // Minimal XML escape for CDATA-unsafe chars
@@ -18,7 +18,8 @@ function toRFC822(dateStr: string) {
   return d.toUTCString();
 }
 
-export const GET: APIRoute = () => {
+export const GET: APIRoute = async () => {
+  const BLOG_POSTS = await getAllPosts();
   // Redirected / canonical-consolidated slugs — exclude from feed
   const EXCLUDE = new Set([
     'emergency-ac-repair-wesley-chapel-fl',
@@ -31,7 +32,7 @@ export const GET: APIRoute = () => {
     .filter(p => !EXCLUDE.has(p.slug))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .map(p => {
-      const url = `${SITE.url}/${p.slug}/`;
+      const url = `${SITE.url}/blogs/${p.slug}/`;
       return `
     <item>
       <title>${esc(p.title)}</title>

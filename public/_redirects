@@ -71,15 +71,15 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 /our-team/ /about-us/#team 301
 /contact-us /contact/ 301
 /contact-us/ /contact/ 301
-# Buyer's Guide migrated from /services/ to root blog post (Apr 29 2026)
-/services/heat-pump-vs-ac-tampa /heat-pump-vs-ac-tampa/ 301
-/services/heat-pump-vs-ac-tampa/ /heat-pump-vs-ac-tampa/ 301
+# Buyer's Guide migrated from /services/ to /blogs/ (May 2026)
+/services/heat-pump-vs-ac-tampa /blogs/heat-pump-vs-ac-tampa/ 301
+/services/heat-pump-vs-ac-tampa/ /blogs/heat-pump-vs-ac-tampa/ 301
 /hvac-services /services/ 301
 /service-area /service-areas/ 301
 /ac-installation-tampa /services/hvac-installation-tampa/ 301
-/emergency-ac-repair-wesley-chapel-fl/ /emergency-ac-repair-wesley-chapel/ 301
-/air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/ /air-duct-cleaning-wesley-chapel/ 301
-/ac-not-cooling-solutions/ /ac-not-cooling-wesley-chapel/ 301
+/emergency-ac-repair-wesley-chapel-fl/ /blogs/emergency-ac-repair-wesley-chapel/ 301
+/air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/ /blogs/air-duct-cleaning-wesley-chapel/ 301
+/ac-not-cooling-solutions/ /blogs/ac-not-cooling-wesley-chapel/ 301
 
 # 6. Service-area orphan variants (Google indexed shorter forms with slash)
 /service-areas/wesley-chapel /service-areas/wesley-chapel-ac-repair/ 301
@@ -138,16 +138,52 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 # 9. WordPress date-permalinks → flat slugs.
 #    Year-prefixed patterns ONLY (a generic /:year/:month/:day/:slug/
 #    catch-all greedily matched /category/ac-maintenance/page/2/ → /2/).
-/2026/02/11/air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/ /air-duct-cleaning-wesley-chapel/ 301
-/2025/12/09/wesley-chapel-air-conditioning/ /wesley-chapel-air-conditioning/ 301
-/2025/03/31/air-filter-change-frequency/ /air-filter-change-frequency/ 301
-/2026/:month/:day/:slug/ /:slug/ 301
-/2025/:month/:day/:slug/ /:slug/ 301
-/2024/:month/:day/:slug/ /:slug/ 301
-/2023/:month/:day/:slug/ /:slug/ 301
-/2022/:month/:day/:slug/ /:slug/ 301
-/2021/:month/:day/:slug/ /:slug/ 301
-/2020/:month/:day/:slug/ /:slug/ 301
+/2026/02/11/air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/ /blogs/air-duct-cleaning-wesley-chapel/ 301
+/2025/12/09/wesley-chapel-air-conditioning/ /blogs/wesley-chapel-air-conditioning/ 301
+/2025/03/31/air-filter-change-frequency/ /blogs/air-filter-change-frequency/ 301
+/2026/:month/:day/:slug/ /blogs/:slug/ 301
+/2025/:month/:day/:slug/ /blogs/:slug/ 301
+/2024/:month/:day/:slug/ /blogs/:slug/ 301
+/2023/:month/:day/:slug/ /blogs/:slug/ 301
+/2022/:month/:day/:slug/ /blogs/:slug/ 301
+/2021/:month/:day/:slug/ /blogs/:slug/ 301
+/2020/:month/:day/:slug/ /blogs/:slug/ 301
 
-# 10. Safety net (keep last)
-/blogs/:slug/ /:slug/ 301
+# 10. Blog post URL migration (May 2026): /:slug/ → /blogs/:slug/
+#     All 31 posts previously lived at the root. Each now redirects to its
+#     /blogs/ canonical so existing GSC indexed URLs and inbound links carry
+#     equity to the new path. Listed explicitly (no wildcard) because root
+#     also hosts /about-us/, /contact/, /financing/, /reviews/, /careers/,
+#     /tim-hawk/, /book/, /thank-you/, /404/, and the Astro page collections
+#     /services/* and /service-areas/* — a wildcard would clobber those.
+/10-most-common-ac-problems-wesley-chapel-homes/ /blogs/10-most-common-ac-problems-wesley-chapel-homes/ 301
+/air-conditioning-not-cooling-in-tampa-fl-heres-how-to-fix-it-fast/ /blogs/air-conditioning-not-cooling-in-tampa-fl-heres-how-to-fix-it-fast/ 301
+/ac-blowing-warm-air-in-tampa-heres-how-to-fix-it-fast/ /blogs/ac-blowing-warm-air-in-tampa-heres-how-to-fix-it-fast/ 301
+/new-construction-hvac-guide-for-epperson-mirada-homeowners/ /blogs/new-construction-hvac-guide-for-epperson-mirada-homeowners/ 301
+/ac-not-cooling-wesley-chapel/ /blogs/ac-not-cooling-wesley-chapel/ 301
+/air-duct-cleaning-wesley-chapel/ /blogs/air-duct-cleaning-wesley-chapel/ 301
+/ac-maintenance-wesley-chapel/ /blogs/ac-maintenance-wesley-chapel/ 301
+/air-conditioning-installation-wesley-chapel/ /blogs/air-conditioning-installation-wesley-chapel/ 301
+/how-to-choose-the-right-hvac-team-for-your-home/ /blogs/how-to-choose-the-right-hvac-team-for-your-home/ 301
+/emergency-ac-repair-wesley-chapel/ /blogs/emergency-ac-repair-wesley-chapel/ 301
+/hvac-installation-in-tampa-bay-complete-guide-for-homeowners/ /blogs/hvac-installation-in-tampa-bay-complete-guide-for-homeowners/ 301
+/what-are-the-best-preventive-hvac-maintenance-plans-for-homeowners-in-tampa-bay-who-want-a-local-trusted-contractor/ /blogs/what-are-the-best-preventive-hvac-maintenance-plans-for-homeowners-in-tampa-bay-who-want-a-local-trusted-contractor/ 301
+/what-does-a-residential-preventive-hvac-maintenance-visit-include-in-wesley-chapel-fl/ /blogs/what-does-a-residential-preventive-hvac-maintenance-visit-include-in-wesley-chapel-fl/ 301
+/evaluate-hvac-companies-tampa-bay-repair-warranty/ /blogs/evaluate-hvac-companies-tampa-bay-repair-warranty/ 301
+/which-preventive-hvac-maintenance-plans-in-tampa-bay-offer-the-best-value/ /blogs/which-preventive-hvac-maintenance-plans-in-tampa-bay-offer-the-best-value/ 301
+/why-is-my-ac-running-but-not-cooling-in-florida-what-homeowners-need-to-know/ /blogs/why-is-my-ac-running-but-not-cooling-in-florida-what-homeowners-need-to-know/ 301
+/how-to-book-preventive-hvac-maintenance-in-tampa-bay-with-financing-options/ /blogs/how-to-book-preventive-hvac-maintenance-in-tampa-bay-with-financing-options/ 301
+/ac-repair-seven-oaks-wesley-chapel/ /blogs/ac-repair-seven-oaks-wesley-chapel/ 301
+/ac-blowing-warm-air-in-wesley-chapel-7-common-causes-and-how-we-fix-them/ /blogs/ac-blowing-warm-air-in-wesley-chapel-7-common-causes-and-how-we-fix-them/ 301
+/ac-repair-in-epperson-fast-reliable-cooling-for-lagoon-community-homes/ /blogs/ac-repair-in-epperson-fast-reliable-cooling-for-lagoon-community-homes/ 301
+/how-to-find-reliable-heating-and-air-contractors-near-me/ /blogs/how-to-find-reliable-heating-and-air-contractors-near-me/ 301
+/why-homeowners-need-reliable-air-conditioning-repair-in-tampa/ /blogs/why-homeowners-need-reliable-air-conditioning-repair-in-tampa/ 301
+/how-to-lower-cooling-bills-in-wesley-chapel-without-overworking-your-ac/ /blogs/how-to-lower-cooling-bills-in-wesley-chapel-without-overworking-your-ac/ 301
+/ac-replacement-wesley-chapel-fl/ /blogs/ac-replacement-wesley-chapel-fl/ 301
+/wesley-chapel-air-conditioning/ /blogs/wesley-chapel-air-conditioning/ 301
+/ac-repair-wesley-chapel-fl/ /blogs/ac-repair-wesley-chapel-fl/ 301
+/air-filter-change-frequency/ /blogs/air-filter-change-frequency/ 301
+/ac-maintenance-tips/ /blogs/ac-maintenance-tips/ 301
+/heat-pump-vs-ac-tampa/ /blogs/heat-pump-vs-ac-tampa/ 301
+/carrier-vs-trane-vs-rheem-tampa/ /blogs/carrier-vs-trane-vs-rheem-tampa/ 301
+/seer2-explained-florida-2026/ /blogs/seer2-explained-florida-2026/ 301
