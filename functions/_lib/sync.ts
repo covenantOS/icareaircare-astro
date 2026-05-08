@@ -481,7 +481,10 @@ export async function runSync(env: SyncEnv, opts: SyncOptions): Promise<SyncResu
   const notes: string[] = [];
 
   const endpoints = opts.endpoints || ['employees', 'customers', 'jobs'];
-  const maxPages = opts.maxPagesPerEndpoint || 20;
+  // Default 50 pages × 100 page_size = 5,000 records per endpoint per run.
+  // I Care Air Care has ~4,239 customers and ~21k jobs lifetime; a 90-day
+  // jobs window is much smaller than the cap.
+  const maxPages = opts.maxPagesPerEndpoint || 50;
   const daysBack = opts.daysBack ?? 30;
   const thresholds = await readThresholds(env);
 
@@ -524,14 +527,13 @@ export async function runSync(env: SyncEnv, opts: SyncOptions): Promise<SyncResu
   }
 
   // Derived: backfill customers.first_job_at / last_job_at / total_jobs / lifetime_value_cents
+  // (use prepare().run() — D1's exec() rejects multi-line SQL with "incomplete input")
   try {
-    await env.DB.exec(
-      `UPDATE customers SET
-        first_job_at = (SELECT MIN(completed_at) FROM jobs WHERE jobs.customer_hcp_id = customers.hcp_id AND completed_at IS NOT NULL),
-        last_job_at  = (SELECT MAX(completed_at) FROM jobs WHERE jobs.customer_hcp_id = customers.hcp_id AND completed_at IS NOT NULL),
-        total_jobs   = COALESCE((SELECT COUNT(*)       FROM jobs WHERE jobs.customer_hcp_id = customers.hcp_id), 0),
-        lifetime_value_cents = COALESCE((SELECT SUM(invoice_total_cents) FROM jobs WHERE jobs.customer_hcp_id = customers.hcp_id), 0)`,
-    );
+    await env.DB
+      .prepare(
+        `UPDATE customers SET first_job_at = (SELECT MIN(completed_at) FROM jobs WHERE jobs.customer_hcp_id = customers.hcp_id AND completed_at IS NOT NULL), last_job_at = (SELECT MAX(completed_at) FROM jobs WHERE jobs.customer_hcp_id = customers.hcp_id AND completed_at IS NOT NULL), total_jobs = COALESCE((SELECT COUNT(*) FROM jobs WHERE jobs.customer_hcp_id = customers.hcp_id), 0), lifetime_value_cents = COALESCE((SELECT SUM(invoice_total_cents) FROM jobs WHERE jobs.customer_hcp_id = customers.hcp_id), 0)`,
+      )
+      .run();
     notes.push('customer rollups updated');
   } catch (e) {
     errors.push(`customer rollups: ${e instanceof Error ? e.message : String(e)}`);
