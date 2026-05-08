@@ -349,7 +349,9 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     </main>
 
     <!-- FLOATING CHAT PANEL (Phase 4) -->
-    <div id="chat-panel" class="hidden fixed z-40 bg-white shadow-2xl rounded-xl border border-line flex-col" style="right:1rem; bottom:5rem; width:min(420px,calc(100vw - 2rem)); height:min(560px,70vh); display:none;">
+    <!-- Visibility is controlled via the .is-open class (rule lives in AdminLayout). -->
+    <!-- Do NOT add `hidden` or inline display:none here — both override #chat-panel.is-open. -->
+    <div id="chat-panel" class="fixed z-40 bg-white shadow-2xl rounded-xl border border-line" style="right:1rem; bottom:5rem; width:min(420px,calc(100vw - 2rem)); height:min(560px,70vh);">
       <div class="flex items-center justify-between px-4 py-3 border-b border-line bg-gradient-to-r from-brand-500 to-brand-700 text-white rounded-t-xl">
         <div class="flex items-center gap-2 min-w-0">
           <span class="section-icon bg-white/20 text-white w-6 h-6 text-xs">💬</span>
@@ -717,14 +719,25 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         ? cbRows.map(r => `<tr><td>${esc(r.tech_name)}</td><td class="text-right num">${fmtI(r.total_jobs)}</td><td class="text-right num">${fmtI(r.callbacks)}</td><td class="text-right num">${fmtP(r.rate_pct)}</td></tr>`).join('')
         : `<tr><td colspan="4" class="text-center text-slate-400 py-4">No callbacks in this window 🎉</td></tr>`;
 
-      // Sync status
+      // Sync status. Three states:
+      //   success === 1            → "Synced"
+      //   finished_at && success !=1 → "Failed"
+      //   finished_at == null      → "In progress" (started but never closed; common when CF
+      //                               worker timed out / browser closed mid-sync). Don't
+      //                               flag as Failed because the data may still be fresh.
       if (data.last_sync) {
         const ls = data.last_sync;
         const finished = ls.finished_at || ls.started_at;
-        const successPill = ls.success === 1 ? 'pill pill-ok' : 'pill pill-err';
-        const successText = ls.success === 1 ? 'Synced' : 'Failed';
+        let pill, text;
+        if (ls.success === 1) { pill = 'pill pill-ok'; text = 'Synced'; }
+        else if (!ls.finished_at) { pill = 'pill pill-warn'; text = 'In progress'; }
+        else { pill = 'pill pill-err'; text = 'Failed'; }
+        // For an in-progress row jobs/customers counts are zero and not meaningful — hide them.
+        const counts = ls.finished_at
+          ? ` · ${fmtI(ls.jobs_synced)} jobs · ${fmtI(ls.customers_synced)} customers`
+          : '';
         document.getElementById('sync-status').innerHTML =
-          `<span class="${successPill}">${successText}</span> Last sync ${fmtRel(finished)} · ${fmtI(ls.jobs_synced)} jobs · ${fmtI(ls.customers_synced)} customers`;
+          `<span class="${pill}">${text}</span> Last sync ${fmtRel(finished)}${counts}`;
       } else {
         document.getElementById('sync-status').innerHTML = `<span class="pill pill-warn">No sync yet</span> Click "Sync now"`;
       }
