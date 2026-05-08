@@ -1,0 +1,25 @@
+# Cloudflare Pages config for icareaircare-astro
+#
+# This file binds the D1 database and KV namespace into Pages Functions
+# (the functions/ directory). The site itself is a static Astro build —
+# the static output goes to dist/ which is published by `pages_build_output_dir`.
+#
+# Existing Pages Functions: functions/api/book.ts (HCP /leads), functions/api/lead.ts (LeadConnector).
+# New for KPI dashboard: functions/api/kpis/*, functions/api/admin/*, functions/api/sync/*.
+
+name = "icareaircare-astro"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "./dist"
+
+# D1 — KPI data store
+# Created 2026-05-08 via `wrangler d1 create icareaircare-kpis`
+[[d1_databases]]
+binding = "DB"
+database_name = "icareaircare-kpis"
+database_id = "ea5f239d-1e38-4303-83c0-d83bff728b91"
+
+# KV — config (formula weights, thresholds) + HCP response cache
+# Created 2026-05-08 via `wrangler kv namespace create kpi_config`
+[[kv_namespaces]]
+binding = "KPI_CONFIG"
+id = "80194a6f0fb54d88bfb31f3d6d9247d2"
