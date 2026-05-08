@@ -308,25 +308,38 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => t.hidden = true, 4000);
     }
 
+    // Industry benchmarks. Sources are listed and shown on hover so it's
+    // clear what each comparison is against. We only call something
+    // "below avg" when we have apples-to-apples per-tech data — never
+    // for shop-wide totals.
+    const BENCHMARKS = {
+      avg_ticket:        { p:250, a:450, t:600, dir:'up',
+        src:'FieldPulse / MarginPlug 2026 — residential service, $450-600 typical, $600+ premium.' },
+      close_rate:        { p:35, a:55, t:75, dir:'up',
+        src:'Industry composite — Mercurio "90s percentile" target; 50-75% typical for residential service techs.' },
+      close_rate_tune_up:{ p:30, a:50, t:75, dir:'up',
+        src:'HVACR Business — 10% to repair + 70% to membership combined ≈ 50% avg, 75%+ top.' },
+      close_rate_diag:   { p:50, a:67, t:85, dir:'up',
+        src:'BaaDigi / Mercurio — diagnostic close: 60-75% avg, 80%+ top.' },
+      callback_rate:     { p:5, a:3, t:2, dir:'down',
+        src:'Contracting Business / Mar-Hy — under 3% acceptable, under 2% top performer.' },
+      jobs_per_day:      { p:3, a:4, t:6, dir:'up',
+        src:'ServiceTitan / Oxmaint — 3-5 jobs/day standard, 5-8 top performers.' },
+      revenue_per_day:   { p:1200, a:2000, t:2400, dir:'up',
+        src:'BaaDigi / MarginPlug 2026 — per-tech-per-day, top-quartile $2,400+ (residential service).' },
+    };
     function bench(metric, value) {
-      const B = {
-        revenue_per_tech_per_day: { p:1200, a:2000, t:2400, dir:'up' },
-        avg_ticket: { p:250, a:450, t:600, dir:'up' },
-        close_rate: { p:35, a:55, t:75, dir:'up' },
-        callback_rate: { p:5, a:3, t:2, dir:'down' },
-        jobs_per_day: { p:3, a:4, t:6, dir:'up' },
-      };
-      const b = B[metric]; if (!b || value == null) return null;
+      const b = BENCHMARKS[metric]; if (!b || value == null) return null;
       const tier = b.dir === 'up'
         ? (value >= b.t ? 'top' : value >= b.a ? 'avg' : 'poor')
         : (value <= b.t ? 'top' : value <= b.a ? 'avg' : 'poor');
       const color = { top:'#15803d', avg:'#b45309', poor:'#b91c1c' }[tier];
       const label = { top:'Top quartile', avg:'Industry avg', poor:'Below avg' }[tier];
-      return { tier, color, label };
+      return { tier, color, label, src: b.src };
     }
     function benchPill(metric, value) {
       const b = bench(metric, value); if (!b) return '';
-      return `<span style="display:inline-flex;align-items:center;gap:4px;font-weight:600;color:${b.color}"><span style="width:7px;height:7px;border-radius:999px;background:${b.color}"></span>${b.label}</span>`;
+      return `<span title="${esc(b.src)}" style="display:inline-flex;align-items:center;gap:4px;font-weight:600;color:${b.color};cursor:help"><span style="width:7px;height:7px;border-radius:999px;background:${b.color}"></span>${b.label}</span>`;
     }
 
     function spark(values, opts = {}) {
@@ -395,8 +408,11 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       document.getElementById('kpi-volume').textContent = fmtI(s.call_volume.total);
       document.getElementById('kpi-volume-sub').textContent =
         `${s.call_volume.tune_up} TU · ${s.call_volume.diagnostic} Dx · ${s.call_volume.estimate} Est`;
-      const jpd = s.call_volume.total / days / techCount;
-      document.getElementById('kv-bench').innerHTML = benchPill('jobs_per_day', jpd);
+      // Per-tech jobs/day — only count field techs that actually closed jobs in window.
+      const activeTechCount = ((data.summary.revenue.by_tech || []).filter(t => t.jobs > 0)).length || 1;
+      const jpd = s.call_volume.total / days / activeTechCount;
+      document.getElementById('kv-bench').innerHTML = benchPill('jobs_per_day', jpd) +
+        `<span class="text-[10px] text-slate-500 ml-1">${jpd.toFixed(1)}/tech/day</span>`;
 
       document.getElementById('kpi-close').textContent = fmtP(s.close_rate.overall_pct);
       document.getElementById('kpi-close-sub').textContent =
@@ -407,9 +423,13 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       document.getElementById('at-bench').innerHTML = benchPill('avg_ticket', s.average_ticket.overall);
 
       document.getElementById('kpi-revenue').textContent = fmt$(s.revenue.total);
-      const rpd = s.revenue.total / days / techCount;
-      document.getElementById('kpi-revenue-sub').textContent = `${fmt$(rpd)}/tech/day`;
-      document.getElementById('rev-bench').innerHTML = benchPill('revenue_per_tech_per_day', rpd);
+      // Don't dot-rate shop-wide revenue against a per-tech industry benchmark
+      // — apples to oranges. Show the period total, the period rate, and
+      // who topped the leaderboard. Per-tech benchmarks live in the tech detail page.
+      const topTech = (data.summary.revenue.by_tech || [])[0];
+      document.getElementById('kpi-revenue-sub').textContent =
+        topTech ? `Top: ${topTech.tech_name} · ${fmt$(topTech.revenue)}` : `${fmt$(s.revenue.total)} total`;
+      document.getElementById('rev-bench').innerHTML = '';
 
       // Sparklines from 12-week trend
       const t = trend.points || [];
@@ -491,7 +511,10 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           `<tr><td colspan="8" class="text-center text-slate-400 py-6">No tech data.</td></tr>`;
         return;
       }
-      // Compute simple score per tech using the same Formula A normalization
+      // Score each tech using Formula A — ONLY components we can actually measure.
+      // Reviews and utilization are pending Phase-2 integrations; if we score those
+      // as 0 we'd cap every tech at ~70/100 (= F). Skip them and renormalize so
+      // the score reflects what we can actually see.
       const days = currentRange;
       const w = (configCache && configCache.weights) || {
         revenue_per_day:0.25, avg_ticket:0.15, close_rate:0.15, membership_conversion:0.10,
@@ -503,6 +526,16 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         callback_rate_inverted:{zero:5,hundred:0}, review_rate:{zero:5,hundred:30},
         utilization:{zero:50,hundred:75}, volume:{zero:2,hundred:5}
       };
+      // Components we have real data for right now. Reviews + utilization need
+      // Google Business Profile + Timesheets CSV (Phase 2).
+      const measured = {
+        revenue_per_day: true, avg_ticket: true, close_rate: true,
+        membership_conversion: true, callback_rate_inverted: true,
+        review_rate: false, utilization: false, volume: true,
+      };
+      let measuredWeight = 0;
+      for (const k of Object.keys(w)) if (measured[k]) measuredWeight += w[k];
+      if (measuredWeight === 0) measuredWeight = 1;
       const norm = (val, t) => {
         if (t.zero === t.hundred) return 50;
         const c = (n) => Math.max(0, Math.min(100, n));
@@ -518,7 +551,10 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           review_rate: 0, utilization: 0, volume: t.jobs / days,
         };
         let total = 0;
-        for (const k of Object.keys(w)) total += norm(inputs[k] || 0, tg[k]) * (w[k] || 0);
+        for (const k of Object.keys(w)) {
+          if (!measured[k]) continue;
+          total += norm(inputs[k] || 0, tg[k]) * (w[k] / measuredWeight);
+        }
         const sc = Math.round(total * 10) / 10;
         const g = grade(sc);
         const color = gradeColor(g);

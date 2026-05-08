@@ -67,6 +67,21 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
             <tr><td colspan="8" class="text-center text-slate-400 py-8">Loading…</td></tr>
           </tbody>
         </table>
+        <div id="seg-pagination" class="flex items-center justify-between gap-3 px-2 py-3 border-t border-line text-sm" hidden>
+          <div id="seg-page-info" class="text-slate-600">—</div>
+          <div class="flex items-center gap-2">
+            <label class="text-slate-600 text-xs">Per page
+              <select id="seg-page-size" class="ml-1 px-2 py-1 border border-line rounded">
+                <option value="25">25</option>
+                <option value="50" selected>50</option>
+                <option value="100">100</option>
+                <option value="500">500</option>
+              </select>
+            </label>
+            <button id="seg-prev" class="btn-ghost-admin text-xs">← Prev</button>
+            <button id="seg-next" class="btn-ghost-admin text-xs">Next →</button>
+          </div>
+        </div>
       </section>
 
       <section class="card-quiet text-xs text-slate-500">
@@ -109,26 +124,55 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
 
     let currentRows = [];
     let currentSeg = 'dormant_12mo';
+    let currentPage = 1;
+    let pageSize = 50;
+    let filteredCache = [];
 
     function applyFilter() {
       const q = (document.getElementById('seg-search').value || '').toLowerCase().trim();
-      const filtered = q
+      filteredCache = q
         ? currentRows.filter(r => (r.name + ' ' + (r.email||'') + ' ' + (r.phone||'') + ' ' + (r.city||'')).toLowerCase().includes(q))
         : currentRows;
+      currentPage = 1;
+      renderPage();
+    }
+
+    function renderPage() {
       const tbody = document.getElementById('seg-rows');
-      if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="8" class="text-center text-slate-400 py-8">No matches.</td></tr>`; return; }
-      tbody.innerHTML = filtered.map(r => `
-        <tr>
-          <td><strong>${esc(r.name)}</strong></td>
-          <td class="hidden md:table-cell text-xs">${esc(r.email || '—')}</td>
-          <td class="hidden md:table-cell text-xs">${esc(r.phone || '—')}</td>
-          <td class="hidden lg:table-cell text-xs">${esc([r.city, r.zip].filter(Boolean).join(' '))}</td>
-          <td class="text-center hidden sm:table-cell">${r.is_member ? '<span class="pill pill-info">Member</span>' : '—'}</td>
-          <td class="text-right num">${fmtI(r.total_jobs)}</td>
-          <td class="text-right num"><strong>${fmt$(r.lifetime_value)}</strong></td>
-          <td class="text-right num text-xs">${r.days_since_last_job != null ? r.days_since_last_job + 'd' : '—'}</td>
-        </tr>
-      `).join('');
+      const total = filteredCache.length;
+      const totalPages = Math.max(1, Math.ceil(total / pageSize));
+      if (currentPage > totalPages) currentPage = totalPages;
+      const start = (currentPage - 1) * pageSize;
+      const end = Math.min(start + pageSize, total);
+      const slice = filteredCache.slice(start, end);
+
+      if (!slice.length) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center text-slate-400 py-8">${total === 0 ? 'No matches.' : 'Empty page.'}</td></tr>`;
+      } else {
+        tbody.innerHTML = slice.map(r => `
+          <tr>
+            <td><strong>${esc(r.name)}</strong></td>
+            <td class="hidden md:table-cell text-xs">${esc(r.email || '—')}</td>
+            <td class="hidden md:table-cell text-xs">${esc(r.phone || '—')}</td>
+            <td class="hidden lg:table-cell text-xs">${esc([r.city, r.zip].filter(Boolean).join(' '))}</td>
+            <td class="text-center hidden sm:table-cell">${r.is_member ? '<span class="pill pill-info">Member</span>' : '—'}</td>
+            <td class="text-right num">${fmtI(r.total_jobs)}</td>
+            <td class="text-right num"><strong>${fmt$(r.lifetime_value)}</strong></td>
+            <td class="text-right num text-xs">${r.days_since_last_job != null ? r.days_since_last_job + 'd' : '—'}</td>
+          </tr>
+        `).join('');
+      }
+
+      const pag = document.getElementById('seg-pagination');
+      if (total <= pageSize) {
+        pag.hidden = true;
+      } else {
+        pag.hidden = false;
+        document.getElementById('seg-page-info').textContent =
+          `${start + 1}-${end} of ${fmtI(total)} · page ${currentPage} of ${totalPages}`;
+        document.getElementById('seg-prev').disabled = currentPage <= 1;
+        document.getElementById('seg-next').disabled = currentPage >= totalPages;
+      }
     }
 
     async function load(seg) {
@@ -182,6 +226,9 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
     document.getElementById('copy-emails').addEventListener('click', () => copyList('email'));
     document.getElementById('copy-phones').addEventListener('click', () => copyList('phone'));
     document.getElementById('export-csv').addEventListener('click', exportCsv);
+    document.getElementById('seg-prev').addEventListener('click', () => { currentPage = Math.max(1, currentPage - 1); renderPage(); window.scrollTo({top:0,behavior:'smooth'}); });
+    document.getElementById('seg-next').addEventListener('click', () => { currentPage++; renderPage(); window.scrollTo({top:0,behavior:'smooth'}); });
+    document.getElementById('seg-page-size').addEventListener('change', (e) => { pageSize = parseInt(e.target.value, 10) || 50; currentPage = 1; renderPage(); });
 
     document.getElementById('login-form').addEventListener('submit', async (ev) => {
       ev.preventDefault();
