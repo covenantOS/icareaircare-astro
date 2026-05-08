@@ -163,12 +163,51 @@ function parseTaskResult(parsed: Record<string, unknown> | null, duration_ms: nu
     return { ok: true, cost, summary, reviews };
 }
 
+// First, check tasks_ready for any already-completed tasks. DataForSEO holds
+// the ready list until you fetch each one — so a task we previously submitted
+// but couldn't wait for (Cloudflare timeout, dashboard refresh, etc.) is
+// retrievable here at no extra cost. If we find one, return it; otherwise
+// submit a fresh task and poll.
+async function fetchReadyTaskIfAny(env: DataForSEOEnv): Promise<FetchReviewsResult | null> {
+  const start = Date.now();
+  const ready = await dfsGet(env, '/v3/business_data/google/reviews/tasks_ready');
+  if (!ready.ok) return null;
+  const tasks = (ready.data?.tasks as Array<Record<string, unknown>>) || [];
+  for (const t of tasks) {
+    const tList = (t?.result as Array<Record<string, unknown>>) || [];
+    for (const r of tList) {
+      const id = r.id as string;
+      if (!id) continue;
+      const got = await dfsGet(env, `/v3/business_data/google/reviews/task_get/${id}`);
+      if (!got.ok) continue;
+      const parsed = parseTaskResult(got.data, Date.now() - start);
+      if (parsed.ok && parsed.summary) {
+        return {
+          ok: true,
+          status: 200,
+          duration_ms: Date.now() - start,
+          task_id: id,
+          cost_usd: parsed.cost,
+          summary: parsed.summary,
+          reviews: parsed.reviews,
+        };
+      }
+    }
+  }
+  return null;
+}
+
 // Submit task + poll task_get until reviews are ready (or we hit max_wait_ms).
 export async function fetchGoogleReviews(env: DataForSEOEnv, params: FetchReviewsParams): Promise<FetchReviewsResult> {
   const start = Date.now();
   if (!env.DATAFORSEO_LOGIN || !env.DATAFORSEO_PASSWORD) {
     return { ok: false, status: 0, duration_ms: 0, error: 'DataForSEO credentials not configured' };
   }
+
+  // Cheap optimisation: if a previously-pending task happens to be ready
+  // right now, grab it instead of paying for another task_post.
+  const ready = await fetchReadyTaskIfAny(env);
+  if (ready) return ready;
 
   // 1. Submit task
   const taskBody: Record<string, unknown> = {
