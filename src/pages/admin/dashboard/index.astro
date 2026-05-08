@@ -2,13 +2,13 @@
 import AdminLayout from '../../../layouts/AdminLayout.astro';
 ---
 <AdminLayout title="KPI Dashboard">
-  <!-- LOGIN GATE — shown if no admin key in sessionStorage and CF Access isn't fronting -->
+  <!-- LOGIN GATE -->
   <div id="login-gate" hidden>
     <div class="card login-card">
       <h2 class="text-xl font-bold mb-1">Sign in</h2>
-      <p class="text-sm text-slate-600 mb-5">Enter the admin key to continue. (When Cloudflare Access is enabled this screen will be replaced by Google login.)</p>
+      <p class="text-sm text-slate-600 mb-5">Enter your PIN to continue. Cloudflare Access (one-time email PIN) can replace this for production.</p>
       <form id="login-form" class="space-y-3">
-        <input id="login-key" type="password" placeholder="Admin key" autocomplete="current-password" required />
+        <input id="login-key" type="password" inputmode="numeric" placeholder="PIN" autocomplete="current-password" required />
         <button type="submit" class="btn-admin w-full justify-center">Continue</button>
       </form>
       <p id="login-error" class="text-red-600 text-sm mt-3" hidden></p>
@@ -18,62 +18,87 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
   <!-- DASHBOARD -->
   <div id="dashboard" hidden>
     <header class="bg-white border-b border-line">
-      <div class="container-site py-4 flex flex-wrap items-center justify-between gap-3">
+      <div class="container-site py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 class="text-xl sm:text-2xl font-bold text-navy-700">I Care Air Care · KPI Dashboard</h1>
+          <h1 class="text-lg sm:text-2xl font-bold text-navy-700">I Care Air Care · KPI Dashboard</h1>
           <div id="sync-status" class="text-xs text-slate-500 mt-1">Loading sync status…</div>
         </div>
-        <div class="flex items-center gap-2">
-          <button id="sync-btn" class="btn-ghost-admin" type="button">Sync now</button>
-          <a href="/admin/" class="btn-ghost-admin">Admin home</a>
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="settings-btn" class="btn-ghost-admin" type="button" aria-label="Settings">⚙ Settings</button>
+          <button id="sync-btn" class="btn-admin" type="button">Sync now</button>
           <button id="logout-btn" class="btn-ghost-admin" type="button">Sign out</button>
         </div>
       </div>
     </header>
 
-    <main class="container-site py-6 space-y-6">
+    <main class="container-site py-4 sm:py-6 space-y-5">
 
-      <!-- Date range tabs -->
+      <!-- AI INSIGHTS -->
+      <section id="ai-insights" class="card relative overflow-hidden" style="background:linear-gradient(135deg, #fff 0%, #f0f7fa 100%);">
+        <div class="absolute top-0 right-0 w-32 h-32 -mt-8 -mr-8 rounded-full" style="background:radial-gradient(circle, rgba(232,138,56,0.10), transparent 70%)"></div>
+        <div class="flex items-start justify-between gap-3 relative">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-accent-500 text-white text-sm font-bold">AI</span>
+            <h2 class="text-lg font-bold text-navy-700">This week, in plain English</h2>
+          </div>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <span id="ai-meta" class="text-xs text-slate-500 hidden sm:inline">—</span>
+            <button id="ai-refresh" class="btn-ghost-admin text-xs py-1 px-2" type="button">↻</button>
+          </div>
+        </div>
+        <div id="ai-body" class="mt-3 prose-icac max-w-none text-sm sm:text-[15px] text-slate-800">
+          <div class="skeleton h-4 w-3/4 mb-2"></div>
+          <div class="skeleton h-4 w-full mb-2"></div>
+          <div class="skeleton h-4 w-5/6 mb-2"></div>
+          <div class="skeleton h-4 w-2/3"></div>
+        </div>
+      </section>
+
+      <!-- DATE RANGE TABS -->
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div class="flex flex-wrap gap-2" role="tablist" aria-label="Date range">
-          <button class="tab" data-range="7"  type="button" aria-pressed="false">Last 7 days</button>
-          <button class="tab" data-range="30" type="button" aria-pressed="true">Last 30 days</button>
-          <button class="tab" data-range="90" type="button" aria-pressed="false">Last 90 days</button>
+          <button class="tab" data-range="7"  type="button" aria-pressed="false">7 days</button>
+          <button class="tab" data-range="30" type="button" aria-pressed="true">30 days</button>
+          <button class="tab" data-range="90" type="button" aria-pressed="false">90 days</button>
         </div>
         <div class="text-xs text-slate-500" id="window-display"></div>
       </div>
 
-      <!-- Top-row KPI cards -->
-      <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <!-- HEADLINE KPI CARDS WITH SPARKLINES + BENCHMARKS -->
+      <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <article class="card">
-          <div class="stat-label">Call Volume</div>
+          <div class="flex items-center justify-between"><div class="stat-label">Call Volume</div><div id="kv-bench" class="text-[10px]"></div></div>
           <div id="kpi-volume" class="stat-value">—</div>
           <div id="kpi-volume-sub" class="stat-sub">tune-ups · diagnostics · estimates</div>
+          <div id="kpi-volume-spark" class="mt-2 h-10 -mx-1"></div>
         </article>
         <article class="card">
-          <div class="stat-label">Close Rate</div>
+          <div class="flex items-center justify-between"><div class="stat-label">Close Rate</div><div id="cr-bench" class="text-[10px]"></div></div>
           <div id="kpi-close" class="stat-value">—</div>
           <div id="kpi-close-sub" class="stat-sub">overall (sold / completed)</div>
+          <div id="kpi-close-spark" class="mt-2 h-10 -mx-1"></div>
         </article>
         <article class="card">
-          <div class="stat-label">Avg Ticket</div>
+          <div class="flex items-center justify-between"><div class="stat-label">Avg Ticket</div><div id="at-bench" class="text-[10px]"></div></div>
           <div id="kpi-ticket" class="stat-value">—</div>
           <div id="kpi-ticket-sub" class="stat-sub">discounts applied</div>
+          <div id="kpi-ticket-spark" class="mt-2 h-10 -mx-1"></div>
         </article>
         <article class="card">
-          <div class="stat-label">Revenue</div>
+          <div class="flex items-center justify-between"><div class="stat-label">Revenue</div><div id="rev-bench" class="text-[10px]"></div></div>
           <div id="kpi-revenue" class="stat-value">—</div>
           <div id="kpi-revenue-sub" class="stat-sub">total invoiced</div>
+          <div id="kpi-revenue-spark" class="mt-2 h-10 -mx-1"></div>
         </article>
       </section>
 
-      <!-- Per-call-type breakdown -->
+      <!-- BY CALL TYPE -->
       <section class="card">
-        <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
           <h2 class="text-lg font-bold text-navy-700">By call type</h2>
-          <span class="text-xs text-slate-500">tune-up sold ≥ <span id="thr-sold-tu">$110</span> · min ticket TU <span id="thr-min-tu">$175</span> / Diag <span id="thr-min-diag">$275</span></span>
+          <span class="text-xs text-slate-500">sold ≥ <span id="thr-sold-tu">$110</span> · min TU <span id="thr-min-tu">$175</span> / Diag <span id="thr-min-diag">$275</span></span>
         </div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto -mx-5 sm:mx-0">
           <table class="kpi-table">
             <thead>
               <tr>
@@ -86,40 +111,80 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
               </tr>
             </thead>
             <tbody id="by-type-rows">
-              <tr><td colspan="6" class="text-center text-slate-400 py-6">No data yet — run a sync to populate.</td></tr>
+              <tr><td colspan="6" class="text-center text-slate-400 py-6">Loading…</td></tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <!-- Tech leaderboard -->
+      <!-- TECH LEADERBOARD -->
       <section class="card">
-        <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
           <h2 class="text-lg font-bold text-navy-700">Tech leaderboard</h2>
-          <span class="text-xs text-slate-500">Sorted by revenue</span>
+          <span class="text-xs text-slate-500">Tap a row for detail · A-F grade via Formula A</span>
         </div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto -mx-5 sm:mx-0">
           <table class="kpi-table">
             <thead>
               <tr>
                 <th>Tech</th>
+                <th class="text-center">Score</th>
                 <th class="text-right">Jobs</th>
-                <th class="text-right" title="Tune-ups · Diagnostics · Estimates">TU · Dx · Est</th>
+                <th class="text-right hidden sm:table-cell" title="Tune-ups · Diagnostics · Estimates">TU · Dx · Est</th>
                 <th class="text-right">Close %</th>
-                <th class="text-right">Avg Ticket</th>
+                <th class="text-right hidden sm:table-cell">Avg Ticket</th>
                 <th class="text-right">Revenue</th>
-                <th class="text-right">Callbacks</th>
+                <th class="text-right hidden lg:table-cell">Callbacks</th>
               </tr>
             </thead>
             <tbody id="tech-rows">
-              <tr><td colspan="7" class="text-center text-slate-400 py-6">No data yet — run a sync to populate.</td></tr>
+              <tr><td colspan="8" class="text-center text-slate-400 py-6">Loading…</td></tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <!-- Customer mix + callbacks -->
-      <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- SEGMENTS (3-col on desktop, stack on mobile) -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
+        <article class="card">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-navy-700">Dormant 12+ months</h3>
+            <span id="seg-dormant-count" class="pill pill-warn">—</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-3">Customers who haven't booked in 1+ year (still inside HCP's 3-yr cap). Sorted by lifetime value.</p>
+          <div id="seg-dormant" class="space-y-1 text-sm"></div>
+          <div class="flex gap-2 mt-3">
+            <button class="btn-ghost-admin text-xs flex-1" data-action="copy-emails" data-segment="dormant_12mo">Copy emails</button>
+            <button class="btn-admin text-xs flex-1" data-action="open-segment" data-segment="dormant_12mo">View all →</button>
+          </div>
+        </article>
+        <article class="card">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-navy-700">Members renewing soon</h3>
+            <span id="seg-renew-count" class="pill pill-info">—</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-3">Care-plan members whose last service was 11-13 months ago — reach out before they lapse.</p>
+          <div id="seg-renew" class="space-y-1 text-sm"></div>
+          <div class="flex gap-2 mt-3">
+            <button class="btn-ghost-admin text-xs flex-1" data-action="copy-emails" data-segment="members_renewing">Copy emails</button>
+            <button class="btn-admin text-xs flex-1" data-action="open-segment" data-segment="members_renewing">View all →</button>
+          </div>
+        </article>
+        <article class="card">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-navy-700">VIPs (top lifetime value)</h3>
+            <span class="pill pill-info">Top 50</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-3">Highest lifetime spend. Treat with care — these underwrite the business.</p>
+          <div id="seg-vip" class="space-y-1 text-sm"></div>
+          <div class="flex gap-2 mt-3">
+            <button class="btn-admin text-xs flex-1 ml-auto" data-action="open-segment" data-segment="top_ltv">View all →</button>
+          </div>
+        </article>
+      </section>
+
+      <!-- CUSTOMER MIX + CALLBACKS -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
         <article class="card">
           <h2 class="text-lg font-bold text-navy-700 mb-3">Customer mix</h2>
           <div class="space-y-3">
@@ -138,13 +203,13 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           </div>
         </article>
         <article class="card">
-          <h2 class="text-lg font-bold text-navy-700 mb-3">Callbacks</h2>
+          <div class="flex items-center justify-between mb-3"><h2 class="text-lg font-bold text-navy-700">Callbacks</h2><span id="cb-bench" class="text-[10px]"></span></div>
           <div class="flex items-baseline gap-3 mb-2">
             <div class="stat-value" id="cb-total">—</div>
             <div class="stat-sub">callbacks · <span id="cb-rate">—</span> rate</div>
           </div>
-          <p class="text-xs text-slate-500 mb-3">Industry target: under 3%. Top performers under 2%.</p>
-          <div class="overflow-x-auto">
+          <p class="text-xs text-slate-500 mb-3">Industry: under 3% target, top performers under 2%.</p>
+          <div class="overflow-x-auto -mx-5 sm:mx-0">
             <table class="kpi-table">
               <thead><tr><th>Tech</th><th class="text-right">Jobs</th><th class="text-right">Callbacks</th><th class="text-right">Rate</th></tr></thead>
               <tbody id="cb-rows"><tr><td colspan="4" class="text-center text-slate-400 py-4">—</td></tr></tbody>
@@ -153,29 +218,132 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         </article>
       </section>
 
-      <!-- Notes / footer -->
+      <!-- FOOTNOTES -->
       <section class="card-quiet text-xs text-slate-500 leading-relaxed">
-        <p class="mb-1"><strong>Data source:</strong> Housecall Pro API. Synced on demand or via scheduled job.</p>
-        <p class="mb-1"><strong>Hours worked / drive time</strong> aren't yet visible — HCP doesn't expose timesheets via public API. Phase 2 will ingest a weekly CSV.</p>
-        <p><strong>Reviews</strong> per tech land in Phase 2 once Google Business Profile is wired up.</p>
+        <p class="mb-1"><strong>Source:</strong> Housecall Pro API. Tap "Sync now" to pull latest. Membership detection: HCP job tags ("Care plan member - YES").</p>
+        <p class="mb-1"><strong>Score:</strong> Formula A — 25% rev/day + 15% ticket + 15% close + 10% memberships + 10% callbacks(inv) + 10% reviews + 10% utilization + 5% volume. Tunable in Settings.</p>
+        <p class="mb-1"><strong>Phase 2:</strong> Hours/utilization (Timesheets CSV ingest) · Reviews per tech (Google Business Profile API) · Real-time webhooks.</p>
+        <p><strong>Industry context:</strong> Top-quartile residential HVAC tech does $2,400+/day, 75-85% close rate, $450+ avg ticket. Sources: ServiceTitan, BaaDigi, MarginPlug 2026.</p>
       </section>
 
     </main>
   </div>
 
-  <!-- Toasts -->
+  <!-- SETTINGS DRAWER -->
+  <div id="settings-drawer" class="fixed inset-0 z-40 hidden" aria-modal="true">
+    <div id="settings-backdrop" class="absolute inset-0 bg-black/40"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-full sm:max-w-md bg-white shadow-xl overflow-y-auto">
+      <div class="p-5 border-b border-line flex items-center justify-between">
+        <h2 class="text-lg font-bold text-navy-700">Settings</h2>
+        <button id="settings-close" class="btn-ghost-admin">✕</button>
+      </div>
+      <div class="p-5 space-y-6">
+        <div>
+          <h3 class="font-semibold text-navy-700 mb-2">Thresholds</h3>
+          <p class="text-xs text-slate-500 mb-3">Tim's stated values. Below sold threshold = "didn't close". Below min ticket = highlighted in tables.</p>
+          <div class="space-y-3">
+            <label class="block text-sm">Tune-up sold threshold ($)
+              <input id="set-sold-tu" type="number" class="block w-full mt-1 px-3 py-2 border border-line rounded" />
+            </label>
+            <label class="block text-sm">Tune-up minimum ticket ($)
+              <input id="set-min-tu" type="number" class="block w-full mt-1 px-3 py-2 border border-line rounded" />
+            </label>
+            <label class="block text-sm">Diagnostic minimum ticket ($)
+              <input id="set-min-diag" type="number" class="block w-full mt-1 px-3 py-2 border border-line rounded" />
+            </label>
+          </div>
+        </div>
+        <div>
+          <h3 class="font-semibold text-navy-700 mb-2">Score weights</h3>
+          <p class="text-xs text-slate-500 mb-3">Must sum to 1.00. Auto-normalized on save.</p>
+          <div id="weight-sliders" class="space-y-3"></div>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button id="settings-save" class="btn-admin flex-1">Save & re-score</button>
+          <button id="settings-reset" class="btn-ghost-admin">Reset to defaults</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50" hidden>
     <div id="toast-body" class="bg-navy-700 text-white text-sm px-4 py-2 rounded-lg shadow-soft"></div>
   </div>
 
   <script is:inline>
     // ─────────────────────────────────────────────────────────────────
-    // I Care Air Care KPI Dashboard — client logic
+    // I Care Air Care KPI Dashboard — Phase 2
     // ─────────────────────────────────────────────────────────────────
-
     const STORAGE_KEY = 'icac_admin_key';
     let currentRange = 30;
-    let currentWindow = computeWindow(30);
+    let configCache = null;
+
+    function getKey() { return sessionStorage.getItem(STORAGE_KEY) || ''; }
+    function setKey(k) { sessionStorage.setItem(STORAGE_KEY, k); }
+    function clearKey() { sessionStorage.removeItem(STORAGE_KEY); }
+    function withAuth(url) {
+      const k = getKey(); if (!k) return url;
+      const u = new URL(url, location.origin); u.searchParams.set('key', k); return u.toString();
+    }
+    async function api(path, init) {
+      const res = await fetch(withAuth(path), { credentials: 'include', ...init });
+      if (res.status === 401) { clearKey(); show('login'); throw new Error('Auth required'); }
+      if (!res.ok) { const t = await res.text().catch(() => ''); throw new Error(`API ${path}: ${res.status} ${t.slice(0, 200)}`); }
+      return res.json();
+    }
+    function show(which) {
+      document.getElementById('login-gate').hidden = which !== 'login';
+      document.getElementById('dashboard').hidden = which !== 'dash';
+    }
+    function fmt$(n)  { if (n == null || isNaN(n)) return '—'; return '$' + Number(n).toLocaleString('en-US', { maximumFractionDigits: 0 }); }
+    function fmt$d(n) { if (n == null || isNaN(n)) return '—'; return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    function fmtP(n)  { if (n == null || isNaN(n)) return '—'; return Number(n).toFixed(1) + '%'; }
+    function fmtI(n)  { if (n == null || isNaN(n)) return '—'; return Number(n).toLocaleString('en-US'); }
+    function esc(s)   { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+    function toast(msg, kind) {
+      const t = document.getElementById('toast'), b = document.getElementById('toast-body');
+      b.textContent = msg;
+      b.className = 'text-sm px-4 py-2 rounded-lg shadow-soft ' +
+        (kind === 'error' ? 'bg-red-600 text-white' : kind === 'ok' ? 'bg-emerald-600 text-white' : 'bg-navy-700 text-white');
+      t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => t.hidden = true, 4000);
+    }
+
+    function bench(metric, value) {
+      const B = {
+        revenue_per_tech_per_day: { p:1200, a:2000, t:2400, dir:'up' },
+        avg_ticket: { p:250, a:450, t:600, dir:'up' },
+        close_rate: { p:35, a:55, t:75, dir:'up' },
+        callback_rate: { p:5, a:3, t:2, dir:'down' },
+        jobs_per_day: { p:3, a:4, t:6, dir:'up' },
+      };
+      const b = B[metric]; if (!b || value == null) return null;
+      const tier = b.dir === 'up'
+        ? (value >= b.t ? 'top' : value >= b.a ? 'avg' : 'poor')
+        : (value <= b.t ? 'top' : value <= b.a ? 'avg' : 'poor');
+      const color = { top:'#15803d', avg:'#b45309', poor:'#b91c1c' }[tier];
+      const label = { top:'Top quartile', avg:'Industry avg', poor:'Below avg' }[tier];
+      return { tier, color, label };
+    }
+    function benchPill(metric, value) {
+      const b = bench(metric, value); if (!b) return '';
+      return `<span style="display:inline-flex;align-items:center;gap:4px;font-weight:600;color:${b.color}"><span style="width:7px;height:7px;border-radius:999px;background:${b.color}"></span>${b.label}</span>`;
+    }
+
+    function spark(values, opts = {}) {
+      if (!values || values.length === 0) return '';
+      const w = opts.w || 240, h = opts.h || 40;
+      const max = Math.max(1, ...values);
+      const min = Math.min(0, ...values);
+      const range = max - min || 1;
+      const stepX = w / Math.max(1, values.length - 1);
+      const pts = values.map((v, i) => `${(i * stepX).toFixed(1)},${(h - ((v - min) / range) * h).toFixed(1)}`);
+      return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="none">
+        <polyline fill="${opts.fill || 'rgba(93,165,184,0.12)'}" stroke="none" points="0,${h} ${pts.join(' ')} ${w},${h}" />
+        <polyline fill="none" stroke="${opts.stroke || '#5da5b8'}" stroke-width="2" points="${pts.join(' ')}" />
+      </svg>`;
+    }
+
+    function gradeColor(g) { return ({ A:'#15803d', B:'#10b981', C:'#b45309', D:'#dc2626', F:'#991b1b' }[g] || '#64748b'); }
 
     function computeWindow(days) {
       const to = new Date();
@@ -183,186 +351,16 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       return { from: from.toISOString(), to: to.toISOString() };
     }
 
-    function getKey() { return sessionStorage.getItem(STORAGE_KEY) || ''; }
-    function setKey(k) { sessionStorage.setItem(STORAGE_KEY, k); }
-    function clearKey() { sessionStorage.removeItem(STORAGE_KEY); }
-
-    function withAuth(url) {
-      const k = getKey();
-      if (!k) return url;
-      const u = new URL(url, location.origin);
-      u.searchParams.set('key', k);
-      return u.toString();
-    }
-
-    async function api(path, init) {
-      const res = await fetch(withAuth(path), { credentials: 'include', ...init });
-      if (res.status === 401) {
-        clearKey();
-        showLogin();
-        throw new Error('Auth required');
-      }
-      if (!res.ok) {
-        const text = await res.text().catch(() => '');
-        throw new Error(`API ${path} failed: ${res.status} ${text.slice(0, 200)}`);
-      }
-      return res.json();
-    }
-
-    function showLogin() {
-      document.getElementById('login-gate').hidden = false;
-      document.getElementById('dashboard').hidden = true;
-    }
-    function showDashboard() {
-      document.getElementById('login-gate').hidden = true;
-      document.getElementById('dashboard').hidden = false;
-    }
-
-    function fmtMoney(n) {
-      if (n == null || isNaN(n)) return '—';
-      const v = Number(n);
-      return '$' + v.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-    }
-    function fmtPct(n) { if (n == null || isNaN(n)) return '—'; return Number(n).toFixed(1) + '%'; }
-    function fmtInt(n) { if (n == null || isNaN(n)) return '—'; return Number(n).toLocaleString('en-US'); }
-
-    function fmtRelTime(iso) {
-      if (!iso) return 'never';
-      const d = new Date(iso);
-      const diff = (Date.now() - d.getTime()) / 1000;
-      if (diff < 60) return Math.round(diff) + 's ago';
-      if (diff < 3600) return Math.round(diff / 60) + 'm ago';
-      if (diff < 86400) return Math.round(diff / 3600) + 'h ago';
-      return Math.round(diff / 86400) + 'd ago';
-    }
-
-    function toast(msg, kind) {
-      const t = document.getElementById('toast');
-      const b = document.getElementById('toast-body');
-      b.textContent = msg;
-      b.className = 'text-sm px-4 py-2 rounded-lg shadow-soft ' +
-        (kind === 'error' ? 'bg-red-600 text-white' : kind === 'ok' ? 'bg-emerald-600 text-white' : 'bg-navy-700 text-white');
-      t.hidden = false;
-      clearTimeout(toast._t);
-      toast._t = setTimeout(() => { t.hidden = true; }, 4000);
-    }
-
-    function renderSummary(data) {
-      const s = data.summary;
-      // Top-row cards
-      document.getElementById('kpi-volume').textContent = fmtInt(s.call_volume.total);
-      document.getElementById('kpi-volume-sub').textContent =
-        `${s.call_volume.tune_up} TU · ${s.call_volume.diagnostic} Dx · ${s.call_volume.estimate} Est`;
-      document.getElementById('kpi-close').textContent = fmtPct(s.close_rate.overall_pct);
-      document.getElementById('kpi-close-sub').textContent =
-        `${s.totals.sold_jobs} sold of ${s.totals.completed_jobs} completed`;
-      document.getElementById('kpi-ticket').textContent = fmtMoney(s.average_ticket.overall);
-      document.getElementById('kpi-revenue').textContent = fmtMoney(s.revenue.total);
-
-      // By call type rows
-      const byTypeBody = document.getElementById('by-type-rows');
-      const types = ['tune_up', 'diagnostic', 'estimate', 'install', 'other'];
-      const labels = { tune_up: 'Tune-up', diagnostic: 'Diagnostic', estimate: 'Estimate', install: 'Install', other: 'Other' };
-      const rows = [];
-      for (const t of types) {
-        const cv = s.call_volume[t] || 0;
-        if (!cv) continue;
-        const cr = s.close_rate.by_type[t] || { closed: 0, total: 0, pct: 0 };
-        const at = s.average_ticket.by_type[t] || 0;
-        const rev = s.revenue.by_type[t] || 0;
-        rows.push(`
-          <tr>
-            <td><strong>${labels[t]}</strong></td>
-            <td class="text-right num">${fmtInt(cv)}</td>
-            <td class="text-right num">${fmtInt(cr.closed)}</td>
-            <td class="text-right num">${fmtPct(cr.pct)}</td>
-            <td class="text-right num">${fmtMoney(at)}</td>
-            <td class="text-right num">${fmtMoney(rev)}</td>
-          </tr>`);
-      }
-      byTypeBody.innerHTML = rows.length ? rows.join('') :
-        `<tr><td colspan="6" class="text-center text-slate-400 py-6">No completed jobs in this window.</td></tr>`;
-
-      // Customer mix
-      const ct = s.customer_type;
-      const ctMax = Math.max(ct.new_customers, ct.existing_customers, ct.member_customers, 1);
-      document.getElementById('cust-new').textContent = fmtInt(ct.new_customers);
-      document.getElementById('cust-existing').textContent = fmtInt(ct.existing_customers);
-      document.getElementById('cust-member').textContent = fmtInt(ct.member_customers);
-      document.getElementById('cust-new-bar').style.width = (ct.new_customers / ctMax * 100) + '%';
-      document.getElementById('cust-existing-bar').style.width = (ct.existing_customers / ctMax * 100) + '%';
-      document.getElementById('cust-member-bar').style.width = (ct.member_customers / ctMax * 100) + '%';
-
-      // Callbacks
-      const cb = s.callbacks;
-      document.getElementById('cb-total').textContent = fmtInt(cb.total);
-      document.getElementById('cb-rate').textContent = fmtPct(cb.rate_pct);
-      const cbRows = (cb.by_tech || []).filter(r => r.callbacks > 0).slice(0, 8);
-      document.getElementById('cb-rows').innerHTML = cbRows.length
-        ? cbRows.map(r => `
-          <tr>
-            <td>${escapeHtml(r.tech_name)}</td>
-            <td class="text-right num">${fmtInt(r.total_jobs)}</td>
-            <td class="text-right num">${fmtInt(r.callbacks)}</td>
-            <td class="text-right num">${fmtPct(r.rate_pct)}</td>
-          </tr>`).join('')
-        : `<tr><td colspan="4" class="text-center text-slate-400 py-4">No callbacks in this window 🎉</td></tr>`;
-
-      // Sync status
-      if (data.last_sync) {
-        const ls = data.last_sync;
-        const finished = ls.finished_at || ls.started_at;
-        const successPill = ls.success === 1 ? 'pill pill-ok' : ls.success === 0 ? 'pill pill-err' : 'pill pill-warn';
-        const successText = ls.success === 1 ? 'Synced' : ls.success === 0 ? 'Failed' : 'In progress';
-        document.getElementById('sync-status').innerHTML =
-          `<span class="${successPill}">${successText}</span> ` +
-          `Last sync ${fmtRelTime(finished)} · ${fmtInt(ls.jobs_synced)} jobs · ${fmtInt(ls.customers_synced)} customers`;
-      } else {
-        document.getElementById('sync-status').innerHTML =
-          `<span class="pill pill-warn">No sync yet</span> Click "Sync now" to pull from Housecall Pro.`;
-      }
-
-      // Window display
-      const w = s.window;
-      document.getElementById('window-display').textContent =
-        `${new Date(w.from).toLocaleDateString()} → ${new Date(w.to).toLocaleDateString()}`;
-    }
-
-    function renderTechs(data) {
-      const techs = data.techs || [];
-      if (!techs.length) {
-        document.getElementById('tech-rows').innerHTML =
-          `<tr><td colspan="7" class="text-center text-slate-400 py-6">No tech data yet.</td></tr>`;
-        return;
-      }
-      document.getElementById('tech-rows').innerHTML = techs.map(t => `
-        <tr>
-          <td><strong>${escapeHtml(t.tech_name)}</strong></td>
-          <td class="text-right num">${fmtInt(t.jobs)}</td>
-          <td class="text-right num">${t.tune_ups} · ${t.diagnostics} · ${t.estimates}</td>
-          <td class="text-right num">${fmtPct(t.close_rate_pct)}</td>
-          <td class="text-right num">${fmtMoney(t.avg_ticket)}</td>
-          <td class="text-right num"><strong>${fmtMoney(t.revenue)}</strong></td>
-          <td class="text-right num">${t.callbacks} (${fmtPct(t.callback_rate_pct)})</td>
-        </tr>
-      `).join('');
-    }
-
-    function escapeHtml(s) {
-      return String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
-    }
-
-    function setLoading() {
-      const skel = '<span class="skeleton inline-block h-9 w-24"></span>';
+    function setSkeletons() {
       ['kpi-volume','kpi-close','kpi-ticket','kpi-revenue'].forEach(id => {
-        document.getElementById(id).innerHTML = skel;
+        document.getElementById(id).innerHTML = '<span class="skeleton inline-block h-9 w-24"></span>';
       });
     }
 
     async function loadConfig() {
       try {
-        const cfg = await api('/api/kpis/config');
-        const t = cfg.thresholds || {};
+        configCache = await api('/api/kpis/config');
+        const t = configCache.thresholds || {};
         document.getElementById('thr-sold-tu').textContent = '$' + ((t.sold && t.sold.tune_up) || 110);
         document.getElementById('thr-min-tu').textContent  = '$' + ((t.minTicket && t.minTicket.tune_up) || 175);
         document.getElementById('thr-min-diag').textContent= '$' + ((t.minTicket && t.minTicket.diagnostic) || 275);
@@ -370,63 +368,328 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     }
 
     async function loadAll() {
-      setLoading();
-      currentWindow = computeWindow(currentRange);
+      setSkeletons();
+      const w = computeWindow(currentRange);
       try {
-        const [summary, byTech] = await Promise.all([
-          api(`/api/kpis/summary?from=${encodeURIComponent(currentWindow.from)}&to=${encodeURIComponent(currentWindow.to)}`),
-          api(`/api/kpis/by-tech?from=${encodeURIComponent(currentWindow.from)}&to=${encodeURIComponent(currentWindow.to)}`),
+        const [summary, byTech, trend, segDormant, segRenew, segVip] = await Promise.all([
+          api(`/api/kpis/summary?from=${encodeURIComponent(w.from)}&to=${encodeURIComponent(w.to)}`),
+          api(`/api/kpis/by-tech?from=${encodeURIComponent(w.from)}&to=${encodeURIComponent(w.to)}`),
+          api(`/api/kpis/trends?weeks=12`),
+          api(`/api/kpis/segments?name=dormant_12mo&limit=5`),
+          api(`/api/kpis/segments?name=members_renewing&limit=5`),
+          api(`/api/kpis/segments?name=top_ltv&limit=5`),
         ]);
-        renderSummary(summary);
+        renderSummary(summary, trend);
         renderTechs(byTech);
+        renderSegments(segDormant, segRenew, segVip);
       } catch (e) {
         toast(e.message || 'Load failed', 'error');
       }
     }
 
+    function renderSummary(data, trend) {
+      const s = data.summary;
+      const days = currentRange;
+      const techCount = Math.max(1, (data.summary.revenue.by_tech || []).length);
+
+      document.getElementById('kpi-volume').textContent = fmtI(s.call_volume.total);
+      document.getElementById('kpi-volume-sub').textContent =
+        `${s.call_volume.tune_up} TU · ${s.call_volume.diagnostic} Dx · ${s.call_volume.estimate} Est`;
+      const jpd = s.call_volume.total / days / techCount;
+      document.getElementById('kv-bench').innerHTML = benchPill('jobs_per_day', jpd);
+
+      document.getElementById('kpi-close').textContent = fmtP(s.close_rate.overall_pct);
+      document.getElementById('kpi-close-sub').textContent =
+        `${s.totals.sold_jobs} sold of ${s.totals.completed_jobs}`;
+      document.getElementById('cr-bench').innerHTML = benchPill('close_rate', s.close_rate.overall_pct);
+
+      document.getElementById('kpi-ticket').textContent = fmt$(s.average_ticket.overall);
+      document.getElementById('at-bench').innerHTML = benchPill('avg_ticket', s.average_ticket.overall);
+
+      document.getElementById('kpi-revenue').textContent = fmt$(s.revenue.total);
+      const rpd = s.revenue.total / days / techCount;
+      document.getElementById('kpi-revenue-sub').textContent = `${fmt$(rpd)}/tech/day`;
+      document.getElementById('rev-bench').innerHTML = benchPill('revenue_per_tech_per_day', rpd);
+
+      // Sparklines from 12-week trend
+      const t = trend.points || [];
+      document.getElementById('kpi-volume-spark').innerHTML  = spark(t.map(p => p.jobs),       { stroke:'#5da5b8' });
+      document.getElementById('kpi-close-spark').innerHTML   = spark(t.map(p => p.close_rate_pct),{ stroke:'#10b981', fill:'rgba(16,185,129,0.10)' });
+      document.getElementById('kpi-ticket-spark').innerHTML  = spark(t.map(p => p.avg_ticket), { stroke:'#e88a38', fill:'rgba(232,138,56,0.10)' });
+      document.getElementById('kpi-revenue-spark').innerHTML = spark(t.map(p => p.revenue),    { stroke:'#1a2e45', fill:'rgba(26,46,69,0.10)' });
+
+      // By call type
+      const types = ['tune_up','diagnostic','estimate','install','iaq','other'];
+      const labels = { tune_up:'Tune-up', diagnostic:'Diagnostic', estimate:'Estimate', install:'Install', iaq:'IAQ', other:'Other' };
+      const rows = [];
+      for (const tp of types) {
+        const cv = s.call_volume[tp] || 0;
+        if (!cv) continue;
+        const cr = s.close_rate.by_type[tp] || { closed:0, total:0, pct:0 };
+        const at = s.average_ticket.by_type[tp] || 0;
+        const rev = s.revenue.by_type[tp] || 0;
+        rows.push(`<tr>
+          <td><strong>${labels[tp]}</strong></td>
+          <td class="text-right num">${fmtI(cv)}</td>
+          <td class="text-right num">${fmtI(cr.closed)}</td>
+          <td class="text-right num">${fmtP(cr.pct)}</td>
+          <td class="text-right num">${fmt$(at)}</td>
+          <td class="text-right num">${fmt$(rev)}</td>
+        </tr>`);
+      }
+      document.getElementById('by-type-rows').innerHTML = rows.length ? rows.join('') :
+        `<tr><td colspan="6" class="text-center text-slate-400 py-6">No completed jobs in this window.</td></tr>`;
+
+      // Customer mix
+      const ct = s.customer_type;
+      const ctMax = Math.max(ct.new_customers, ct.existing_customers, ct.member_customers, 1);
+      document.getElementById('cust-new').textContent = fmtI(ct.new_customers);
+      document.getElementById('cust-existing').textContent = fmtI(ct.existing_customers);
+      document.getElementById('cust-member').textContent = fmtI(ct.member_customers);
+      document.getElementById('cust-new-bar').style.width = (ct.new_customers / ctMax * 100) + '%';
+      document.getElementById('cust-existing-bar').style.width = (ct.existing_customers / ctMax * 100) + '%';
+      document.getElementById('cust-member-bar').style.width = (ct.member_customers / ctMax * 100) + '%';
+
+      // Callbacks
+      const cb = s.callbacks;
+      document.getElementById('cb-total').textContent = fmtI(cb.total);
+      document.getElementById('cb-rate').textContent = fmtP(cb.rate_pct);
+      document.getElementById('cb-bench').innerHTML = cb.total > 0 ? benchPill('callback_rate', cb.rate_pct) : '';
+      const cbRows = (cb.by_tech || []).filter(r => r.callbacks > 0).slice(0, 8);
+      document.getElementById('cb-rows').innerHTML = cbRows.length
+        ? cbRows.map(r => `<tr><td>${esc(r.tech_name)}</td><td class="text-right num">${fmtI(r.total_jobs)}</td><td class="text-right num">${fmtI(r.callbacks)}</td><td class="text-right num">${fmtP(r.rate_pct)}</td></tr>`).join('')
+        : `<tr><td colspan="4" class="text-center text-slate-400 py-4">No callbacks in this window 🎉</td></tr>`;
+
+      // Sync status
+      if (data.last_sync) {
+        const ls = data.last_sync;
+        const finished = ls.finished_at || ls.started_at;
+        const successPill = ls.success === 1 ? 'pill pill-ok' : 'pill pill-err';
+        const successText = ls.success === 1 ? 'Synced' : 'Failed';
+        document.getElementById('sync-status').innerHTML =
+          `<span class="${successPill}">${successText}</span> Last sync ${fmtRel(finished)} · ${fmtI(ls.jobs_synced)} jobs · ${fmtI(ls.customers_synced)} customers`;
+      } else {
+        document.getElementById('sync-status').innerHTML = `<span class="pill pill-warn">No sync yet</span> Click "Sync now"`;
+      }
+      document.getElementById('window-display').textContent =
+        `${new Date(s.window.from).toLocaleDateString()} → ${new Date(s.window.to).toLocaleDateString()}`;
+    }
+
+    function fmtRel(iso) {
+      if (!iso) return 'never';
+      const d = new Date(iso); const diff = (Date.now() - d.getTime()) / 1000;
+      if (diff < 60) return Math.round(diff) + 's ago';
+      if (diff < 3600) return Math.round(diff / 60) + 'm ago';
+      if (diff < 86400) return Math.round(diff / 3600) + 'h ago';
+      return Math.round(diff / 86400) + 'd ago';
+    }
+
+    function renderTechs(data) {
+      const techs = (data.techs || []).filter(t => t.jobs > 0);
+      if (!techs.length) {
+        document.getElementById('tech-rows').innerHTML =
+          `<tr><td colspan="8" class="text-center text-slate-400 py-6">No tech data.</td></tr>`;
+        return;
+      }
+      // Compute simple score per tech using the same Formula A normalization
+      const days = currentRange;
+      const w = (configCache && configCache.weights) || {
+        revenue_per_day:0.25, avg_ticket:0.15, close_rate:0.15, membership_conversion:0.10,
+        callback_rate_inverted:0.10, review_rate:0.10, utilization:0.10, volume:0.05
+      };
+      const tg = (configCache && configCache.targets) || {
+        revenue_per_day:{zero:1000,hundred:2400}, avg_ticket:{zero:200,hundred:550},
+        close_rate:{zero:50,hundred:90}, membership_conversion:{zero:10,hundred:35},
+        callback_rate_inverted:{zero:5,hundred:0}, review_rate:{zero:5,hundred:30},
+        utilization:{zero:50,hundred:75}, volume:{zero:2,hundred:5}
+      };
+      const norm = (val, t) => {
+        if (t.zero === t.hundred) return 50;
+        const c = (n) => Math.max(0, Math.min(100, n));
+        return t.zero < t.hundred ? c(((val - t.zero) / (t.hundred - t.zero)) * 100) : c(((t.zero - val) / (t.zero - t.hundred)) * 100);
+      };
+      const grade = (n) => n>=90?'A':n>=80?'B':n>=70?'C':n>=60?'D':'F';
+
+      const rows = techs.map(t => {
+        const rpd = t.revenue / days;
+        const inputs = {
+          revenue_per_day: rpd, avg_ticket: t.avg_ticket, close_rate: t.close_rate_pct,
+          membership_conversion: 0, callback_rate_inverted: t.callback_rate_pct,
+          review_rate: 0, utilization: 0, volume: t.jobs / days,
+        };
+        let total = 0;
+        for (const k of Object.keys(w)) total += norm(inputs[k] || 0, tg[k]) * (w[k] || 0);
+        const sc = Math.round(total * 10) / 10;
+        const g = grade(sc);
+        const color = gradeColor(g);
+        return `<tr style="cursor:pointer" data-tech-id="${esc(t.tech_id)}">
+          <td><strong>${esc(t.tech_name)}</strong></td>
+          <td class="text-center">
+            <span style="display:inline-flex;align-items:center;gap:6px">
+              <span style="display:inline-block;width:28px;height:28px;border-radius:8px;background:${color};color:#fff;font-weight:700;font-size:13px;line-height:28px;text-align:center">${g}</span>
+              <span class="num text-xs text-slate-500">${sc.toFixed(0)}</span>
+            </span>
+          </td>
+          <td class="text-right num">${fmtI(t.jobs)}</td>
+          <td class="text-right num hidden sm:table-cell">${t.tune_ups} · ${t.diagnostics} · ${t.estimates}</td>
+          <td class="text-right num">${fmtP(t.close_rate_pct)}</td>
+          <td class="text-right num hidden sm:table-cell">${fmt$(t.avg_ticket)}</td>
+          <td class="text-right num"><strong>${fmt$(t.revenue)}</strong></td>
+          <td class="text-right num hidden lg:table-cell">${t.callbacks} (${fmtP(t.callback_rate_pct)})</td>
+        </tr>`;
+      }).join('');
+      const tbody = document.getElementById('tech-rows');
+      tbody.innerHTML = rows;
+      tbody.querySelectorAll('tr[data-tech-id]').forEach(tr => {
+        tr.addEventListener('click', () => {
+          const id = tr.getAttribute('data-tech-id');
+          location.href = `/admin/dashboard/tech/?id=${encodeURIComponent(id)}`;
+        });
+      });
+    }
+
+    function renderSegments(dormant, renew, vip) {
+      const fmtRow = r => `<div class="flex items-center justify-between gap-2 py-1 border-b border-line last:border-0">
+        <div class="min-w-0 flex-1"><div class="font-semibold truncate">${esc(r.name)}</div><div class="text-xs text-slate-500 truncate">${esc(r.email || r.phone || '')}</div></div>
+        <div class="text-right flex-shrink-0"><div class="font-semibold num">${fmt$(r.lifetime_value)}</div><div class="text-xs text-slate-500">${r.days_since_last_job != null ? r.days_since_last_job + 'd ago' : '—'}</div></div>
+      </div>`;
+      document.getElementById('seg-dormant').innerHTML = (dormant.rows || []).slice(0,5).map(fmtRow).join('') || '<div class="text-slate-400 text-sm py-2">No dormant customers in pool 🎉</div>';
+      document.getElementById('seg-dormant-count').textContent = `${dormant.count}`;
+      document.getElementById('seg-renew').innerHTML   = (renew.rows || []).slice(0,5).map(fmtRow).join('')   || '<div class="text-slate-400 text-sm py-2">None renewing in window.</div>';
+      document.getElementById('seg-renew-count').textContent = `${renew.count}`;
+      document.getElementById('seg-vip').innerHTML     = (vip.rows || []).slice(0,5).map(fmtRow).join('')     || '<div class="text-slate-400 text-sm py-2">—</div>';
+    }
+
+    async function loadAI(forceRefresh) {
+      try {
+        const url = forceRefresh ? `/api/ai/insights?days=${currentRange}&refresh=1` : `/api/ai/insights?days=${currentRange}`;
+        const r = await api(url);
+        document.getElementById('ai-body').innerHTML = mdToHtml(r.markdown || '_No insight available._');
+        document.getElementById('ai-meta').textContent =
+          (r.cached ? '· cached' : '· fresh') +
+          (r.tokens && r.tokens.out ? ` · ${r.tokens.out} out` : '');
+      } catch (e) {
+        document.getElementById('ai-body').innerHTML = `<p class="text-amber-700">AI insights unavailable: ${esc(e.message)}</p>`;
+      }
+    }
+
+    // Tiny markdown → HTML (headers, bullets, ordered lists, bold, italic).
+    // Just enough for MiniMax's structured response.
+    function mdToHtml(md) {
+      const lines = md.split(/\r?\n/);
+      let out = ''; let inUl = false; let inOl = false;
+      const closeLists = () => { if (inUl) { out += '</ul>'; inUl = false; } if (inOl) { out += '</ol>'; inOl = false; } };
+      for (let line of lines) {
+        let m;
+        if (/^\s*$/.test(line)) { closeLists(); continue; }
+        if ((m = line.match(/^##\s+(.*)$/))) { closeLists(); out += `<h3 class="text-base font-bold text-navy-700 mt-3 mb-1">${esc(m[1])}</h3>`; continue; }
+        if ((m = line.match(/^#\s+(.*)$/))) { closeLists(); out += `<h2 class="text-lg font-bold text-navy-700 mt-3 mb-2">${esc(m[1])}</h2>`; continue; }
+        if ((m = line.match(/^\s*[-*]\s+(.*)$/))) {
+          if (!inUl) { closeLists(); out += '<ul class="list-disc pl-5 space-y-1">'; inUl = true; }
+          out += `<li>${formatInline(m[1])}</li>`; continue;
+        }
+        if ((m = line.match(/^\s*\d+\.\s+(.*)$/))) {
+          if (!inOl) { closeLists(); out += '<ol class="list-decimal pl-5 space-y-1">'; inOl = true; }
+          out += `<li>${formatInline(m[1])}</li>`; continue;
+        }
+        closeLists();
+        out += `<p>${formatInline(line)}</p>`;
+      }
+      closeLists();
+      return out;
+    }
+    function formatInline(s) {
+      return esc(s)
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/`(.+?)`/g, '<code>$1</code>');
+    }
+
     async function runSync() {
       const btn = document.getElementById('sync-btn');
       btn.disabled = true;
-      // Cloudflare Workers (free plan) caps each function invocation at 50
-      // subrequests. ICAC's customers page out at 43 pages alone, so we
-      // sync in 3 separate invocations to keep each within budget.
       const phases = [
         { name: 'employees', label: 'Pulling techs',     body: { endpoints: ['employees'] } },
         { name: 'customers', label: 'Pulling customers', body: { endpoints: ['customers'] } },
         { name: 'jobs',      label: 'Pulling jobs',      body: { endpoints: ['jobs'], daysBack: 90 } },
       ];
-      let totalTechs = 0, totalCustomers = 0, totalJobs = 0;
-      const errors = [];
+      let tt=0, tc=0, tj=0; const errs = [];
       try {
         for (const p of phases) {
           btn.textContent = p.label + '…';
           toast(p.label + ' from Housecall Pro…');
           const r = await api('/api/sync/run', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(p.body),
           });
-          totalTechs     += r.techs_synced || 0;
-          totalCustomers += r.customers_synced || 0;
-          totalJobs      += r.jobs_synced || 0;
-          if (r.errors && r.errors.length) errors.push(...r.errors);
+          tt += r.techs_synced || 0; tc += r.customers_synced || 0; tj += r.jobs_synced || 0;
+          if (r.errors && r.errors.length) errs.push(...r.errors);
         }
-        if (errors.length) {
-          toast(`Synced w/ warnings: ${totalJobs} jobs · ${totalCustomers} customers · ${totalTechs} techs · ${errors.length} error(s)`, 'error');
-          console.warn('Sync errors:', errors);
-        } else {
-          toast(`Synced ${totalJobs} jobs · ${totalCustomers} customers · ${totalTechs} techs`, 'ok');
-        }
-        await loadAll();
-      } catch (e) {
-        toast(e.message || 'Sync failed', 'error');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Sync now';
-      }
+        toast(errs.length
+          ? `Synced w/ warnings: ${tj} jobs · ${tc} customers · ${tt} techs · ${errs.length} error(s)`
+          : `Synced ${tj} jobs · ${tc} customers · ${tt} techs`,
+          errs.length ? 'error' : 'ok');
+        await Promise.all([loadAll(), loadAI(true)]);
+      } catch (e) { toast(e.message || 'Sync failed', 'error'); }
+      finally { btn.disabled = false; btn.textContent = 'Sync now'; }
     }
 
-    // Wire up
+    // ─── SETTINGS DRAWER ────────────────────────────────────────────
+    function openSettings() {
+      const d = document.getElementById('settings-drawer'); d.classList.remove('hidden');
+      const t = (configCache && configCache.thresholds) || {};
+      document.getElementById('set-sold-tu').value  = (t.sold && t.sold.tune_up) || 110;
+      document.getElementById('set-min-tu').value   = (t.minTicket && t.minTicket.tune_up) || 175;
+      document.getElementById('set-min-diag').value = (t.minTicket && t.minTicket.diagnostic) || 275;
+
+      const w = (configCache && configCache.weights) || {};
+      const labels = { revenue_per_day:'Revenue/day', avg_ticket:'Avg ticket', close_rate:'Close rate', membership_conversion:'Memberships', callback_rate_inverted:'Callbacks (inverted)', review_rate:'Review rate', utilization:'Utilization', volume:'Volume' };
+      document.getElementById('weight-sliders').innerHTML = Object.entries(w).map(([k, v]) => `
+        <div>
+          <div class="flex justify-between text-sm"><span>${labels[k]}</span><span class="num font-semibold"><span data-w-display="${k}">${(v*100).toFixed(0)}</span>%</span></div>
+          <input type="range" min="0" max="50" step="1" value="${(v*100).toFixed(0)}" data-w-input="${k}" class="w-full" />
+        </div>`).join('');
+      document.querySelectorAll('input[data-w-input]').forEach(inp => {
+        inp.addEventListener('input', () => {
+          const k = inp.getAttribute('data-w-input');
+          document.querySelector(`[data-w-display="${k}"]`).textContent = inp.value;
+        });
+      });
+    }
+    function closeSettings() { document.getElementById('settings-drawer').classList.add('hidden'); }
+
+    async function saveSettings() {
+      const sold = Number(document.getElementById('set-sold-tu').value);
+      const minTu = Number(document.getElementById('set-min-tu').value);
+      const minDi = Number(document.getElementById('set-min-diag').value);
+      const weights = {};
+      let total = 0;
+      document.querySelectorAll('input[data-w-input]').forEach(inp => {
+        const k = inp.getAttribute('data-w-input');
+        weights[k] = Number(inp.value) / 100;
+        total += weights[k];
+      });
+      // normalize to sum=1
+      if (total > 0) for (const k of Object.keys(weights)) weights[k] = weights[k] / total;
+      try {
+        await api('/api/kpis/config', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            thresholds: {
+              sold: { default: sold, tune_up: sold, diagnostic: sold, estimate: sold },
+              minTicket: { default: minTu, tune_up: minTu, diagnostic: minDi, estimate: minTu },
+            },
+            weights,
+          }),
+        });
+        toast('Settings saved · re-syncing', 'ok');
+        await loadConfig();
+        await loadAll();
+        closeSettings();
+      } catch (e) { toast(e.message || 'Save failed', 'error'); }
+    }
+
+    // ─── EVENT WIRING ───────────────────────────────────────────────
     document.querySelectorAll('.tab[data-range]').forEach(b => {
       b.addEventListener('click', () => {
         document.querySelectorAll('.tab[data-range]').forEach(x => x.setAttribute('aria-pressed', 'false'));
@@ -435,11 +698,40 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         loadAll();
       });
     });
-
     document.getElementById('sync-btn').addEventListener('click', runSync);
-    document.getElementById('logout-btn').addEventListener('click', () => {
-      clearKey();
-      showLogin();
+    document.getElementById('logout-btn').addEventListener('click', () => { clearKey(); show('login'); });
+    document.getElementById('ai-refresh').addEventListener('click', () => loadAI(true));
+    document.getElementById('settings-btn').addEventListener('click', openSettings);
+    document.getElementById('settings-close').addEventListener('click', closeSettings);
+    document.getElementById('settings-backdrop').addEventListener('click', closeSettings);
+    document.getElementById('settings-save').addEventListener('click', saveSettings);
+    document.getElementById('settings-reset').addEventListener('click', async () => {
+      if (!confirm('Reset thresholds and weights to defaults?')) return;
+      try {
+        await api('/api/kpis/config', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ thresholds: null, weights: null, targets: null }),
+        });
+      } catch {}
+      await loadConfig(); openSettings();
+    });
+
+    document.querySelectorAll('[data-action="open-segment"]').forEach(b => {
+      b.addEventListener('click', () => {
+        const seg = b.getAttribute('data-segment');
+        location.href = `/admin/dashboard/segments/?name=${encodeURIComponent(seg)}`;
+      });
+    });
+    document.querySelectorAll('[data-action="copy-emails"]').forEach(b => {
+      b.addEventListener('click', async () => {
+        const seg = b.getAttribute('data-segment');
+        try {
+          const r = await api(`/api/kpis/segments?name=${encodeURIComponent(seg)}&limit=500`);
+          const emails = (r.rows || []).map(x => x.email).filter(Boolean).join(', ');
+          await navigator.clipboard.writeText(emails);
+          toast(`Copied ${(emails.match(/,/g) || []).length + 1} emails — paste into HCP Marketing Center`, 'ok');
+        } catch (e) { toast(e.message || 'Copy failed', 'error'); }
+      });
     });
 
     document.getElementById('login-form').addEventListener('submit', async (ev) => {
@@ -448,44 +740,29 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       if (!k) return;
       setKey(k);
       try {
-        // Validate by hitting summary
         await api('/api/kpis/summary');
         document.getElementById('login-error').hidden = true;
-        showDashboard();
+        show('dash');
         await loadConfig();
         await loadAll();
+        loadAI(false);
       } catch (e) {
         document.getElementById('login-error').hidden = false;
-        document.getElementById('login-error').textContent = 'Wrong key or server error: ' + (e.message || '');
+        document.getElementById('login-error').textContent = 'Wrong PIN.';
         clearKey();
       }
     });
 
     // Boot
     (async () => {
-      // Try session key first
       if (getKey()) {
-        try {
-          await api('/api/kpis/summary');
-          showDashboard();
-          await loadConfig();
-          await loadAll();
-          return;
-        } catch (e) {
-          /* fall through to login */
-        }
+        try { await api('/api/kpis/summary'); show('dash'); await loadConfig(); await loadAll(); loadAI(false); return; } catch {}
       }
-      // Otherwise try CF Access session (no key needed)
       try {
         const r = await fetch('/api/kpis/summary', { credentials: 'include' });
-        if (r.ok) {
-          showDashboard();
-          await loadConfig();
-          await loadAll();
-          return;
-        }
+        if (r.ok) { show('dash'); await loadConfig(); await loadAll(); loadAI(false); return; }
       } catch {}
-      showLogin();
+      show('login');
     })();
   </script>
 </AdminLayout>

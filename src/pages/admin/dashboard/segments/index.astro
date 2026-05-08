@@ -1,0 +1,209 @@
+---
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="Customer segment">
+  <div id="login-gate" hidden>
+    <div class="card login-card">
+      <h2 class="text-xl font-bold mb-1">Sign in</h2>
+      <p class="text-sm text-slate-600 mb-5">Enter your PIN to continue.</p>
+      <form id="login-form" class="space-y-3">
+        <input id="login-key" type="password" inputmode="numeric" placeholder="PIN" autocomplete="current-password" required />
+        <button type="submit" class="btn-admin w-full justify-center">Continue</button>
+      </form>
+      <p id="login-error" class="text-red-600 text-sm mt-3" hidden></p>
+    </div>
+  </div>
+
+  <div id="dashboard" hidden>
+    <header class="bg-white border-b border-line">
+      <div class="container-site py-3 sm:py-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <a href="/admin/dashboard/" class="text-sm text-brand-700 hover:underline">← Dashboard</a>
+          <h1 id="seg-title" class="text-xl sm:text-2xl font-bold text-navy-700">Segment</h1>
+          <div id="seg-sub" class="text-xs text-slate-500 mt-1"></div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <select id="seg-picker" class="tab" aria-label="Segment">
+            <option value="dormant_12mo">Dormant 12+ months</option>
+            <option value="members_renewing">Members renewing soon</option>
+            <option value="top_ltv">Top by lifetime value</option>
+            <option value="new">New (last 30 days)</option>
+          </select>
+          <button id="copy-emails" class="btn-ghost-admin">Copy emails</button>
+          <button id="copy-phones" class="btn-ghost-admin">Copy phones</button>
+          <button id="export-csv" class="btn-admin">Export CSV</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container-site py-4 sm:py-6 space-y-4">
+      <section class="card-quiet">
+        <div class="flex flex-wrap items-baseline gap-4">
+          <div><div class="stat-label">Customers</div><div id="seg-count" class="text-2xl font-bold text-navy-700">—</div></div>
+          <div><div class="stat-label">Total LTV</div><div id="seg-ltv" class="text-2xl font-bold text-navy-700">—</div></div>
+          <div><div class="stat-label">Avg LTV</div><div id="seg-avg-ltv" class="text-2xl font-bold text-navy-700">—</div></div>
+          <div><div class="stat-label">With email</div><div id="seg-with-email" class="text-2xl font-bold text-navy-700">—</div></div>
+          <div class="flex-1 min-w-[200px]">
+            <input id="seg-search" type="search" placeholder="Filter…" class="w-full px-3 py-2 border border-line rounded text-sm" />
+          </div>
+        </div>
+      </section>
+
+      <section class="card overflow-x-auto">
+        <table class="kpi-table">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th class="hidden md:table-cell">Email</th>
+              <th class="hidden md:table-cell">Phone</th>
+              <th class="hidden lg:table-cell">City</th>
+              <th class="text-center hidden sm:table-cell">Member</th>
+              <th class="text-right">Jobs</th>
+              <th class="text-right">LTV</th>
+              <th class="text-right">Last seen</th>
+            </tr>
+          </thead>
+          <tbody id="seg-rows">
+            <tr><td colspan="8" class="text-center text-slate-400 py-8">Loading…</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card-quiet text-xs text-slate-500">
+        <p><strong>How to use:</strong> Click "Copy emails" → paste into HCP Marketing Center → "New custom audience" → "From a list of contacts". Or "Export CSV" → upload the CSV as the audience source. Subject and body live in HCP — this dashboard supplies the targeting.</p>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50" hidden>
+    <div id="toast-body" class="bg-navy-700 text-white text-sm px-4 py-2 rounded-lg shadow-soft"></div>
+  </div>
+
+  <script is:inline>
+    const STORAGE_KEY = 'icac_admin_key';
+    function getKey() { return sessionStorage.getItem(STORAGE_KEY) || ''; }
+    function setKey(k) { sessionStorage.setItem(STORAGE_KEY, k); }
+    function clearKey() { sessionStorage.removeItem(STORAGE_KEY); }
+    function withAuth(url) { const k = getKey(); if (!k) return url; const u = new URL(url, location.origin); u.searchParams.set('key', k); return u.toString(); }
+    async function api(path, init) {
+      const res = await fetch(withAuth(path), { credentials: 'include', ...init });
+      if (res.status === 401) { clearKey(); show('login'); throw new Error('Auth required'); }
+      if (!res.ok) throw new Error(`API ${path} ${res.status}`);
+      return res.json();
+    }
+    function show(which) {
+      document.getElementById('login-gate').hidden = which !== 'login';
+      document.getElementById('dashboard').hidden = which !== 'dash';
+    }
+    function fmt$(n) { if (n == null || isNaN(n)) return '—'; return '$' + Number(n).toLocaleString('en-US', { maximumFractionDigits: 0 }); }
+    function fmtI(n) { if (n == null || isNaN(n)) return '—'; return Number(n).toLocaleString('en-US'); }
+    function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+    function toast(msg, kind) { const t=document.getElementById('toast'),b=document.getElementById('toast-body'); b.textContent=msg; b.className='text-sm px-4 py-2 rounded-lg shadow-soft '+(kind==='error'?'bg-red-600 text-white':kind==='ok'?'bg-emerald-600 text-white':'bg-navy-700 text-white'); t.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>t.hidden=true,3500); }
+
+    const TITLES = {
+      dormant_12mo:    { title: 'Dormant 12+ months', sub: "Customers who haven't booked in 1+ year (still inside HCP's 3-year mailing window). Sorted by lifetime value." },
+      members_renewing:{ title: 'Members renewing soon', sub: 'Care-plan members whose last service was 11-13 months ago. Reach out before they lapse.' },
+      top_ltv:         { title: 'VIPs · top lifetime value', sub: 'Highest lifetime spend. Treat with care — these underwrite the business.' },
+      new:             { title: 'New customers (30 days)', sub: 'Customers whose first invoiced job was in the last 30 days.' },
+    };
+
+    let currentRows = [];
+    let currentSeg = 'dormant_12mo';
+
+    function applyFilter() {
+      const q = (document.getElementById('seg-search').value || '').toLowerCase().trim();
+      const filtered = q
+        ? currentRows.filter(r => (r.name + ' ' + (r.email||'') + ' ' + (r.phone||'') + ' ' + (r.city||'')).toLowerCase().includes(q))
+        : currentRows;
+      const tbody = document.getElementById('seg-rows');
+      if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="8" class="text-center text-slate-400 py-8">No matches.</td></tr>`; return; }
+      tbody.innerHTML = filtered.map(r => `
+        <tr>
+          <td><strong>${esc(r.name)}</strong></td>
+          <td class="hidden md:table-cell text-xs">${esc(r.email || '—')}</td>
+          <td class="hidden md:table-cell text-xs">${esc(r.phone || '—')}</td>
+          <td class="hidden lg:table-cell text-xs">${esc([r.city, r.zip].filter(Boolean).join(' '))}</td>
+          <td class="text-center hidden sm:table-cell">${r.is_member ? '<span class="pill pill-info">Member</span>' : '—'}</td>
+          <td class="text-right num">${fmtI(r.total_jobs)}</td>
+          <td class="text-right num"><strong>${fmt$(r.lifetime_value)}</strong></td>
+          <td class="text-right num text-xs">${r.days_since_last_job != null ? r.days_since_last_job + 'd' : '—'}</td>
+        </tr>
+      `).join('');
+    }
+
+    async function load(seg) {
+      currentSeg = seg;
+      document.getElementById('seg-picker').value = seg;
+      const meta = TITLES[seg] || { title: seg, sub: '' };
+      document.getElementById('seg-title').textContent = meta.title;
+      document.getElementById('seg-sub').textContent = meta.sub;
+      try {
+        const r = await api(`/api/kpis/segments?name=${encodeURIComponent(seg)}&limit=500`);
+        currentRows = r.rows || [];
+        document.getElementById('seg-count').textContent = fmtI(currentRows.length);
+        const totalLtv = currentRows.reduce((s, x) => s + (x.lifetime_value || 0), 0);
+        document.getElementById('seg-ltv').textContent = fmt$(totalLtv);
+        document.getElementById('seg-avg-ltv').textContent = fmt$(currentRows.length ? totalLtv / currentRows.length : 0);
+        document.getElementById('seg-with-email').textContent = fmtI(currentRows.filter(x => x.email).length);
+        applyFilter();
+      } catch (e) { toast(e.message || 'Load failed', 'error'); }
+    }
+
+    function copyList(field) {
+      const vals = currentRows.map(r => r[field]).filter(Boolean);
+      if (!vals.length) { toast('Nothing to copy', 'error'); return; }
+      navigator.clipboard.writeText(vals.join(', ')).then(
+        () => toast(`Copied ${vals.length} ${field}s`, 'ok'),
+        () => toast('Clipboard blocked', 'error'),
+      );
+    }
+    function exportCsv() {
+      if (!currentRows.length) { toast('Nothing to export', 'error'); return; }
+      const cols = ['name','email','phone','city','zip','is_member','member_plan','total_jobs','lifetime_value','last_job_at','days_since_last_job'];
+      const csv = [cols.join(',')].concat(
+        currentRows.map(r => cols.map(c => {
+          const v = r[c]; if (v == null) return '';
+          const s = String(v).replace(/"/g, '""');
+          return /[,"\n]/.test(s) ? `"${s}"` : s;
+        }).join(','))
+      ).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `icac-${currentSeg}-${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a); a.click(); a.remove();
+    }
+
+    document.getElementById('seg-picker').addEventListener('change', e => {
+      const url = new URL(location.href); url.searchParams.set('name', e.target.value); history.replaceState(null, '', url);
+      load(e.target.value);
+    });
+    document.getElementById('seg-search').addEventListener('input', applyFilter);
+    document.getElementById('copy-emails').addEventListener('click', () => copyList('email'));
+    document.getElementById('copy-phones').addEventListener('click', () => copyList('phone'));
+    document.getElementById('export-csv').addEventListener('click', exportCsv);
+
+    document.getElementById('login-form').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const k = document.getElementById('login-key').value.trim();
+      if (!k) return; setKey(k);
+      try { await api('/api/kpis/summary'); show('dash'); await boot(); }
+      catch (e) { document.getElementById('login-error').hidden = false; document.getElementById('login-error').textContent = 'Wrong PIN.'; clearKey(); }
+    });
+
+    async function boot() {
+      const seg = new URL(location.href).searchParams.get('name') || 'dormant_12mo';
+      await load(seg);
+    }
+    (async () => {
+      if (getKey()) {
+        try { await api('/api/kpis/summary'); show('dash'); await boot(); return; } catch {}
+      }
+      try {
+        const r = await fetch('/api/kpis/summary', { credentials: 'include' });
+        if (r.ok) { show('dash'); await boot(); return; }
+      } catch {}
+      show('login');
+    })();
+  </script>
+</AdminLayout>

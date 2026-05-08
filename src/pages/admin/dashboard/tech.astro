@@ -1,0 +1,247 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="Tech detail">
+  <div id="login-gate" hidden>
+    <div class="card login-card">
+      <h2 class="text-xl font-bold mb-1">Sign in</h2>
+      <p class="text-sm text-slate-600 mb-5">Enter your PIN to continue.</p>
+      <form id="login-form" class="space-y-3">
+        <input id="login-key" type="password" inputmode="numeric" placeholder="PIN" autocomplete="current-password" required />
+        <button type="submit" class="btn-admin w-full justify-center">Continue</button>
+      </form>
+      <p id="login-error" class="text-red-600 text-sm mt-3" hidden></p>
+    </div>
+  </div>
+
+  <div id="dashboard" hidden>
+    <header class="bg-white border-b border-line">
+      <div class="container-site py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+          <a href="/admin/dashboard/" class="text-sm text-brand-700 hover:underline">← All techs</a>
+          <h1 id="th-name" class="text-xl sm:text-2xl font-bold text-navy-700">Tech detail</h1>
+          <div id="th-role" class="text-xs text-slate-500 mt-1"></div>
+        </div>
+        <div class="flex items-center gap-2">
+          <select id="th-window" class="tab" aria-label="Window">
+            <option value="7">Last 7 days</option>
+            <option value="30" selected>Last 30 days</option>
+            <option value="90">Last 90 days</option>
+            <option value="365">Last 365 days</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <main class="container-site py-4 sm:py-6 space-y-5">
+      <section class="card">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <div class="stat-label">Performance Score</div>
+            <div class="flex items-baseline gap-3">
+              <div id="th-score" class="stat-value">—</div>
+              <div id="th-grade" class="text-3xl font-bold">—</div>
+            </div>
+            <div id="th-grade-sub" class="stat-sub">Formula A</div>
+          </div>
+          <div id="th-score-bars" class="grid grid-cols-2 sm:grid-cols-4 gap-3 flex-1 min-w-0"></div>
+        </div>
+      </section>
+
+      <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <article class="card">
+          <div class="stat-label">Jobs</div>
+          <div id="th-jobs" class="stat-value">—</div>
+          <div id="th-jobs-sub" class="stat-sub"></div>
+        </article>
+        <article class="card">
+          <div class="stat-label">Close rate</div>
+          <div id="th-close" class="stat-value">—</div>
+          <div id="th-close-sub" class="stat-sub"></div>
+        </article>
+        <article class="card">
+          <div class="stat-label">Avg ticket</div>
+          <div id="th-ticket" class="stat-value">—</div>
+          <div id="th-ticket-sub" class="stat-sub"></div>
+        </article>
+        <article class="card">
+          <div class="stat-label">Revenue</div>
+          <div id="th-revenue" class="stat-value">—</div>
+          <div id="th-revenue-sub" class="stat-sub"></div>
+        </article>
+      </section>
+
+      <section class="card">
+        <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+          <h2 class="text-lg font-bold text-navy-700">12-week trend</h2>
+          <span class="text-xs text-slate-500">Revenue &amp; close rate</span>
+        </div>
+        <div id="th-trend" class="space-y-3">
+          <div class="text-slate-400 text-sm py-4">Loading…</div>
+        </div>
+      </section>
+
+      <section class="card overflow-x-auto">
+        <h2 class="text-lg font-bold text-navy-700 mb-3">Top 5 jobs by ticket</h2>
+        <table class="kpi-table">
+          <thead><tr><th>Job</th><th>Type</th><th class="hidden sm:table-cell">Completed</th><th class="text-right">Ticket</th></tr></thead>
+          <tbody id="th-top-rows"><tr><td colspan="4" class="text-slate-400 text-sm py-4">—</td></tr></tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2 class="text-lg font-bold text-navy-700 mb-3">Vs. shop average</h2>
+        <div id="th-peer" class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm"></div>
+      </section>
+
+      <section class="card-quiet">
+        <h3 class="font-semibold text-navy-700 mb-1">Coaching prompts</h3>
+        <ul id="th-coach" class="text-sm text-slate-700 space-y-1 list-disc pl-5"><li>—</li></ul>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50" hidden>
+    <div id="toast-body" class="bg-navy-700 text-white text-sm px-4 py-2 rounded-lg shadow-soft"></div>
+  </div>
+
+  <script is:inline>
+    const STORAGE_KEY = 'icac_admin_key';
+    const techId = new URL(location.href).searchParams.get('id') || '';
+
+    function getKey() { return sessionStorage.getItem(STORAGE_KEY) || ''; }
+    function setKey(k) { sessionStorage.setItem(STORAGE_KEY, k); }
+    function clearKey() { sessionStorage.removeItem(STORAGE_KEY); }
+    function withAuth(url) { const k = getKey(); if (!k) return url; const u = new URL(url, location.origin); u.searchParams.set('key', k); return u.toString(); }
+    async function api(path, init) {
+      const res = await fetch(withAuth(path), { credentials: 'include', ...init });
+      if (res.status === 401) { clearKey(); show('login'); throw new Error('Auth required'); }
+      if (!res.ok) throw new Error(`API ${path} ${res.status}`);
+      return res.json();
+    }
+    function show(which) {
+      document.getElementById('login-gate').hidden = which !== 'login';
+      document.getElementById('dashboard').hidden = which !== 'dash';
+    }
+    function fmt$(n) { if (n == null || isNaN(n)) return '—'; return '$' + Number(n).toLocaleString('en-US', { maximumFractionDigits: 0 }); }
+    function fmtP(n) { if (n == null || isNaN(n)) return '—'; return Number(n).toFixed(1) + '%'; }
+    function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+    function toast(msg, kind) { const t=document.getElementById('toast'),b=document.getElementById('toast-body'); b.textContent=msg; b.className='text-sm px-4 py-2 rounded-lg shadow-soft '+(kind==='error'?'bg-red-600 text-white':'bg-navy-700 text-white'); t.hidden=false; setTimeout(()=>t.hidden=true,3500); }
+
+    function bench(metric, value) {
+      const B = {
+        revenue_per_tech_per_day: { p:1200, a:2000, t:2400, dir:'up' },
+        avg_ticket: { p:250, a:450, t:600, dir:'up' },
+        callback_rate: { p:5, a:3, t:2, dir:'down' },
+      };
+      const b = B[metric]; if (!b || value == null) return null;
+      const tier = b.dir === 'up'
+        ? (value >= b.t ? 'top' : value >= b.a ? 'avg' : 'poor')
+        : (value <= b.t ? 'top' : value <= b.a ? 'avg' : 'poor');
+      const color = { top:'#15803d', avg:'#b45309', poor:'#b91c1c' }[tier];
+      const label = { top:'Top quartile', avg:'Industry avg', poor:'Below avg' }[tier];
+      return { color, label };
+    }
+    function dot(metric, value) {
+      const b = bench(metric, value); if (!b) return '';
+      return `<span style="display:inline-flex;align-items:center;gap:4px;font-weight:600;color:${b.color}"><span style="width:7px;height:7px;border-radius:999px;background:${b.color}"></span>${b.label}</span>`;
+    }
+    function spark(values, opts = {}) {
+      if (!values || values.length === 0) return '';
+      const w = opts.w || 320, h = opts.h || 56;
+      const max = Math.max(1, ...values);
+      const min = Math.min(0, ...values);
+      const range = max - min || 1;
+      const stepX = w / Math.max(1, values.length - 1);
+      const pts = values.map((v, i) => `${(i * stepX).toFixed(1)},${(h - ((v - min) / range) * h).toFixed(1)}`);
+      return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="none">
+        <polyline fill="${opts.fill || 'rgba(93,165,184,0.12)'}" stroke="none" points="0,${h} ${pts.join(' ')} ${w},${h}" />
+        <polyline fill="none" stroke="${opts.stroke || '#5da5b8'}" stroke-width="2" points="${pts.join(' ')}" />
+      </svg>`;
+    }
+    const gradeColor = g => ({ A:'#15803d', B:'#10b981', C:'#b45309', D:'#dc2626', F:'#991b1b' }[g] || '#64748b');
+
+    async function load() {
+      if (!techId) { toast('Missing ?id=', 'error'); return; }
+      const days = parseInt(document.getElementById('th-window').value, 10) || 30;
+      try {
+        const data = await api(`/api/kpis/tech-detail?id=${encodeURIComponent(techId)}&days=${days}`);
+        const s = data.summary, sc = data.score, peer = data.peer_comparison;
+
+        document.getElementById('th-name').textContent = s.tech_name;
+        document.getElementById('th-role').textContent = s.role || '';
+        document.getElementById('th-score').textContent = sc.total.toFixed(1);
+        document.getElementById('th-grade').textContent = sc.grade;
+        document.getElementById('th-grade').style.color = gradeColor(sc.grade);
+        document.getElementById('th-grade-sub').textContent = `Formula A · ${days} day window`;
+
+        const labels = { revenue_per_day:'Rev/day', avg_ticket:'Ticket', close_rate:'Close', membership_conversion:'Members', callback_rate_inverted:'Callbacks', review_rate:'Reviews', utilization:'Utilization', volume:'Volume' };
+        document.getElementById('th-score-bars').innerHTML = Object.entries(sc.components).map(([k, v]) => `
+          <div>
+            <div class="text-xs text-slate-600 flex justify-between"><span>${labels[k] || k}</span><span class="font-semibold text-navy-700">${v.normalized.toFixed(0)}</span></div>
+            <div class="progress mt-1"><span style="width:${Math.max(2, v.normalized).toFixed(0)}%; background:${gradeColor(sc.grade)}"></span></div>
+          </div>`).join('');
+
+        document.getElementById('th-jobs').textContent = s.jobs;
+        document.getElementById('th-jobs-sub').textContent = `${s.tune_ups} TU · ${s.diagnostics} Dx · ${s.estimates} Est · ${s.jobs_per_day}/day`;
+        document.getElementById('th-close').textContent = fmtP(s.close_rate_pct);
+        document.getElementById('th-close-sub').textContent = `${s.closed_jobs} sold of ${s.jobs}`;
+        document.getElementById('th-ticket').textContent = fmt$(s.avg_ticket);
+        document.getElementById('th-ticket-sub').innerHTML = dot('avg_ticket', s.avg_ticket);
+        document.getElementById('th-revenue').textContent = fmt$(s.revenue);
+        document.getElementById('th-revenue-sub').innerHTML = `${fmt$(s.revenue_per_day)}/day · ${dot('revenue_per_tech_per_day', s.revenue_per_day)}`;
+
+        const t = data.trend;
+        const revVals = t.map(p => p.revenue);
+        const closeVals = t.map(p => p.close_rate_pct);
+        document.getElementById('th-trend').innerHTML = `
+          <div>
+            <div class="flex justify-between text-xs text-slate-500 mb-1"><span>Revenue per week</span><span>Latest ${fmt$(revVals[revVals.length-1])} · max ${fmt$(Math.max(...revVals))}</span></div>
+            ${spark(revVals, { stroke:'#e88a38', fill:'rgba(232,138,56,0.10)' })}
+          </div>
+          <div>
+            <div class="flex justify-between text-xs text-slate-500 mb-1"><span>Close rate per week</span><span>${(closeVals[closeVals.length-1] || 0).toFixed(1)}% latest</span></div>
+            ${spark(closeVals, { stroke:'#5da5b8' })}
+          </div>`;
+
+        const tj = data.top_jobs || [];
+        document.getElementById('th-top-rows').innerHTML = tj.length
+          ? tj.map(j => `<tr><td class="font-mono text-xs">${esc(j.job_id.slice(-8))}</td><td>${esc(j.job_type)}</td><td class="hidden sm:table-cell text-xs text-slate-500">${j.completed_at ? new Date(j.completed_at).toLocaleDateString() : '—'}</td><td class="text-right num"><strong>${fmt$(j.ticket)}</strong></td></tr>`).join('')
+          : `<tr><td colspan="4" class="text-slate-400 text-sm py-4">No invoiced jobs in window.</td></tr>`;
+
+        const cmp = (a, b) => a > b ? 'text-emerald-700' : a < b ? 'text-amber-700' : 'text-slate-600';
+        document.getElementById('th-peer').innerHTML = `
+          <div><div class="stat-label">Revenue</div><div class="flex items-baseline gap-2"><div class="text-xl font-bold ${cmp(s.revenue, peer.shop_avg_revenue)}">${fmt$(s.revenue)}</div><div class="text-sm text-slate-500">vs ${fmt$(peer.shop_avg_revenue)}</div></div></div>
+          <div><div class="stat-label">Close rate</div><div class="flex items-baseline gap-2"><div class="text-xl font-bold ${cmp(s.close_rate_pct, peer.shop_avg_close_rate_pct)}">${fmtP(s.close_rate_pct)}</div><div class="text-sm text-slate-500">vs ${fmtP(peer.shop_avg_close_rate_pct)}</div></div></div>
+          <div><div class="stat-label">Avg ticket</div><div class="flex items-baseline gap-2"><div class="text-xl font-bold ${cmp(s.avg_ticket, peer.shop_avg_ticket)}">${fmt$(s.avg_ticket)}</div><div class="text-sm text-slate-500">vs ${fmt$(peer.shop_avg_ticket)}</div></div></div>`;
+
+        const prompts = [];
+        if (s.avg_ticket < 200) prompts.push(`Avg ticket ${fmt$(s.avg_ticket)} below the strong-tech band ($450+) — review whether recommendations are made on every job.`);
+        if (s.close_rate_pct < 40 && s.tune_ups > 5) prompts.push(`Tune-up close rate ${fmtP(s.close_rate_pct)} below industry average — possibly under-diagnosing or under-quoting on tune-ups.`);
+        if (s.callback_rate_pct > 3) prompts.push(`Callback rate ${fmtP(s.callback_rate_pct)} above 3% — review last 5 callbacks for root cause.`);
+        if (s.revenue_per_day > 2400) prompts.push(`Revenue/day ${fmt$(s.revenue_per_day)} is top-quartile (industry $2,400+). Replicate this tech's playbook.`);
+        if (!prompts.length) prompts.push('No flags from rules. Check the AI Insights panel for qualitative observations.');
+        document.getElementById('th-coach').innerHTML = prompts.map(p => `<li>${esc(p)}</li>`).join('');
+      } catch (e) { toast(e.message || 'Load failed', 'error'); }
+    }
+
+    document.getElementById('th-window').addEventListener('change', load);
+    document.getElementById('login-form').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const k = document.getElementById('login-key').value.trim();
+      if (!k) return; setKey(k);
+      try { await api('/api/kpis/summary'); show('dash'); await load(); }
+      catch { document.getElementById('login-error').hidden = false; document.getElementById('login-error').textContent = 'Wrong PIN.'; clearKey(); }
+    });
+    (async () => {
+      if (getKey()) {
+        try { await api('/api/kpis/summary'); show('dash'); await load(); return; } catch {}
+      }
+      try {
+        const r = await fetch('/api/kpis/summary', { credentials: 'include' });
+        if (r.ok) { show('dash'); await load(); return; }
+      } catch {}
+      show('login');
+    })();
+  </script>
+</AdminLayout>
