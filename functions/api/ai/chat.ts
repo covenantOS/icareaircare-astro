@@ -144,10 +144,13 @@ ${techsBlock}
 
 ${goalsBlock}${segmentsBlock}${reviewsBlock}`;
 
+  // MiniMax-M2.7 rejects multiple system messages with "invalid params" —
+  // merge the role prompt and live-data context block into a single system
+  // message. Then send the trailing 6 user/assistant turns from history.
+  const trailing = messages.slice(-6).filter(m => m.role === 'user' || m.role === 'assistant');
   const result = await miniChat(env, [
-    { role: 'system', content: SYSTEM_PROMPT },
-    { role: 'system', content: contextBlock },
-    ...messages.slice(-6).map(m => ({ role: m.role, content: m.content })),
+    { role: 'system', content: `${SYSTEM_PROMPT}\n\n${contextBlock}` },
+    ...trailing.map(m => ({ role: m.role as 'user' | 'assistant', content: m.content })),
   ], { temperature: 0.4, max_tokens: 4000 });
 
   if (!result.ok) {
