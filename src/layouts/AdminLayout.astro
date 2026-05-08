@@ -154,6 +154,40 @@ const { title, description = 'Internal — I Care Air Care KPI dashboard' } = As
         0%   { background-position: 200% 0; }
         100% { background-position: -200% 0; }
       }
+      /* Smooth fade+slide entrance for cards / sections */
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(8px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      .fade-up { animation: fadeUp 360ms cubic-bezier(.22,1,.36,1) both; }
+      /* Stagger by setting --i: 0,1,2,3 on each element */
+      .fade-up[style*="--i"] { animation-delay: calc(var(--i) * 60ms); }
+      /* Subtle lift on hoverable rows / interactive cards */
+      .hover-lift { transition: transform 180ms ease, box-shadow 180ms ease; }
+      .hover-lift:hover { transform: translateY(-1px); box-shadow: var(--shadow-soft); }
+      /* Soft pulse for live-ish elements */
+      @keyframes softPulse {
+        0%, 100% { opacity: 0.85; }
+        50%      { opacity: 1; }
+      }
+      .pulse-soft { animation: softPulse 2.4s ease-in-out infinite; }
+      /* AI briefing tone tints */
+      .tone-good  { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-left: 3px solid #10b981; }
+      .tone-warn  { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-left: 3px solid #f59e0b; }
+      .tone-bad   { background: linear-gradient(135deg, #fef2f2, #fee2e2); border-left: 3px solid #ef4444; }
+      .tone-neutral { background: linear-gradient(135deg, #f8fafc, #f1f5f9); border-left: 3px solid #64748b; }
+      .chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+      .chip-good { background: #d1fae5; color: #065f46; }
+      .chip-warn { background: #fef3c7; color: #92400e; }
+      .chip-bad  { background: #fee2e2; color: #991b1b; }
+      .chip-info { background: var(--color-brand-50); color: var(--color-brand-800); }
+      /* Counter animation target — opacity comes up smoothly */
+      .stat-value, .num-anim { transition: opacity 200ms ease; }
+      /* Rounded section badges with icon */
+      .section-icon {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 28px; height: 28px; border-radius: 8px; font-size: 14px;
+      }
       .login-card {
         max-width: 420px;
         margin: 4rem auto;

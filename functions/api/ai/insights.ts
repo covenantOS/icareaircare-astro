@@ -129,28 +129,44 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     },
   };
 
-  const systemPrompt = `You are an HVAC operations analyst writing a weekly executive briefing for the owner of an HVAC service company. Tone: direct, specific, actionable, no fluff. Use the company's name "I Care Air Care" and the owner's first name "Tim" naturally.
+  const systemPrompt = `You are an operations analyst writing the weekly briefing for Tim Hawk, the owner of I Care Air Care — a residential HVAC company in Wesley Chapel, FL. The data comes from **Housecall Pro (HCP)** — their job/customer/invoice management software. Always reference Housecall Pro by name, never call it "the CRM" or "ServiceTitan" or any other vendor.
 
-Write the briefing as Markdown with these sections:
+Output STRICT JSON only — NO markdown, NO preamble, NO trailing commentary. Just the JSON object.
 
-## Headlines
-3-5 short bullets that capture the most important numbers and trends. Each bullet must include a concrete number.
+JSON schema:
+{
+  "headline_summary": string,           // ONE punchy sentence summarising the week, ≤140 chars
+  "headlines": [                         // 3-5 items, ordered by importance
+    { "label": string, "value": string, "context": string, "tone": "good"|"neutral"|"warn" }
+  ],
+  "whats_working": [                     // 2-3 items
+    { "title": string, "detail": string, "tech": string | null }
+  ],
+  "needs_attention": [                   // 2-3 items
+    { "title": string, "detail": string, "tech": string | null, "severity": "high"|"med"|"low" }
+  ],
+  "data_quality_notes": [                // 0-2 items — see Rule 4 below
+    { "title": string, "detail": string, "fix": string }
+  ],
+  "actions": [                           // 3-5 prioritised actions
+    { "priority": number, "title": string, "detail": string, "value_estimate": string | null }
+  ]
+}
 
-## What's working
-2-3 bullets identifying the strongest performers (techs, call types, segments) with specific numbers.
-
-## What needs attention
-2-3 bullets identifying the weakest performers, declining trends, or under-performing call types. Be specific about who or what.
-
-## Recommended actions this week
-3-5 numbered actions Tim can take THIS week. Each should be concrete (e.g. "Run a re-engagement campaign to the 50 dormant customers — total lifetime value $XX,XXX") not vague (e.g. "improve customer service").
-
-Rules:
-- Reference industry benchmarks when explaining why something is good or bad (e.g., "Erick's 51% tune-up close rate is at the industry average of 50% but well below top-quartile 75%")
-- Never invent numbers — only use the numbers in the input JSON
-- Don't mention "the JSON" or "the data" — write as if you read the actual books
-- Keep total length under 400 words
-- Output ONLY the markdown — no preamble, no "Here is your briefing:"`;
+Critical rules:
+1. **Use real numbers from the input JSON only.** Never invent.
+2. **Reference Housecall Pro explicitly** when discussing data sources or actions — never "your CRM", "ServiceTitan", or "the software".
+3. **Reference industry benchmarks for context** (e.g. "below top-quartile 75% tune-up close rate"). The benchmarks are in the input under industry_benchmarks_for_context.
+4. **Anomaly detection: data hygiene FIRST.** If a metric looks oddly low or high given the company's known volume (≥20,000 lifetime jobs at HCP), it's almost always a tagging/classification issue in HCP, NOT a real business problem. Examples:
+   - "Only 4 estimates in 30 days" → these are likely being booked under generic 'service call' or untagged in Housecall Pro. Don't say "you have a leadgen problem"; flag it under data_quality_notes with a fix like "Train office staff to apply HCP's 'Estimate' job type when scheduling replacement consultations."
+   - "Other" job types > 20% of total → tagging hygiene issue, not a business issue.
+   - Membership conversion at 0% across all techs → likely Care plan tag isn't being applied at job close.
+   Put these in data_quality_notes, NOT in needs_attention. The fix field tells Tim what to change in HCP usage.
+5. **whats_working / needs_attention are for REAL business observations** about people, performance, or patterns — not data gaps.
+6. **actions must be concrete and HCP-actionable.** "Run a Marketing Center campaign in Housecall Pro to the 50 dormant customers" — not "do better marketing".
+7. **Tech names exactly as given.** No nicknaming, no fixing typos.
+8. **value_estimate** when you can compute one — e.g. "$14,000+ at company-avg ticket".
+9. Keep it tight. Each detail field ≤ 200 chars. headline_summary ≤ 140 chars.`;
 
   const userPrompt = `Write the briefing using this data:\n\n${JSON.stringify(compactInputs, null, 2)}`;
 
@@ -170,7 +186,7 @@ Rules:
     const r = await chat(env, [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt },
-    ], { temperature: 0.4, max_tokens: 6000 });
+    ], { temperature: 0.4, max_tokens: 6000, response_format: 'json_object' });
     totalDuration += r.duration_ms;
     if (r.ok && r.text && r.text.trim()) {
       markdown = r.text;
@@ -215,10 +231,28 @@ Rules:
     }, 502);
   }
 
+  // Try to parse the response as JSON (per the new structured prompt). If it's
+  // not valid JSON, the frontend will fall back to markdown rendering.
+  let briefing: Record<string, unknown> | null = null;
+  try {
+    // Strip markdown fences if the model wrapped JSON in ```json ... ```.
+    const cleaned = markdown.trim()
+      .replace(/^```(?:json)?\s*/i, '')
+      .replace(/```\s*$/, '')
+      .trim();
+    const parsed = JSON.parse(cleaned);
+    if (parsed && typeof parsed === 'object') {
+      briefing = parsed;
+    }
+  } catch {
+    // leave briefing null — frontend renders markdown fallback
+  }
+
   const result = {
     days,
     generated_at: new Date().toISOString(),
-    markdown,
+    briefing,                            // structured (preferred)
+    markdown,                            // fallback / debugging
     provider: providerUsed,
     tokens: { in: tokensIn, out: tokensOut },
     duration_ms: totalDuration,
