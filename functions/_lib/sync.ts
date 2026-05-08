@@ -139,24 +139,69 @@ function pickNum(obj: Record<string, unknown>, ...keys: string[]): number | unde
   return undefined;
 }
 
-function dollarsToCents(n: number | undefined): number | undefined {
-  if (n === undefined || n === null) return undefined;
-  // HCP API typically returns money as decimal dollars (e.g. 175.50)
-  // OR as cents (e.g. 17550). Heuristic: if absolute value < 100000 and
-  // has fractional part → dollars; else cents.
-  // Defensive default: assume dollars and convert to cents.
-  return Math.round(n * 100);
+// HCP returns money in CENTS already (verified against real /jobs response —
+// e.g. total_amount 16900 = $169 for a tune-up). No conversion needed.
+function asCents(n: number | undefined): number | undefined {
+  if (n === undefined || n === null || isNaN(n)) return undefined;
+  return Math.round(n);
 }
 
 function normalizeJobType(raw: string | undefined): string {
   if (!raw) return 'other';
   const t = raw.toLowerCase();
-  if (/tune.?up|maintenance|seasonal|precision/i.test(t)) return 'tune_up';
-  if (/diagnostic|service.?call|repair|trouble/i.test(t)) return 'diagnostic';
-  if (/estimate|proposal|quote|sales.?call|comfort/i.test(t)) return 'estimate';
-  if (/install|new.?system|replacement/i.test(t)) return 'install';
-  if (/duct|iaq|air.?quality|uv/i.test(t)) return 'iaq';
+  if (/tune.?up|maintenance|seasonal|precision/.test(t)) return 'tune_up';
+  // Diagnostic / repair / service call. Order matters — check before generic 'service'.
+  if (/diagnostic|service.?call|repair|trouble|no.?cool|warm.?air|leak|callback/.test(t)) return 'diagnostic';
+  if (/estimate|proposal|quote|sales.?call|comfort.?advisor/.test(t)) return 'estimate';
+  if (/install|new.?system|replacement|change.?out|changeout/.test(t)) return 'install';
+  if (/duct|iaq|air.?quality|uv|filter|thermostat|insulation/.test(t)) return 'iaq';
   return 'other';
+}
+
+// Job type derivation from a job object — checks tags first (Tim's primary
+// classification mechanism), then description text, then any structured
+// job_type / business_unit field.
+function deriveJobType(job: Record<string, unknown>): { jobType: string; rawType: string | undefined } {
+  // 1. Tags — most reliable for ICAC. Real example tags:
+  //    ["Tune up", "New customer", "Care plan member - NO", "1 unit"]
+  const tags = (job.tags as unknown[]) || [];
+  const tagStrings = tags.filter((t): t is string => typeof t === 'string');
+  for (const tag of tagStrings) {
+    const t = normalizeJobType(tag);
+    if (t !== 'other') return { jobType: t, rawType: `tag:${tag}` };
+  }
+
+  // 2. Description — e.g. "Basic services - Tune up", "Diagnostic", "Estimate"
+  const desc = pickStr(job, 'description');
+  if (desc) {
+    const t = normalizeJobType(desc);
+    if (t !== 'other') return { jobType: t, rawType: `desc:${desc}` };
+  }
+
+  // 3. Structured fields — fallback if HCP starts populating these
+  const structured =
+    pickStr(job, 'job_type', 'type') ||
+    pickStr((job.job_fields as Record<string, unknown>) || {}, 'job_type') ||
+    pickStr((job.business_unit as Record<string, unknown>) || {}, 'name');
+  if (structured) {
+    const t = normalizeJobType(structured);
+    if (t !== 'other') return { jobType: t, rawType: `field:${structured}` };
+  }
+
+  return { jobType: 'other', rawType: tagStrings.join(',') || desc || undefined };
+}
+
+// Care-plan / membership detection from job tags.
+// ICAC's tag convention: "Care plan member - NO" / "Care plan member - YES".
+function deriveIsCallback(job: Record<string, unknown>): boolean {
+  const tags = (job.tags as unknown[]) || [];
+  for (const t of tags) {
+    if (typeof t === 'string' && /callback|warranty|recall/i.test(t)) return true;
+  }
+  if (job.callback === true) return true;
+  const jf = (job.job_fields as Record<string, unknown>) || {};
+  if (jf.callback === true) return true;
+  return false;
 }
 
 function extractPrimaryTech(job: Record<string, unknown>): { primary: string | undefined; all: string[] } {
@@ -341,47 +386,47 @@ async function syncJobs(
     for (const j of items) {
       const id = pickStr(j, 'id');
       if (!id) continue;
+
+      // HCP nests important fields:
+      //   schedule.scheduled_start / schedule.scheduled_end
+      //   work_timestamps.completed_at / work_timestamps.started_at / work_timestamps.on_my_way_at
+      //   customer.id
+      //   assigned_employees[]
+      // (verified against real /jobs response).
+      const schedule = (j.schedule as Record<string, unknown>) || {};
+      const workTs = (j.work_timestamps as Record<string, unknown>) || {};
+
       const customerId =
         pickStr(j, 'customer_id') ||
         pickStr((j.customer as Record<string, unknown>) || {}, 'id');
       const { primary, all } = extractPrimaryTech(j);
-      // HCP's job_type can live in several places — check job_fields, work_status, tags, business_unit, description.
-      const rawType =
-        pickStr(j, 'job_type', 'type', 'work_status') ||
-        pickStr((j.job_fields as Record<string, unknown>) || {}, 'job_type') ||
-        pickStr((j.business_unit as Record<string, unknown>) || {}, 'name') ||
-        (Array.isArray(j.tags)
-          ? (j.tags as unknown[]).find((t) => typeof t === 'string') as string
-          : undefined) ||
-        pickStr(j, 'description');
-      const jobType = normalizeJobType(rawType);
-      const status =
-        pickStr(j, 'work_status', 'status') ||
-        (j.completed_at ? 'completed' : 'scheduled');
-      const isCallback =
-        (j.callback === true) ||
-        ((j.job_fields as Record<string, unknown>)?.callback === true) ||
-        false;
 
-      const invoiceTotal =
-        pickNum(j, 'total_amount', 'invoice_total') ||
-        pickNum((j.invoice as Record<string, unknown>) || {}, 'total', 'total_amount');
-      const invoiceSubtotal =
-        pickNum(j, 'subtotal', 'sales_total') ||
-        pickNum((j.invoice as Record<string, unknown>) || {}, 'subtotal');
-      const invoiceDiscount =
-        pickNum(j, 'discount_total', 'discount') ||
-        pickNum((j.invoice as Record<string, unknown>) || {}, 'discount_total', 'discount');
-      const invoiceTax = pickNum(j, 'tax_total', 'tax') ||
-        pickNum((j.invoice as Record<string, unknown>) || {}, 'tax_total', 'tax');
-      const invoicePaid = pickNum(j, 'paid_amount') ||
-        pickNum((j.invoice as Record<string, unknown>) || {}, 'paid_amount');
+      const { jobType, rawType } = deriveJobType(j);
+      const status = pickStr(j, 'work_status', 'status') || 'unknown';
+      const isCallback = deriveIsCallback(j);
 
-      const totalCents = dollarsToCents(invoiceTotal);
+      // Money — HCP returns cents directly. total_amount is post-discount.
+      const totalCents = asCents(pickNum(j, 'total_amount', 'invoice_total'));
+      const subtotalCents = asCents(pickNum(j, 'subtotal', 'sales_total'));
+      const discountCents = asCents(pickNum(j, 'discount_total', 'discount'));
+      const taxCents = asCents(pickNum(j, 'tax_total', 'tax'));
+      // outstanding_balance is what's still owed; paid = total - outstanding
+      const outstandingCents = asCents(pickNum(j, 'outstanding_balance'));
+      const paidCents =
+        totalCents !== undefined && outstandingCents !== undefined
+          ? Math.max(0, totalCents - outstandingCents)
+          : asCents(pickNum(j, 'paid_amount'));
+
+      // Threshold lookups — config is in DOLLARS, jobs in CENTS, convert config.
       const soldThresholdCents = (thresholds.sold[jobType] || thresholds.sold.default) * 100;
       const minTicketCents = (thresholds.minTicket[jobType] || thresholds.minTicket.default) * 100;
       const isSold = totalCents !== undefined ? (totalCents >= soldThresholdCents ? 1 : 0) : null;
       const meetsMin = totalCents !== undefined ? (totalCents >= minTicketCents ? 1 : 0) : null;
+
+      // Dates — pull from the nested objects, fall back to top-level.
+      const scheduledStart = pickStr(schedule, 'scheduled_start') || pickStr(j, 'scheduled_start');
+      const scheduledEnd   = pickStr(schedule, 'scheduled_end')   || pickStr(j, 'scheduled_end');
+      const completedAt    = pickStr(workTs, 'completed_at')      || pickStr(j, 'completed_at', 'work_finished_at');
 
       batch.push(
         env.DB.prepare(
@@ -420,14 +465,14 @@ async function syncJobs(
           rawType || null,
           status,
           isCallback ? 1 : 0,
-          pickStr(j, 'scheduled_start') || null,
-          pickStr(j, 'scheduled_end') || null,
-          pickStr(j, 'completed_at', 'work_finished_at') || null,
+          scheduledStart || null,
+          scheduledEnd || null,
+          completedAt || null,
           totalCents ?? null,
-          dollarsToCents(invoiceSubtotal) ?? null,
-          dollarsToCents(invoiceDiscount) ?? null,
-          dollarsToCents(invoiceTax) ?? null,
-          dollarsToCents(invoicePaid) ?? null,
+          subtotalCents ?? null,
+          discountCents ?? null,
+          taxCents ?? null,
+          paidCents ?? null,
           isSold,
           meetsMin,
           pickStr(j, 'invoice_id') || pickStr((j.invoice as Record<string, unknown>) || {}, 'id') || null,
@@ -537,6 +582,21 @@ export async function runSync(env: SyncEnv, opts: SyncOptions): Promise<SyncResu
     notes.push('customer rollups updated');
   } catch (e) {
     errors.push(`customer rollups: ${e instanceof Error ? e.message : String(e)}`);
+  }
+
+  // Derived: customers.is_member from job tags. ICAC tag convention:
+  // "Care plan member - YES" / "Care plan member - NO" appear on each job's tags.
+  // SQLite LIKE on _raw_json — crude but fine for ~5k customer / ~21k job rows.
+  try {
+    await env.DB.prepare(`UPDATE customers SET is_member = 0`).run();
+    await env.DB
+      .prepare(
+        `UPDATE customers SET is_member = 1 WHERE EXISTS (SELECT 1 FROM jobs j WHERE j.customer_hcp_id = customers.hcp_id AND j._raw_json LIKE '%Care plan member - YES%')`,
+      )
+      .run();
+    notes.push('membership flags updated');
+  } catch (e) {
+    errors.push(`membership flags: ${e instanceof Error ? e.message : String(e)}`);
   }
 
   const finished_at = new Date().toISOString();

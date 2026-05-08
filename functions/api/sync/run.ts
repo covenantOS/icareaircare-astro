@@ -54,7 +54,8 @@ const handler: PagesFunction<Env> = async ({ request, env }) => {
     trigger: 'manual',
     daysBack: userOpts.daysBack ?? 30,
     endpoints: userOpts.endpoints,
-    maxPagesPerEndpoint: userOpts.maxPagesPerEndpoint ?? 20,
+    // Defer to runSync's default (50) unless caller explicitly sets it.
+    maxPagesPerEndpoint: userOpts.maxPagesPerEndpoint,
   });
 
   return json(result, result.success ? 200 : 502);
