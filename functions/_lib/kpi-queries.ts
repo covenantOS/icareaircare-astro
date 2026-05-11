@@ -249,8 +249,10 @@ export interface TechRow {
   tech_id: string;
   tech_name: string;
   role: string | null;        // HCP role string — used to flag owner/CSR
+  role_band: 'service' | 'install' | 'helper' | 'office' | 'owner' | 'other';  // Tim-configurable role band
   is_owner: boolean;          // true if role looks like owner/admin
   jobs: number;
+  shared_jobs: number;        // jobs where this tech was NOT primary (multi-tech credit)
   tune_ups: number;
   diagnostics: number;
   estimates: number;
@@ -264,31 +266,79 @@ export interface TechRow {
   review_rate_pct: number;          // reviews_generated / jobs * 100
 }
 
-// Roles we consider "non-field" — owner/admin/office staff. These show up
-// as assigned to jobs in HCP because the office staff books them, but they
-// don't deserve to be ranked alongside actual field techs.
-const NON_FIELD_ROLE_RE = /owner|admin|office|csr|dispatch|sales/i;
+// Role-band classifier — uses KV-configurable per-tech overrides first
+// (Tim's labels), then falls back to HCP role string heuristics.
+export type RoleBand = 'service' | 'install' | 'helper' | 'office' | 'owner' | 'other';
+export function classifyRole(roleString: string | null, techHcpId: string, overrides: Record<string, RoleBand> | null): RoleBand {
+  if (overrides && overrides[techHcpId]) return overrides[techHcpId];
+  const r = (roleString || '').toLowerCase();
+  if (!r) return 'other';
+  if (/owner|admin/.test(r)) return 'owner';
+  if (/csr|dispatch|office|sales/.test(r)) return 'office';
+  if (/helper|apprentice/.test(r)) return 'helper';
+  if (/install/.test(r)) return 'install';
+  if (/tech|service/.test(r)) return 'service';
+  return 'other';
+}
 
-export async function computeByTech(db: D1Database, window: DateWindow): Promise<TechRow[]> {
+// (Legacy regex — kept for reference; replaced by classifyRole + KV role overrides.)
+// const NON_FIELD_ROLE_RE = /owner|admin|office|csr|dispatch|sales/i;
+
+export async function computeByTech(
+  db: D1Database,
+  window: DateWindow,
+  roleOverrides?: Record<string, RoleBand>,
+): Promise<TechRow[]> {
   const { from, to } = window;
+  // Multi-tech credit (2026-05-11): each tech in `all_tech_hcp_ids` gets
+  // a "you worked on this" credit. Revenue is split equally among assigned
+  // techs (so shop totals stay correct — no double-counting). Jobs/types/
+  // closes/callbacks count once per assigned tech. Avg ticket = revenue
+  // share / job count (each tech's "average dollar per job you touched").
+  //
+  // Fallback: if all_tech_hcp_ids is NULL or "[]", we credit primary_tech.
+  // That keeps older single-tech data working without re-sync.
+  //
+  // Tim flagged on 2026-05-09: Erick had 11 jobs on the dashboard but
+  // worked on 13 (2 were multi-tech). Kleber's installs were attributed
+  // to the installer (Cesar/Daniel) so he saw zero — same root cause.
+  // This fixes the "jobs you worked on" count; "sales credit" still
+  // needs a separate sold_by mechanism (pending tag convention).
   const res = await db
     .prepare(
-      `SELECT
-         j.primary_tech_hcp_id AS tech_id,
-         COALESCE(t.first_name || ' ' || t.last_name, j.primary_tech_hcp_id, 'Unassigned') AS tech_name,
+      `WITH tech_jobs AS (
+         SELECT
+           j.hcp_id AS job_id,
+           j.completed_at, j.job_type, j.is_sold, j.is_callback,
+           j.invoice_total_cents,
+           j.primary_tech_hcp_id,
+           COALESCE(je.value, j.primary_tech_hcp_id) AS tech_id,
+           CASE
+             WHEN json_valid(j.all_tech_hcp_ids) AND json_array_length(j.all_tech_hcp_ids) > 0
+               THEN 1.0 / json_array_length(j.all_tech_hcp_ids)
+             ELSE 1.0
+           END AS share
+         FROM jobs j
+         LEFT JOIN json_each(CASE WHEN json_valid(j.all_tech_hcp_ids) THEN j.all_tech_hcp_ids ELSE '[]' END) je
+         WHERE j.completed_at >= ? AND j.completed_at <= ?
+       )
+       SELECT
+         tj.tech_id AS tech_id,
+         COALESCE(t.first_name || ' ' || t.last_name, tj.tech_id, 'Unassigned') AS tech_name,
          t.role AS role,
          COUNT(*) AS jobs,
-         SUM(CASE WHEN j.job_type = 'tune_up' THEN 1 ELSE 0 END) AS tune_ups,
-         SUM(CASE WHEN j.job_type = 'diagnostic' THEN 1 ELSE 0 END) AS diagnostics,
-         SUM(CASE WHEN j.job_type = 'estimate' THEN 1 ELSE 0 END) AS estimates,
-         SUM(CASE WHEN j.is_sold = 1 THEN 1 ELSE 0 END) AS closed_jobs,
-         AVG(j.invoice_total_cents) AS avg_cents,
-         COALESCE(SUM(j.invoice_total_cents), 0) AS revenue_cents,
-         SUM(CASE WHEN j.is_callback = 1 THEN 1 ELSE 0 END) AS callbacks
-       FROM jobs j
-       LEFT JOIN techs t ON t.hcp_id = j.primary_tech_hcp_id
-       WHERE j.completed_at >= ? AND j.completed_at <= ?
-       GROUP BY j.primary_tech_hcp_id
+         SUM(CASE WHEN tj.job_type = 'tune_up' THEN 1 ELSE 0 END) AS tune_ups,
+         SUM(CASE WHEN tj.job_type = 'diagnostic' THEN 1 ELSE 0 END) AS diagnostics,
+         SUM(CASE WHEN tj.job_type = 'estimate' THEN 1 ELSE 0 END) AS estimates,
+         SUM(CASE WHEN tj.is_sold = 1 THEN 1 ELSE 0 END) AS closed_jobs,
+         AVG(tj.invoice_total_cents * tj.share) AS avg_cents,
+         COALESCE(SUM(tj.invoice_total_cents * tj.share), 0) AS revenue_cents,
+         SUM(CASE WHEN tj.is_callback = 1 THEN 1 ELSE 0 END) AS callbacks,
+         SUM(CASE WHEN tj.tech_id != tj.primary_tech_hcp_id THEN 1 ELSE 0 END) AS shared_jobs
+       FROM tech_jobs tj
+       LEFT JOIN techs t ON t.hcp_id = tj.tech_id
+       WHERE tj.tech_id IS NOT NULL
+       GROUP BY tj.tech_id
        ORDER BY revenue_cents DESC`,
     )
     .bind(from, to)
@@ -296,7 +346,7 @@ export async function computeByTech(db: D1Database, window: DateWindow): Promise
       tech_id: string; tech_name: string; role: string | null; jobs: number;
       tune_ups: number; diagnostics: number; estimates: number;
       closed_jobs: number; avg_cents: number;
-      revenue_cents: number; callbacks: number;
+      revenue_cents: number; callbacks: number; shared_jobs: number;
     }>();
 
   // Per-tech review counts (Google reviews attributed via name match, posted in window)
@@ -317,12 +367,15 @@ export async function computeByTech(db: D1Database, window: DateWindow): Promise
   return (res.results || []).map((r) => {
     const role = (r.role || '').trim() || null;
     const reviewsGen = reviewsByTech.get(r.tech_id) || 0;
+    const band = classifyRole(role, r.tech_id, roleOverrides || null);
     return {
       tech_id: r.tech_id || 'unassigned',
       tech_name: r.tech_name || 'Unassigned',
       role,
-      is_owner: role ? NON_FIELD_ROLE_RE.test(role) : false,
+      role_band: band,
+      is_owner: band === 'owner' || band === 'office',
       jobs: r.jobs || 0,
+      shared_jobs: r.shared_jobs || 0,
       tune_ups: r.tune_ups || 0,
       diagnostics: r.diagnostics || 0,
       estimates: r.estimates || 0,

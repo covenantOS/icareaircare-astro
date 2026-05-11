@@ -768,15 +768,24 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         return;
       }
 
-      // Three groups:
-      //   field   — actual field techs eligible for ranking (5+ jobs, not owner/CSR)
-      //   low     — field techs with under 5 jobs (data too thin to rank fairly)
-      //   non_field — owner / office / CSR / dispatch (handle different jobs;
-      //               not a fair comparison — shown in a separate band)
+      // Tim's bands (2026-05-09): split field techs into SERVICE vs INSTALL
+      // because service and install techs do fundamentally different work
+      // and shouldn't be peer-ranked against each other. Helpers (Angel /
+      // Paul) ride alongside install techs but are tracked separately.
+      // Owner / office stay in their own band.
+      //
+      //   serviceTechs   — Erick, Kleber, Gerald, James (or whoever Tim labels)
+      //   installTechs   — Cesar, Daniel
+      //   helpers        — Angel, Paul
+      //   non_field      — owner / office / CSR / dispatch
+      //   low            — under 5 jobs (data too thin in any band)
       const MIN_JOBS = 5;
-      const field = all.filter(t => !t.is_owner && t.jobs >= MIN_JOBS);
-      const low   = all.filter(t => !t.is_owner && t.jobs < MIN_JOBS);
-      const nonField = all.filter(t => t.is_owner);
+      const serviceTechs = all.filter(t => t.role_band === 'service' && t.jobs >= MIN_JOBS);
+      const installTechs = all.filter(t => t.role_band === 'install' && t.jobs >= MIN_JOBS);
+      const helpers      = all.filter(t => t.role_band === 'helper'  && t.jobs >= MIN_JOBS);
+      const otherField   = all.filter(t => !['service','install','helper','owner','office'].includes(t.role_band) && t.jobs >= MIN_JOBS);
+      const low      = all.filter(t => !['owner','office'].includes(t.role_band) && t.jobs < MIN_JOBS);
+      const nonField = all.filter(t => t.role_band === 'owner' || t.role_band === 'office' || t.is_owner);
 
       // Shop-relative percentile ranking — for each metric, where does this
       // tech sit in the field-tech distribution? 100 = best in shop, 0 = worst.
@@ -823,28 +832,40 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         return Math.round(((below + 0.5 * equal) / values.length) * 100);
       }
 
-      // Build per-metric distributions across field techs only — that's the
-      // peer group. Non-field roles get scored with the same anchors but
-      // displayed in a separate band.
-      const dists = {};
-      const fieldInputs = field.map(inputs);
-      for (const k of Object.keys(measured)) {
-        if (!measured[k]) continue;
-        dists[k] = fieldInputs.map(i => i[k] || 0);
+      // Build per-band, per-metric distributions. Service techs compare
+      // against service techs only; install techs against install techs.
+      // (Tim's 2026-05-09 feedback — service and install do different
+      // work, peer ranking only works within band.)
+      function buildDist(group) {
+        const d = {};
+        const inps = group.map(inputs);
+        for (const k of Object.keys(measured)) {
+          if (!measured[k]) continue;
+          d[k] = inps.map(i => i[k] || 0);
+        }
+        return d;
       }
+      const distsByBand = {
+        service: buildDist(serviceTechs),
+        install: buildDist(installTechs),
+        helper:  buildDist(helpers),
+        other:   buildDist(otherField),
+      };
 
       const grade = (n) => n>=90?'A':n>=80?'B':n>=70?'C':n>=60?'D':'F';
 
       function scoreTech(t, isPeer) {
         const inp = inputs(t);
+        // Pick the distribution that matches this tech's band.
+        const bandKey = ['service','install','helper'].includes(t.role_band) ? t.role_band : 'other';
+        const dists = distsByBand[bandKey] || {};
         let total = 0;
         const breakdown = {};
         for (const k of Object.keys(w)) {
           if (!measured[k]) continue;
           const v = inp[k] || 0;
-          // Peer comparison uses the field-tech distribution.
-          // For non-peers (owner, low-volume), show a single neutral 50 unless
-          // we have a meaningful comparison group.
+          // Peer comparison uses the within-band distribution.
+          // Non-peer (owner, low-volume) gets a single neutral 50.
           const pct = isPeer ? percentile(dists[k] || [], v) : 50;
           breakdown[k] = pct;
           total += pct * (w[k] / measuredWeight);
@@ -863,10 +884,15 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         const gradeCell = peer
           ? `<span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:28px;height:28px;border-radius:8px;background:${color};color:#fff;font-weight:700;font-size:13px;line-height:28px;text-align:center">${g}</span><span class="num text-xs text-slate-500">${sc.score.toFixed(0)}</span></span>`
           : `<span class="text-xs text-slate-400">—</span>`;
+        // Show "X jobs" with a quiet "+Y shared" indicator when the tech
+        // got credit on multi-tech jobs (where they weren't primary).
+        const sharedHint = (t.shared_jobs || 0) > 0
+          ? ` <span class="text-[10px] text-slate-500" title="${t.shared_jobs} of these jobs you worked alongside another tech (multi-tech credit)">+${t.shared_jobs} shared</span>`
+          : '';
         return `<tr class="hover-lift" style="cursor:pointer" data-tech-id="${esc(t.tech_id)}">
           <td>${name}</td>
           <td class="text-center">${gradeCell}</td>
-          <td class="text-right num">${fmtI(t.jobs)}</td>
+          <td class="text-right num">${fmtI(t.jobs)}${sharedHint}</td>
           <td class="text-right num hidden sm:table-cell">${t.tune_ups} · ${t.diagnostics} · ${t.estimates}</td>
           <td class="text-right num">${fmtP(t.close_rate_pct)}</td>
           <td class="text-right num hidden sm:table-cell">${fmt$(t.avg_ticket)}</td>
@@ -877,21 +903,32 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       }
 
       const sections = [];
-      if (field.length) {
-        // Sort by score desc within the peer group
-        const fieldRows = field
-          .map(t => ({ t, score: scoreTech(t, true).score }))
-          .sort((a, b) => b.score - a.score)
-          .map(x => row(x.t, { isPeer: true }))
-          .join('');
-        sections.push(fieldRows);
+      const bandHeader = (label, sublabel) =>
+        `<tr><td colspan="9" class="text-xs text-slate-600 bg-slate-50 py-2 px-3"><strong>${label}</strong> <span class="text-slate-400">— ${sublabel}</span></td></tr>`;
+      const sortByScore = (arr) => arr.map(t => ({ t, score: scoreTech(t, true).score })).sort((a, b) => b.score - a.score).map(x => row(x.t, { isPeer: true })).join('');
+
+      if (serviceTechs.length) {
+        sections.push(bandHeader('Service techs', 'tune-ups, diagnostics, repair — graded against each other'));
+        sections.push(sortByScore(serviceTechs));
+      }
+      if (installTechs.length) {
+        sections.push(bandHeader('Install techs', 'replacements, change-outs — different work, ranked separately'));
+        sections.push(sortByScore(installTechs));
+      }
+      if (helpers.length) {
+        sections.push(bandHeader('Install helpers', 'apprentice / 2nd-tech support'));
+        sections.push(helpers.map(t => row(t, { isPeer: false })).join(''));
+      }
+      if (otherField.length) {
+        sections.push(bandHeader('Field (unlabeled)', 'set their band in Settings → Roles'));
+        sections.push(otherField.map(t => row(t, { isPeer: false })).join(''));
       }
       if (nonField.length) {
-        sections.push(`<tr><td colspan="8" class="text-xs text-slate-500 bg-slate-50 py-1"><strong>Owner / Office</strong> — different role, not ranked alongside field techs</td></tr>`);
+        sections.push(bandHeader('Owner / Office', 'different role, not ranked alongside field techs'));
         sections.push(nonField.map(t => row(t, { isPeer: false })).join(''));
       }
       if (low.length) {
-        sections.push(`<tr><td colspan="8" class="text-xs text-slate-500 bg-slate-50 py-1"><strong>Low volume (under ${MIN_JOBS} jobs)</strong> — data too thin to grade fairly</td></tr>`);
+        sections.push(bandHeader(`Low volume (under ${MIN_JOBS} jobs)`, 'data too thin to grade fairly'));
         sections.push(low.map(t => row(t, { isPeer: false })).join(''));
       }
 
@@ -1301,6 +1338,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         { name: 'employees', label: 'Pulling techs',     body: { endpoints: ['employees'] } },
         { name: 'customers', label: 'Pulling customers', body: { endpoints: ['customers'] } },
         { name: 'jobs',      label: 'Pulling jobs',      body: { endpoints: ['jobs'], daysBack: 90 } },
+        { name: 'estimates', label: 'Pulling estimates', body: { endpoints: ['estimates'], daysBack: 90 } },
       ];
       let tt=0, tc=0, tj=0; const errs = [];
       try {

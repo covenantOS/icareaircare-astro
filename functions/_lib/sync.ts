@@ -24,7 +24,7 @@ export interface SyncEnv extends HcpEnv {
 export interface SyncOptions {
   trigger: 'manual' | 'cron' | 'webhook';
   daysBack?: number;             // default 30
-  endpoints?: Array<'employees' | 'customers' | 'jobs' | 'invoices'>;
+  endpoints?: Array<'employees' | 'customers' | 'jobs' | 'invoices' | 'estimates'>;
   maxPagesPerEndpoint?: number;  // default 20 (= up to 2000 records / endpoint)
 }
 
@@ -51,6 +51,7 @@ const ENDPOINT_PATHS = {
   customers: '/customers',
   jobs: '/jobs',
   invoices: '/invoices',
+  estimates: '/estimates',          // separate from /jobs — many ICAC estimates live here
 };
 
 const PAGE_SIZE = 100;
@@ -489,6 +490,137 @@ async function syncJobs(
 }
 
 // ─────────────────────────────────────────────────────────────────
+// ESTIMATES — pulled from /estimates and inserted into `jobs` table as
+// rows with job_type='estimate'. HCP exposes ~2,785 estimates for ICAC
+// (smoke probe 2026-05-11), separate from the /jobs endpoint. Tim
+// flagged on 2026-05-09 that estimates were missing because we only
+// pulled from /jobs. IDs start with `csr_` so won't collide with `job_`.
+//
+// We treat each estimate like a sales-cycle row: keep customer link, tech
+// assignment, scheduled / completed timestamps, and any dollar amount
+// (HCP estimates carry a `total_amount` like jobs). is_sold is set to
+// 1 only when work_status indicates the estimate was approved /
+// converted; otherwise 0. This keeps the close-rate math honest.
+// ─────────────────────────────────────────────────────────────────
+async function syncEstimates(
+  env: SyncEnv,
+  daysBack: number,
+  maxPages: number,
+  apiCalls: { count: number },
+  thresholds: KpiThresholds,
+): Promise<number> {
+  let count = 0;
+  const synced_at = new Date().toISOString();
+  const since = new Date(Date.now() - daysBack * 86400_000).toISOString();
+
+  for await (const { items } of paginate<Record<string, unknown>>(
+    env,
+    ENDPOINT_PATHS.estimates,
+    {
+      // /estimates supports the same date filters as /jobs in HCP's API
+      scheduled_start_min: since,
+      updated_at_min: since,
+    },
+    maxPages,
+    apiCalls,
+  )) {
+    const batch: D1PreparedStatement[] = [];
+    for (const e of items) {
+      const id = pickStr(e, 'id');
+      if (!id) continue;
+
+      const schedule = (e.schedule as Record<string, unknown>) || {};
+      const workTs = (e.work_timestamps as Record<string, unknown>) || {};
+      const customerId =
+        pickStr(e, 'customer_id') ||
+        pickStr((e.customer as Record<string, unknown>) || {}, 'id');
+      const { primary, all } = extractPrimaryTech(e);
+
+      const status = pickStr(e, 'work_status', 'status') || 'unknown';
+      // An estimate is "sold" if its status indicates it was approved /
+      // converted. HCP uses status strings like "approved" or "converted"
+      // for accepted estimates; otherwise we treat it as a pending sales
+      // attempt that hasn't closed.
+      const statusLower = status.toLowerCase();
+      const looksApproved = /approved|accepted|converted|won|signed/.test(statusLower);
+
+      // Money — estimates carry `total_amount` (cents). Often $0 because
+      // the dollar is on the linked job; that's fine.
+      const totalCents = asCents(pickNum(e, 'total_amount', 'amount'));
+      const subtotalCents = asCents(pickNum(e, 'subtotal', 'sales_total'));
+      const discountCents = asCents(pickNum(e, 'discount_total', 'discount'));
+      const taxCents = asCents(pickNum(e, 'tax_total', 'tax'));
+
+      const soldThresholdCents = (thresholds.sold.estimate || thresholds.sold.default) * 100;
+      const isSold = looksApproved
+        ? 1
+        : (totalCents !== undefined ? (totalCents >= soldThresholdCents ? 1 : 0) : 0);
+      const meetsMin = totalCents !== undefined
+        ? (totalCents >= (thresholds.minTicket.estimate || thresholds.minTicket.default) * 100 ? 1 : 0)
+        : null;
+
+      const scheduledStart = pickStr(schedule, 'scheduled_start') || pickStr(e, 'scheduled_start');
+      const scheduledEnd   = pickStr(schedule, 'scheduled_end')   || pickStr(e, 'scheduled_end');
+      const completedAt    = pickStr(workTs, 'completed_at')      || pickStr(e, 'completed_at', 'work_finished_at');
+
+      batch.push(
+        env.DB.prepare(
+          `INSERT INTO jobs (hcp_id, customer_hcp_id, primary_tech_hcp_id, all_tech_hcp_ids, job_type, job_type_raw, status, is_callback,
+                              scheduled_start, scheduled_end, completed_at,
+                              invoice_total_cents, invoice_subtotal_cents, invoice_discount_cents, invoice_tax_cents, invoice_paid_cents,
+                              is_sold, meets_min_ticket, invoice_hcp_id, _raw_json, synced_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+           ON CONFLICT(hcp_id) DO UPDATE SET
+             customer_hcp_id=excluded.customer_hcp_id,
+             primary_tech_hcp_id=excluded.primary_tech_hcp_id,
+             all_tech_hcp_ids=excluded.all_tech_hcp_ids,
+             job_type=excluded.job_type,
+             job_type_raw=excluded.job_type_raw,
+             status=excluded.status,
+             scheduled_start=excluded.scheduled_start,
+             scheduled_end=excluded.scheduled_end,
+             completed_at=excluded.completed_at,
+             invoice_total_cents=excluded.invoice_total_cents,
+             invoice_subtotal_cents=excluded.invoice_subtotal_cents,
+             invoice_discount_cents=excluded.invoice_discount_cents,
+             invoice_tax_cents=excluded.invoice_tax_cents,
+             is_sold=excluded.is_sold,
+             meets_min_ticket=excluded.meets_min_ticket,
+             _raw_json=excluded._raw_json,
+             synced_at=excluded.synced_at`,
+        ).bind(
+          id,
+          customerId || null,
+          primary || null,
+          JSON.stringify(all),
+          'estimate',
+          `estimate:${status}`,
+          status,
+          0,
+          scheduledStart || null,
+          scheduledEnd || null,
+          completedAt || null,
+          totalCents ?? null,
+          subtotalCents ?? null,
+          discountCents ?? null,
+          taxCents ?? null,
+          null,
+          isSold,
+          meetsMin,
+          null,
+          JSON.stringify(e),
+          synced_at,
+        ),
+      );
+      count++;
+    }
+    if (batch.length) await env.DB.batch(batch);
+  }
+
+  return count;
+}
+
+// ─────────────────────────────────────────────────────────────────
 // Thresholds — read from KV with fallback defaults
 // ─────────────────────────────────────────────────────────────────
 
@@ -568,6 +700,17 @@ export async function runSync(env: SyncEnv, opts: SyncOptions): Promise<SyncResu
       notes.push(`jobs (last ${daysBack}d): ${jobs_synced}`);
     } catch (e) {
       errors.push(`jobs: ${e instanceof Error ? e.message : String(e)}`);
+    }
+  }
+  if (endpoints.includes('estimates')) {
+    try {
+      const estCount = await syncEstimates(env, daysBack, maxPages, apiCalls, thresholds);
+      // Estimates flow into the jobs table as job_type='estimate'; bump
+      // the same counter so observability still works.
+      jobs_synced += estCount;
+      notes.push(`estimates (last ${daysBack}d): ${estCount}`);
+    } catch (e) {
+      errors.push(`estimates: ${e instanceof Error ? e.message : String(e)}`);
     }
   }
 
