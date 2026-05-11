@@ -35,7 +35,12 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     return json({ error: 'HCP_API_KEY not configured' }, 503);
   }
 
-  const endpoints = ['employees', 'customers', 'jobs', 'invoices', 'estimates'];
+  // Allow caller to pass ?endpoints=foo,bar to probe arbitrary names.
+  // Falls back to the canonical set we ship with.
+  const requested = url.searchParams.get('endpoints');
+  const endpoints = requested
+    ? requested.split(',').map(s => s.trim()).filter(Boolean)
+    : ['employees', 'customers', 'jobs', 'invoices', 'estimates'];
   const start = Date.now();
   const results: Record<string, unknown> = {};
   for (const ep of endpoints) {
