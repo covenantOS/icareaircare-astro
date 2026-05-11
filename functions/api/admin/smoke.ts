@@ -8,7 +8,7 @@
 // Protected by ADMIN_SECRET env var so it's not crawlable.
 // Set with:  npx wrangler pages secret put ADMIN_SECRET --project-name icareaircare-astro
 
-import { probeEndpoint } from '../../_lib/hcp';
+import { probeEndpoint, hcpFetch } from '../../_lib/hcp';
 
 interface Env {
   HCP_API_KEY: string;
@@ -33,6 +33,23 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
 
   if (!env.HCP_API_KEY) {
     return json({ error: 'HCP_API_KEY not configured' }, 503);
+  }
+
+  // ?path=/jobs/JOB_ID  — full body dump for a single HCP resource (no truncation)
+  // Use to inspect actual response schema rather than re-deriving from docs.
+  const path = url.searchParams.get('path');
+  if (path) {
+    const r = await hcpFetch(env, { path });
+    return json({
+      summary: 'HCP single-path fetch',
+      path,
+      status: r.status,
+      ok: r.ok,
+      // Full body — caller asked, caller gets.
+      data: r.data,
+      headers: r.headers,
+      error: r.error,
+    });
   }
 
   // Allow caller to pass ?endpoints=foo,bar to probe arbitrary names.
