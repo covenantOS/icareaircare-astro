@@ -22,27 +22,46 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const url = new URL(request.url);
   const status = url.searchParams.get('status') || 'unattributed';
   const limit = Math.min(200, Math.max(5, parseInt(url.searchParams.get('limit') || '50', 10) || 50));
+  const offset = Math.max(0, parseInt(url.searchParams.get('offset') || '0', 10) || 0);
+  const q = (url.searchParams.get('q') || '').trim();
 
   let where = `attributed_tech_hcp_id IS NULL`;
   if (status === 'low_confidence') {
-    // Manual button should be useful for fuzzy auto-attributions too — show
-    // attribution_method values that came from name-first or text-fuzzy
-    // matchers so Tim can confirm or override.
     where = `attribution_method IN ('first_name_match', 'fuzzy_name_match', 'text_first_name')`;
+  } else if (status === 'manual') {
+    where = `attribution_method = 'manual'`;
+  } else if (status === 'attributed') {
+    where = `attributed_tech_hcp_id IS NOT NULL`;
   } else if (status === 'all') {
     where = `1 = 1`;
   }
+
+  // Search across reviewer name + review text (LIKE is fine on ~1k rows).
+  const bindParams: (string | number)[] = [];
+  let qClause = '';
+  if (q) {
+    qClause = ` AND (LOWER(reviewer_name) LIKE ? OR LOWER(text) LIKE ?)`;
+    const wild = '%' + q.toLowerCase() + '%';
+    bindParams.push(wild, wild);
+  }
+
+  // Total count BEFORE pagination so the UI can show "showing X-Y of Z"
+  const countRes = await env.DB
+    .prepare(`SELECT COUNT(*) AS n FROM reviews WHERE ${where}${qClause}`)
+    .bind(...bindParams)
+    .first<{ n: number }>();
+  const totalMatching = countRes?.n || 0;
 
   const reviewsRes = await env.DB
     .prepare(
       `SELECT review_id, reviewer_name, rating, text, posted_at, response_text,
               attributed_tech_hcp_id, attribution_method
        FROM reviews
-       WHERE ${where}
+       WHERE ${where}${qClause}
        ORDER BY posted_at DESC
-       LIMIT ?`,
+       LIMIT ? OFFSET ?`,
     )
-    .bind(limit)
+    .bind(...bindParams, limit, offset)
     .all();
 
   // Roster of techs for the dropdown. Active field techs first.
@@ -61,6 +80,13 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
 
   return jsonResponse({
     status,
+    q,
+    pagination: {
+      limit,
+      offset,
+      total: totalMatching,
+      has_more: (offset + (reviewsRes.results || []).length) < totalMatching,
+    },
     reviews: (reviewsRes.results || []).map((r: Record<string, unknown>) => ({
       ...r,
       attributed_tech_name: r.attributed_tech_hcp_id ? techMap.get(r.attributed_tech_hcp_id as string) || null : null,
@@ -119,10 +145,12 @@ async function loadCounts(db: D1Database) {
   const total = await db.prepare(`SELECT COUNT(*) AS n FROM reviews`).first<{ n: number }>();
   const attributed = await db.prepare(`SELECT COUNT(*) AS n FROM reviews WHERE attributed_tech_hcp_id IS NOT NULL`).first<{ n: number }>();
   const manual = await db.prepare(`SELECT COUNT(*) AS n FROM reviews WHERE attribution_method = 'manual'`).first<{ n: number }>();
+  const lowConfidence = await db.prepare(`SELECT COUNT(*) AS n FROM reviews WHERE attribution_method IN ('first_name_match', 'fuzzy_name_match', 'text_first_name')`).first<{ n: number }>();
   return {
     total: total?.n || 0,
     attributed: attributed?.n || 0,
     unattributed: (total?.n || 0) - (attributed?.n || 0),
     manual: manual?.n || 0,
+    low_confidence: lowConfidence?.n || 0,
   };
 }

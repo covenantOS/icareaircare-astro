@@ -147,11 +147,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         <div id="th-ai-error" hidden class="mt-3 text-sm text-amber-700"></div>
       </section>
 
-      <!-- Rule-based coaching prompts (kept as a quick fallback) -->
-      <section class="card-quiet">
-        <h3 class="font-semibold text-navy-700 mb-1 text-sm">Quick rule-based prompts</h3>
-        <ul id="th-coach" class="text-xs text-slate-700 space-y-1 list-disc pl-5"><li>—</li></ul>
-      </section>
+      <!-- (Quick rule-based prompts removed 2026-05-15 per Will — too crude
+           alongside the AI briefing; the briefing covers the same ground better.) -->
     </main>
   </div>
 
@@ -353,14 +350,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <div><div class="stat-label">Close rate</div><div class="flex items-baseline gap-2"><div class="text-xl font-bold ${cmp(s.close_rate_pct, peer.shop_avg_close_rate_pct)}">${fmtP(s.close_rate_pct)}</div><div class="text-sm text-slate-500">vs ${fmtP(peer.shop_avg_close_rate_pct)}</div></div></div>
           <div><div class="stat-label">Avg ticket</div><div class="flex items-baseline gap-2"><div class="text-xl font-bold ${cmp(s.avg_ticket, peer.shop_avg_ticket)}">${fmt$(s.avg_ticket)}</div><div class="text-sm text-slate-500">vs ${fmt$(peer.shop_avg_ticket)}</div></div></div>`;
 
-        const prompts = [];
-        if (s.avg_ticket < 200) prompts.push(`Avg ticket ${fmt$(s.avg_ticket)} below the strong-tech band ($450+) — review whether recommendations are made on every job.`);
-        if (s.close_rate_pct < 40 && s.tune_ups > 5) prompts.push(`Tune-up close rate ${fmtP(s.close_rate_pct)} below industry average — possibly under-diagnosing or under-quoting on tune-ups.`);
-        if (s.callback_rate_pct > 3) prompts.push(`Callback rate ${fmtP(s.callback_rate_pct)} above 3% — review last 5 callbacks for root cause.`);
-        if (s.revenue_per_day > 2400) prompts.push(`Revenue/day ${fmt$(s.revenue_per_day)} is top-quartile (industry $2,400+). Replicate this tech's playbook.`);
-        if (!prompts.length) prompts.push('No flags from quick rules. AI coaching panel above has the full read.');
-        document.getElementById('th-coach').innerHTML = prompts.map(p => `<li>${esc(p)}</li>`).join('');
-        // Kick the AI panel after the basic data loads
+        // Rule-based prompts removed — AI panel handles all coaching guidance.
         loadAICoaching(days, false);
       } catch (e) { toast(e.message || 'Load failed', 'error'); }
     }

@@ -338,26 +338,9 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         </article>
       </section>
 
-      <!-- REVIEW ATTRIBUTION (Tim 2026-05-09 — confirmed manual screen) -->
-      <section id="sec-review-attr" class="card">
-        <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
-          <div>
-            <h2 class="text-lg font-bold text-navy-700 flex items-center gap-2">
-              <span class="section-icon bg-amber-100 text-amber-700 w-7 h-7 text-sm">🪪</span>
-              Manual review attribution
-            </h2>
-            <div class="text-xs text-slate-500 mt-0.5" id="ra-counts">—</div>
-          </div>
-          <div class="flex items-center gap-2 text-xs">
-            <button class="tab" id="ra-tab-unattr" type="button" aria-pressed="true" data-ra-status="unattributed">Unattributed</button>
-            <button class="tab" id="ra-tab-low"   type="button" aria-pressed="false" data-ra-status="low_confidence">Low confidence</button>
-            <button class="tab" id="ra-tab-all"   type="button" aria-pressed="false" data-ra-status="all">All</button>
-          </div>
-        </div>
-        <div id="ra-list" class="space-y-2">
-          <div class="text-slate-400 text-sm py-4 text-center">Loading…</div>
-        </div>
-      </section>
+      <!-- (Manual review attribution moved to /admin/dashboard/reviews/
+           on 2026-05-15 — paginated, gamified, dedicated workspace. The
+           link to it lives in the Google Reviews section header below.) -->
 
       <!-- GOOGLE REVIEWS -->
       <section id="sec-reviews" class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
@@ -375,9 +358,14 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <div class="text-[10px] text-slate-400 mt-3" id="rev-meta">—</div>
         </article>
         <article class="card lg:col-span-2">
-          <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
             <h2 class="text-lg font-bold text-navy-700">Recent reviews</h2>
-            <span class="text-xs text-slate-500">Tap-and-hold the response area to copy</span>
+            <div class="flex items-center gap-2">
+              <a id="rev-manage-link" href="/admin/dashboard/reviews/" class="btn-admin text-xs py-1.5 px-3" title="Open the paginated review-attribution workspace">
+                🪪 Manage attribution
+              </a>
+              <span class="text-xs text-slate-500 hidden sm:inline">Tap-and-hold to copy a reply</span>
+            </div>
           </div>
           <div id="rev-recent" class="space-y-3"><div class="text-slate-400 text-sm py-2">Click ↻ to load reviews from Google.</div></div>
         </article>
@@ -757,8 +745,39 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         renderTechs(byTech);
         renderGoals(byTech);
         renderSegments(segDormant, segRenew, segVip);
+        // Pre-warm AI coaching cache for all field techs in the background
+        // so clicking into a tech detail page is instant (cache TTL 6h).
+        // Will reported tech-detail AI taking ~2min on cold load — this
+        // bakes the bread before he asks for the sandwich.
+        prewarmAICoaching(byTech);
       } catch (e) {
         toast(e.message || 'Load failed', 'error');
+      }
+    }
+
+    // Background AI cache pre-warming. We fire requests in series (one at a
+    // time) so we don't slam MiniMax with 6 parallel reasoning calls.
+    // Each request is fire-and-forget — failures are silent. KV caches for
+    // 6 hours, so subsequent clicks into tech detail pages return instantly.
+    let _prewarmInFlight = false;
+    async function prewarmAICoaching(byTech) {
+      if (_prewarmInFlight) return;
+      _prewarmInFlight = true;
+      try {
+        const looksLikeRawId = name => !name || /^pro_[a-f0-9]{20,}$/i.test(String(name).trim());
+        const candidates = ((byTech && byTech.techs) || [])
+          .filter(t => t.jobs >= 5 && !looksLikeRawId(t.tech_name) && (t.role_band === 'service' || t.role_band === 'install'))
+          .sort((a, b) => (b.revenue || 0) - (a.revenue || 0))
+          .slice(0, 8);  // Top-8 by revenue covers Tim's likely click targets
+        for (const t of candidates) {
+          try {
+            // Don't use api() — we don't want errors here to throw or kick to login.
+            // Just GET and rely on the server-side KV cache write as the side effect.
+            await fetch(withAuth(`/api/ai/tech-coaching?id=${encodeURIComponent(t.tech_id)}&days=${currentRange}`), { credentials: 'include' });
+          } catch { /* silent — best-effort */ }
+        }
+      } finally {
+        _prewarmInFlight = false;
       }
     }
 
@@ -882,7 +901,12 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     }
 
     function renderTechs(data) {
-      const all = (data.techs || []).filter(t => t.jobs > 0);
+      // Filter out tech rows that have no human name (HCP records we never
+      // synced — usually deleted/historical employees still attached to
+      // old jobs via all_tech_hcp_ids). They render as "pro_xxxx..." and
+      // confuse the leaderboard; we can't action on them anyway.
+      const looksLikeRawId = name => !name || /^pro_[a-f0-9]{20,}$/i.test(String(name).trim());
+      const all = (data.techs || []).filter(t => t.jobs > 0 && !looksLikeRawId(t.tech_name));
       // Stash for the settings drawer's live preview
       lastTechsForPreview = all;
       if (!all.length) {
@@ -975,7 +999,13 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         other:   buildDist(otherField),
       };
 
-      const grade = (n) => n>=90?'A':n>=80?'B':n>=70?'C':n>=60?'D':'F';
+      // Will-tuned grade scale (2026-05-15): standard school grading made
+      // every tech an F because nobody hits the 60-90 normalized range on
+      // a peer-relative percentile (you'd need to be the best AND beat
+      // industry top-quartile). New cuts: 80=A, 60=B, 40=C, 20=D, else F.
+      // A "C" now means roughly the middle of the shop AND mid-industry —
+      // which is genuinely "average," matching how people read grades.
+      const grade = (n) => n>=80?'A':n>=60?'B':n>=40?'C':n>=20?'D':'F';
 
       function scoreTech(t, isPeer) {
         const inp = inputs(t);
@@ -1129,8 +1159,9 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       // rollup averages down AND lets them appear as "Most upside" leader, which
       // is misleading (low jobs ≠ underperformer).
       const MIN_JOBS_FOR_GOALS = 5;
+      const looksLikeRawId = name => !name || /^pro_[a-f0-9]{20,}$/i.test(String(name).trim());
       const techs = (byTech && byTech.techs)
-        ? byTech.techs.filter(t => t.jobs >= MIN_JOBS_FOR_GOALS && !t.is_owner)
+        ? byTech.techs.filter(t => t.jobs >= MIN_JOBS_FOR_GOALS && !t.is_owner && !looksLikeRawId(t.tech_name))
         : [];
       if (!techs.length) { wrapShop.innerHTML = ''; wrapTech.innerHTML = ''; empty.hidden = false; summary.textContent = ''; return; }
       empty.hidden = true;
@@ -1619,7 +1650,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       const fieldInputs = field.map(inputs);
       const dists = {};
       for (const k of Object.keys(measured)) if (measured[k]) dists[k] = fieldInputs.map(i => i[k] || 0);
-      const grade = n => n>=90?'A':n>=80?'B':n>=70?'C':n>=60?'D':'F';
+      const grade = n => n>=80?'A':n>=60?'B':n>=40?'C':n>=20?'D':'F';  // matches new Will-tuned scale
       const scored = field.map(t => {
         const inp = inputs(t);
         let total = 0;
@@ -1778,6 +1809,15 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       loadAll();
     });
     document.getElementById('sync-btn').addEventListener('click', runSync);
+    // Pass the active PIN to the dedicated reviews page so opening it in
+    // a fresh tab doesn't drop the user back to the login gate.
+    document.getElementById('rev-manage-link')?.addEventListener('click', (e) => {
+      const k = getKey(); if (!k) return;
+      const a = e.currentTarget;
+      const u = new URL(a.getAttribute('href'), location.origin);
+      u.searchParams.set('key', k);
+      a.setAttribute('href', u.toString());
+    });
     // Industry-grade column toggle — persists across reloads in sessionStorage.
     const SHOW_IND_KEY = 'icac_show_industry';
     function applyIndustryColumn(show) {

@@ -1,0 +1,341 @@
+---
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="Review Attribution">
+  <!-- LOGIN GATE -->
+  <div id="login-gate" hidden>
+    <div class="card login-card">
+      <h2 class="text-xl font-bold mb-1">Sign in</h2>
+      <p class="text-sm text-slate-600 mb-5">Enter your PIN to continue.</p>
+      <form id="login-form" class="space-y-3">
+        <input id="login-key" type="password" inputmode="numeric" placeholder="PIN" autocomplete="current-password" required />
+        <button type="submit" class="btn-admin w-full justify-center">Continue</button>
+      </form>
+      <p id="login-error" class="text-red-600 text-sm mt-3" hidden></p>
+    </div>
+  </div>
+
+  <!-- PAGE -->
+  <div id="page" hidden>
+    <!-- Compact sticky header -->
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-line">
+      <div class="container-site py-3 flex items-center justify-between gap-3 flex-wrap">
+        <div class="flex items-center gap-3 min-w-0">
+          <a href="/admin/dashboard/" class="btn-ghost-admin text-xs py-1.5 px-2.5" title="Back to dashboard">← Dashboard</a>
+          <div class="min-w-0">
+            <h1 class="text-base sm:text-lg font-bold text-navy-700 truncate">Review Attribution</h1>
+            <div id="page-sub" class="text-[11px] text-slate-500">Manually link Google reviews to the tech who earned them.</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 text-xs">
+          <button id="header-refresh" class="btn-ghost-admin text-xs py-1.5 px-2.5" type="button">↻ Refresh</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container-site py-5 space-y-5">
+      <!-- HERO STATS — progress + gamified counters -->
+      <section class="card">
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 items-center">
+          <div class="sm:col-span-2">
+            <div class="stat-label">Attribution progress</div>
+            <div class="flex items-baseline gap-2 mt-1">
+              <div id="progress-pct" class="stat-value">—</div>
+              <div id="progress-fraction" class="text-base text-slate-500">—</div>
+            </div>
+            <div class="progress mt-2 h-3"><span id="progress-bar" style="width:0%"></span></div>
+            <div id="progress-note" class="text-[11px] text-slate-500 mt-1">—</div>
+          </div>
+          <div class="text-center">
+            <div class="stat-label">Set manually</div>
+            <div id="manual-count" class="text-3xl font-bold text-navy-700 mt-1">—</div>
+            <div class="text-[11px] text-slate-500 mt-0.5">all-time you've assigned</div>
+          </div>
+          <div class="text-center">
+            <div class="stat-label">Today</div>
+            <div id="today-count" class="text-3xl font-bold text-accent-600 mt-1">—</div>
+            <div class="text-[11px] text-slate-500 mt-0.5">attributions in this session</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FILTERS + SEARCH -->
+      <section class="card">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap gap-1.5" role="tablist" aria-label="Filter">
+            <button class="tab" data-status="unattributed"   aria-pressed="true">Unattributed <span id="cnt-unattr" class="ml-1 text-slate-500"></span></button>
+            <button class="tab" data-status="low_confidence" aria-pressed="false">Low confidence <span id="cnt-low" class="ml-1 text-slate-500"></span></button>
+            <button class="tab" data-status="manual"         aria-pressed="false">Manually set <span id="cnt-manual" class="ml-1 text-slate-500"></span></button>
+            <button class="tab" data-status="attributed"     aria-pressed="false">All attributed</button>
+            <button class="tab" data-status="all"            aria-pressed="false">Everything</button>
+          </div>
+          <div class="flex items-center gap-2">
+            <input id="search" type="search" placeholder="Search reviewer or text…" class="px-3 py-1.5 border border-line rounded text-sm w-56" />
+          </div>
+        </div>
+      </section>
+
+      <!-- REVIEW LIST -->
+      <section class="space-y-3" id="review-list">
+        <div class="text-slate-400 text-sm py-8 text-center">Loading…</div>
+      </section>
+
+      <!-- PAGINATION -->
+      <nav id="pager" class="flex items-center justify-between gap-2 mt-2" aria-label="Pagination">
+        <button id="prev-page" class="btn-ghost-admin text-sm" disabled>← Previous</button>
+        <span id="page-info" class="text-xs text-slate-500">—</span>
+        <button id="next-page" class="btn-ghost-admin text-sm" disabled>Next →</button>
+      </nav>
+    </main>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50" hidden>
+    <div id="toast-body" class="bg-navy-700 text-white text-sm px-4 py-2 rounded-lg shadow-soft"></div>
+  </div>
+
+  <style is:global>
+    /* Page-specific styles — the AdminLayout has the base card / btn / pill styles. */
+    .review-card {
+      background: #fff;
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.25rem;
+      transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+    .review-card:hover { border-color: var(--color-brand-400, #88c0d0); box-shadow: var(--shadow-soft); }
+    .review-card.is-saving { opacity: 0.6; pointer-events: none; }
+    .review-card.is-just-saved { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
+    .review-stars { color: #f59e0b; letter-spacing: 1px; }
+    .review-rating-1 { border-left: 4px solid #b91c1c; }
+    .review-rating-2 { border-left: 4px solid #dc2626; }
+    .review-rating-3 { border-left: 4px solid #b45309; }
+    .review-rating-4 { border-left: 4px solid #10b981; }
+    .review-rating-5 { border-left: 4px solid #15803d; }
+    .progress.h-3 { height: 12px; }
+    .progress.h-3 > span { background: linear-gradient(90deg, var(--color-accent-500), var(--color-accent-600)); }
+  </style>
+
+  <script is:inline>
+    const STORAGE_KEY = 'icac_admin_key';
+    const PAGE_SIZE = 50;
+    let state = {
+      status: 'unattributed',
+      q: '',
+      offset: 0,
+      total: 0,
+      techs: [],
+      counts: { total: 0, attributed: 0, unattributed: 0, manual: 0, low_confidence: 0 },
+      todayCount: 0,             // attributions saved this browser session
+    };
+
+    function getKey() { return sessionStorage.getItem(STORAGE_KEY) || ''; }
+    function setKey(k) { sessionStorage.setItem(STORAGE_KEY, k); }
+    function clearKey() { sessionStorage.removeItem(STORAGE_KEY); }
+    function withAuth(url) { const k = getKey(); if (!k) return url; const u = new URL(url, location.origin); u.searchParams.set('key', k); return u.toString(); }
+    async function api(path, init) {
+      const res = await fetch(withAuth(path), { credentials: 'include', ...init });
+      if (res.status === 401) { clearKey(); show('login'); throw new Error('Auth required'); }
+      if (!res.ok) { const t = await res.text().catch(() => ''); throw new Error(`API ${path}: ${res.status} ${t.slice(0,200)}`); }
+      return res.json();
+    }
+    function show(which) { document.getElementById('login-gate').hidden = which !== 'login'; document.getElementById('page').hidden = which !== 'page'; }
+    function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+    function fmtI(n) { if (n == null || isNaN(n)) return '—'; return Number(n).toLocaleString('en-US'); }
+    function toast(msg, kind) {
+      const t = document.getElementById('toast'), b = document.getElementById('toast-body');
+      b.textContent = msg;
+      b.className = 'text-sm px-4 py-2 rounded-lg shadow-soft ' + (kind === 'error' ? 'bg-red-600 text-white' : kind === 'ok' ? 'bg-emerald-600 text-white' : 'bg-navy-700 text-white');
+      t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => t.hidden = true, 2500);
+    }
+    function stars(n) { return '★'.repeat(n || 0) + '☆'.repeat(5 - (n || 0)); }
+    function timeAgo(iso) {
+      if (!iso) return '';
+      const t = new Date(iso); const diff = (Date.now() - t.getTime()) / 1000;
+      if (diff < 60) return Math.round(diff) + 's ago';
+      if (diff < 3600) return Math.round(diff/60) + 'm ago';
+      if (diff < 86400) return Math.round(diff/3600) + 'h ago';
+      if (diff < 2592000) return Math.round(diff/86400) + 'd ago';
+      return t.toLocaleDateString();
+    }
+
+    // ─── Rendering ──────────────────────────────────────────────────
+    function renderProgress() {
+      const c = state.counts;
+      const pct = c.total > 0 ? (c.attributed / c.total) * 100 : 0;
+      document.getElementById('progress-pct').textContent = pct.toFixed(0) + '%';
+      document.getElementById('progress-fraction').textContent = `${fmtI(c.attributed)} of ${fmtI(c.total)}`;
+      document.getElementById('progress-bar').style.width = pct.toFixed(1) + '%';
+      document.getElementById('progress-note').textContent =
+        c.unattributed === 0
+          ? 'Every review is attributed to a tech. Nice.'
+          : `${fmtI(c.unattributed)} reviews still need a tech assigned${c.low_confidence ? ` · ${fmtI(c.low_confidence)} auto-attributed at low confidence — worth a glance` : ''}.`;
+      document.getElementById('manual-count').textContent = fmtI(c.manual);
+      document.getElementById('today-count').textContent = fmtI(state.todayCount);
+      // Filter pill counters
+      document.getElementById('cnt-unattr').textContent  = `(${fmtI(c.unattributed)})`;
+      document.getElementById('cnt-low').textContent     = `(${fmtI(c.low_confidence)})`;
+      document.getElementById('cnt-manual').textContent  = `(${fmtI(c.manual)})`;
+    }
+
+    function renderList(reviews) {
+      const list = document.getElementById('review-list');
+      if (!reviews.length) {
+        list.innerHTML = `<div class="card text-center py-10">
+          <div class="text-4xl mb-2">✨</div>
+          <div class="font-bold text-navy-700">${state.status === 'unattributed' ? 'No unattributed reviews — every one has a tech.' : 'No reviews match.'}</div>
+          <div class="text-sm text-slate-500 mt-1">${state.q ? 'Try clearing your search or switching filters.' : 'Switch filters above to see other reviews.'}</div>
+        </div>`;
+        return;
+      }
+      // Tech dropdown options, sorted alphabetically.
+      const opts = (state.techs || []).slice().sort((a,b)=>a.name.localeCompare(b.name)).map(t => `<option value="${esc(t.hcp_id)}">${esc(t.name)}</option>`).join('');
+      list.innerHTML = reviews.map(r => {
+        const ratingCls = `review-rating-${r.rating || 0}`;
+        const currentTech = r.attributed_tech_hcp_id || '';
+        const methodChip = r.attribution_method
+          ? `<span class="chip ${r.attribution_method === 'manual' ? 'chip-good' : 'chip-warn'}">${esc(r.attribution_method.replace(/_/g,' '))}</span>`
+          : `<span class="chip chip-warn">unattributed</span>`;
+        const responseBlock = r.response_text
+          ? `<details class="mt-2"><summary class="text-[11px] text-slate-500 cursor-pointer">Owner reply</summary><div class="mt-1 text-xs bg-brand-50 p-2 rounded">${esc(r.response_text.slice(0, 400))}</div></details>`
+          : '';
+        return `<article class="review-card ${ratingCls}" data-review-id="${esc(r.review_id)}">
+          <header class="flex flex-wrap items-baseline gap-2 mb-2">
+            <div class="font-bold text-navy-700">${esc(r.reviewer_name || 'Anonymous')}</div>
+            <div class="review-stars text-lg">${stars(r.rating)}</div>
+            <div class="text-[11px] text-slate-500">${r.posted_at ? new Date(r.posted_at).toLocaleDateString() + ' · ' + timeAgo(r.posted_at) : ''}</div>
+            ${methodChip}
+          </header>
+          ${r.text ? `<p class="text-sm text-slate-700 mb-3 leading-relaxed">${esc(r.text)}</p>` : '<p class="text-xs text-slate-400 italic mb-3">No review text — star rating only.</p>'}
+          <div class="flex items-center gap-2 flex-wrap pt-2 border-t border-line">
+            <label class="text-xs text-slate-500 font-semibold">Tech credit:</label>
+            <select class="attribute-select px-3 py-1.5 border border-line rounded text-sm flex-1 min-w-[180px]" data-review-id="${esc(r.review_id)}">
+              <option value="">— Unattributed —</option>
+              ${opts.replace(`value="${esc(currentTech)}"`, `value="${esc(currentTech)}" selected`)}
+            </select>
+            <button class="btn-ghost-admin text-xs save-status" type="button">Saved automatically</button>
+          </div>
+          ${responseBlock}
+        </article>`;
+      }).join('');
+      // Wire dropdowns
+      list.querySelectorAll('.attribute-select').forEach(sel => {
+        sel.addEventListener('change', () => saveAttribution(sel));
+      });
+    }
+
+    async function saveAttribution(sel) {
+      const reviewId = sel.getAttribute('data-review-id');
+      const techId = sel.value || null;
+      const card = sel.closest('.review-card');
+      const statusBtn = card.querySelector('.save-status');
+      card.classList.add('is-saving');
+      if (statusBtn) statusBtn.textContent = 'Saving…';
+      try {
+        await api('/api/reviews/manual', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ review_id: reviewId, tech_hcp_id: techId }),
+        });
+        card.classList.remove('is-saving');
+        card.classList.add('is-just-saved');
+        if (statusBtn) statusBtn.textContent = techId ? '✓ Saved' : '✓ Cleared';
+        if (techId) state.todayCount++;     // count only assignments, not clears
+        toast(techId ? 'Attributed to ' + (sel.options[sel.selectedIndex] || {}).text : 'Cleared', 'ok');
+        // Reload the counts but don't refetch the whole list — keeps focus.
+        // On the next filter switch or page change the list naturally refetches.
+        await refreshCountsOnly();
+      } catch (e) {
+        card.classList.remove('is-saving');
+        if (statusBtn) statusBtn.textContent = 'Save failed — try again';
+        toast(e.message || 'Save failed', 'error');
+      }
+    }
+
+    async function refreshCountsOnly() {
+      try {
+        const r = await api(`/api/reviews/manual?status=all&limit=1`);
+        state.counts = r.counts || state.counts;
+        renderProgress();
+      } catch { /* silent */ }
+    }
+
+    function renderPagination(total, returned) {
+      const prev = document.getElementById('prev-page'), next = document.getElementById('next-page'), info = document.getElementById('page-info');
+      const first = total === 0 ? 0 : state.offset + 1;
+      const last = state.offset + returned;
+      info.textContent = total === 0 ? '0 results' : `${fmtI(first)}-${fmtI(last)} of ${fmtI(total)}`;
+      prev.disabled = state.offset === 0;
+      next.disabled = (state.offset + returned) >= total;
+    }
+
+    // ─── Loading ────────────────────────────────────────────────────
+    let _searchTimer = null;
+    async function load() {
+      try {
+        const params = new URLSearchParams({
+          status: state.status,
+          limit: String(PAGE_SIZE),
+          offset: String(state.offset),
+        });
+        if (state.q) params.set('q', state.q);
+        const r = await api(`/api/reviews/manual?${params.toString()}`);
+        state.techs = r.techs || [];
+        state.counts = r.counts || state.counts;
+        state.total = (r.pagination && r.pagination.total) || 0;
+        renderProgress();
+        renderList(r.reviews || []);
+        renderPagination(state.total, (r.reviews || []).length);
+      } catch (e) {
+        document.getElementById('review-list').innerHTML = `<div class="card text-red-600 text-sm">Failed to load: ${esc(e.message || String(e))}</div>`;
+      }
+    }
+
+    // ─── Event wiring ───────────────────────────────────────────────
+    document.querySelectorAll('[data-status]').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('[data-status]').forEach(x => x.setAttribute('aria-pressed', 'false'));
+        b.setAttribute('aria-pressed', 'true');
+        state.status = b.getAttribute('data-status');
+        state.offset = 0;
+        load();
+      });
+    });
+    document.getElementById('search').addEventListener('input', (e) => {
+      clearTimeout(_searchTimer);
+      _searchTimer = setTimeout(() => {
+        state.q = e.target.value.trim();
+        state.offset = 0;
+        load();
+      }, 220);
+    });
+    document.getElementById('prev-page').addEventListener('click', () => {
+      state.offset = Math.max(0, state.offset - PAGE_SIZE); load();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    document.getElementById('next-page').addEventListener('click', () => {
+      state.offset = state.offset + PAGE_SIZE; load();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    document.getElementById('header-refresh').addEventListener('click', load);
+
+    // Login flow
+    document.getElementById('login-form').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const k = document.getElementById('login-key').value.trim();
+      if (!k) return;
+      setKey(k);
+      try { await api('/api/reviews/manual?limit=1'); show('page'); load(); }
+      catch { document.getElementById('login-error').hidden = false; document.getElementById('login-error').textContent = 'Wrong PIN.'; clearKey(); }
+    });
+
+    // Boot
+    (async () => {
+      const urlKey = new URL(location.href).searchParams.get('key');
+      if (urlKey) setKey(urlKey);
+      if (getKey()) {
+        try { await api('/api/reviews/manual?limit=1'); show('page'); load(); return; } catch {}
+      }
+      try { const r = await fetch('/api/reviews/manual?limit=1', { credentials: 'include' }); if (r.ok) { show('page'); load(); return; } } catch {}
+      show('login');
+    })();
+  </script>
+</AdminLayout>
