@@ -259,7 +259,9 @@ export interface TechRow {
   closed_jobs: number;
   close_rate_pct: number;
   avg_ticket: number;
-  revenue: number;
+  revenue: number;             // existing equal-split revenue across assigned techs
+  sales_rev: number;           // role-aware: revenue from jobs you sold (Option A from Tim feedback 2026-05-14)
+  install_rev: number;         // role-aware: revenue from jobs you physically performed
   callbacks: number;
   callback_rate_pct: number;
   reviews_generated: number;       // Google reviews attributed to this tech in window
@@ -364,6 +366,87 @@ export async function computeByTech(
   const reviewsByTech = new Map<string, number>();
   for (const r of reviewRes.results || []) reviewsByTech.set(r.tech_id, r.n);
 
+  // ─── SALES vs INSTALL revenue split (per Tim's Option A, 2026-05-14) ───
+  // For install jobs: if both a service-band tech AND an install-band tech
+  // are assigned, the service-band tech gets sales_rev, the install-band
+  // tech gets install_rev. For all other job types: whichever tech(s) are
+  // assigned get BOTH sales_rev and install_rev for their share (they
+  // sold AND did the work).
+  //
+  // Sum across techs: total sales_rev = total install_rev = shop revenue.
+  // No double-counting; just two cuts of the same dollar.
+  const techMetaRes = await db
+    .prepare(`SELECT hcp_id, role FROM techs`)
+    .all<{ hcp_id: string; role: string | null }>();
+  const techBand = new Map<string, RoleBand>();
+  for (const t of techMetaRes.results || []) {
+    techBand.set(t.hcp_id, classifyRole(t.role, t.hcp_id, roleOverrides || null));
+  }
+  // Pull job-level rows for the window. We'll loop once and accumulate.
+  const jobsRes = await db
+    .prepare(
+      `SELECT hcp_id AS job_id, job_type, primary_tech_hcp_id, all_tech_hcp_ids, invoice_total_cents
+       FROM jobs
+       WHERE completed_at >= ? AND completed_at <= ?`,
+    )
+    .bind(from, to)
+    .all<{
+      job_id: string; job_type: string | null;
+      primary_tech_hcp_id: string | null; all_tech_hcp_ids: string | null;
+      invoice_total_cents: number | null;
+    }>();
+
+  const salesCents = new Map<string, number>();
+  const installCents = new Map<string, number>();
+  const SALES_BANDS = new Set<RoleBand>(['service', 'owner']);
+  const INSTALL_BANDS = new Set<RoleBand>(['install', 'helper']);
+
+  for (const j of jobsRes.results || []) {
+    const total = j.invoice_total_cents || 0;
+    if (!total) continue;
+    let assigned: string[] = [];
+    try {
+      const parsed = j.all_tech_hcp_ids ? JSON.parse(j.all_tech_hcp_ids) : [];
+      if (Array.isArray(parsed)) assigned = parsed.filter((x): x is string => typeof x === 'string');
+    } catch { /* leave empty */ }
+    if (assigned.length === 0 && j.primary_tech_hcp_id) assigned = [j.primary_tech_hcp_id];
+    if (assigned.length === 0) continue;
+
+    const jobType = j.job_type || 'other';
+
+    if (jobType === 'install') {
+      const installers = assigned.filter(id => INSTALL_BANDS.has(techBand.get(id) || 'other'));
+      const sellers    = assigned.filter(id => SALES_BANDS.has(techBand.get(id) || 'other'));
+
+      if (installers.length && sellers.length) {
+        // Pure Option A: split full revenue per role.
+        for (const id of installers) {
+          installCents.set(id, (installCents.get(id) || 0) + total / installers.length);
+        }
+        for (const id of sellers) {
+          salesCents.set(id, (salesCents.get(id) || 0) + total / sellers.length);
+        }
+      } else {
+        // No role separation on this install — credit everyone for both.
+        for (const id of assigned) {
+          installCents.set(id, (installCents.get(id) || 0) + total / assigned.length);
+          salesCents.set(id, (salesCents.get(id) || 0) + total / assigned.length);
+        }
+      }
+    } else if (jobType === 'estimate') {
+      // Estimates are pure sales activity — no install work yet.
+      for (const id of assigned) {
+        salesCents.set(id, (salesCents.get(id) || 0) + total / assigned.length);
+      }
+    } else {
+      // Tune-ups, diagnostics, IAQ, etc. — tech did both (sale + work).
+      for (const id of assigned) {
+        salesCents.set(id, (salesCents.get(id) || 0) + total / assigned.length);
+        installCents.set(id, (installCents.get(id) || 0) + total / assigned.length);
+      }
+    }
+  }
+
   return (res.results || []).map((r) => {
     const role = (r.role || '').trim() || null;
     const reviewsGen = reviewsByTech.get(r.tech_id) || 0;
@@ -383,6 +466,8 @@ export async function computeByTech(
       close_rate_pct: r.jobs > 0 ? round((r.closed_jobs / r.jobs) * 100, 1) : 0,
       avg_ticket: round((r.avg_cents || 0) / 100, 2),
       revenue: round((r.revenue_cents || 0) / 100, 2),
+      sales_rev: round((salesCents.get(r.tech_id) || 0) / 100, 2),
+      install_rev: round((installCents.get(r.tech_id) || 0) / 100, 2),
       callbacks: r.callbacks || 0,
       callback_rate_pct: r.jobs > 0 ? round((r.callbacks / r.jobs) * 100, 2) : 0,
       reviews_generated: reviewsGen,
