@@ -32,6 +32,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <a href="#sec-kpis" data-nav="sec-kpis" class="nav-pill">KPIs</a>
           <a href="#sec-leaderboard" data-nav="sec-leaderboard" class="nav-pill">Techs</a>
           <a href="#sec-goals" data-nav="sec-goals" class="nav-pill">Goals</a>
+          <a href="#sec-hours" data-nav="sec-hours" class="nav-pill">Hours</a>
           <a href="#sec-reviews" data-nav="sec-reviews" class="nav-pill">Reviews</a>
           <a href="#sec-segments" data-nav="sec-segments" class="nav-pill">Segments</a>
         </nav>
@@ -53,6 +54,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <a href="#sec-kpis" data-nav="sec-kpis" class="nav-pill">KPIs</a>
           <a href="#sec-leaderboard" data-nav="sec-leaderboard" class="nav-pill">Techs</a>
           <a href="#sec-goals" data-nav="sec-goals" class="nav-pill">Goals</a>
+          <a href="#sec-hours" data-nav="sec-hours" class="nav-pill">Hours</a>
           <a href="#sec-reviews" data-nav="sec-reviews" class="nav-pill">Reviews</a>
           <a href="#sec-segments" data-nav="sec-segments" class="nav-pill">Segs</a>
         </div>
@@ -240,15 +242,42 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
                 <th class="text-right" title="Equal-split revenue across assigned techs (existing)">Revenue</th>
                 <th class="text-right hidden md:table-cell" title="Revenue from jobs you sold. On installs, only the salesperson gets credit.">Sold $</th>
                 <th class="text-right hidden md:table-cell" title="Revenue from jobs you physically performed. On installs, only the installer gets credit.">Installed $</th>
+                <th class="text-right hidden lg:table-cell" title="Hours worked in window (from HCP Time Tracking CSV upload)">Hours</th>
+                <th class="text-right hidden lg:table-cell" title="Revenue ÷ hours worked. 0 until a Time Tracking CSV is uploaded.">$/Hr</th>
                 <th class="text-right hidden lg:table-cell" title="Google reviews attributed to tech">⭐ Reviews</th>
                 <th class="text-right hidden lg:table-cell">Callbacks</th>
               </tr>
             </thead>
             <tbody id="tech-rows">
-              <tr><td colspan="11" class="text-center text-slate-400 py-6">Loading…</td></tr>
+              <tr><td colspan="14" class="text-center text-slate-400 py-6">Loading…</td></tr>
             </tbody>
           </table>
         </div>
+      </section>
+
+      <!-- HOURS UPLOAD (Tim's Path A — HCP Time Tracking CSV) -->
+      <section id="sec-hours" class="card">
+        <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+          <div>
+            <h2 class="text-lg font-bold text-navy-700 flex items-center gap-2">
+              <span class="section-icon bg-brand-50 text-brand-700 w-7 h-7 text-sm">⏱</span>
+              Hours &amp; revenue per hour
+            </h2>
+            <div class="text-xs text-slate-500 mt-0.5">Drop a Time Tracking CSV from Housecall Pro here. Re-uploading replaces data for the same date range.</div>
+          </div>
+          <div class="text-xs text-slate-500 text-right" id="hours-summary">No CSV uploaded yet.</div>
+        </div>
+        <div id="hours-dropzone" class="border-2 border-dashed border-line rounded-lg p-6 text-center transition-colors hover:bg-brand-50 cursor-pointer">
+          <input id="hours-file-input" type="file" accept=".csv,text/csv" class="hidden" />
+          <div class="text-2xl mb-1">📄</div>
+          <div class="text-sm font-semibold text-navy-700">Drop CSV here or click to browse</div>
+          <div class="text-xs text-slate-500 mt-1">Export from HCP → Reports → Time Tracking → Export to CSV</div>
+        </div>
+        <div id="hours-result" hidden class="mt-3 text-sm"></div>
+        <details class="mt-3">
+          <summary class="cursor-pointer text-xs text-slate-500 hover:text-slate-700">Recent uploads</summary>
+          <div id="hours-recent" class="mt-2 text-xs"></div>
+        </details>
       </section>
 
       <!-- GOAL PROGRESS (Phase 8) — per-tech progress vs shop goals -->
@@ -307,6 +336,27 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <button class="btn-admin text-xs flex-1 ml-auto" data-action="open-segment" data-segment="top_ltv">View all →</button>
           </div>
         </article>
+      </section>
+
+      <!-- REVIEW ATTRIBUTION (Tim 2026-05-09 — confirmed manual screen) -->
+      <section id="sec-review-attr" class="card">
+        <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+          <div>
+            <h2 class="text-lg font-bold text-navy-700 flex items-center gap-2">
+              <span class="section-icon bg-amber-100 text-amber-700 w-7 h-7 text-sm">🪪</span>
+              Manual review attribution
+            </h2>
+            <div class="text-xs text-slate-500 mt-0.5" id="ra-counts">—</div>
+          </div>
+          <div class="flex items-center gap-2 text-xs">
+            <button class="tab" id="ra-tab-unattr" type="button" aria-pressed="true" data-ra-status="unattributed">Unattributed</button>
+            <button class="tab" id="ra-tab-low"   type="button" aria-pressed="false" data-ra-status="low_confidence">Low confidence</button>
+            <button class="tab" id="ra-tab-all"   type="button" aria-pressed="false" data-ra-status="all">All</button>
+          </div>
+        </div>
+        <div id="ra-list" class="space-y-2">
+          <div class="text-slate-400 text-sm py-4 text-center">Loading…</div>
+        </div>
       </section>
 
       <!-- GOOGLE REVIEWS -->
@@ -1007,6 +1057,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <td class="text-right num"><strong>${fmt$(t.revenue)}</strong></td>
           <td class="text-right num hidden md:table-cell">${fmt$(t.sales_rev || 0)}</td>
           <td class="text-right num hidden md:table-cell">${fmt$(t.install_rev || 0)}</td>
+          <td class="text-right num hidden lg:table-cell">${(t.hours_total || 0) > 0 ? (t.hours_total).toFixed(1) + 'h' : '<span class="text-slate-300" title="No Time Tracking CSV uploaded yet">—</span>'}</td>
+          <td class="text-right num hidden lg:table-cell">${(t.rev_per_hour || 0) > 0 ? fmt$(t.rev_per_hour) : '<span class="text-slate-300">—</span>'}</td>
           <td class="text-right num hidden lg:table-cell">${t.reviews_generated || 0} (${fmtP(t.review_rate_pct || 0)})</td>
           <td class="text-right num hidden lg:table-cell">${t.callbacks} (${fmtP(t.callback_rate_pct)})</td>
         </tr>`;
@@ -1014,7 +1066,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
       const sections = [];
       const bandHeader = (label, sublabel) =>
-        `<tr><td colspan="12" class="text-xs text-slate-600 bg-slate-50 py-2 px-3"><strong>${label}</strong> <span class="text-slate-400">— ${sublabel}</span></td></tr>`;
+        `<tr><td colspan="14" class="text-xs text-slate-600 bg-slate-50 py-2 px-3"><strong>${label}</strong> <span class="text-slate-400">— ${sublabel}</span></td></tr>`;
       const sortByScore = (arr) => arr.map(t => ({ t, score: scoreTech(t, true).score })).sort((a, b) => b.score - a.score).map(x => row(x.t, { isPeer: true })).join('');
 
       if (serviceTechs.length) {
@@ -1798,12 +1850,162 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         loadReviews(false);
         initSectionNav();
         initChat();
+        initHoursUpload();
+        initReviewAttribution();
       } catch (e) {
         document.getElementById('login-error').hidden = false;
         document.getElementById('login-error').textContent = 'Wrong PIN.';
         clearKey();
       }
     });
+
+    // ─── MANUAL REVIEW ATTRIBUTION ─────────────────────────────────
+    let raStatus = 'unattributed';
+    let raTechsCache = [];
+    async function loadReviewAttribution() {
+      const list = document.getElementById('ra-list');
+      const counts = document.getElementById('ra-counts');
+      try {
+        const r = await api(`/api/reviews/manual?status=${encodeURIComponent(raStatus)}&limit=50`);
+        raTechsCache = r.techs || [];
+        const c = r.counts || {};
+        counts.textContent = `${fmtI(c.attributed)} of ${fmtI(c.total)} attributed (${c.total ? Math.round(c.attributed*100/c.total) : 0}%). ${fmtI(c.manual)} set manually.`;
+        const reviews = r.reviews || [];
+        if (!reviews.length) {
+          list.innerHTML = `<div class="text-slate-400 text-sm py-4 text-center">No reviews in this view.</div>`;
+          return;
+        }
+        const techOptions = raTechsCache.map(t => `<option value="${esc(t.hcp_id)}">${esc(t.name)}</option>`).join('');
+        list.innerHTML = reviews.map(rev => {
+          const stars = '★'.repeat(rev.rating || 0) + '☆'.repeat(5 - (rev.rating || 0));
+          const text = (rev.text || '').slice(0, 240).replace(/\n/g, ' ');
+          const currentTech = rev.attributed_tech_hcp_id || '';
+          const methodChip = rev.attribution_method
+            ? `<span class="chip ${rev.attribution_method === 'manual' ? 'chip-info' : 'chip-warn'}" style="font-size:9px">${esc(rev.attribution_method)}</span>`
+            : '';
+          return `<div class="card-quiet" data-review-id="${esc(rev.review_id)}">
+            <div class="flex flex-wrap items-baseline gap-2 mb-1">
+              <span class="font-semibold text-sm">${esc(rev.reviewer_name || 'Anonymous')}</span>
+              <span class="text-amber-500 text-sm">${stars}</span>
+              <span class="text-[10px] text-slate-500">${rev.posted_at ? new Date(rev.posted_at).toLocaleDateString() : ''}</span>
+              ${methodChip}
+            </div>
+            ${text ? `<p class="text-sm text-slate-700 mb-2">${esc(text)}${(rev.text || '').length > 240 ? '…' : ''}</p>` : ''}
+            <div class="flex items-center gap-2 flex-wrap">
+              <label class="text-[11px] text-slate-500 font-semibold">Attribute to:</label>
+              <select class="ra-select px-2 py-1 border border-line rounded text-xs" data-review-id="${esc(rev.review_id)}">
+                <option value="">— Unattributed —</option>
+                ${techOptions.replace(`value="${esc(currentTech)}"`, `value="${esc(currentTech)}" selected`)}
+              </select>
+              ${rev.attributed_tech_name ? `<span class="text-[11px] text-slate-500">currently: <strong>${esc(rev.attributed_tech_name)}</strong></span>` : ''}
+            </div>
+          </div>`;
+        }).join('');
+        list.querySelectorAll('.ra-select').forEach(sel => {
+          sel.addEventListener('change', async () => {
+            const review_id = sel.getAttribute('data-review-id');
+            const tech_hcp_id = sel.value || null;
+            try {
+              await api('/api/reviews/manual', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ review_id, tech_hcp_id }),
+              });
+              toast(tech_hcp_id ? 'Attribution saved' : 'Attribution cleared', 'ok');
+              // Refresh leaderboard so per-tech review counts update
+              await loadAll();
+              // Refresh this panel's counts
+              loadReviewAttribution();
+            } catch (e) {
+              toast('Save failed: ' + (e.message || e), 'error');
+            }
+          });
+        });
+      } catch (e) {
+        list.innerHTML = `<div class="text-red-600 text-sm py-3">Failed to load: ${esc(e.message || String(e))}</div>`;
+      }
+    }
+    function initReviewAttribution() {
+      const wrap = document.querySelector('#sec-review-attr');
+      if (!wrap) return;
+      wrap.querySelectorAll('[data-ra-status]').forEach(b => {
+        b.addEventListener('click', () => {
+          wrap.querySelectorAll('[data-ra-status]').forEach(x => x.setAttribute('aria-pressed', 'false'));
+          b.setAttribute('aria-pressed', 'true');
+          raStatus = b.getAttribute('data-ra-status');
+          loadReviewAttribution();
+        });
+      });
+      loadReviewAttribution();
+    }
+
+    // ─── HOURS CSV UPLOAD (Tim's Path A) ────────────────────────────
+    async function uploadHoursCsv(file) {
+      const result = document.getElementById('hours-result');
+      const summary = document.getElementById('hours-summary');
+      result.hidden = false;
+      result.innerHTML = `<div class="text-slate-500">Uploading ${esc(file.name)}…</div>`;
+      try {
+        const form = new FormData();
+        form.append('file', file);
+        const r = await api('/api/admin/timesheets-upload', { method: 'POST', body: form });
+        const range = r.date_range ? `${r.date_range.from} → ${r.date_range.to}` : '—';
+        const unmappedNote = r.unmapped_columns && r.unmapped_columns.length
+          ? `<div class="text-[11px] text-slate-500 mt-1">Unmapped columns: ${esc(r.unmapped_columns.join(', '))}</div>` : '';
+        const unmatchedNote = r.sample_unmatched && r.sample_unmatched.length
+          ? `<div class="text-[11px] text-amber-700 mt-1">Unmatched names: ${esc(r.sample_unmatched.join(', '))}</div>` : '';
+        result.innerHTML = `<div class="card-quiet">
+          <div class="font-semibold text-emerald-700">✓ Uploaded ${esc(file.name)}</div>
+          <div class="mt-1">${fmtI(r.matched_rows)}/${fmtI(r.total_rows)} rows matched to a tech · ${fmtI(r.unmatched_rows)} unmatched</div>
+          <div class="text-[11px] text-slate-500 mt-1">Date range: ${range}</div>
+          ${unmappedNote}${unmatchedNote}
+        </div>`;
+        summary.innerHTML = `<div>Last upload: <span class="num">${fmtI(r.matched_rows)}</span> rows matched · ${range}</div>`;
+        toast(`Hours uploaded: ${r.matched_rows} matched, ${r.unmatched_rows} unmatched`, 'ok');
+        // Refresh the leaderboard so $/Hr columns light up.
+        await loadAll();
+        loadHoursRecent();
+      } catch (e) {
+        result.innerHTML = `<div class="text-red-600">Upload failed: ${esc(e.message || String(e))}</div>`;
+      }
+    }
+    async function loadHoursRecent() {
+      try {
+        const r = await api('/api/admin/timesheets-upload');
+        const wrap = document.getElementById('hours-recent');
+        const summary = document.getElementById('hours-summary');
+        const runs = r.runs || [];
+        if (!runs.length) { wrap.innerHTML = '<div class="text-slate-400 italic">No uploads yet.</div>'; return; }
+        const latest = runs[0];
+        summary.innerHTML = `<div>Last upload: <span class="num">${fmtI(latest.matched_rows)}</span> rows · ${latest.date_min || '?'} → ${latest.date_max || '?'} <span class="text-slate-400">(${fmtRel(latest.uploaded_at)})</span></div>`;
+        wrap.innerHTML = `<table class="kpi-table"><thead><tr><th>When</th><th>File</th><th class="text-right">Matched</th><th class="text-right">Unmatched</th><th>Date range</th></tr></thead><tbody>
+          ${runs.map(u => `<tr>
+            <td>${fmtRel(u.uploaded_at)}</td>
+            <td class="truncate">${esc(u.filename || '—')}</td>
+            <td class="text-right num">${fmtI(u.matched_rows)}</td>
+            <td class="text-right num">${fmtI(u.unmatched_rows)}</td>
+            <td>${u.date_min || '?'} → ${u.date_max || '?'}</td>
+          </tr>`).join('')}
+        </tbody></table>`;
+      } catch (e) { /* silent — section is optional */ }
+    }
+    function initHoursUpload() {
+      const dz = document.getElementById('hours-dropzone');
+      const input = document.getElementById('hours-file-input');
+      if (!dz || !input) return;
+      dz.addEventListener('click', () => input.click());
+      input.addEventListener('change', () => {
+        if (input.files && input.files[0]) uploadHoursCsv(input.files[0]);
+      });
+      dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('bg-brand-50'); });
+      dz.addEventListener('dragleave', () => dz.classList.remove('bg-brand-50'));
+      dz.addEventListener('drop', e => {
+        e.preventDefault();
+        dz.classList.remove('bg-brand-50');
+        const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+        if (f) uploadHoursCsv(f);
+      });
+      loadHoursRecent();
+    }
 
     // ─── SCROLL-SPY NAV ─────────────────────────────────────────────
     // Highlights the matching nav-pill as the user scrolls through sections.
@@ -1938,6 +2140,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         loadReviews(false);
         initSectionNav();
         initChat();
+        initHoursUpload();
+        initReviewAttribution();
       };
 
       if (getKey()) {

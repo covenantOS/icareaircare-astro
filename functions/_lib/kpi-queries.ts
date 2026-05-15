@@ -266,6 +266,12 @@ export interface TechRow {
   callback_rate_pct: number;
   reviews_generated: number;       // Google reviews attributed to this tech in window
   review_rate_pct: number;          // reviews_generated / jobs * 100
+  // From the Time Tracking CSV upload (Tim's Path A). NULL/0 until Tim
+  // drags a CSV in. Once present, rev_per_hour becomes the headline
+  // "is this tech making money for the company" metric.
+  hours_total: number;
+  hours_on_job: number;
+  rev_per_hour: number;             // revenue / hours_total (0 if hours_total is 0)
 }
 
 // Role-band classifier — uses KV-configurable per-tech overrides first
@@ -365,6 +371,31 @@ export async function computeByTech(
     .all<{ tech_id: string; n: number }>();
   const reviewsByTech = new Map<string, number>();
   for (const r of reviewRes.results || []) reviewsByTech.set(r.tech_id, r.n);
+
+  // Hours from the most recent CSV upload, summed across the window.
+  // Falls back to zeros if Tim hasn't uploaded anything yet (which is
+  // the case until path A is set up). Uses YYYY-MM-DD comparison against
+  // the window's local-date range — fine for hours data which is daily.
+  const fromDate = (from || '').slice(0, 10);
+  const toDate   = (to   || '').slice(0, 10);
+  let hoursByTech = new Map<string, { total: number; onJob: number }>();
+  try {
+    const hRes = await db
+      .prepare(
+        `SELECT tech_hcp_id, COALESCE(SUM(total_hours), 0) AS total, COALESCE(SUM(on_job_hours), 0) AS on_job
+         FROM tech_hours
+         WHERE tech_hcp_id IS NOT NULL AND work_date >= ? AND work_date <= ?
+         GROUP BY tech_hcp_id`,
+      )
+      .bind(fromDate, toDate)
+      .all<{ tech_hcp_id: string; total: number; on_job: number }>();
+    for (const r of hRes.results || []) {
+      hoursByTech.set(r.tech_hcp_id, { total: r.total || 0, onJob: r.on_job || 0 });
+    }
+  } catch {
+    // tech_hours table may not exist yet on fresh deploys — silently skip.
+    hoursByTech = new Map();
+  }
 
   // ─── SALES vs INSTALL revenue split (per Tim's Option A, 2026-05-14) ───
   // For install jobs: if both a service-band tech AND an install-band tech
@@ -472,6 +503,11 @@ export async function computeByTech(
       callback_rate_pct: r.jobs > 0 ? round((r.callbacks / r.jobs) * 100, 2) : 0,
       reviews_generated: reviewsGen,
       review_rate_pct: r.jobs > 0 ? round((reviewsGen / r.jobs) * 100, 1) : 0,
+      hours_total: round(hoursByTech.get(r.tech_id)?.total || 0, 2),
+      hours_on_job: round(hoursByTech.get(r.tech_id)?.onJob || 0, 2),
+      rev_per_hour: ((hoursByTech.get(r.tech_id)?.total || 0) > 0)
+        ? round(((r.revenue_cents || 0) / 100) / (hoursByTech.get(r.tech_id)!.total), 2)
+        : 0,
     };
   });
 }
