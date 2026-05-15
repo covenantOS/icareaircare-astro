@@ -33,10 +33,11 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const days = Math.min(180, Math.max(7, parseInt(url.searchParams.get('days') || '30', 10) || 30));
   const refresh = url.searchParams.get('refresh') === '1';
   const provider = (url.searchParams.get('provider') || 'auto').toLowerCase(); // auto | minimax | workers_ai
-  // v2 cache key bump (2026-05-15): we now exclude owner/office roles
-  // from top_techs_by_revenue and the prompt explicitly tells the AI not
-  // to rank Tim. Old cached briefings still feature him.
-  const cacheKey = `ai:insights:v2:${days}:${provider}`;
+  // v3 cache key bump (2026-05-15): v2 fixed the data layer but the AI
+  // still featured Tim because the system prompt named him as the
+  // audience. v3 strips Tim's name from both data and prompt — the AI
+  // shouldn't have a reason to single him out at all.
+  const cacheKey = `ai:insights:v3:${days}:${provider}`;
 
   if (!refresh && env.KPI_CONFIG) {
     const cached = await env.KPI_CONFIG.get(cacheKey, 'json');
@@ -76,7 +77,9 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     business: {
       name: 'I Care Air Care',
       city: 'Wesley Chapel, FL',
-      owner: 'Tim Hawk',
+      // owner name intentionally omitted — when the AI knew the owner's
+      // name it would hallucinate favorable stats for him and feature him
+      // as "top tech" / "leading by example". Anonymizing him fixes that.
       window_days: days,
     },
     headline: {
@@ -140,7 +143,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     },
   };
 
-  const systemPrompt = `You are an operations analyst writing the weekly briefing for Tim Hawk, the owner of I Care Air Care — a residential HVAC company in Wesley Chapel, FL. The data comes from **Housecall Pro (HCP)** — their job/customer/invoice management software. Always reference Housecall Pro by name, never call it "the CRM" or "ServiceTitan" or any other vendor.
+  const systemPrompt = `You are an operations analyst writing the weekly briefing for the owner of I Care Air Care — a residential HVAC company in Wesley Chapel, FL. The data comes from **Housecall Pro (HCP)** — their job/customer/invoice management software. Always reference Housecall Pro by name, never call it "the CRM" or "ServiceTitan" or any other vendor.
 
 Output STRICT JSON only — NO markdown, NO preamble, NO trailing commentary. Just the JSON object.
 
