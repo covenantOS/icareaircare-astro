@@ -33,7 +33,10 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const days = Math.min(180, Math.max(7, parseInt(url.searchParams.get('days') || '30', 10) || 30));
   const refresh = url.searchParams.get('refresh') === '1';
   const provider = (url.searchParams.get('provider') || 'auto').toLowerCase(); // auto | minimax | workers_ai
-  const cacheKey = `ai:insights:${days}:${provider}`;
+  // v2 cache key bump (2026-05-15): we now exclude owner/office roles
+  // from top_techs_by_revenue and the prompt explicitly tells the AI not
+  // to rank Tim. Old cached briefings still feature him.
+  const cacheKey = `ai:insights:v2:${days}:${provider}`;
 
   if (!refresh && env.KPI_CONFIG) {
     const cached = await env.KPI_CONFIG.get(cacheKey, 'json');
@@ -93,14 +96,22 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
       diagnostic_avg: summary.average_ticket.by_type.diagnostic || 0,
     },
     customers: summary.customer_type,
-    top_techs_by_revenue: byTech.slice(0, 6).map((t) => ({
-      name: t.tech_name,
-      jobs: t.jobs,
-      close_pct: t.close_rate_pct,
-      avg_ticket: t.avg_ticket,
-      revenue: t.revenue,
-      callbacks: t.callbacks,
-    })),
+    // Tim Hawk is the owner. He gets attached to most install jobs in HCP
+    // as a courtesy/oversight role, NOT because he sold or worked them.
+    // Including him in "top techs" inflates his numbers and demotes the
+    // real field techs the AI should be highlighting. Exclude owner +
+    // office roles from any "top tech" ranking sent to the model.
+    top_techs_by_revenue: byTech
+      .filter((t) => !t.is_owner && t.role_band !== 'owner' && t.role_band !== 'office')
+      .slice(0, 6)
+      .map((t) => ({
+        name: t.tech_name,
+        jobs: t.jobs,
+        close_pct: t.close_rate_pct,
+        avg_ticket: t.avg_ticket,
+        revenue: t.revenue,
+        callbacks: t.callbacks,
+      })),
     weekly_trend_last_12_weeks: trend.map((p) => ({
       week: p.week_start,
       jobs: p.jobs,
@@ -166,7 +177,8 @@ Critical rules:
 6. **actions must be concrete and HCP-actionable.** "Run a Marketing Center campaign in Housecall Pro to the 50 dormant customers" — not "do better marketing".
 7. **Tech names exactly as given.** No nicknaming, no fixing typos.
 8. **value_estimate** when you can compute one — e.g. "$14,000+ at company-avg ticket".
-9. Keep it tight. Each detail field ≤ 200 chars. headline_summary ≤ 140 chars.`;
+9. Keep it tight. Each detail field ≤ 200 chars. headline_summary ≤ 140 chars.
+10. **NEVER feature Tim Hawk as a top tech, leader, or performer.** Tim is the owner. He gets added to many install jobs in HCP as a courtesy/oversight role — his close rate, avg ticket, and revenue numbers reflect that, not personal performance. If you want to praise leadership, do it as "Tim's team" or "the shop", never single him out by name in whats_working as a tech. The top_techs_by_revenue list already excludes him. Same rule for any "office" / "admin" / "CSR" role employee.`;
 
   const userPrompt = `Write the briefing using this data:\n\n${JSON.stringify(compactInputs, null, 2)}`;
 

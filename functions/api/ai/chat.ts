@@ -39,7 +39,9 @@ Style:
 - If the user asks something that needs data not in CONTEXT, say so plainly and suggest what to enable (e.g. "I'd need Timesheets ingest for that").
 - For action recommendations, be specific: name techs, name customers, name jobs.
 
-Never reveal raw IDs (HCP UUIDs). Use names. Never reveal PII beyond what the dashboard already shows the owner.`;
+Never reveal raw IDs (HCP UUIDs). Use names. Never reveal PII beyond what the dashboard already shows the owner.
+
+**Tim Hawk is the owner.** Tim gets attached to many install jobs in HCP as a courtesy/oversight role, NOT because he sold or worked them. The CONTEXT block already excludes him and office staff from the tech leaderboard. When the user asks about "top tech", "best performer", "tech leader", or similar — answer from the FIELD TECHS list only. Never describe Tim as a tech, top earner, leader, or someone whose metrics should be praised. If a user explicitly asks about Tim's numbers, you may discuss them, but always note he's the owner and his numbers reflect oversight attachment, not personal field work.`;
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const auth = authOrError(request, env);
@@ -113,13 +115,21 @@ ${(recent.results || []).map((r: any) => {
     } catch { /* no reviews table yet — skip */ }
   }
 
-  // Tech leaderboard summary — top 8 by revenue, plus any explicitly named tech.
+  // Tech leaderboard summary — top 8 FIELD techs by revenue. Tim Hawk
+  // (owner) and office/CSR roles are excluded: Tim gets added to most
+  // install jobs in HCP as oversight, so his "revenue" and "close rate"
+  // reflect courtesy assignment, not personal performance. Never call him
+  // the top tech.
   const namedTech = findNamedTech(userMsg, techs);
   if (namedTech) tools_used.push(`tech:${namedTech.tech_name}`);
-  const topTechs = techs.filter(t => t.jobs > 0).sort((a, b) => b.revenue - a.revenue).slice(0, 8);
+  const fieldTechs = techs.filter(t => t.jobs > 0 && !t.is_owner && t.role_band !== 'owner' && t.role_band !== 'office');
+  const topTechs = fieldTechs.sort((a, b) => b.revenue - a.revenue).slice(0, 8);
 
-  const techsBlock = `## Tech leaderboard (window: last ${days} days)
-${topTechs.map(t => `- ${t.tech_name}${t.is_owner ? ' [owner/office]' : ''}: ${t.jobs} jobs · ${fmt$(t.revenue)} rev · ${t.close_rate_pct}% close · ${fmt$(t.avg_ticket)} ticket · ${t.callbacks} callbacks (${t.callback_rate_pct}%) · ${t.reviews_generated} reviews`).join('\n')}${namedTech && !topTechs.find(t => t.tech_id === namedTech.tech_id) ? `\n- ${namedTech.tech_name}: ${namedTech.jobs} jobs · ${fmt$(namedTech.revenue)} rev · ${namedTech.close_rate_pct}% close (specifically asked about)` : ''}`;
+  const techsBlock = `## Tech leaderboard (window: last ${days} days) — FIELD TECHS ONLY
+${topTechs.map(t => `- ${t.tech_name} [${t.role_band}]: ${t.jobs} jobs · ${fmt$(t.revenue)} rev · ${t.close_rate_pct}% close · ${fmt$(t.avg_ticket)} ticket · ${t.callbacks} callbacks (${t.callback_rate_pct}%) · ${t.reviews_generated} reviews`).join('\n')}${namedTech && !topTechs.find(t => t.tech_id === namedTech.tech_id) ? `\n- ${namedTech.tech_name}: ${namedTech.jobs} jobs · ${fmt$(namedTech.revenue)} rev · ${namedTech.close_rate_pct}% close (specifically asked about)` : ''}
+
+## Owner / office (NOT field techs — do not rank or feature)
+The owner (Tim Hawk) and any office/CSR staff are intentionally excluded from the leaderboard above. They get attached to many HCP jobs as courtesy/oversight assignments — their close rate and revenue numbers do NOT reflect personal sales or labor. If the user asks "who is the top tech?", answer from the FIELD TECHS list only. Never call Tim a top performer, leader, or tech.`;
 
   const goalsBlock = `## Shop goals (set by Tim in Settings)
 - Revenue per tech / month: ${fmt$(goals.revenue_monthly)} (window-prorated to ${fmt$(goals.revenue_monthly * (days / 30))})
