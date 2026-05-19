@@ -9,6 +9,11 @@ export const SITE = {
   bookUrlExternal: 'https://book.housecallpro.com/book/I-Care-Air-Care/fc288ca4ca7c48c3bbcf2e13316f44e8?v2=true&lead_source=google&merchant_id=20299a14-5630-423e-86f1-4e7f59c7f1c8&rwg_token=AFd1xnGAsHVZNInJGvpu38195sGp79l7PNwlA7p5bjxGrC4HxCnMJhyim0v8UUckWrmgMBm9R6IfC7pHAG2eizmJtX7s7KiAvw%3D%3D',
   email: 'tim@icareaircare.com',
   license: 'CAC1816515',
+  // Cloudflare Turnstile public site key for the invisible CAPTCHA on lead
+  // forms. Safe to expose — it is meant for the browser. The matching secret
+  // key lives only in the Pages env as TURNSTILE_SECRET_KEY. While this is
+  // empty the widget is not rendered and the server-side check is skipped.
+  turnstileSiteKey: '0x4AAAAAADSg0s9jX0xnBqaE',
   address: {
     street: '27022 Foamflower Blvd',
     city: 'Wesley Chapel',

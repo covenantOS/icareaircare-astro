@@ -1,26 +1,30 @@
 // Cloudflare Pages Function — POST /api/lead
-// Accepts form submissions from public forms (LeadForm, MultiStepForm, Careers application)
-// and forwards them to LeadConnector (GoHighLevel) via webhook. Falls back to FormSubmit
-// if the webhook fails so Tim is never blind to a real lead.
+// Accepts form submissions from the public forms (LeadForm, MultiStepForm,
+// careers application) and forwards them to LeadConnector (GoHighLevel) via
+// webhook. Falls back to FormSubmit if the webhook fails so Tim is never
+// blind to a real lead.
 //
-// Env vars (set in Cloudflare Pages → Settings → Environment Variables, optional):
-//   LC_LEAD_WEBHOOK — override the LeadConnector webhook URL
+// Every submission first passes through guardRequest() (see _lib/spam-guard),
+// which runs the origin / honeypot / keyword / Turnstile checks. A rejected
+// submission is silently redirected to /thank-you/ and never reaches the CRM —
+// a bot can't tell it failed, so it gets no feedback to adapt to.
 //
-// The default LC webhook URL is baked in as a fallback so the site works without
-// env setup; rotate here or override via env var.
+// Secrets (Cloudflare Pages → Settings → Environment Variables, set for both
+// Production and Preview):
+//   LC_MAIN_WEBHOOK       — LeadConnector webhook for contact / quote forms
+//   LC_CAREERS_WEBHOOK    — LeadConnector webhook for the careers form
+//   TURNSTILE_SECRET_KEY  — server-side Turnstile validation key
+// The webhook URLs are intentionally NOT hardcoded here: anything committed to
+// git is permanently exposed and must be treated as burned.
 
-interface Env {
-  LC_MAIN_WEBHOOK?: string;        // regular contact / quote forms
-  LC_CAREERS_WEBHOOK?: string;     // job application form only
+import { guardRequest, type GuardEnv } from '../_lib/spam-guard';
+
+interface Env extends GuardEnv {
+  LC_MAIN_WEBHOOK?: string;        // contact / quote forms
+  LC_CAREERS_WEBHOOK?: string;     // careers application form
   FORMSUBMIT_FALLBACK_EMAIL?: string;
 }
 
-// Main Form webhook — regular contact / quote request forms
-const DEFAULT_MAIN_WEBHOOK =
-  'https://services.leadconnectorhq.com/hooks/9z6AJkL0xkPy2TPVG0J3/webhook-trigger/MTyKfllEL7s6kVraDwmN';
-// Job Appt (Application) webhook — careers/employment form only
-const DEFAULT_CAREERS_WEBHOOK =
-  'https://services.leadconnectorhq.com/hooks/9z6AJkL0xkPy2TPVG0J3/webhook-trigger/JpX53sPd20rcb3QFxQ3m';
 const DEFAULT_FALLBACK_EMAIL = 'tim@icareaircare.com';
 
 function makeRequestId(): string {
@@ -46,43 +50,28 @@ function splitName(full: string) {
   return { first_name, last_name };
 }
 
-async function readAllFields(request: Request): Promise<Record<string, string>> {
-  const ct = request.headers.get('content-type') || '';
-  if (ct.includes('application/json')) {
-    const body = await request.json().catch(() => ({}));
-    const flat: Record<string, string> = {};
-    for (const [k, v] of Object.entries(body as Record<string, unknown>)) {
-      if (v == null) continue;
-      flat[k] = typeof v === 'object' ? JSON.stringify(v) : String(v);
-    }
-    return flat;
-  }
-  // form-data or x-www-form-urlencoded
-  const form = await request.formData();
-  const flat: Record<string, string> = {};
-  for (const [k, v] of form.entries()) {
-    flat[k] = typeof v === 'string' ? v : v.name; // File → filename
-  }
-  return flat;
-}
-
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const reqId = makeRequestId();
   const origin = new URL(request.url).origin;
-  const raw = await readAllFields(request).catch(() => ({}));
 
-  // Honeypot — silently accept and redirect, don't flag to bots
-  if (raw._honey) {
+  // Spam gate — runs before anything is forwarded. A failure is absorbed:
+  // redirect to /thank-you/ exactly like a real submit, but never call the CRM.
+  const guard = await guardRequest(request, env);
+  if (!guard.ok) {
+    console.log(JSON.stringify({ level: 'info', request_id: reqId, msg: 'lead_rejected', reason: guard.reason }));
     return Response.redirect(`${origin}/thank-you/`, 303);
   }
+  const raw = guard.fields;
 
   // Split name for CRM compatibility (LeadConnector maps first_name/last_name natively)
   const { first_name, last_name } = splitName(raw.name || raw.full_name || '');
 
-  // Strip meta fields ( _next, _subject, _captcha, _honey, _form_type ) from the CRM payload
+  // Strip meta fields ( _next, _subject, _captcha, _honey, _form_type ) and the
+  // Turnstile token from the CRM payload.
   const cleanFields: Record<string, string> = {};
   for (const [k, v] of Object.entries(raw)) {
-    if (!k.startsWith('_') && v != null && v !== '') cleanFields[k] = v;
+    if (k.startsWith('_') || k === 'cf-turnstile-response') continue;
+    if (v != null && v !== '') cleanFields[k] = v;
   }
 
   const formType = raw._form_type || 'contact';
@@ -104,42 +93,42 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   };
 
   // Route to the correct LC webhook based on form type:
-  //   - careers_application → Job Appt (Application) webhook
-  //   - everything else (quote_request, hero_multistep, contact) → Main Form webhook
+  //   - careers_application → careers webhook
+  //   - everything else (quote_request, hero_multistep, contact) → main webhook
   const isCareers = formType === 'careers_application';
-  const leadWebhook = isCareers
-    ? (env.LC_CAREERS_WEBHOOK || DEFAULT_CAREERS_WEBHOOK)
-    : (env.LC_MAIN_WEBHOOK || DEFAULT_MAIN_WEBHOOK);
+  const leadWebhook = isCareers ? env.LC_CAREERS_WEBHOOK : env.LC_MAIN_WEBHOOK;
 
-  // Primary: LeadConnector webhook
+  // Primary: LeadConnector webhook. If the secret is not configured the fetch
+  // is skipped and the FormSubmit fallback below carries the lead instead.
   let webhookOk = false;
-  try {
-    const res = await fetch(leadWebhook, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-    webhookOk = res.ok;
-    if (!res.ok) {
+  if (leadWebhook) {
+    try {
+      const res = await fetch(leadWebhook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      webhookOk = res.ok;
       console.log(JSON.stringify({
-        level: 'warn', request_id: reqId,
-        msg: 'lc_webhook_failed', status: res.status,
+        level: res.ok ? 'info' : 'warn', request_id: reqId,
+        msg: res.ok ? 'lc_webhook_ok' : 'lc_webhook_failed',
+        status: res.status, webhook: isCareers ? 'careers' : 'main',
       }));
-    } else {
+    } catch (err) {
       console.log(JSON.stringify({
-        level: 'info', request_id: reqId,
-        msg: 'lc_webhook_ok', form_type: formType,
-        webhook: isCareers ? 'careers' : 'main',
+        level: 'error', request_id: reqId, msg: 'lc_webhook_error',
+        error: err instanceof Error ? err.message : String(err),
       }));
     }
-  } catch (err) {
+  } else {
     console.log(JSON.stringify({
-      level: 'error', request_id: reqId, msg: 'lc_webhook_error',
-      error: err instanceof Error ? err.message : String(err),
+      level: 'warn', request_id: reqId, msg: 'lc_webhook_unconfigured',
+      webhook: isCareers ? 'careers' : 'main',
     }));
   }
 
-  // Backup: mirror to FormSubmit so Tim always gets an email even if LC is down
+  // Backup: mirror to FormSubmit so Tim always gets an email even if the
+  // webhook is down or not yet configured.
   const fallbackEmail = env.FORMSUBMIT_FALLBACK_EMAIL || DEFAULT_FALLBACK_EMAIL;
   if (!webhookOk && fallbackEmail) {
     try {
@@ -149,16 +138,17 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       fsForm.set('request_id', reqId);
       await fetch(`https://formsubmit.co/ajax/${fallbackEmail}`, { method: 'POST', body: fsForm });
       console.log(JSON.stringify({ level: 'info', request_id: reqId, msg: 'formsubmit_fallback_sent' }));
-    } catch (err) {
+    } catch {
       console.log(JSON.stringify({ level: 'error', request_id: reqId, msg: 'formsubmit_fallback_failed' }));
     }
   }
 
-  // Where to send the user after submit — honor form's _next if present + same-origin
+  // Where to send the user after submit — honor the form's _next if present
+  // and same-origin, otherwise the default thank-you page.
   let redirectTo = `${origin}/thank-you/?ref=${encodeURIComponent(formType)}`;
   if (raw._next) {
     try {
-      const u = new URL(raw._next);
+      const u = new URL(raw._next, origin);
       if (u.origin === origin) redirectTo = u.toString();
     } catch { /* ignore */ }
   }
