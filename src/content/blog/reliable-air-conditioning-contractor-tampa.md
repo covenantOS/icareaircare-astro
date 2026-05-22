@@ -4,8 +4,8 @@ description: "Wondering what a reliable air conditioning contractor in Tampa act
 tag: "Hiring Guide"
 date: "May 22, 2026"
 read: "9 min"
-image: "/images/Trusted-HVAC-Contractor-Near-Me-I-Care-Air-Care.webp"
-imageAlt: "Trusted I Care Air Care HVAC contractor serving Tampa Bay homes"
+image: "/images/i-care-air-care-team-wesley-chapel-office.webp"
+imageAlt: "The local I Care Air Care team at our Wesley Chapel office serving Tampa Bay"
 location: "Tampa"
 primaryService:
   href: "/services/ac-repair-tampa/"
@@ -18,7 +18,7 @@ related:
   - href: "/reviews/"
     label: "Customer reviews"
 checklist:
-  - "Reliability is a set of habits, not a marketing word — judge it by behavior."
+  - "Reliability is a set of habits, not a marketing word - judge it by behavior."
   - "Insist on a written, flat-rate quote before any work starts."
   - "Verify Florida licensing and ask about ongoing technician training."
   - "A local contractor has a built-in incentive to make every job right."

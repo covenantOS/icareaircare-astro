@@ -4,8 +4,8 @@ description: "Regular AC maintenance can prevent expensive emergency repairs. Le
 tag: "Maintenance"
 date: "May 22, 2026"
 read: "10 min"
-image: "/images/ac-maintenance-wesley-chapel-indoor-unit-deep-cleaning-technician.webp"
-imageAlt: "I Care Air Care technician performing an AC maintenance tune-up in Wesley Chapel"
+image: "/images/air-conditioning-installation-wesley-chapel-electrical-testing-outdoor-condenser.webp"
+imageAlt: "I Care Air Care technician testing the outdoor condenser during a Wesley Chapel AC tune-up"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/ac-maintenance-tampa/"

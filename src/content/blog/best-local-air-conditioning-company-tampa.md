@@ -19,7 +19,7 @@ related:
     label: "Wesley Chapel AC repair"
 checklist:
   - "Read for patterns across many reviews, not a handful of generic five-stars."
-  - "Check the date range — recent, ongoing reviews beat old reputation."
+  - "Check the date range - recent, ongoing reviews beat old reputation."
   - "Cross-reference Google, BBB, and other platforms before deciding."
   - "Confirm a verifiable Florida license and a physical local presence."
 ---
