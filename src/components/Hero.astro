@@ -49,9 +49,17 @@ const ctaIsExternal = /^https?:\/\//.test(ctaHref);
   <div class={`relative container-site grid lg:grid-cols-12 gap-8 lg:gap-12 ${showForm ? 'py-12 md:py-16 lg:py-20' : 'py-14 md:py-20'} items-center`}>
     <div class={`${showForm ? 'lg:col-span-6' : (image ? 'lg:col-span-7' : 'lg:col-span-12')} text-white`}>
 
-      {/* Star rating pill — above everything */}
+      {/* Star rating pill — above everything. Links to Google reviews:
+          Clarity heatmaps showed mobile users tapping this pill (it was a
+          non-interactive div = dead clicks). */}
       {variant === 'home' && (
-        <div class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm px-4 py-2 text-sm text-white">
+        <a
+          href={SITE.socials.google}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Read ${SITE.rating.count}+ five-star reviews on Google`}
+          class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm px-4 py-2 text-sm text-white transition hover:bg-white/20 hover:border-white/40"
+        >
           {/* Google G in brand colors */}
           <svg width="15" height="15" viewBox="0 0 48 48" aria-hidden="true" class="shrink-0">
             <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
@@ -61,7 +69,7 @@ const ctaIsExternal = /^https?:\/\//.test(ctaHref);
           </svg>
           <span class="text-yellow-300 text-base leading-none tracking-tight" aria-hidden="true">★★★★★</span>
           <span class="font-semibold">{SITE.rating.value} · {SITE.rating.count}+ Google Reviews</span>
-        </div>
+        </a>
       )}
 
       {eyebrow && (
