@@ -45,12 +45,9 @@ const serviceSchema = {
   url: `${SITE.url}/services/${slug}/`,
   inLanguage: 'en-US',
   offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', areaServed: SITE.serviceAreas.map(a => a.name) },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: SITE.rating.value,
-    reviewCount: SITE.rating.count,
-    bestRating: 5,
-  },
+  // aggregateRating intentionally NOT set here — it lives only on the HVACBusiness
+  // @graph entity. Two aggregateRatings on one page triggers GSC's "Review has
+  // multiple aggregate ratings" error (Service block + global business).
   brand: { '@type': 'Brand', name: SITE.name },
   speakable: {
     '@type': 'SpeakableSpecification',
