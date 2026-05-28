@@ -820,8 +820,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       document.getElementById('kpi-revenue-spark').innerHTML = spark(t.map(p => p.revenue),    { stroke:'#1a2e45', fill:'rgba(26,46,69,0.10)' });
 
       // By call type
-      const types = ['tune_up','diagnostic','estimate','install','iaq','other'];
-      const labels = { tune_up:'Tune-up', diagnostic:'Diagnostic', estimate:'Estimate', install:'Install', iaq:'IAQ', other:'Other' };
+      const types = ['tune_up','diagnostic','estimate','install','iaq','admin','other'];
+      const labels = { tune_up:'Tune-up', diagnostic:'Diagnostic', estimate:'Estimate', install:'Install', iaq:'IAQ / duct', admin:'Admin (permits, pickups)', other:'Other' };
       const rows = [];
       for (const tp of types) {
         const cv = s.call_volume[tp] || 0;
@@ -1064,9 +1064,12 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         const indScore = scoreIndustry(t);
         const indGrade = grade(indScore);
         const indColor = gradeColor(indGrade);
+        const formerBadge = (t.is_active === false)
+          ? ` <span class="pill" style="font-size:9px;background:#fee2e2;color:#991b1b" title="No longer active in Housecall Pro — drops off once they have no jobs in the window">former</span>`
+          : '';
         const name = t.is_owner
-          ? `<strong>${esc(t.tech_name)}</strong> <span class="pill pill-info" style="font-size:9px">${esc(t.role || 'OWNER')}</span>`
-          : `<strong>${esc(t.tech_name)}</strong>${t.role ? ` <span class="text-[10px] text-slate-500">${esc(t.role)}</span>` : ''}`;
+          ? `<strong>${esc(t.tech_name)}</strong> <span class="pill pill-info" style="font-size:9px">${esc(t.role || 'OWNER')}</span>${formerBadge}`
+          : `<strong>${esc(t.tech_name)}</strong>${t.role ? ` <span class="text-[10px] text-slate-500">${esc(t.role)}</span>` : ''}${formerBadge}`;
         const peerCell = peer
           ? `<span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:28px;height:28px;border-radius:8px;background:${color};color:#fff;font-weight:700;font-size:13px;line-height:28px;text-align:center">${g}</span><span class="num text-xs text-slate-500">${sc.score.toFixed(0)}</span></span>`
           : `<span class="text-xs text-slate-400">—</span>`;
@@ -1983,30 +1986,54 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       const result = document.getElementById('hours-result');
       const summary = document.getElementById('hours-summary');
       result.hidden = false;
-      result.innerHTML = `<div class="text-slate-500">Uploading ${esc(file.name)}…</div>`;
+      result.innerHTML = `<div class="card-quiet text-slate-600">⏳ Uploading <strong>${esc(file.name)}</strong>…</div>`;
+      // Fetch directly (not via api()) so we can read the friendly error
+      // message in the JSON body on a 400 instead of api() swallowing it.
       try {
         const form = new FormData();
         form.append('file', file);
-        const r = await api('/api/admin/timesheets-upload', { method: 'POST', body: form });
+        const res = await fetch(withAuth('/api/admin/timesheets-upload'), { method: 'POST', body: form, credentials: 'include' });
+        const r = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          // LOUD red error banner with the server's specific guidance.
+          result.innerHTML = `<div class="card-quiet" style="border-left:4px solid #dc2626; background:#fef2f2">
+            <div class="font-bold text-red-700">⚠ Upload didn't work</div>
+            <div class="text-sm text-slate-700 mt-1">${esc(r.error || ('HTTP ' + res.status))}</div>
+            ${r.header_seen && r.header_seen.length ? `<div class="text-[11px] text-slate-500 mt-2">Columns I saw: ${esc(r.header_seen.join(' · '))}</div>` : ''}
+          </div>`;
+          toast('Upload failed — see the red box for what to fix', 'error');
+          return;
+        }
         const range = r.date_range ? `${r.date_range.from} → ${r.date_range.to}` : '—';
-        const unmappedNote = r.unmapped_columns && r.unmapped_columns.length
-          ? `<div class="text-[11px] text-slate-500 mt-1">Unmapped columns: ${esc(r.unmapped_columns.join(', '))}</div>` : '';
         const unmatchedNote = r.sample_unmatched && r.sample_unmatched.length
-          ? `<div class="text-[11px] text-amber-700 mt-1">Unmatched names: ${esc(r.sample_unmatched.join(', '))}</div>` : '';
-        result.innerHTML = `<div class="card-quiet">
-          <div class="font-semibold text-emerald-700">✓ Uploaded ${esc(file.name)}</div>
-          <div class="mt-1">${fmtI(r.matched_rows)}/${fmtI(r.total_rows)} rows matched to a tech · ${fmtI(r.unmatched_rows)} unmatched</div>
-          <div class="text-[11px] text-slate-500 mt-1">Date range: ${range}</div>
-          ${unmappedNote}${unmatchedNote}
+          ? `<div class="text-[12px] text-amber-700 mt-2">⚠ ${fmtI(r.unmatched_rows)} rows couldn't be matched to a tech — names not found in HCP: <strong>${esc(r.sample_unmatched.join(', '))}</strong>. Fix the spelling in the CSV or check the employee exists in Housecall Pro, then re-upload.</div>`
+          : '';
+        const mapping = r.column_mapping || {};
+        const mappedCols = Object.entries(mapping).filter(([, v]) => v !== null).map(([k]) => k.replace(/_/g, ' ')).join(', ');
+        // LOUD green success banner.
+        result.innerHTML = `<div class="card-quiet" style="border-left:4px solid #15803d; background:#f0fdf4">
+          <div class="font-bold text-emerald-700 text-base">✓ Uploaded — hours are now on the leaderboard</div>
+          <div class="text-sm text-slate-700 mt-1"><strong>${fmtI(r.matched_rows)}</strong> of ${fmtI(r.total_rows)} rows matched to a tech${r.unmatched_rows ? ` · ${fmtI(r.unmatched_rows)} unmatched` : ''}</div>
+          <div class="text-[12px] text-slate-500 mt-1">Date range: <strong>${range}</strong> · columns read: ${esc(mappedCols || '—')}</div>
+          ${unmatchedNote}
+          <div class="text-[11px] text-slate-500 mt-2">Scroll up to the tech leaderboard — the <strong>Hours</strong> and <strong>$/Hr</strong> columns now show real numbers for this date range.</div>
         </div>`;
-        summary.innerHTML = `<div>Last upload: <span class="num">${fmtI(r.matched_rows)}</span> rows matched · ${range}</div>`;
-        toast(`Hours uploaded: ${r.matched_rows} matched, ${r.unmatched_rows} unmatched`, 'ok');
-        // Refresh the leaderboard so $/Hr columns light up.
+        toast(`Hours uploaded: ${r.matched_rows} matched`, 'ok');
         await loadAll();
         loadHoursRecent();
       } catch (e) {
-        result.innerHTML = `<div class="text-red-600">Upload failed: ${esc(e.message || String(e))}</div>`;
+        result.innerHTML = `<div class="card-quiet" style="border-left:4px solid #dc2626; background:#fef2f2"><div class="font-bold text-red-700">⚠ Upload failed</div><div class="text-sm text-slate-700 mt-1">${esc(e.message || String(e))}</div></div>`;
+        toast('Upload failed', 'error');
       }
+    }
+    async function deleteHoursBatch(batchId, label) {
+      if (!confirm(`Remove this upload (${label})? The hours for that date range will be cleared.`)) return;
+      try {
+        await api(`/api/admin/timesheets-upload?batch_id=${encodeURIComponent(batchId)}`, { method: 'DELETE' });
+        toast('Upload removed', 'ok');
+        await loadAll();
+        loadHoursRecent();
+      } catch (e) { toast(e.message || 'Delete failed', 'error'); }
     }
     async function loadHoursRecent() {
       try {
@@ -2014,18 +2041,22 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         const wrap = document.getElementById('hours-recent');
         const summary = document.getElementById('hours-summary');
         const runs = r.runs || [];
-        if (!runs.length) { wrap.innerHTML = '<div class="text-slate-400 italic">No uploads yet.</div>'; return; }
+        if (!runs.length) { wrap.innerHTML = '<div class="text-slate-400 italic">No uploads yet.</div>'; if (summary) summary.textContent = 'No CSV uploaded yet.'; return; }
         const latest = runs[0];
         summary.innerHTML = `<div>Last upload: <span class="num">${fmtI(latest.matched_rows)}</span> rows · ${latest.date_min || '?'} → ${latest.date_max || '?'} <span class="text-slate-400">(${fmtRel(latest.uploaded_at)})</span></div>`;
-        wrap.innerHTML = `<table class="kpi-table"><thead><tr><th>When</th><th>File</th><th class="text-right">Matched</th><th class="text-right">Unmatched</th><th>Date range</th></tr></thead><tbody>
+        wrap.innerHTML = `<table class="kpi-table"><thead><tr><th>When</th><th>File</th><th class="text-right">Matched</th><th class="text-right">Unmatched</th><th>Date range</th><th></th></tr></thead><tbody>
           ${runs.map(u => `<tr>
             <td>${fmtRel(u.uploaded_at)}</td>
             <td class="truncate">${esc(u.filename || '—')}</td>
             <td class="text-right num">${fmtI(u.matched_rows)}</td>
             <td class="text-right num">${fmtI(u.unmatched_rows)}</td>
             <td>${u.date_min || '?'} → ${u.date_max || '?'}</td>
+            <td class="text-right"><button class="btn-ghost-admin text-[11px] py-0.5 px-1.5" data-del-batch="${esc(u.batch_id)}" data-del-label="${esc((u.filename||'upload') + ' ' + (u.date_min||''))}">Remove</button></td>
           </tr>`).join('')}
         </tbody></table>`;
+        wrap.querySelectorAll('[data-del-batch]').forEach(b => {
+          b.addEventListener('click', () => deleteHoursBatch(b.getAttribute('data-del-batch'), b.getAttribute('data-del-label')));
+        });
       } catch (e) { /* silent — section is optional */ }
     }
     function initHoursUpload() {

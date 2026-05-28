@@ -17,6 +17,8 @@ export interface KpiSummary {
     diagnostic: number;
     estimate: number;
     install: number;
+    iaq: number;
+    admin: number;
     other: number;
     total: number;
   };
@@ -63,7 +65,7 @@ export async function computeSummary(db: D1Database, window: DateWindow): Promis
     )
     .bind(from, to)
     .all<{ job_type: string; n: number }>();
-  const callVolume = { tune_up: 0, diagnostic: 0, estimate: 0, install: 0, other: 0, total: 0 };
+  const callVolume = { tune_up: 0, diagnostic: 0, estimate: 0, install: 0, iaq: 0, admin: 0, other: 0, total: 0 };
   for (const row of cvRes.results || []) {
     const k = (row.job_type || 'other') as keyof typeof callVolume;
     if (k in callVolume) (callVolume as Record<string, number>)[k] = row.n;
@@ -251,6 +253,7 @@ export interface TechRow {
   role: string | null;        // HCP role string — used to flag owner/CSR
   role_band: 'service' | 'install' | 'helper' | 'office' | 'owner' | 'other';  // Tim-configurable role band
   is_owner: boolean;          // true if role looks like owner/admin
+  is_active: boolean;         // false = deactivated/removed in HCP (former staff)
   jobs: number;
   shared_jobs: number;        // jobs where this tech was NOT primary (multi-tech credit)
   tune_ups: number;
@@ -334,6 +337,7 @@ export async function computeByTech(
          tj.tech_id AS tech_id,
          COALESCE(t.first_name || ' ' || t.last_name, tj.tech_id, 'Unassigned') AS tech_name,
          t.role AS role,
+         COALESCE(t.is_active, 1) AS is_active,
          COUNT(*) AS jobs,
          SUM(CASE WHEN tj.job_type = 'tune_up' THEN 1 ELSE 0 END) AS tune_ups,
          SUM(CASE WHEN tj.job_type = 'diagnostic' THEN 1 ELSE 0 END) AS diagnostics,
@@ -351,7 +355,7 @@ export async function computeByTech(
     )
     .bind(from, to)
     .all<{
-      tech_id: string; tech_name: string; role: string | null; jobs: number;
+      tech_id: string; tech_name: string; role: string | null; is_active: number; jobs: number;
       tune_ups: number; diagnostics: number; estimates: number;
       closed_jobs: number; avg_cents: number;
       revenue_cents: number; callbacks: number; shared_jobs: number;
@@ -488,6 +492,7 @@ export async function computeByTech(
       role,
       role_band: band,
       is_owner: band === 'owner' || band === 'office',
+      is_active: r.is_active !== 0,
       jobs: r.jobs || 0,
       shared_jobs: r.shared_jobs || 0,
       tune_ups: r.tune_ups || 0,

@@ -2,6 +2,26 @@
 import AdminLayout from '../../../layouts/AdminLayout.astro';
 ---
 <AdminLayout title="Tech detail">
+  <style is:global>
+    /* Print / PDF — 1-page tech scorecard (Tim asked 2026-05-21).
+       Hide nav/controls, tighten spacing, force light bg, avoid card breaks. */
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #fff !important; }
+      .admin-shell > footer { display: none !important; }
+      main { padding: 0 !important; }
+      main.container-site, .container-site { max-width: 100% !important; padding: 0 !important; }
+      .card, .card-quiet { box-shadow: none !important; border: 1px solid #ccc !important; break-inside: avoid; page-break-inside: avoid; margin-bottom: 8px !important; }
+      section { break-inside: avoid; }
+      .stat-value { font-size: 1.6rem !important; }
+      /* Expand any collapsed AI sections / skeletons so the print is complete */
+      .skeleton { display: none !important; }
+      @page { margin: 0.5in; size: letter portrait; }
+      /* Print header band */
+      #th-print-header { display: block !important; }
+    }
+    #th-print-header { display: none; }
+  </style>
   <div id="login-gate" hidden>
     <div class="card login-card">
       <h2 class="text-xl font-bold mb-1">Sign in</h2>
@@ -22,18 +42,35 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <h1 id="th-name" class="text-xl sm:text-2xl font-bold text-navy-700">Tech detail</h1>
           <div id="th-role" class="text-xs text-slate-500 mt-1"></div>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 flex-wrap no-print">
           <select id="th-window" class="tab" aria-label="Window">
             <option value="7">Last 7 days</option>
             <option value="30" selected>Last 30 days</option>
             <option value="90">Last 90 days</option>
             <option value="365">Last 365 days</option>
+            <option value="this_month">This month</option>
+            <option value="last_month">Last month</option>
+            <option value="custom">Custom range…</option>
           </select>
+          <button id="th-print" class="btn-ghost-admin text-xs py-1.5 px-2.5" type="button" title="Print or save this scorecard as a 1-page PDF">🖨 Print / PDF</button>
+        </div>
+      </div>
+      <!-- Custom range popover -->
+      <div id="th-custom-range" class="hidden container-site pb-3 no-print">
+        <div class="card flex items-end gap-3 flex-wrap" style="max-width:520px">
+          <label class="text-xs font-semibold flex-1 min-w-[130px]">From<input id="th-cr-from" type="date" class="w-full mt-1 px-3 py-2 border border-line rounded text-sm" /></label>
+          <label class="text-xs font-semibold flex-1 min-w-[130px]">To<input id="th-cr-to" type="date" class="w-full mt-1 px-3 py-2 border border-line rounded text-sm" /></label>
+          <button id="th-cr-apply" type="button" class="btn-admin text-sm">Apply</button>
         </div>
       </div>
     </header>
 
     <main class="container-site py-4 sm:py-6 space-y-5">
+      <!-- Print-only header band -->
+      <div id="th-print-header" style="margin-bottom:12px; border-bottom:2px solid #1a2e45; padding-bottom:6px">
+        <div style="font-size:1.25rem; font-weight:700; color:#1a2e45">I Care Air Care — Tech Scorecard</div>
+        <div style="font-size:0.8rem; color:#555"><span id="th-print-name">—</span> · <span id="th-print-window">—</span> · printed <span id="th-print-date">—</span></div>
+      </div>
       <section class="card">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -84,7 +121,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       <section class="card overflow-x-auto">
         <h2 class="text-lg font-bold text-navy-700 mb-3">Top 5 jobs by ticket</h2>
         <table class="kpi-table">
-          <thead><tr><th>Job</th><th>Type</th><th class="hidden sm:table-cell">Completed</th><th class="text-right">Ticket</th></tr></thead>
+          <thead><tr><th>Customer</th><th>Type</th><th class="hidden sm:table-cell">Completed</th><th class="text-right">Ticket</th></tr></thead>
           <tbody id="th-top-rows"><tr><td colspan="4" class="text-slate-400 text-sm py-4">—</td></tr></tbody>
         </table>
       </section>
@@ -296,19 +333,53 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       }
     }
 
+    // Resolve the window selector to either a rolling `days` value or an
+    // explicit from/to range (presets + custom). Returns a query-string
+    // fragment + a human label.
+    function resolveWindow() {
+      const sel = document.getElementById('th-window').value;
+      const ymd = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+      const now = new Date();
+      if (sel === 'this_month') {
+        const first = new Date(now.getFullYear(), now.getMonth(), 1);
+        return { qs: `from=${first.toISOString()}&to=${now.toISOString()}`, label: `${first.toLocaleString('en-US',{month:'long'})} (month-to-date)`, days: Math.max(1, Math.round((now-first)/86400000)) };
+      }
+      if (sel === 'last_month') {
+        const firstThis = new Date(now.getFullYear(), now.getMonth(), 1);
+        const lastPrev = new Date(firstThis.getTime() - 1);
+        const firstPrev = new Date(lastPrev.getFullYear(), lastPrev.getMonth(), 1);
+        return { qs: `from=${firstPrev.toISOString()}&to=${lastPrev.toISOString()}`, label: `${firstPrev.toLocaleString('en-US',{month:'long'})} ${firstPrev.getFullYear()}`, days: Math.max(1, Math.round((lastPrev-firstPrev)/86400000)) };
+      }
+      if (sel === 'custom') {
+        const f = document.getElementById('th-cr-from').value, t = document.getElementById('th-cr-to').value;
+        if (f && t) {
+          const fd = new Date(f + 'T00:00:00'), td = new Date(t + 'T23:59:59');
+          return { qs: `from=${fd.toISOString()}&to=${td.toISOString()}`, label: `${f} → ${t}`, days: Math.max(1, Math.round((td-fd)/86400000)) };
+        }
+        return { qs: `days=30`, label: '30 day window', days: 30 };
+      }
+      const days = parseInt(sel, 10) || 30;
+      return { qs: `days=${days}`, label: `${days} day window`, days };
+    }
+
     async function load() {
       if (!techId) { toast('Missing ?id=', 'error'); return; }
-      const days = parseInt(document.getElementById('th-window').value, 10) || 30;
+      const win = resolveWindow();
+      const days = win.days;
       try {
-        const data = await api(`/api/kpis/tech-detail?id=${encodeURIComponent(techId)}&days=${days}`);
+        const data = await api(`/api/kpis/tech-detail?id=${encodeURIComponent(techId)}&${win.qs}`);
         const s = data.summary, sc = data.score, peer = data.peer_comparison;
 
         document.getElementById('th-name').textContent = s.tech_name;
         document.getElementById('th-role').textContent = s.role || '';
+        // Print header fields
+        document.getElementById('th-print-name').textContent = s.tech_name;
+        document.getElementById('th-print-window').textContent = win.label;
+        document.getElementById('th-print-date').textContent = new Date().toLocaleDateString();
         document.getElementById('th-score').textContent = sc.total.toFixed(1);
         document.getElementById('th-grade').textContent = sc.grade;
         document.getElementById('th-grade').style.color = gradeColor(sc.grade);
-        document.getElementById('th-grade-sub').textContent = `Formula A · ${days} day window`;
+        document.getElementById('th-grade-sub').textContent = `Formula A · ${win.label}`;
 
         const labels = { revenue_per_day:'Rev/day', avg_ticket:'Ticket', close_rate:'Close', membership_conversion:'Members', callback_rate_inverted:'Callbacks', review_rate:'Reviews', utilization:'Utilization', volume:'Volume' };
         document.getElementById('th-score-bars').innerHTML = Object.entries(sc.components).map(([k, v]) => `
@@ -341,7 +412,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
         const tj = data.top_jobs || [];
         document.getElementById('th-top-rows').innerHTML = tj.length
-          ? tj.map(j => `<tr><td class="font-mono text-xs">${esc(j.job_id.slice(-8))}</td><td>${esc(j.job_type)}</td><td class="hidden sm:table-cell text-xs text-slate-500">${j.completed_at ? new Date(j.completed_at).toLocaleDateString() : '—'}</td><td class="text-right num"><strong>${fmt$(j.ticket)}</strong></td></tr>`).join('')
+          ? tj.map(j => `<tr><td><strong>${esc(j.customer_name || 'Unknown customer')}</strong><div class="font-mono text-[10px] text-slate-400">${esc(j.job_id.slice(-8))}</div></td><td>${esc(j.job_type)}</td><td class="hidden sm:table-cell text-xs text-slate-500">${j.completed_at ? new Date(j.completed_at).toLocaleDateString() : '—'}</td><td class="text-right num"><strong>${fmt$(j.ticket)}</strong></td></tr>`).join('')
           : `<tr><td colspan="4" class="text-slate-400 text-sm py-4">No invoiced jobs in window.</td></tr>`;
 
         const cmp = (a, b) => a > b ? 'text-emerald-700' : a < b ? 'text-amber-700' : 'text-slate-600';
@@ -355,11 +426,17 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       } catch (e) { toast(e.message || 'Load failed', 'error'); }
     }
 
-    document.getElementById('th-window').addEventListener('change', load);
-    document.getElementById('th-ai-refresh').addEventListener('click', () => {
-      const days = parseInt(document.getElementById('th-window').value, 10) || 30;
-      loadAICoaching(days, true);
+    document.getElementById('th-window').addEventListener('change', () => {
+      const isCustom = document.getElementById('th-window').value === 'custom';
+      document.getElementById('th-custom-range').classList.toggle('hidden', !isCustom);
+      if (!isCustom) load();   // presets/rolling apply immediately; custom waits for Apply
     });
+    document.getElementById('th-cr-apply').addEventListener('click', load);
+    document.getElementById('th-ai-refresh').addEventListener('click', () => {
+      loadAICoaching(resolveWindow().days, true);
+    });
+    // Print / PDF — browser's native print dialog with a print stylesheet.
+    document.getElementById('th-print').addEventListener('click', () => window.print());
     document.getElementById('login-form').addEventListener('submit', async (ev) => {
       ev.preventDefault();
       const k = document.getElementById('login-key').value.trim();

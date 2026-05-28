@@ -52,9 +52,21 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const url = new URL(request.url);
   const techId = url.searchParams.get('id');
   if (!techId) return jsonResponse({ error: 'Missing ?id=<tech_hcp_id>' }, 400);
-  const days = Math.min(365, Math.max(1, parseInt(url.searchParams.get('days') || '30', 10) || 30));
-  const to = new Date();
-  const from = new Date(to.getTime() - days * 86400_000);
+  // Custom range support (Tim asked 2026-05-22): explicit from/to override
+  // the rolling `days` window. Lets the tech scorecard match the main
+  // dashboard's custom range / preset selection.
+  const fromParam = url.searchParams.get('from');
+  const toParam = url.searchParams.get('to');
+  let from: Date, to: Date, days: number;
+  if (fromParam && toParam) {
+    from = new Date(fromParam);
+    to = new Date(toParam);
+    days = Math.max(1, Math.round((to.getTime() - from.getTime()) / 86400_000));
+  } else {
+    days = Math.min(3650, Math.max(1, parseInt(url.searchParams.get('days') || '30', 10) || 30));
+    to = new Date();
+    from = new Date(to.getTime() - days * 86400_000);
+  }
 
   // Tech basics
   const tech = await env.DB
@@ -221,8 +233,10 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     components[k] = { raw, normalized, weighted, measured: isMeasured };
     total += weighted;
   }
+  // Grade scale matches the leaderboard's Will-tuned cuts (2026-05-15):
+  // 80=A, 60=B, 40=C, 20=D, else F. (Was 90/80/70/60 — made every tech an F.)
   const grade: 'A' | 'B' | 'C' | 'D' | 'F' =
-    total >= 90 ? 'A' : total >= 80 ? 'B' : total >= 70 ? 'C' : total >= 60 ? 'D' : 'F';
+    total >= 80 ? 'A' : total >= 60 ? 'B' : total >= 40 ? 'C' : total >= 20 ? 'D' : 'F';
   const scoreOut = {
     total: Math.round(total * 10) / 10,
     grade,
@@ -232,20 +246,24 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     peer_relative: true,
   };
 
-  // Top 5 jobs by ticket in window
+  // Top 5 jobs by ticket in window — JOIN customers so we can show the
+  // customer name (Tim asked for names instead of/in addition to job #).
   const topJobsRes = await env.DB
     .prepare(
-      `SELECT hcp_id, customer_hcp_id, job_type, completed_at, invoice_total_cents
-       FROM jobs
-       WHERE primary_tech_hcp_id = ? AND completed_at >= ? AND completed_at <= ?
-         AND invoice_total_cents IS NOT NULL
-       ORDER BY invoice_total_cents DESC LIMIT 5`,
+      `SELECT j.hcp_id, j.customer_hcp_id, j.job_type, j.completed_at, j.invoice_total_cents,
+              c.first_name AS c_first, c.last_name AS c_last, c.company AS c_company
+       FROM jobs j
+       LEFT JOIN customers c ON c.hcp_id = j.customer_hcp_id
+       WHERE j.primary_tech_hcp_id = ? AND j.completed_at >= ? AND j.completed_at <= ?
+         AND j.invoice_total_cents IS NOT NULL
+       ORDER BY j.invoice_total_cents DESC LIMIT 5`,
     )
     .bind(techId, from.toISOString(), to.toISOString())
-    .all<{ hcp_id: string; customer_hcp_id: string; job_type: string; completed_at: string; invoice_total_cents: number }>();
+    .all<{ hcp_id: string; customer_hcp_id: string; job_type: string; completed_at: string; invoice_total_cents: number; c_first: string | null; c_last: string | null; c_company: string | null }>();
   const topJobs = (topJobsRes.results || []).map((r) => ({
     job_id: r.hcp_id,
     customer_id: r.customer_hcp_id,
+    customer_name: [r.c_first, r.c_last].filter(Boolean).join(' ').trim() || r.c_company || null,
     job_type: r.job_type,
     completed_at: r.completed_at,
     ticket: round((r.invoice_total_cents || 0) / 100, 2),
