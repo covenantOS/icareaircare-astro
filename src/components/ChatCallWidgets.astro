@@ -121,6 +121,9 @@ import { SITE } from '../lib/site';
           class="w-full rounded-md border border-slate-200 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 placeholder:text-slate-400 resize-none"
         ></textarea>
       </label>
+      {SITE.turnstileSiteKey && (
+        <div class="cf-turnstile" data-sitekey={SITE.turnstileSiteKey} data-size="flexible"></div>
+      )}
       <button
         type="submit"
         class="w-full inline-flex items-center justify-center gap-2 rounded-md bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-3 transition"

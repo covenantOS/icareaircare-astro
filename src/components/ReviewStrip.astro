@@ -180,17 +180,14 @@ const firstFeatured = featured[0];
   </div>
 </section>
 
-<!-- JSON-LD: AggregateRating + first 10 Reviews -->
+<!-- JSON-LD: attaches the displayed Reviews to the #business entity. NO
+     aggregateRating here — that lives only on the HVACBusiness @graph in
+     BaseLayout. A second aggregateRating on the same @id triggers GSC's
+     "Review has multiple aggregate ratings" error sitewide. -->
 <script type="application/ld+json" set:html={JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   '@id': `${SITE.url}/#business`,
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: SITE.rating.value,
-    reviewCount: SITE.rating.count,
-    bestRating: 5,
-  },
   review: reviews.slice(0, 10).map(r => ({
     '@type': 'Review',
     author: { '@type': 'Person', name: r.n },

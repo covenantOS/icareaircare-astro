@@ -76,7 +76,9 @@ const reviewSchemaItems = (reviews || []).slice(0, 5).map(r => ({
     bestRating: 5,
     worstRating: 1,
   },
-  itemReviewed: { '@id': `${SITE.url}/#business` },
+  // itemReviewed intentionally omitted — a Review nested inside a Service can't
+  // carry itemReviewed (GSC "invalid object type" / "nested object can't contain
+  // itemReviewed"). The parent Service is the implied reviewed item.
   ...(r.neighborhood ? { locationCreated: { '@type': 'Place', name: `${r.neighborhood}, ${cityName}, FL` } } : {}),
 }));
 
@@ -95,12 +97,9 @@ const areaSchema: any = {
   description,
   url: `${SITE.url}/service-areas/${slug}/`,
   inLanguage: 'en-US',
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: SITE.rating.value,
-    reviewCount: SITE.rating.count,
-    bestRating: 5,
-  },
+  // aggregateRating intentionally NOT set here — it lives only on the HVACBusiness
+  // @graph entity. Duplicating it on the Service block triggers GSC's "Review has
+  // multiple aggregate ratings" error.
   ...(reviewSchemaItems.length > 0 ? { review: reviewSchemaItems } : {}),
   speakable: {
     '@type': 'SpeakableSpecification',
