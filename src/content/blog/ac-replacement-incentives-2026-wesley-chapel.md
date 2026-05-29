@@ -29,22 +29,27 @@ checklist:
 <h2>Key statistics on AC incentives and Florida energy costs</h2>
 <p>Florida homeowners face a dual challenge of higher cooling costs while federal incentive programs transition. Data from the U.S. Energy Information Administration, combined with local HVAC trends we observe at I Care Air Care, shows rising expenses and a closing window for maximum financial aid on new, efficient systems.</p>
 <ul>
-<li><strong>15.86 cents/kWh</strong> - Florida's residential electricity rate in February 2026 (U.S. Energy Information Administration), directly increasing the cost to run any inefficient air conditioner.</li>
-<li><strong>+8.0% increase</strong> - Florida electricity prices rose from 14.68 to 15.86 cents per kWh in just one year (EIA), accelerating the payback period for an efficiency upgrade.</li>
-<li><strong>~$190.32/month</strong> - The estimated monthly electric bill for a Florida home using a conservative 1,200 kWh, calculated from EIA data.</li>
-<li><strong>4,000+ homes served</strong> - I Care Air Care has completed HVAC work for thousands of Tampa Bay households.</li>
-<li><strong>16+ years in service</strong> - The company has operated in the Tampa Bay area since 2010, navigating multiple cycles of incentive changes and climate demands.</li>
-<li><strong>700+ Google reviews, 4.9-star average</strong> - A high volume of positive feedback, a critical trust signal when choosing a contractor for a major investment.</li>
-<li><strong>License CAC1816515</strong> - Our Florida HVAC contractor license, verifying state compliance, insurance, and professional installation standards.</li>
-<li><strong>1-year workmanship warranty</strong> - Covers parts and labor for installation-related issues, on top of manufacturer coverage.</li>
+<li><strong><a href="https://www.eia.gov/" target="_blank" rel="noopener">15.86 cents/kWh</a></strong> - Florida's residential electricity rate in February 2026 (U.S. Energy Information Administration), directly increasing the cost to run any inefficient air conditioner.</li>
+<li><strong><a href="https://www.eia.gov/" target="_blank" rel="noopener">+8.0% increase</a></strong> - Florida electricity prices rose from 14.68 to 15.86 cents per kWh in just one year (EIA), accelerating the payback period for an efficiency upgrade.</li>
+<li><strong><a href="https://www.eia.gov/" target="_blank" rel="noopener">~$190.32/month</a></strong> - The estimated monthly electric bill for a Florida home using a conservative 1,200 kWh, calculated from EIA data.</li>
+<li><strong><a href="/about-us/">4,000+ homes served</a></strong> - I Care Air Care has completed HVAC work for thousands of Tampa Bay households.</li>
+<li><strong><a href="/about-us/">16+ years in service</a></strong> - The company has operated in the Tampa Bay area since 2010, navigating multiple cycles of incentive changes and climate demands.</li>
+<li><strong><a href="/reviews/">700+ Google reviews, 4.9-star average</a></strong> - A high volume of positive feedback, a critical trust signal when choosing a contractor for a major investment.</li>
+<li><strong><a href="/about-us/">License CAC1816515</a></strong> - Our Florida HVAC contractor license, verifying state compliance, insurance, and professional installation standards.</li>
+<li><strong><a href="/services/ac-replacement-tampa/">1-year workmanship warranty</a></strong> - Covers parts and labor for installation-related issues, on top of manufacturer coverage.</li>
 </ul>
 
 <h2>Why Florida's 15.86 cents/kWh electricity rate matters for AC owners</h2>
-<p>15.86 cents per kilowatt-hour, according to U.S. Energy Information Administration data for February 2026, is more than a number, it's the direct operating cost for every hour an air conditioner runs. For a homeowner with an older, low-SEER unit running 8 to 10 hours a day in the summer, this rate translates to hundreds of dollars in monthly cooling costs.</p>
+<p><a href="https://www.eia.gov/" target="_blank" rel="noopener">15.86 cents per kilowatt-hour, according to U.S. Energy Information Administration data for February 2026</a>, is more than a number, it's the direct operating cost for every hour an air conditioner runs. For a homeowner with an older, low-SEER unit running 8 to 10 hours a day in the summer, this rate translates to hundreds of dollars in monthly cooling costs.</p>
 <p>The higher the rate, the greater the financial return on investing in a high-efficiency system. A modern AC with a SEER rating of 16 or higher uses significantly less electricity to deliver the same cooling, making the higher upfront cost easier to justify as utility rates climb. The equation is straightforward: inefficient systems become luxury items in a high-rate environment.</p>
 
+<figure>
+<img src="/images/air-conditioning-installation-wesley-chapel-outdoor-condenser-fan-grille.webp" alt="Close-up of a newly installed energy-efficient AC condenser fan grille in Wesley Chapel - I Care Air Care" width="1024" height="683" loading="lazy" />
+<figcaption>A modern high-SEER condenser delivers the same cooling for far less electricity than a 15-year-old unit.</figcaption>
+</figure>
+
 <h2>Florida's 8% electricity rate increase explained</h2>
-<p>The jump from 14.68 to 15.86 cents per kWh in one year, as reported by the EIA, is driven by several interconnected factors. Florida's continued population growth increases overall demand on the power grid, especially during peak summer hours. The cost of natural gas, a primary fuel for electricity generation, remains volatile, and investments in grid hardening and storm resilience after severe weather also contribute to rising base rates.</p>
+<p><a href="https://www.eia.gov/" target="_blank" rel="noopener">The jump from 14.68 to 15.86 cents per kWh in one year, as reported by the EIA</a>, is driven by several interconnected factors. Florida's continued population growth increases overall demand on the power grid, especially during peak summer hours. The cost of natural gas, a primary fuel for electricity generation, remains volatile, and investments in grid hardening and storm resilience after severe weather also contribute to rising base rates.</p>
 <p>For homeowners, this trend is not an anomaly, it's a likely direction for the future. Each percentage increase widens the operating-cost gap between an old AC and a new one, financially punishing procrastination.</p>
 <table>
 <thead>
@@ -57,16 +62,26 @@ checklist:
 </table>
 
 <h2>The average Florida electric bill: why it's near $190 per month</h2>
-<p>The estimated $190.32 monthly bill for 1,200 kWh of usage, calculated from current EIA rate data, highlights the burden of climate control. In Florida, air conditioning can account for over 50% of a home's electricity consumption during the hottest months. An older, poorly maintained system can consume 1,200 kWh just for cooling in a single month, driving total usage even higher.</p>
+<p><a href="https://www.eia.gov/" target="_blank" rel="noopener">The estimated $190.32 monthly bill for 1,200 kWh of usage, calculated from current EIA rate data</a>, highlights the burden of climate control. In Florida, air conditioning can account for over 50% of a home's electricity consumption during the hottest months. An older, poorly maintained system can consume 1,200 kWh just for cooling in a single month, driving total usage even higher.</p>
 <p>That makes the savings from an upgrade clear. Replacing a SEER 10 system with a SEER 16 system can cut cooling energy use by over 35%. On a $190 bill where cooling is half the cost, that means:</p>
 <ul>
 <li>Savings of over $30 per month.</li>
 <li>Annual savings of roughly $360, before the next electricity rate increase happens.</li>
 </ul>
 
+<figure>
+<img src="/images/smart-thermostat-installation-tampa-honeywell.webp" alt="Smart thermostat installed by I Care Air Care to lower cooling costs in a Tampa Bay home" width="1024" height="683" loading="lazy" />
+<figcaption>Pairing a high-efficiency system with a smart thermostat compounds the monthly savings.</figcaption>
+</figure>
+
 <h2>I Care Air Care's growth: serving 4,000+ homes</h2>
 <p>Serving over 4,000 homes in the Tampa Bay area is a milestone built on consistent local service and community trust. This volume of work means we have encountered virtually every type of HVAC system, home layout, and efficiency challenge common to Florida. It represents a deep well of practical experience in proper system sizing, installation for humidity control, and navigating local permit requirements.</p>
 <p>For a homeowner, choosing a contractor with this scale of local experience reduces the risk of improper installation, a leading cause of poor efficiency and premature system failure even with the best equipment. See what neighbors say on our <a href="/reviews/">reviews page</a>.</p>
+
+<figure>
+<img src="/images/i-care-air-care-wesley-chapel-hvac-team.webp" alt="The I Care Air Care HVAC team serving Wesley Chapel and Tampa Bay homeowners" width="1024" height="683" loading="lazy" />
+<figcaption>Sixteen-plus years of local installs across Pasco, Hillsborough, and Polk counties.</figcaption>
+</figure>
 
 <h2>The value of 16+ years of HVAC experience in Florida</h2>
 <p>Operating for 16+ years in the Florida market means a contractor has seen it all: multiple incentive program rollouts, major storms, refrigerant phase-outs, and evolving building codes. Florida's combination of high heat and extreme humidity creates unique demands. A system must be sized and installed not just for temperature, but for latent heat removal to manage moisture.</p>
