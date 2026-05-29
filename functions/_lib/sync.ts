@@ -150,12 +150,21 @@ function asCents(n: number | undefined): number | undefined {
 function normalizeJobType(raw: string | undefined): string {
   if (!raw) return 'other';
   const t = raw.toLowerCase();
-  if (/tune.?up|maintenance|seasonal|precision/.test(t)) return 'tune_up';
-  // Diagnostic / repair / service call. Order matters — check before generic 'service'.
-  if (/diagnostic|service.?call|repair|trouble|no.?cool|warm.?air|leak|callback/.test(t)) return 'diagnostic';
-  if (/estimate|proposal|quote|sales.?call|comfort.?advisor/.test(t)) return 'estimate';
-  if (/install|new.?system|replacement|change.?out|changeout/.test(t)) return 'install';
-  if (/duct|iaq|air.?quality|uv|filter|thermostat|insulation/.test(t)) return 'iaq';
+  // Order matters — most specific first. Expanded 2026-05-28 (Tim asked to
+  // shrink the "other" bucket). Added repair part names, follow-ups,
+  // dryer-vent, and a dedicated 'admin' bucket for non-billable visits
+  // (permits, part pickups, office runs) so they stop polluting "other".
+  if (/tune.?up|maintenance|seasonal|precision|pm visit|ac inspection|maint\b/.test(t)) return 'tune_up';
+  // Install / replacement — check before diagnostic so "install" beats "repair".
+  if (/install|new.?system|replacement|change.?out|changeout|coil.?pull|condenser.?(swap|change)|system.?swap|equipment/.test(t)) return 'install';
+  if (/estimate|proposal|quote|sales.?call|comfort.?advisor|est-rep|consult/.test(t)) return 'estimate';
+  // Diagnostic / repair / service call / revisit. Repair part names
+  // (compressor, capacitor, etc.) and follow-up/callback visits route here.
+  if (/diagnostic|service.?call|\brepair\b|trouble|no.?cool|warm.?air|leak|callback|call.?back|warranty|recall|follow.?up|followup|revisit|visit #|compressor|capacitor|contactor|motor|blower|condenser|evaporator|refrigerant|freon|breaker|fan/.test(t)) return 'diagnostic';
+  if (/duct|iaq|air.?quality|uv\b|filter|thermostat|insulation|dryer.?vent|purifier|dehumidifier|air.?scrubber|reme/.test(t)) return 'iaq';
+  // Non-billable administrative visits — keep them OUT of the revenue
+  // call types but also out of "other" so the real picture is cleaner.
+  if (/permit|inspection|part.?(pick|pickup|up)|pick.?up|office|warehouse|drop.?off|supply|will.?call|return/.test(t)) return 'admin';
   return 'other';
 }
 

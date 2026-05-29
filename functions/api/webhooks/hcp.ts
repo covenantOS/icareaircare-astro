@@ -380,13 +380,15 @@ function numField(obj: Record<string, unknown>, ...keys: string[]): number | und
   return undefined;
 }
 function normalizeJobType(raw: string): string {
+  // Keep in sync with functions/_lib/sync.ts normalizeJobType.
   if (!raw) return 'other';
   const t = raw.toLowerCase();
-  if (/tune.?up|maintenance|seasonal|precision/.test(t)) return 'tune_up';
-  if (/diagnostic|service.?call|repair|trouble|no.?cool|warm.?air|leak|callback/.test(t)) return 'diagnostic';
-  if (/estimate|proposal|quote|sales.?call|comfort.?advisor/.test(t)) return 'estimate';
-  if (/install|new.?system|replacement|change.?out|changeout/.test(t)) return 'install';
-  if (/duct|iaq|air.?quality|uv|filter|thermostat|insulation/.test(t)) return 'iaq';
+  if (/tune.?up|maintenance|seasonal|precision|pm visit|ac inspection|maint\b/.test(t)) return 'tune_up';
+  if (/install|new.?system|replacement|change.?out|changeout|coil.?pull|condenser.?(swap|change)|system.?swap|equipment/.test(t)) return 'install';
+  if (/estimate|proposal|quote|sales.?call|comfort.?advisor|est-rep|consult/.test(t)) return 'estimate';
+  if (/diagnostic|service.?call|\brepair\b|trouble|no.?cool|warm.?air|leak|callback|call.?back|warranty|recall|follow.?up|followup|revisit|visit #|compressor|capacitor|contactor|motor|blower|condenser|evaporator|refrigerant|freon|breaker|fan/.test(t)) return 'diagnostic';
+  if (/duct|iaq|air.?quality|uv\b|filter|thermostat|insulation|dryer.?vent|purifier|dehumidifier|air.?scrubber|reme/.test(t)) return 'iaq';
+  if (/permit|inspection|part.?(pick|pickup|up)|pick.?up|office|warehouse|drop.?off|supply|will.?call|return/.test(t)) return 'admin';
   return 'other';
 }
 function extractPrimaryTech(job: Record<string, unknown>): { primary: string | undefined; all: string[] } {

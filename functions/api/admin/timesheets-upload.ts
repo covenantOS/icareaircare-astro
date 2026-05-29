@@ -47,13 +47,44 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
 
   if (!csvText.trim()) {
-    return jsonResponse({ error: 'Empty CSV body' }, 400);
+    return jsonResponse({ error: 'The file was empty. Export the Time Tracking report from Housecall Pro as CSV and try again.' }, 400);
+  }
+
+  // ─── 1b. Wrong-format detection — the #1 cause of "nothing happened".
+  // Excel (.xlsx) is a ZIP (starts "PK"); .xls starts with 0xD0CF; PDFs
+  // start "%PDF". HCP's UI offers both Excel and CSV export — Tim likely
+  // grabbed the Excel one. Tell him exactly what to do.
+  const head = csvText.slice(0, 8);
+  // Binary signatures: PK = xlsx(zip), 0xD0 = legacy xls, %PDF = pdf,
+  // or a NUL byte in the first few chars = definitely not text.
+  if (head.startsWith('PK') || head.charCodeAt(0) === 0xd0 || head.startsWith('%PDF') || /[\x00-\x08]/.test(head)) {
+    const kind = head.startsWith('%PDF') ? 'a PDF' : 'an Excel (.xlsx/.xls) file';
+    return jsonResponse({
+      error: `That looks like ${kind}, not a CSV. In Housecall Pro, when you export the Time Tracking report, choose "Export to CSV" (not Excel/PDF), then drag that .csv file here.`,
+      wrong_format: true,
+    }, 400);
   }
 
   // ─── 2. Parse the CSV ───────────────────────────────────────────────
   const report = parseTimesheetsCsv(csvText);
   if (report.total_rows === 0) {
-    return jsonResponse({ error: 'No data rows in CSV', report }, 400);
+    return jsonResponse({
+      error: 'I read the file but found no data rows. Make sure it has a header row (Employee, Date, Total Hours) plus at least one line of data. If you exported a summary/grouped report, try the detailed per-day Time Tracking export instead.',
+      header_seen: report.header_raw,
+      column_mapping: report.column_mapping,
+      notes: report.notes,
+    }, 400);
+  }
+  // Parsed rows but none had the minimum required fields (employee+date+hours).
+  const usableRows = report.rows.filter(r => r.employee_name && r.work_date && r.total_hours != null).length;
+  if (usableRows === 0) {
+    return jsonResponse({
+      error: 'I read ' + report.total_rows + ' rows but none had a usable Employee + Date + Total Hours combination. Check that those three columns exist and are filled in.',
+      header_seen: report.header_raw,
+      column_mapping: report.column_mapping,
+      unmapped_columns: report.unmapped_columns,
+      notes: report.notes,
+    }, 400);
   }
 
   // ─── 3. Match employee names to techs ───────────────────────────────
@@ -160,4 +191,26 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     .all();
 
   return jsonResponse({ runs: runs.results || [] });
+};
+
+// DELETE /api/admin/timesheets-upload?batch_id=<id> — remove a bad upload.
+// Lets Tim undo a mistaken upload (and cleans up test/junk runs). Deletes
+// both the tech_hours rows and the upload-run record for the batch.
+export const onRequestDelete: PagesFunction<Env> = async ({ request, env }) => {
+  const auth = authOrError(request, env);
+  if (!auth.ok) return jsonResponse({ error: auth.error }, auth.status);
+  if (!env.DB) return jsonResponse({ error: 'D1 not configured' }, 503);
+
+  const batchId = new URL(request.url).searchParams.get('batch_id');
+  if (!batchId) return jsonResponse({ error: 'batch_id required' }, 400);
+
+  const hoursDel = await env.DB.prepare(`DELETE FROM tech_hours WHERE upload_batch_id = ?`).bind(batchId).run();
+  const runDel = await env.DB.prepare(`DELETE FROM hours_upload_runs WHERE batch_id = ?`).bind(batchId).run();
+
+  return jsonResponse({
+    ok: true,
+    batch_id: batchId,
+    tech_hours_deleted: hoursDel.meta?.changes ?? 0,
+    upload_run_deleted: runDel.meta?.changes ?? 0,
+  });
 };
