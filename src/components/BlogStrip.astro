@@ -41,10 +41,11 @@ const srcsetMap: Record<string, { small: string; large: string; smallW: number; 
                  srcset={`${v.small} ${v.smallW}w, ${v.large} ${v.largeW}w`}
                  sizes="(min-width: 768px) 33vw, 100vw"
                  alt={p.title}
+                 title={p.title}
                  class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500"
                  loading="lazy" width="400" height="500" decoding="async" />
           ) : (
-            <img src={p.image} alt={p.title} class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" width="400" height="500" decoding="async" />
+            <img src={p.image} alt={p.title} title={p.title} class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" width="400" height="500" decoding="async" />
           )}
           <div class="absolute inset-0 bg-gradient-to-t from-navy-800/85 via-navy-800/25 to-transparent"></div>
           <div class="absolute top-4 left-4 inline-flex rounded-md bg-brand-700/90 text-white text-xs font-semibold px-2.5 py-1">{p.tag}</div>
