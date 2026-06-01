@@ -208,6 +208,10 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     .first<{ n: number }>();
   const reviewsGen = reviewRow?.n || 0;
   const reviewRatePct = summary.jobs > 0 ? round((reviewsGen / summary.jobs) * 100, 1) : 0;
+  // Surface the resolved role band so the scorecard's reclassify dropdown
+  // can pre-select the tech's current band.
+  const meRow = allTechs.find((t) => t.tech_id === techId);
+  (summary as TechSummary & { role_band?: string }).role_band = meRow?.role_band || 'other';
   // Splice the review fields onto summary so the response includes them.
   (summary as TechSummary & { reviews_generated: number; review_rate_pct: number }).reviews_generated = reviewsGen;
   (summary as TechSummary & { reviews_generated: number; review_rate_pct: number }).review_rate_pct = reviewRatePct;

@@ -102,13 +102,20 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   let unmatchedRows = 0;
   const inserts: D1PreparedStatement[] = [];
   const seenKeys = new Set<string>();           // dedup within the same upload
+  // Track exactly which tech identities this upload touches, so replace-mode
+  // only clears THOSE techs' prior rows — not everyone's. (Bug fix 2026-05-31:
+  // Tim uploaded one tech at a time and each upload wiped the previous tech's
+  // hours because the old DELETE cleared the whole date range.)
+  const matchedIds = new Set<string>();
+  const unmatchedNames = new Set<string>();
 
   for (const row of report.rows) {
     if (!row.work_date || row.total_hours == null) continue;     // skip unparseable rows
     if (!row.employee_name) continue;
 
     const matched_id = matchEmployee(row.employee_name, techs);
-    if (matched_id) matchedRows++; else unmatchedRows++;
+    if (matched_id) { matchedRows++; matchedIds.add(matched_id); }
+    else { unmatchedRows++; unmatchedNames.add(row.employee_name); }
 
     // Dedup within this upload: same employee + date keeps the largest
     // total_hours row (some HCP exports double-list partial entries).
@@ -136,12 +143,27 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     ));
   }
 
-  // ─── 5. Replace mode — wipe any existing rows in the date range for
-  // matched techs so re-uploads cleanly override prior data.
-  if (report.date_min && report.date_max) {
+  // ─── 5. Replace mode — wipe prior rows ONLY for the techs in THIS upload,
+  // within the date range. Uploading a new tech no longer clears existing
+  // techs' hours; re-uploading the same tech cleanly replaces his rows.
+  if (report.date_min && report.date_max && (matchedIds.size || unmatchedNames.size)) {
+    const clauses: string[] = [];
+    const binds: (string | number)[] = [report.date_min, report.date_max];
+    if (matchedIds.size) {
+      const ph = Array.from(matchedIds).map(() => '?').join(',');
+      clauses.push(`tech_hcp_id IN (${ph})`);
+      binds.push(...matchedIds);
+    }
+    if (unmatchedNames.size) {
+      const ph = Array.from(unmatchedNames).map(() => '?').join(',');
+      clauses.push(`(tech_hcp_id IS NULL AND tech_name_csv IN (${ph}))`);
+      binds.push(...unmatchedNames);
+    }
     await env.DB.prepare(
-      `DELETE FROM tech_hours WHERE work_date >= ? AND work_date <= ? AND source = 'csv_upload'`,
-    ).bind(report.date_min, report.date_max).run();
+      `DELETE FROM tech_hours
+       WHERE work_date >= ? AND work_date <= ? AND source = 'csv_upload'
+         AND (${clauses.join(' OR ')})`,
+    ).bind(...binds).run();
   }
 
   if (inserts.length) await env.DB.batch(inserts);
