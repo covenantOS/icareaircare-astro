@@ -4,7 +4,7 @@ description: "Safety-first steps for Wesley Chapel homes when the air conditione
 tag: "Urgent Repair"
 date: "Mar 28, 2026"
 read: "7 min"
-image: "/images/emergency-ac-repair-wesley-chapel-ac-filter-panel-deep-cleaning.webp.webp"
+image: "/images/emergency-ac-repair-wesley-chapel-ac-filter-panel-deep-cleaning.webp"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/emergency-ac-repair-tampa/"
