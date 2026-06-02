@@ -4,8 +4,8 @@ description: "Wesley Chapel homeowners may face higher AC replacement costs afte
 tag: "Local Guide"
 date: "May 29, 2026"
 read: "5 min"
-image: "/images/florida-residential-electricity-rates-8-percent-increase-2025-2026.webp"
-imageAlt: "Line chart of Florida residential electricity rates rising 8% from 14.68 cents in 2025 to 15.86 cents in 2026"
+image: "/images/changing-incentives-ac-replacement-newsroom-hero.webp"
+imageAlt: "Before and after of an old rusty AC condenser replaced with a new high-efficiency unit serviced by an I Care Air Care technician in Wesley Chapel"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/ac-replacement-tampa/"
@@ -32,10 +32,6 @@ checklist:
 <p><strong>Finding #3: The average Florida household now spends nearly $2,300 annually on electricity.</strong> Based on EIA rate data and typical usage of 1,200 kWh per month, that annual bill hits roughly $2,284. Cooling alone accounts for more than half of that during summer months. An old AC isn't just uncomfortable, it's expensive.</p>
 
 <h2>Key findings</h2>
-<figure>
-<img src="/images/ac-incentives-florida-energy-costs-key-statistics-infographic.webp" alt="Infographic of key statistics on AC incentives and Florida energy costs, including 15.86 cents/kWh, +8% increase, and $190/month" width="941" height="1672" loading="lazy" />
-<figcaption>Key statistics on AC incentives and Florida energy costs, pulled from verified sources.</figcaption>
-</figure>
 <ul>
 <li><strong><a href="https://www.eia.gov/" target="_blank" rel="noopener">15.86 cents/kWh</a></strong> - Florida residential electricity rate (February 2026). Source: U.S. Energy Information Administration (EIA), April 23, 2026.</li>
 <li><strong><a href="https://www.eia.gov/" target="_blank" rel="noopener">+8.0% increase</a></strong> - Florida electricity prices rose from 14.68 to 15.86 cents in one year. Source: EIA, April 23, 2026.</li>
@@ -47,10 +43,6 @@ checklist:
 </ul>
 
 <h2>What this means for Wesley Chapel homeowners</h2>
-<figure>
-<img src="/images/florida-190-monthly-electric-bill-50-percent-ac-usage.webp" alt="Graphic of a $190.32 average monthly Florida electric bill with air conditioning accounting for about 50% of usage" width="1376" height="768" loading="lazy" />
-<figcaption>Cooling can account for over half of a Florida home's electricity use in peak months.</figcaption>
-</figure>
 <p>This isn't abstract economics. It's real money leaving your bank account every month. If your AC is more than 10 years old, you're paying the 15.86 cents/kWh rate to run a system designed when electricity was cheaper and efficiency standards were lower. Every percentage increase in rates makes that old unit more expensive to keep.</p>
 <p>Meanwhile, the financial help available to replace that old unit is shrinking. Waiting until 2027 could mean higher monthly electric bills, fewer federal incentives, and possible exclusion from income-limited rebates. So the math is simple: replace now, lock in current incentives, and start saving on monthly operating costs. Replace later, and you might pay more for the same equipment.</p>
 
