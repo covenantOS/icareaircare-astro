@@ -4,7 +4,8 @@ description: "Tampa heat makes delayed AC repair more than an inconvenience. Her
 tag: "AC Repair"
 date: "Mar 2, 2026"
 read: "8 min"
-image: "/images/air-conditioning-not-cooling-tampa-fl-mini-split-outdoor-condenser-unit-wall-mounted.webp"
+image: "/images/reliable-ac-repair-tampa-i-care-air-care-honest-pricing.webp"
+imageAlt: "I Care Air Care reliable AC repair with honest upfront pricing for Tampa homeowners"
 location: "Tampa"
 primaryService:
   href: "/services/ac-repair-tampa/"

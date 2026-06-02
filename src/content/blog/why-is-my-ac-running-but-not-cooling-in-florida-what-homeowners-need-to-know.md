@@ -4,7 +4,8 @@ description: "The most common Florida causes of a running AC that still leaves t
 tag: "AC Repair"
 date: "Mar 14, 2026"
 read: "9 min"
-image: "/images/air-conditioning-not-cooling-tampa-fl-mini-split-outdoor-condenser-unit-wall-mounted.webp"
+image: "/images/air-conditioning-not-cooling-tampa-fl-homeowner-ac-remote-control-troubleshooting.webp"
+imageAlt: "Florida homeowner using a remote to troubleshoot an AC that is running but not cooling"
 location: "Florida"
 primaryService:
   href: "/services/ac-repair-tampa/"

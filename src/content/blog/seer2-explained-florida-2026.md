@@ -4,8 +4,8 @@ description: "What SEER2 actually means, why it replaced SEER in 2023, Florida's
 tag: "Buyer's Guide"
 date: "Apr 29, 2026"
 read: "10 min"
-image: "/images/ac-maintenance-wesley-chapel-indoor-unit-deep-cleaning-technician.webp"
-imageAlt: "SEER2 efficiency rating explained Florida Tampa Bay HVAC — I Care Air Care"
+image: "/images/seer2-explained-florida-smart-thermostat-efficient-cooling.webp"
+imageAlt: "Smart thermostat set to 72 degrees with 45% humidity, illustrating SEER2 cooling efficiency in Florida"
 location: "Tampa Bay"
 primaryService:
   href: "/services/hvac-installation-tampa/"

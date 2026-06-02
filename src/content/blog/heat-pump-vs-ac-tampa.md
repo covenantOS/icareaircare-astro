@@ -4,8 +4,8 @@ description: "Honest math on which system wins in Florida — install costs, 202
 tag: "Buyer's Guide"
 date: "Apr 29, 2026"
 read: "12 min"
-image: "/images/HVAC-Installation-Tampa-Bay-%E2%80%93-New-Outdoor-Condenser-Installation.webp"
-imageAlt: "Outdoor heat pump condenser installation in Tampa Bay — I Care Air Care HVAC contractor Wesley Chapel"
+image: "/images/efficient-heat-pump-500-annual-savings-vs-standard-ac-furnace.webp"
+imageAlt: "Infographic comparing an efficient heat pump annual savings versus a standard AC and furnace in Tampa"
 location: "Tampa Bay"
 primaryService:
   href: "/services/hvac-installation-tampa/"

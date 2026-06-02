@@ -4,7 +4,8 @@ description: "Practical steps for reducing energy use while keeping humidity and
 tag: "Efficiency"
 date: "Feb 28, 2026"
 read: "8 min"
-image: "/images/ac-maintenance-wesley-chapel-indoor-unit-deep-cleaning-technician.webp"
+image: "/images/lower-cooling-bills-wesley-chapel-technician-reviewing-energy-bill.webp"
+imageAlt: "I Care Air Care technician reviewing a high energy bill with a Wesley Chapel homeowner to lower cooling costs"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/ac-maintenance-tampa/"

@@ -4,7 +4,8 @@ description: "Common repair symptoms, likely causes, and when to call a licensed
 tag: "AC Repair"
 date: "Feb 20, 2026"
 read: "8 min"
-image: "/images/ac-not-cooling-i-care-air-care-technician-refrigerant-diagnostics-wesley-chapel.webp"
+image: "/images/ac-repair-wesley-chapel-fl-technician-refrigerant-gauges-condenser.webp"
+imageAlt: "I Care Air Care technician using refrigerant gauges to repair an AC condenser in Wesley Chapel, FL"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/ac-repair-tampa/"

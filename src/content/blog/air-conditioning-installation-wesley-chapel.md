@@ -4,7 +4,8 @@ description: "What to ask before replacing an AC system in Wesley Chapel, from M
 tag: "Installation"
 date: "Apr 2, 2026"
 read: "10 min"
-image: "/images/HVAC-Installation-Tampa-Bay-%E2%80%93-New-Outdoor-Condenser-Installation.webp"
+image: "/images/air-conditioning-installation-wesley-chapel-new-outdoor-condenser-units-rooftop.webp"
+imageAlt: "Newly installed outdoor AC condenser units after an air conditioning installation in Wesley Chapel"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/hvac-installation-tampa/"

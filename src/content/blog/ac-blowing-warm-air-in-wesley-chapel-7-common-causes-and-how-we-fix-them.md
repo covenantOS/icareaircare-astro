@@ -4,7 +4,8 @@ description: "From capacitors to coils, here are the most common warm-air proble
 tag: "AC Repair"
 date: "Mar 8, 2026"
 read: "8 min"
-image: "/images/ac-blowing-warm-air-tampa-woman-relaxing-cool-comfort-mini-split-living-room.webp"
+image: "/images/ac-blowing-warm-air-tampa-technician-mini-split-indoor-unit-inspection-repair.webp"
+imageAlt: "I Care Air Care technician inspecting a mini-split indoor unit blowing warm air in Wesley Chapel"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/ac-repair-tampa/"

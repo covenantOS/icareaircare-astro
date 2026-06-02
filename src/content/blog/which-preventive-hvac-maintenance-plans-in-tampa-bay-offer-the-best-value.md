@@ -4,7 +4,8 @@ description: "How to compare plan value without getting distracted by coupons or
 tag: "Maintenance"
 date: "Mar 16, 2026"
 read: "8 min"
-image: "/images/ac-maintenance-wesley-chapel-indoor-unit-deep-cleaning-technician.webp"
+image: "/images/which-hvac-maintenance-plan-best-value-tampa-clean-ductwork.webp"
+imageAlt: "Clean, well-maintained galvanized HVAC ductwork representing the best-value Tampa Bay maintenance plans"
 location: "Tampa Bay"
 primaryService:
   href: "/services/ac-maintenance-tampa/"
