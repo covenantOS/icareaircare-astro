@@ -4,7 +4,8 @@ description: "Why Epperson homes often need airflow, humidity, and thermostat at
 tag: "Local Guide"
 date: "Mar 6, 2026"
 read: "7 min"
-image: "/images/ac-not-cooling-i-care-air-care-technician-refrigerant-diagnostics-wesley-chapel.webp"
+image: "/images/ac-repair-epperson-condenser-refrigerant-gauges-i-care-air-care.webp"
+imageAlt: "AC condenser with refrigerant tank and I Care Air Care service gauges during AC repair in Epperson"
 location: "Epperson"
 primaryService:
   href: "/services/ac-repair-tampa/"

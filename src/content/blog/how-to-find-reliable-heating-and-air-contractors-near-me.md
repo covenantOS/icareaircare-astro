@@ -4,7 +4,8 @@ description: "A local search checklist for finding an HVAC contractor who can ex
 tag: "Hiring Guide"
 date: "Mar 4, 2026"
 read: "7 min"
-image: "/images/Trusted-HVAC-Contractor-Near-Me-I-Care-Air-Care.webp"
+image: "/images/reliable-hvac-contractor-near-me-satisfied-homeowners-i-care-air-care.webp"
+imageAlt: "Happy homeowners with an I Care Air Care technician by the service van after finding a reliable HVAC contractor"
 location: "Tampa Bay"
 primaryService:
   href: "/services/ac-repair-tampa/"

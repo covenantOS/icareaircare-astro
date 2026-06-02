@@ -4,8 +4,8 @@ description: "An HVAC contractor's honest brand comparison — compressor warran
 tag: "Buyer's Guide"
 date: "Apr 29, 2026"
 read: "14 min"
-image: "/images/HVAC-Installation-Tampa-Bay-%E2%80%93-New-Outdoor-Condenser-Installation.webp"
-imageAlt: "Carrier Trane Rheem outdoor condenser brand comparison — Tampa Bay HVAC installer"
+image: "/images/carrier-outdoor-ac-condenser-unit-tampa-bay-brand-comparison.webp"
+imageAlt: "Carrier outdoor AC condenser installed at a Tampa Bay home, compared with Trane and Rheem"
 location: "Tampa Bay"
 primaryService:
   href: "/services/hvac-installation-tampa/"

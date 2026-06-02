@@ -4,7 +4,8 @@ description: "Builder-grade systems in Epperson, Mirada, and nearby Wesley Chape
 tag: "New Construction"
 date: "Apr 10, 2026"
 read: "10 min"
-image: "/images/HVAC-Installation-Tampa-Bay-%E2%80%93-New-Outdoor-Condenser-Installation.webp"
+image: "/images/new-construction-hvac-epperson-mirada-indoor-air-handler-ductwork.webp"
+imageAlt: "Indoor HVAC air handler and ductwork in a new-construction Epperson and Mirada home"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/hvac-installation-tampa/"

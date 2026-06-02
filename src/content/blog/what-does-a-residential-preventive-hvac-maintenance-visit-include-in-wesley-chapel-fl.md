@@ -4,7 +4,8 @@ description: "A service-call checklist for homeowners who want to know what tech
 tag: "Maintenance"
 date: "Mar 20, 2026"
 read: "8 min"
-image: "/images/ac-maintenance-wesley-chapel-indoor-unit-deep-cleaning-technician.webp"
+image: "/images/wesley-chapel-hvac-tune-up-new-pleated-air-filters.webp"
+imageAlt: "Clean pleated HVAC air filters replaced during a Wesley Chapel preventive maintenance tune-up"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/ac-maintenance-tampa/"

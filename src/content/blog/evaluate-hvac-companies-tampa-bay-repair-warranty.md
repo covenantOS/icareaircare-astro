@@ -4,7 +4,8 @@ description: "Why warranty wording matters and what homeowners should ask before
 tag: "Hiring Guide"
 date: "Mar 18, 2026"
 read: "7 min"
-image: "/images/Quality-Star-Icon.webp"
+image: "/images/evaluate-hvac-warranty-tampa-technician-reviewing-quote-homeowner.webp"
+imageAlt: "I Care Air Care technician reviewing a repair quote and warranty with a Tampa Bay homeowner"
 location: "Tampa Bay"
 primaryService:
   href: "/services/ac-repair-tampa/"

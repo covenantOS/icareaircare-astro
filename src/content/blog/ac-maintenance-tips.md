@@ -4,7 +4,8 @@ description: "Simple habits that help your AC survive Tampa Bay heat, humidity, 
 tag: "Maintenance"
 date: "Feb 14, 2026"
 read: "7 min"
-image: "/images/ac-maintenance-wesley-chapel-indoor-unit-deep-cleaning-technician.webp"
+image: "/images/ac-maintenance-tips-tampa-bay-two-technicians-servicing-condenser.webp"
+imageAlt: "Two I Care Air Care technicians servicing an outdoor AC condenser during a Tampa Bay maintenance visit"
 location: "Tampa Bay"
 primaryService:
   href: "/services/ac-maintenance-tampa/"

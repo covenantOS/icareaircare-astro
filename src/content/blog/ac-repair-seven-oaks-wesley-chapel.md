@@ -4,7 +4,8 @@ description: "Common HVAC issues in Seven Oaks homes and how to approach repair 
 tag: "Local Guide"
 date: "Mar 10, 2026"
 read: "7 min"
-image: "/images/ac-not-cooling-i-care-air-care-technician-refrigerant-diagnostics-wesley-chapel.webp"
+image: "/images/ac-repair-seven-oaks-wesley-chapel-outdoor-condenser-tool-bag.webp"
+imageAlt: "Outdoor AC condenser and I Care Air Care tool bag ready for AC repair in Seven Oaks, Wesley Chapel"
 location: "Seven Oaks"
 primaryService:
   href: "/services/ac-repair-tampa/"
