@@ -4,7 +4,8 @@ description: "What a useful maintenance plan should include, what to skip, and h
 tag: "Maintenance"
 date: "Mar 22, 2026"
 read: "9 min"
-image: "/images/ac-maintenance-wesley-chapel-indoor-unit-deep-cleaning-technician.webp"
+image: "/images/HVAC-Services-in-Tampa-FL-%E2%80%93-Outdoor-AC-Unit-Repair-Man.webp"
+imageAlt: "Local I Care Air Care technician servicing an outdoor AC unit for a trusted Tampa Bay maintenance plan"
 location: "Tampa Bay"
 primaryService:
   href: "/services/ac-maintenance-tampa/"

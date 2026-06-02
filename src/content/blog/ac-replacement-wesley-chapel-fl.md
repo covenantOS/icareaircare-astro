@@ -4,7 +4,8 @@ description: "When replacement makes more sense than repair and what a proper We
 tag: "Installation"
 date: "Feb 26, 2026"
 read: "9 min"
-image: "/images/HVAC-Installation-Tampa-Bay-%E2%80%93-New-Outdoor-Condenser-Installation.webp"
+image: "/images/ac-replacement-wesley-chapel-fl-technicians-installing-new-condenser.webp"
+imageAlt: "I Care Air Care technicians removing an old unit and installing a new AC condenser in Wesley Chapel, FL"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/hvac-installation-tampa/"

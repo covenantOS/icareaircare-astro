@@ -4,8 +4,8 @@ description: "The ten failure modes Wesley Chapel AC systems hit most often, ran
 tag: "AC Repair"
 date: "Apr 23, 2026"
 read: "10 min"
-image: "/images/ac-not-cooling-i-care-air-care-technician-refrigerant-diagnostics-wesley-chapel.webp"
-imageAlt: "Wesley Chapel AC repair technician diagnosing outdoor condenser unit — I Care Air Care"
+image: "/images/10-common-ac-problems-wesley-chapel-technician-electrical-diagnostics.webp"
+imageAlt: "I Care Air Care technician running electrical diagnostics on an outdoor AC condenser in Wesley Chapel"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/ac-repair-tampa/"

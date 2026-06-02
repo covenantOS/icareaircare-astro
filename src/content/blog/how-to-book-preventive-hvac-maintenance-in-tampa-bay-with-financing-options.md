@@ -4,7 +4,8 @@ description: "How to schedule maintenance, what information to have ready, and w
 tag: "Maintenance"
 date: "Mar 12, 2026"
 read: "6 min"
-image: "/images/ac-maintenance-wesley-chapel-indoor-unit-deep-cleaning-technician.webp"
+image: "/images/HVAC-Services-in-Tampa-FL-%E2%80%93-AC-Refrigerant-Pressure-Testing.webp"
+imageAlt: "I Care Air Care technician performing AC refrigerant pressure testing during a preventive maintenance visit in Tampa Bay"
 location: "Tampa Bay"
 primaryService:
   href: "/services/ac-maintenance-tampa/"
