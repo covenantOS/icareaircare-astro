@@ -221,6 +221,51 @@ const { title, description = 'Internal — I Care Air Care KPI dashboard' } = As
         background: var(--color-navy-700);
         color: #fff;
       }
+      /* ── Sidebar workspace layout (2026-06-03 — replaced the long scroll) ── */
+      .dash-layout {
+        display: flex;
+        gap: 1.25rem;
+        align-items: flex-start;
+        padding-top: 1rem;
+        padding-bottom: 1.5rem;
+      }
+      .dash-sidebar { flex-shrink: 0; width: 196px; position: sticky; top: 96px; }
+      .dash-nav { display: flex; flex-direction: column; gap: 3px; }
+      .dash-nav-item {
+        display: flex; align-items: center; gap: 0.6rem;
+        width: 100%; text-align: left;
+        padding: 0.6rem 0.8rem; border-radius: 9px;
+        font-weight: 600; font-size: 0.92rem;
+        color: var(--color-ink-soft); background: transparent;
+        border: none; cursor: pointer; transition: background 0.12s, color 0.12s;
+      }
+      .dash-nav-item:hover { background: var(--color-surface-2); color: var(--color-navy-700); }
+      .dash-nav-item.is-active {
+        background: var(--color-navy-700); color: #fff;
+        box-shadow: var(--shadow-soft);
+      }
+      .dash-nav-ico { font-size: 1.05rem; width: 1.35rem; text-align: center; flex-shrink: 0; }
+      /* min-width:0 lets the wide leaderboard table scroll inside the content
+         column instead of forcing the whole page wider than the viewport. */
+      .dash-main { flex: 1 1 0; min-width: 0; }
+
+      @media (max-width: 1023px) {
+        .dash-layout { flex-direction: column; gap: 0.5rem; padding-top: 0.5rem; }
+        .dash-sidebar { position: static; width: 100%; }
+        /* Horizontal icon+label strip on mobile (sticky just under the top bar). */
+        .dash-nav {
+          flex-direction: row; overflow-x: auto; gap: 6px;
+          padding: 4px 0; -webkit-overflow-scrolling: touch;
+        }
+        .dash-nav-item {
+          flex-direction: column; gap: 2px;
+          padding: 0.45rem 0.8rem; font-size: 0.68rem;
+          white-space: nowrap; border-radius: 10px;
+          border: 1px solid var(--color-line);
+        }
+        .dash-nav-item.is-active { border-color: var(--color-navy-700); }
+        .dash-nav-ico { font-size: 1.2rem; width: auto; }
+      }
       /* Goal-progress bars */
       .goal-bar {
         position: relative;

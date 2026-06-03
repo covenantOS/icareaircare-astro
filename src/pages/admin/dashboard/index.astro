@@ -17,25 +17,16 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
   <!-- DASHBOARD -->
   <div id="dashboard" hidden>
-    <!-- CONTROL-CENTER STICKY NAV -->
-    <header id="control-nav" class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-line">
-      <div class="container-site py-2 sm:py-3 flex items-center justify-between gap-3 flex-wrap">
-        <div class="flex items-center gap-3 min-w-0 flex-1">
+    <!-- TOP BAR — global: brand, sync status, actions -->
+    <header id="topbar" class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-line">
+      <div class="container-site py-2 sm:py-3 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3 min-w-0">
           <div class="hidden sm:flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 text-white font-bold text-sm flex-shrink-0">IC</div>
           <div class="min-w-0">
-            <h1 class="text-sm sm:text-base font-bold text-navy-700 truncate">I Care Air Care · Control Center</h1>
+            <h1 id="topbar-title" class="text-sm sm:text-base font-bold text-navy-700 truncate">I Care Air Care · Control Center</h1>
             <div id="sync-status" class="text-[10px] sm:text-xs text-slate-500 truncate">Loading…</div>
           </div>
         </div>
-        <nav id="section-nav" class="hidden lg:flex items-center gap-1 text-xs font-semibold flex-shrink-0" aria-label="Sections">
-          <a href="#sec-insights" data-nav="sec-insights" class="nav-pill">AI</a>
-          <a href="#sec-kpis" data-nav="sec-kpis" class="nav-pill">KPIs</a>
-          <a href="#sec-leaderboard" data-nav="sec-leaderboard" class="nav-pill">Techs</a>
-          <a href="#sec-goals" data-nav="sec-goals" class="nav-pill">Goals</a>
-          <a href="#sec-hours" data-nav="sec-hours" class="nav-pill">Hours</a>
-          <a href="#sec-reviews" data-nav="sec-reviews" class="nav-pill">Reviews</a>
-          <a href="#sec-segments" data-nav="sec-segments" class="nav-pill">Segments</a>
-        </nav>
         <div class="flex flex-wrap items-center gap-1.5 flex-shrink-0">
           <button id="chat-open-btn" class="btn-ghost-admin text-xs py-1.5 px-2.5" type="button" aria-label="Ask the dashboard" title="Ask the dashboard a question">
             <span class="hidden sm:inline">💬 Ask</span><span class="sm:hidden">💬</span>
@@ -47,24 +38,50 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <button id="logout-btn" class="btn-ghost-admin text-xs py-1.5 px-2" type="button" aria-label="Sign out">Out</button>
         </div>
       </div>
-      <!-- Mobile section pills (hidden on lg+) -->
-      <nav class="lg:hidden border-t border-line overflow-x-auto" aria-label="Sections (mobile)">
-        <div class="flex gap-1 px-3 py-1.5 text-[11px] font-semibold whitespace-nowrap">
-          <a href="#sec-insights" data-nav="sec-insights" class="nav-pill">AI</a>
-          <a href="#sec-kpis" data-nav="sec-kpis" class="nav-pill">KPIs</a>
-          <a href="#sec-leaderboard" data-nav="sec-leaderboard" class="nav-pill">Techs</a>
-          <a href="#sec-goals" data-nav="sec-goals" class="nav-pill">Goals</a>
-          <a href="#sec-hours" data-nav="sec-hours" class="nav-pill">Hours</a>
-          <a href="#sec-reviews" data-nav="sec-reviews" class="nav-pill">Reviews</a>
-          <a href="#sec-segments" data-nav="sec-segments" class="nav-pill">Segs</a>
+      <!-- CONTEXT STRIP — global date range (applies to every view) -->
+      <div class="border-t border-line bg-surface/60">
+        <div class="container-site py-1.5 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex flex-wrap items-center gap-2 overflow-x-auto" role="tablist" aria-label="Date range">
+            <button class="tab" data-range="7"  type="button" aria-pressed="false">Last 7d</button>
+            <button class="tab" data-range="30" type="button" aria-pressed="true">Last 30d</button>
+            <button class="tab" data-range="90" type="button" aria-pressed="false">Last 90d</button>
+            <span class="w-px h-6 bg-slate-200 mx-1"></span>
+            <button class="tab" data-preset="last_week"   type="button">Last week (Sun-Sat)</button>
+            <button class="tab" data-preset="this_month"  type="button">This month</button>
+            <button class="tab" data-preset="last_month"  type="button">Last month</button>
+            <button class="tab" id="custom-range-btn" type="button">Custom…</button>
+          </div>
+          <div class="text-xs text-slate-500" id="window-display"></div>
         </div>
-      </nav>
+        <div id="custom-range-popover" class="hidden container-site pb-2" style="max-width:560px">
+          <div class="card flex items-end gap-3 flex-wrap">
+            <label class="text-xs font-semibold flex-1 min-w-[140px]">From
+              <input id="cr-from" type="date" class="w-full mt-1 px-3 py-2 border border-line rounded text-sm" /></label>
+            <label class="text-xs font-semibold flex-1 min-w-[140px]">To
+              <input id="cr-to" type="date" class="w-full mt-1 px-3 py-2 border border-line rounded text-sm" /></label>
+            <button id="cr-apply" type="button" class="btn-admin text-sm">Apply</button>
+            <button id="cr-cancel" type="button" class="btn-ghost-admin text-sm">Cancel</button>
+          </div>
+        </div>
+      </div>
     </header>
 
-    <main class="container-site py-4 sm:py-6 space-y-5">
+    <!-- WORKSPACE — left sidebar nav + content area (replaces the long scroll) -->
+    <div class="dash-layout container-site">
+      <aside class="dash-sidebar">
+        <nav class="dash-nav" aria-label="Dashboard sections">
+          <button class="dash-nav-item is-active" data-view="overview" type="button"><span class="dash-nav-ico">📊</span><span class="dash-nav-label">Overview</span></button>
+          <button class="dash-nav-item" data-view="team" type="button"><span class="dash-nav-ico">👷</span><span class="dash-nav-label">Team</span></button>
+          <button class="dash-nav-item" data-view="customers" type="button"><span class="dash-nav-ico">👥</span><span class="dash-nav-label">Customers</span></button>
+          <button class="dash-nav-item" data-view="reviews" type="button"><span class="dash-nav-ico">⭐</span><span class="dash-nav-label">Reviews</span></button>
+          <button class="dash-nav-item" data-view="hours" type="button"><span class="dash-nav-ico">⏱</span><span class="dash-nav-label">Hours</span></button>
+        </nav>
+      </aside>
+
+      <main id="dash-main" class="dash-main space-y-5">
 
       <!-- AI INSIGHTS — structured visual rendering -->
-      <section id="sec-insights" class="card relative overflow-hidden fade-up" data-card="ai" style="background:linear-gradient(135deg, #fff 0%, #f0f7fa 100%); --i:0">
+      <section id="sec-insights" data-view="overview" class="card relative overflow-hidden fade-up" data-card="ai" style="background:linear-gradient(135deg, #fff 0%, #f0f7fa 100%); --i:0">
         <div class="absolute top-0 right-0 w-40 h-40 -mt-12 -mr-12 rounded-full pulse-soft" style="background:radial-gradient(circle, rgba(232,138,56,0.16), transparent 70%)"></div>
         <div class="flex items-start justify-between gap-3 relative">
           <div class="flex items-center gap-3 min-w-0">
@@ -132,39 +149,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         <div id="ai-fallback-md" hidden class="mt-3 prose-icac max-w-none text-sm text-slate-800"></div>
       </section>
 
-      <!-- DATE RANGE — rolling tabs + presets + custom picker -->
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <div class="flex flex-wrap items-center gap-2" role="tablist" aria-label="Date range">
-          <button class="tab" data-range="7"  type="button" aria-pressed="false">Last 7d</button>
-          <button class="tab" data-range="30" type="button" aria-pressed="true">Last 30d</button>
-          <button class="tab" data-range="90" type="button" aria-pressed="false">Last 90d</button>
-          <span class="w-px h-6 bg-slate-200 mx-1"></span>
-          <button class="tab" data-preset="last_week"   type="button">Last week (Sun-Sat)</button>
-          <button class="tab" data-preset="this_month"  type="button">This month</button>
-          <button class="tab" data-preset="last_month"  type="button">Last month</button>
-          <button class="tab" id="custom-range-btn" type="button">Custom…</button>
-        </div>
-        <div class="text-xs text-slate-500" id="window-display"></div>
-      </div>
-
-      <!-- CUSTOM RANGE POPOVER (hidden by default) -->
-      <div id="custom-range-popover" class="hidden card" style="position:relative; max-width:520px">
-        <div class="flex items-end gap-3 flex-wrap">
-          <label class="text-xs font-semibold flex-1 min-w-[140px]">
-            From
-            <input id="cr-from" type="date" class="w-full mt-1 px-3 py-2 border border-line rounded text-sm" />
-          </label>
-          <label class="text-xs font-semibold flex-1 min-w-[140px]">
-            To
-            <input id="cr-to" type="date" class="w-full mt-1 px-3 py-2 border border-line rounded text-sm" />
-          </label>
-          <button id="cr-apply" type="button" class="btn-admin text-sm">Apply</button>
-          <button id="cr-cancel" type="button" class="btn-ghost-admin text-sm">Cancel</button>
-        </div>
-      </div>
-
       <!-- HEADLINE KPI CARDS WITH SPARKLINES + BENCHMARKS -->
-      <section id="sec-kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <section id="sec-kpis" data-view="overview" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <article class="card hover-lift fade-up" style="--i:1; border-left:3px solid var(--color-brand-500)">
           <div class="flex items-center justify-between"><div class="stat-label">Call Volume</div><div id="kv-bench" class="text-[10px]"></div></div>
           <div id="kpi-volume" class="stat-value" data-count="0">—</div>
@@ -192,7 +178,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </section>
 
       <!-- BY CALL TYPE -->
-      <section id="sec-bytype" class="card">
+      <section id="sec-bytype" data-view="overview" class="card">
         <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
           <h2 class="text-lg font-bold text-navy-700">By call type</h2>
           <span class="text-xs text-slate-500">sold ≥ <span id="thr-sold-tu">$110</span> · min TU <span id="thr-min-tu">$175</span> / Diag <span id="thr-min-diag">$275</span></span>
@@ -217,7 +203,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </section>
 
       <!-- TECH LEADERBOARD -->
-      <section id="sec-leaderboard" class="card">
+      <section id="sec-leaderboard" data-view="team" class="card">
         <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
           <h2 class="text-lg font-bold text-navy-700">Tech leaderboard</h2>
           <div class="flex items-center gap-3 text-xs text-slate-500">
@@ -258,7 +244,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </section>
 
       <!-- HOURS UPLOAD (Tim's Path A — HCP Time Tracking CSV) -->
-      <section id="sec-hours" class="card">
+      <section id="sec-hours" data-view="hours" class="card">
         <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
           <div>
             <h2 class="text-lg font-bold text-navy-700 flex items-center gap-2">
@@ -283,7 +269,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </section>
 
       <!-- GOAL PROGRESS (Phase 8) — per-tech progress vs shop goals -->
-      <section id="sec-goals" class="card">
+      <section id="sec-goals" data-view="team" class="card">
         <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
           <div>
             <h2 class="text-lg font-bold text-navy-700 flex items-center gap-2">
@@ -302,7 +288,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </section>
 
       <!-- SEGMENTS (3-col on desktop, stack on mobile) -->
-      <section id="sec-segments" class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
+      <section id="sec-segments" data-view="customers" class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
         <article class="card">
           <div class="flex items-center justify-between mb-2">
             <h3 class="font-bold text-navy-700">Dormant 12+ months</h3>
@@ -345,7 +331,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
            link to it lives in the Google Reviews section header below.) -->
 
       <!-- GOOGLE REVIEWS -->
-      <section id="sec-reviews" class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
+      <section id="sec-reviews" data-view="reviews" class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
         <article class="card lg:col-span-1">
           <div class="flex items-center justify-between mb-2">
             <h2 class="text-lg font-bold text-navy-700">Google Reviews</h2>
@@ -374,7 +360,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </section>
 
       <!-- CUSTOMER MIX + CALLBACKS -->
-      <section id="sec-mix" class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+      <section id="sec-mix" data-view="customers" class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
         <article class="card">
           <h2 class="text-lg font-bold text-navy-700 mb-3">Customer mix</h2>
           <div class="space-y-3">
@@ -409,14 +395,15 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </section>
 
       <!-- FOOTNOTES -->
-      <section class="card-quiet text-xs text-slate-500 leading-relaxed">
+      <section data-view="overview" class="card-quiet text-xs text-slate-500 leading-relaxed">
         <p class="mb-1"><strong>Source:</strong> Housecall Pro API. Tap "Sync now" to pull latest. Membership detection: HCP job tags ("Care plan member - YES").</p>
         <p class="mb-1"><strong>Score:</strong> Formula A — 25% rev/day + 15% ticket + 15% close + 10% memberships + 10% callbacks(inv) + 10% reviews + 10% utilization + 5% volume. Tunable in Settings.</p>
         <p class="mb-1"><strong>Phase 2:</strong> Hours/utilization (Timesheets CSV ingest) · Reviews per tech (Google Business Profile API) · Real-time webhooks.</p>
         <p><strong>Industry context:</strong> Top-quartile residential HVAC tech does $2,400+/day, 75-85% close rate, $450+ avg ticket. Sources: ServiceTitan, BaaDigi, MarginPlug 2026.</p>
       </section>
 
-    </main>
+      </main>
+    </div><!-- /.dash-layout -->
 
     <!-- FLOATING CHAT PANEL (Phase 4) -->
     <!-- Visibility is controlled via the .is-open class (rule lives in AdminLayout). -->
@@ -2113,36 +2100,44 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
     // ─── SCROLL-SPY NAV ─────────────────────────────────────────────
     // Highlights the matching nav-pill as the user scrolls through sections.
-    function initSectionNav() {
-      const links = Array.from(document.querySelectorAll('a[data-nav]'));
-      if (!links.length) return;
-      const sectionIds = [...new Set(links.map(a => a.getAttribute('data-nav')))];
-      const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
-      if (!sections.length) return;
-
-      const setActive = (id) => {
-        links.forEach(a => a.classList.toggle('is-active', a.getAttribute('data-nav') === id));
-      };
-
-      const io = new IntersectionObserver((entries) => {
-        // Pick the section closest to the top with at least some intersection
-        const visible = entries.filter(e => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible[0]) setActive(visible[0].target.id);
-      }, { rootMargin: '-90px 0px -55% 0px', threshold: [0, 0.2] });
-      sections.forEach(s => io.observe(s));
-
-      // Smooth scroll on click + offset for sticky header
-      links.forEach(a => {
-        a.addEventListener('click', (e) => {
-          const id = a.getAttribute('data-nav');
-          const el = document.getElementById(id);
-          if (!el) return;
-          e.preventDefault();
-          const top = el.getBoundingClientRect().top + window.scrollY - 80;
-          window.scrollTo({ top, behavior: 'smooth' });
-          history.replaceState(null, '', '#' + id);
-        });
+    // ─── SIDEBAR WORKSPACE NAV (2026-06-03) ─────────────────────────
+    // The dashboard is now a left-sidebar workspace instead of one long
+    // scroll. Each section carries data-view; the sidebar swaps which view
+    // is visible. All render functions still populate every section on
+    // loadAll() regardless of which view is showing, so switching is instant.
+    const VIEW_TITLES = {
+      overview: 'Overview', team: 'Team', customers: 'Customers',
+      reviews: 'Reviews', hours: 'Hours',
+    };
+    const DASH_VIEW_KEY = 'icac_dash_view';
+    function showView(view) {
+      if (!VIEW_TITLES[view]) view = 'overview';
+      // Toggle section visibility by data-view (display:none = no phantom gaps).
+      document.querySelectorAll('#dash-main [data-view]').forEach(el => {
+        el.style.display = (el.getAttribute('data-view') === view) ? '' : 'none';
       });
+      // Active state on the sidebar.
+      document.querySelectorAll('.dash-nav-item').forEach(b =>
+        b.classList.toggle('is-active', b.getAttribute('data-view') === view));
+      // Reflect in the top-bar subtitle + URL hash + sessionStorage.
+      const titleEl = document.getElementById('topbar-title');
+      if (titleEl) titleEl.textContent = 'I Care Air Care · ' + VIEW_TITLES[view];
+      try { sessionStorage.setItem(DASH_VIEW_KEY, view); } catch {}
+      history.replaceState(null, '', '#' + view);
+      // Jump to top of content when switching (so a long Team view doesn't
+      // leave you scrolled halfway down the next view).
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+    function initSectionNav() {
+      const items = Array.from(document.querySelectorAll('.dash-nav-item'));
+      if (!items.length) return;
+      items.forEach(b => b.addEventListener('click', () => showView(b.getAttribute('data-view'))));
+      // Restore last view: URL hash → sessionStorage → default overview.
+      const hash = (location.hash || '').replace('#', '');
+      let initial = 'overview';
+      if (VIEW_TITLES[hash]) initial = hash;
+      else { try { const saved = sessionStorage.getItem(DASH_VIEW_KEY); if (VIEW_TITLES[saved]) initial = saved; } catch {} }
+      showView(initial);
     }
 
     // ─── PHASE 4 — AI CHAT (ASK THE DASHBOARD) ──────────────────────
