@@ -121,6 +121,27 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         </article>
       </section>
 
+      <!-- Money calls + memberships (Tim 2026-06-01) -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <article class="card">
+          <div class="stat-label">Money calls / day</div>
+          <div class="flex items-baseline gap-2">
+            <div id="th-money-day" class="stat-value">—</div>
+            <div id="th-money-sub" class="text-sm text-slate-500"></div>
+          </div>
+          <p class="text-[11px] text-slate-500 mt-1">Tune-ups, diagnostics &amp; estimates only — the revenue calls. Excludes installs, callbacks, admin.</p>
+        </article>
+        <article class="card">
+          <div class="stat-label">Care plans</div>
+          <div class="flex items-baseline gap-4 mt-1">
+            <div><div id="th-mem-new" class="text-2xl font-bold text-emerald-700">—</div><div class="text-[11px] text-slate-500">new sign-ups</div></div>
+            <div><div id="th-mem-renew" class="text-2xl font-bold text-brand-700">—</div><div class="text-[11px] text-slate-500">renewed</div></div>
+            <div><div id="th-mem-rate" class="text-2xl font-bold text-navy-700">—</div><div class="text-[11px] text-slate-500">renew rate</div></div>
+          </div>
+          <p id="th-mem-detail" class="text-[11px] text-slate-500 mt-1"></p>
+        </article>
+      </section>
+
       <!-- Job-type quick filters → drill-down (Tim: "click tune-up, see who closed which") -->
       <section class="card no-print">
         <div class="flex items-center justify-between flex-wrap gap-2">
@@ -431,6 +452,17 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         document.getElementById('th-role').textContent = s.role || '';
         // Reflect current role band in the reclassify dropdown
         if (s.role_band) document.getElementById('th-band').value = s.role_band;
+        // Money calls + memberships
+        document.getElementById('th-money-day').textContent = (s.money_calls || 0) > 0 ? (s.money_calls_per_day || 0).toFixed(1) : '—';
+        document.getElementById('th-money-sub').textContent = (s.money_calls || 0) > 0
+          ? `${s.money_calls} calls${s.days_worked ? ` over ${s.days_worked} days worked` : ' (per business day est.)'}`
+          : 'no money calls in window';
+        document.getElementById('th-mem-new').textContent = s.new_signups || 0;
+        document.getElementById('th-mem-renew').textContent = s.renewals_won || 0;
+        const renewDecided = (s.renewals_won || 0) + (s.renewals_lost || 0);
+        document.getElementById('th-mem-rate').textContent = renewDecided > 0 ? (s.renew_rate_pct || 0).toFixed(0) + '%' : '—';
+        document.getElementById('th-mem-detail').textContent =
+          `Sign-ups: ${s.new_signups_new_cust || 0} new customer + ${s.new_signups_existing || 0} existing · Renewals: ${s.renewals_won || 0} won / ${s.renewals_lost || 0} lost${s.renewals_due ? ` · ${s.renewals_due} came up for renewal` : ''}`;
         // Print header fields
         document.getElementById('th-print-name').textContent = s.tech_name;
         document.getElementById('th-print-window').textContent = win.label;

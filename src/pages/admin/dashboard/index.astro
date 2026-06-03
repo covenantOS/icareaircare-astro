@@ -238,10 +238,12 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
                 <th class="text-right">Jobs</th>
                 <th class="text-right hidden sm:table-cell" title="Tune-ups · Diagnostics · Estimates">TU · Dx · Est</th>
                 <th class="text-right">Close %</th>
+                <th class="text-right" title="Money calls per day — tune-ups, diagnostics, estimates (not installs/admin/callbacks). Uses real days worked from uploaded hours when available.">Calls/day</th>
                 <th class="text-right hidden sm:table-cell">Avg Ticket</th>
                 <th class="text-right" title="Equal-split revenue across assigned techs (existing)">Revenue</th>
                 <th class="text-right hidden md:table-cell" title="Revenue from jobs you sold. On installs, only the salesperson gets credit.">Sold $</th>
                 <th class="text-right hidden md:table-cell" title="Revenue from jobs you physically performed. On installs, only the installer gets credit.">Installed $</th>
+                <th class="text-right hidden lg:table-cell" title="Care-plan memberships: new sign-ups / renewals won. From HCP tags.">Plans</th>
                 <th class="text-right hidden lg:table-cell" title="Hours worked in window (from HCP Time Tracking CSV upload)">Hours</th>
                 <th class="text-right hidden lg:table-cell" title="Revenue ÷ hours worked. 0 until a Time Tracking CSV is uploaded.">$/Hr</th>
                 <th class="text-right hidden lg:table-cell" title="Google reviews attributed to tech">⭐ Reviews</th>
@@ -249,7 +251,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
               </tr>
             </thead>
             <tbody id="tech-rows">
-              <tr><td colspan="14" class="text-center text-slate-400 py-6">Loading…</td></tr>
+              <tr><td colspan="16" class="text-center text-slate-400 py-6">Loading…</td></tr>
             </tbody>
           </table>
         </div>
@@ -1067,9 +1069,15 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         const formerBadge = (t.is_active === false)
           ? ` <span class="pill" style="font-size:9px;background:#fee2e2;color:#991b1b" title="No longer active in Housecall Pro — drops off once they have no jobs in the window">former</span>`
           : '';
+        // Inline reclassify dropdown (Tim 2026-06-01: move techs between bands
+        // right from the board). Stops row-click navigation when used.
+        const BANDS = [['service','Service'],['install','Install'],['helper','Helper'],['office','Office'],['owner','Owner'],['other','Other']];
+        const bandSelect = `<select class="band-select no-print" data-band-tech="${esc(t.tech_id)}" title="Reclassify this tech" style="font-size:10px;border:1px solid var(--color-line);border-radius:4px;padding:1px 3px;margin-top:2px;color:#64748b">
+          ${BANDS.map(([v,lab]) => `<option value="${v}"${t.role_band===v?' selected':''}>${lab}</option>`).join('')}
+        </select>`;
         const name = t.is_owner
-          ? `<strong>${esc(t.tech_name)}</strong> <span class="pill pill-info" style="font-size:9px">${esc(t.role || 'OWNER')}</span>${formerBadge}`
-          : `<strong>${esc(t.tech_name)}</strong>${t.role ? ` <span class="text-[10px] text-slate-500">${esc(t.role)}</span>` : ''}${formerBadge}`;
+          ? `<strong>${esc(t.tech_name)}</strong> <span class="pill pill-info" style="font-size:9px">${esc(t.role || 'OWNER')}</span>${formerBadge}<div>${bandSelect}</div>`
+          : `<strong>${esc(t.tech_name)}</strong>${t.role ? ` <span class="text-[10px] text-slate-500">${esc(t.role)}</span>` : ''}${formerBadge}<div>${bandSelect}</div>`;
         const peerCell = peer
           ? `<span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:28px;height:28px;border-radius:8px;background:${color};color:#fff;font-weight:700;font-size:13px;line-height:28px;text-align:center">${g}</span><span class="num text-xs text-slate-500">${sc.score.toFixed(0)}</span></span>`
           : `<span class="text-xs text-slate-400">—</span>`;
@@ -1086,10 +1094,12 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <td class="text-right num">${fmtI(t.jobs)}${sharedHint}</td>
           <td class="text-right num hidden sm:table-cell">${t.tune_ups} · ${t.diagnostics} · ${t.estimates}</td>
           <td class="text-right num">${fmtP(t.close_rate_pct)}</td>
+          <td class="text-right num">${(t.money_calls || 0) > 0 ? (t.money_calls_per_day || 0).toFixed(1) : '<span class="text-slate-300">—</span>'}<div class="text-[10px] text-slate-400">${t.money_calls || 0} calls${t.days_worked ? ' / ' + t.days_worked + 'd' : ''}</div></td>
           <td class="text-right num hidden sm:table-cell">${fmt$(t.avg_ticket)}</td>
           <td class="text-right num"><strong>${fmt$(t.revenue)}</strong></td>
           <td class="text-right num hidden md:table-cell">${fmt$(t.sales_rev || 0)}</td>
           <td class="text-right num hidden md:table-cell">${fmt$(t.install_rev || 0)}</td>
+          <td class="text-right num hidden lg:table-cell">${(t.new_signups || t.renewals_won || t.renewals_lost) ? `<span class="text-emerald-700" title="${t.new_signups_new_cust||0} new cust + ${t.new_signups_existing||0} existing">${t.new_signups||0} new</span> / <span title="${t.renewals_won||0} won of ${(t.renewals_won||0)+(t.renewals_lost||0)} decided">${t.renewals_won||0} ren</span>` : '<span class="text-slate-300">—</span>'}</td>
           <td class="text-right num hidden lg:table-cell">${(t.hours_total || 0) > 0 ? (t.hours_total).toFixed(1) + 'h' : '<span class="text-slate-300" title="No Time Tracking CSV uploaded yet">—</span>'}</td>
           <td class="text-right num hidden lg:table-cell">${(t.rev_per_hour || 0) > 0 ? fmt$(t.rev_per_hour) : '<span class="text-slate-300">—</span>'}</td>
           <td class="text-right num hidden lg:table-cell">${t.reviews_generated || 0} (${fmtP(t.review_rate_pct || 0)})</td>
@@ -1099,7 +1109,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
       const sections = [];
       const bandHeader = (label, sublabel) =>
-        `<tr><td colspan="14" class="text-xs text-slate-600 bg-slate-50 py-2 px-3"><strong>${label}</strong> <span class="text-slate-400">— ${sublabel}</span></td></tr>`;
+        `<tr><td colspan="16" class="text-xs text-slate-600 bg-slate-50 py-2 px-3"><strong>${label}</strong> <span class="text-slate-400">— ${sublabel}</span></td></tr>`;
       const sortByScore = (arr) => arr.map(t => ({ t, score: scoreTech(t, true).score })).sort((a, b) => b.score - a.score).map(x => row(x.t, { isPeer: true })).join('');
 
       if (serviceTechs.length) {
@@ -1130,11 +1140,34 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       const tbody = document.getElementById('tech-rows');
       tbody.innerHTML = sections.join('');
       tbody.querySelectorAll('tr[data-tech-id]').forEach(tr => {
-        tr.addEventListener('click', () => {
+        tr.addEventListener('click', (e) => {
+          // Don't navigate when the user is using the reclassify dropdown.
+          if (e.target.closest('.band-select')) return;
           const id = tr.getAttribute('data-tech-id');
           // Pass the current date range so the detail page shows the same
           // window and computes the same score as the leaderboard.
           location.href = `/admin/dashboard/tech/?id=${encodeURIComponent(id)}&days=${currentRange}`;
+        });
+      });
+      // Inline reclassify — change band right on the board, then re-render.
+      tbody.querySelectorAll('.band-select').forEach(sel => {
+        sel.addEventListener('click', e => e.stopPropagation());
+        sel.addEventListener('change', async (e) => {
+          e.stopPropagation();
+          const techId = sel.getAttribute('data-band-tech');
+          const band = sel.value;
+          sel.disabled = true;
+          try {
+            await api('/api/kpis/role-override', {
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ tech_hcp_id: techId, band }),
+            });
+            toast(`Reclassified as ${band} — re-grouping`, 'ok');
+            await loadAll();   // re-fetch so the tech moves to the right band + re-grades
+          } catch (err) {
+            toast(err.message || 'Reclassify failed', 'error');
+            sel.disabled = false;
+          }
         });
       });
       // Reapply industry-column visibility — every render recreates the

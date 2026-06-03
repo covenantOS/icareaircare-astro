@@ -259,6 +259,17 @@ export interface TechRow {
   tune_ups: number;
   diagnostics: number;
   estimates: number;
+  money_calls: number;             // revenue-generating service calls (TU+Dx+Est, no callbacks)
+  money_calls_per_day: number;     // money_calls / days worked (or business-day estimate)
+  days_worked: number;             // distinct days with uploaded hours (0 = estimated)
+  // Membership (per Tim's tags — credited to primary tech)
+  new_signups: number;             // new care-plan memberships sold
+  new_signups_new_cust: number;    // of those, brand-new customers
+  new_signups_existing: number;    // of those, existing customers who hadn't joined
+  renewals_won: number;            // 'Renewed - yes'
+  renewals_lost: number;           // 'Renewed - no'
+  renewals_due: number;            // 'Care plan renew time' (came up for renewal)
+  renew_rate_pct: number;          // won / (won + lost)
   closed_jobs: number;
   close_rate_pct: number;
   avg_ticket: number;
@@ -342,6 +353,10 @@ export async function computeByTech(
          SUM(CASE WHEN tj.job_type = 'tune_up' THEN 1 ELSE 0 END) AS tune_ups,
          SUM(CASE WHEN tj.job_type = 'diagnostic' THEN 1 ELSE 0 END) AS diagnostics,
          SUM(CASE WHEN tj.job_type = 'estimate' THEN 1 ELSE 0 END) AS estimates,
+         -- "Money calls" (Tim 2026-06-01): revenue-generating service calls —
+         -- tune-ups (incl care-plan tune-ups), diagnostics, estimates. Excludes
+         -- installs, admin, IAQ, other, and callbacks (free warranty returns).
+         SUM(CASE WHEN tj.job_type IN ('tune_up','diagnostic','estimate') AND tj.is_callback = 0 THEN 1 ELSE 0 END) AS money_calls,
          SUM(CASE WHEN tj.is_sold = 1 THEN 1 ELSE 0 END) AS closed_jobs,
          AVG(tj.invoice_total_cents * tj.share) AS avg_cents,
          COALESCE(SUM(tj.invoice_total_cents * tj.share), 0) AS revenue_cents,
@@ -356,10 +371,64 @@ export async function computeByTech(
     .bind(from, to)
     .all<{
       tech_id: string; tech_name: string; role: string | null; is_active: number; jobs: number;
-      tune_ups: number; diagnostics: number; estimates: number;
+      tune_ups: number; diagnostics: number; estimates: number; money_calls: number;
       closed_jobs: number; avg_cents: number;
       revenue_cents: number; callbacks: number; shared_jobs: number;
     }>();
+
+  // ─── Membership sign-ups + renewals (Tim's tags, 2026-06-01) ──────────
+  // Credited to the PRIMARY tech (the lead service tech who sold the plan),
+  // not split across co-techs. Matched via tag substrings in jobs._raw_json
+  // (SQLite LIKE is case-insensitive for ASCII). Tim's tag vocabulary:
+  //   'Care plan member - new sign up'  → a new membership sold
+  //   'New customer'                    → (on a signup) brand-new customer
+  //   'Renewed - yes' / 'Renewed - no'  → result of a renewal call
+  //   'Care plan renew time'            → membership was up for renewal
+  const memRes = await db
+    .prepare(
+      `SELECT primary_tech_hcp_id AS tech_id,
+         SUM(CASE WHEN _raw_json LIKE '%care plan member - new sign up%' THEN 1 ELSE 0 END) AS new_signups,
+         SUM(CASE WHEN _raw_json LIKE '%care plan member - new sign up%' AND _raw_json LIKE '%new customer%' THEN 1 ELSE 0 END) AS new_signups_newcust,
+         SUM(CASE WHEN _raw_json LIKE '%renewed - yes%' THEN 1 ELSE 0 END) AS renewals_won,
+         SUM(CASE WHEN _raw_json LIKE '%renewed - no%' THEN 1 ELSE 0 END) AS renewals_lost,
+         SUM(CASE WHEN _raw_json LIKE '%care plan renew time%' THEN 1 ELSE 0 END) AS renewals_due
+       FROM jobs
+       WHERE completed_at >= ? AND completed_at <= ? AND primary_tech_hcp_id IS NOT NULL
+       GROUP BY primary_tech_hcp_id`,
+    )
+    .bind(from, to)
+    .all<{ tech_id: string; new_signups: number; new_signups_newcust: number; renewals_won: number; renewals_lost: number; renewals_due: number }>();
+  const memByTech = new Map<string, { newSignups: number; newSignupsNewCust: number; renewalsWon: number; renewalsLost: number; renewalsDue: number }>();
+  for (const m of memRes.results || []) {
+    memByTech.set(m.tech_id, {
+      newSignups: m.new_signups || 0,
+      newSignupsNewCust: m.new_signups_newcust || 0,
+      renewalsWon: m.renewals_won || 0,
+      renewalsLost: m.renewals_lost || 0,
+      renewalsDue: m.renewals_due || 0,
+    });
+  }
+
+  // Days actually worked per tech (from uploaded Time Tracking) — used to
+  // turn money-calls into a per-day average that reflects real working days,
+  // not calendar days. Falls back to a business-day estimate when no hours.
+  const windowDays = Math.max(1, Math.round((Date.parse(to) - Date.parse(from)) / 86400_000));
+  const daysWorkedByTech = new Map<string, number>();
+  try {
+    const dwRes = await db
+      .prepare(
+        `SELECT tech_hcp_id, COUNT(DISTINCT work_date) AS d
+         FROM tech_hours
+         WHERE tech_hcp_id IS NOT NULL AND total_hours > 0
+           AND work_date >= ? AND work_date <= ?
+         GROUP BY tech_hcp_id`,
+      )
+      .bind((from || '').slice(0, 10), (to || '').slice(0, 10))
+      .all<{ tech_hcp_id: string; d: number }>();
+    for (const r of dwRes.results || []) daysWorkedByTech.set(r.tech_hcp_id, r.d || 0);
+  } catch { /* tech_hours may not exist on fresh deploys */ }
+  // Business-day estimate for techs without uploaded hours: window × 5/7.
+  const estBusinessDays = Math.max(1, Math.round(windowDays * 5 / 7));
 
   // Per-tech review counts (Google reviews attributed via name match, posted in window)
   const reviewRes = await db
@@ -486,6 +555,13 @@ export async function computeByTech(
     const role = (r.role || '').trim() || null;
     const reviewsGen = reviewsByTech.get(r.tech_id) || 0;
     const band = classifyRole(role, r.tech_id, roleOverrides || null);
+    const mem = memByTech.get(r.tech_id) || { newSignups: 0, newSignupsNewCust: 0, renewalsWon: 0, renewalsLost: 0, renewalsDue: 0 };
+    const renewDecided = mem.renewalsWon + mem.renewalsLost;
+    // Money-calls per day: prefer real days-worked from uploaded hours;
+    // fall back to a business-day estimate so it's still meaningful pre-upload.
+    const daysWorked = daysWorkedByTech.get(r.tech_id) || 0;
+    const perDayDivisor = daysWorked > 0 ? daysWorked : estBusinessDays;
+    const moneyCalls = r.money_calls || 0;
     return {
       tech_id: r.tech_id || 'unassigned',
       tech_name: r.tech_name || 'Unassigned',
@@ -498,6 +574,16 @@ export async function computeByTech(
       tune_ups: r.tune_ups || 0,
       diagnostics: r.diagnostics || 0,
       estimates: r.estimates || 0,
+      money_calls: moneyCalls,
+      money_calls_per_day: round(moneyCalls / perDayDivisor, 1),
+      days_worked: daysWorked,
+      new_signups: mem.newSignups,
+      new_signups_new_cust: mem.newSignupsNewCust,
+      new_signups_existing: Math.max(0, mem.newSignups - mem.newSignupsNewCust),
+      renewals_won: mem.renewalsWon,
+      renewals_lost: mem.renewalsLost,
+      renewals_due: mem.renewalsDue,
+      renew_rate_pct: renewDecided > 0 ? round((mem.renewalsWon / renewDecided) * 100, 1) : 0,
       closed_jobs: r.closed_jobs || 0,
       close_rate_pct: r.jobs > 0 ? round((r.closed_jobs / r.jobs) * 100, 1) : 0,
       avg_ticket: round((r.avg_cents || 0) / 100, 2),
