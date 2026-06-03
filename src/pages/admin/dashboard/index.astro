@@ -227,8 +227,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
                 <th class="text-right" title="Money calls per day — tune-ups, diagnostics, estimates (not installs/admin/callbacks). Uses real days worked from uploaded hours when available.">Calls/day</th>
                 <th class="text-right hidden sm:table-cell">Avg Ticket</th>
                 <th class="text-right" title="Equal-split revenue across assigned techs (existing)">Revenue</th>
-                <th class="text-right hidden md:table-cell" title="Revenue from jobs you sold. On installs, only the salesperson gets credit.">Sold $</th>
-                <th class="text-right hidden md:table-cell" title="Revenue from jobs you physically performed. On installs, only the installer gets credit.">Installed $</th>
+                <th class="text-right hidden md:table-cell" title="Full value of every job this tech SOLD — the seller gets 100% (no split). Sums to shop revenue.">Sold $</th>
+                <th class="text-right hidden md:table-cell" title="Value + count of installs this tech turned a wrench on. Operational volume — NOT counted in sales totals (so it doesn't double-count).">Installed</th>
                 <th class="text-right hidden lg:table-cell" title="Care-plan memberships: new sign-ups / renewals won. From HCP tags.">Plans</th>
                 <th class="text-right hidden lg:table-cell" title="Hours worked in window (from HCP Time Tracking CSV upload)">Hours</th>
                 <th class="text-right hidden lg:table-cell" title="Revenue ÷ hours worked. 0 until a Time Tracking CSV is uploaded.">$/Hr</th>
@@ -1085,7 +1085,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <td class="text-right num hidden sm:table-cell">${fmt$(t.avg_ticket)}</td>
           <td class="text-right num"><strong>${fmt$(t.revenue)}</strong></td>
           <td class="text-right num hidden md:table-cell">${fmt$(t.sales_rev || 0)}</td>
-          <td class="text-right num hidden md:table-cell">${fmt$(t.install_rev || 0)}</td>
+          <td class="text-right num hidden md:table-cell">${(t.installs_count || 0) > 0 ? fmt$(t.install_rev || 0) + `<div class="text-[10px] text-slate-400">${t.installs_count} install${t.installs_count===1?'':'s'}</div>` : '<span class="text-slate-300">—</span>'}</td>
           <td class="text-right num hidden lg:table-cell">${(t.new_signups || t.renewals_won || t.renewals_lost) ? `<span class="text-emerald-700" title="${t.new_signups_new_cust||0} new cust + ${t.new_signups_existing||0} existing">${t.new_signups||0} new</span> / <span title="${t.renewals_won||0} won of ${(t.renewals_won||0)+(t.renewals_lost||0)} decided">${t.renewals_won||0} ren</span>` : '<span class="text-slate-300">—</span>'}</td>
           <td class="text-right num hidden lg:table-cell">${(t.hours_total || 0) > 0 ? (t.hours_total).toFixed(1) + 'h' : '<span class="text-slate-300" title="No Time Tracking CSV uploaded yet">—</span>'}</td>
           <td class="text-right num hidden lg:table-cell">${(t.rev_per_hour || 0) > 0 ? fmt$(t.rev_per_hour) : '<span class="text-slate-300">—</span>'}</td>

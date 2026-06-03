@@ -226,13 +226,23 @@ async function upsertJobFromHcp(env: Env, jobId: string): Promise<void> {
   const tech = extractPrimaryTech(j);
 
   const tags = (j.tags as unknown[]) || [];
-  const tagStr = tags.filter((x): x is string => typeof x === 'string').join(',');
+  const tagStrings = tags.filter((x): x is string => typeof x === 'string');
+  const tagStr = tagStrings.join(',');
   const desc = strField(j, 'description') || '';
-  const jobType = normalizeJobType(tagStr) !== 'other'
-    ? normalizeJobType(tagStr)
-    : (normalizeJobType(desc) !== 'other'
-      ? normalizeJobType(desc)
-      : normalizeJobType(strField(j, 'job_type', 'type') || ''));
+  // Authority order matches sync.ts deriveJobType: HCP structured job type
+  // first, then tags by priority (install beats a stale Estimate tag), then
+  // description, then business unit.
+  const jf = (j.job_fields as Record<string, unknown>) || {};
+  const jfTypeRaw = jf.job_type;
+  const jfTypeName = jfTypeRaw && typeof jfTypeRaw === 'object'
+    ? (jfTypeRaw as Record<string, unknown>).name as string | undefined
+    : (typeof jfTypeRaw === 'string' ? jfTypeRaw : undefined);
+  const jobType =
+    (jfTypeName && normalizeJobType(jfTypeName) !== 'other' && normalizeJobType(jfTypeName)) ||
+    resolveByPriority(tagStrings) ||
+    (normalizeJobType(desc) !== 'other' ? normalizeJobType(desc) : undefined) ||
+    normalizeJobType(strField((j.business_unit as Record<string, unknown>) || {}, 'name') || '') ||
+    'other';
 
   const status = strField(j, 'work_status', 'status') || 'unknown';
   const isCallback = (tags.some(t => typeof t === 'string' && /callback|warranty|recall/i.test(t)) || j.callback === true) ? 1 : 0;
@@ -390,6 +400,14 @@ function normalizeJobType(raw: string): string {
   if (/duct|iaq|air.?quality|uv\b|filter|thermostat|insulation|dryer.?vent|purifier|dehumidifier|air.?scrubber|reme/.test(t)) return 'iaq';
   if (/permit|inspection|part.?(pick|pickup|up)|pick.?up|office|warehouse|drop.?off|supply|will.?call|return/.test(t)) return 'admin';
   return 'other';
+}
+// Priority resolver — keep in sync with sync.ts. Install beats a stale Estimate tag.
+const WH_TYPE_PRIORITY = ['install', 'tune_up', 'diagnostic', 'iaq', 'estimate', 'admin'];
+function resolveByPriority(strings: string[]): string | undefined {
+  const found = new Set<string>();
+  for (const s of strings) { const t = normalizeJobType(s); if (t !== 'other') found.add(t); }
+  for (const p of WH_TYPE_PRIORITY) if (found.has(p)) return p;
+  return undefined;
 }
 function extractPrimaryTech(job: Record<string, unknown>): { primary: string | undefined; all: string[] } {
   const all: string[] = [];

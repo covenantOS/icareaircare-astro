@@ -273,9 +273,10 @@ export interface TechRow {
   closed_jobs: number;
   close_rate_pct: number;
   avg_ticket: number;
-  revenue: number;             // existing equal-split revenue across assigned techs
-  sales_rev: number;           // role-aware: revenue from jobs you sold (Option A from Tim feedback 2026-05-14)
-  install_rev: number;         // role-aware: revenue from jobs you physically performed
+  revenue: number;             // existing equal-split revenue across assigned techs (shop total)
+  sales_rev: number;           // seller-credit: full ticket of every job you sold (Tim 2026-06-03)
+  install_rev: number;         // operational: value of installs you turned a wrench on (NOT a money total)
+  installs_count: number;      // # of install jobs you worked on
   callbacks: number;
   callback_rate_pct: number;
   reviews_generated: number;       // Google reviews attributed to this tech in window
@@ -500,8 +501,23 @@ export async function computeByTech(
       invoice_total_cents: number | null;
     }>();
 
+  // ─── Seller-credit model (Tim 2026-06-03) ────────────────────────────
+  // Tim's call: the SELLER gets 100% of the sale (no split), and installers
+  // get a SEPARATE non-money "installs performed" credit so it doesn't
+  // double-count against shop revenue. So:
+  //   sales_rev   — full ticket → the ONE seller. Seller = the sales-band
+  //                 (service/owner) tech assigned; else the primary tech;
+  //                 else first assigned. Each job has exactly one seller, so
+  //                 sum(sales_rev) == shop revenue (no double count).
+  //   install_rev — full ticket → EACH install-band/helper tech on an
+  //                 install job. This is an OPERATIONAL volume figure
+  //                 ("installs performed value"), NOT summed into revenue.
+  //   installs_count — # of install jobs the tech turned a wrench on.
+  // (`revenue`, the equal-split column, is left untouched — that's the
+  // shop total that feeds goals / AI / customer mix.)
   const salesCents = new Map<string, number>();
   const installCents = new Map<string, number>();
+  const installsCount = new Map<string, number>();
   const SALES_BANDS = new Set<RoleBand>(['service', 'owner']);
   const INSTALL_BANDS = new Set<RoleBand>(['install', 'helper']);
 
@@ -518,35 +534,22 @@ export async function computeByTech(
 
     const jobType = j.job_type || 'other';
 
+    // SELLER: full ticket to one person.
+    const salesBandAssigned = assigned.filter(id => SALES_BANDS.has(techBand.get(id) || 'other'));
+    const seller =
+      salesBandAssigned[0] ||
+      (j.primary_tech_hcp_id && assigned.includes(j.primary_tech_hcp_id) ? j.primary_tech_hcp_id : assigned[0]);
+    salesCents.set(seller, (salesCents.get(seller) || 0) + total);
+
+    // INSTALL CREDIT: operational, only on install jobs, to each wrench-turner.
     if (jobType === 'install') {
       const installers = assigned.filter(id => INSTALL_BANDS.has(techBand.get(id) || 'other'));
-      const sellers    = assigned.filter(id => SALES_BANDS.has(techBand.get(id) || 'other'));
-
-      if (installers.length && sellers.length) {
-        // Pure Option A: split full revenue per role.
-        for (const id of installers) {
-          installCents.set(id, (installCents.get(id) || 0) + total / installers.length);
-        }
-        for (const id of sellers) {
-          salesCents.set(id, (salesCents.get(id) || 0) + total / sellers.length);
-        }
-      } else {
-        // No role separation on this install — credit everyone for both.
-        for (const id of assigned) {
-          installCents.set(id, (installCents.get(id) || 0) + total / assigned.length);
-          salesCents.set(id, (salesCents.get(id) || 0) + total / assigned.length);
-        }
-      }
-    } else if (jobType === 'estimate') {
-      // Estimates are pure sales activity — no install work yet.
-      for (const id of assigned) {
-        salesCents.set(id, (salesCents.get(id) || 0) + total / assigned.length);
-      }
-    } else {
-      // Tune-ups, diagnostics, IAQ, etc. — tech did both (sale + work).
-      for (const id of assigned) {
-        salesCents.set(id, (salesCents.get(id) || 0) + total / assigned.length);
-        installCents.set(id, (installCents.get(id) || 0) + total / assigned.length);
+      // If no install-band tech is on it, credit whoever's assigned (so the
+      // install still shows up somewhere).
+      const crew = installers.length ? installers : assigned.filter(id => id !== seller);
+      for (const id of crew) {
+        installCents.set(id, (installCents.get(id) || 0) + total);
+        installsCount.set(id, (installsCount.get(id) || 0) + 1);
       }
     }
   }
@@ -590,6 +593,7 @@ export async function computeByTech(
       revenue: round((r.revenue_cents || 0) / 100, 2),
       sales_rev: round((salesCents.get(r.tech_id) || 0) / 100, 2),
       install_rev: round((installCents.get(r.tech_id) || 0) / 100, 2),
+      installs_count: installsCount.get(r.tech_id) || 0,
       callbacks: r.callbacks || 0,
       callback_rate_pct: r.jobs > 0 ? round((r.callbacks / r.jobs) * 100, 2) : 0,
       reviews_generated: reviewsGen,
