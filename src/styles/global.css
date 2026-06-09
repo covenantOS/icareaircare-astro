@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* I Care Air Care brand — teal + orange + navy, matched to existing site */
+  /* I Care Air Care brand - teal + orange + navy, matched to existing site */
   --color-brand-50:  #f0f7fa;
   --color-brand-100: #dbecf1;
   --color-brand-200: #b7d8e1;
@@ -81,7 +81,7 @@ body {
 .prose-icac h2 { @apply text-3xl md:text-4xl mt-12 mb-4; }
 .prose-icac h3 { @apply text-xl md:text-2xl mt-8 mb-3; font-weight: 600; }
 .prose-icac ul { @apply list-disc pl-5 space-y-2 text-slate-700; }
-/* brand-700 on white = ~4.7:1, brand-800 hover = ~7:1 — passes WCAG AA for normal text */
+/* brand-700 on white = ~4.7:1, brand-800 hover = ~7:1 - passes WCAG AA for normal text */
 .prose-icac a { @apply text-brand-700 underline underline-offset-2 hover:text-brand-800; }
 .prose-icac strong { @apply text-navy-700; }
 
