@@ -17,7 +17,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
   <!-- DASHBOARD -->
   <div id="dashboard" hidden>
-    <!-- TOP BAR — global: brand, sync status, actions -->
+    <!-- TOP BAR - global: brand, sync status, actions -->
     <header id="topbar" class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-line">
       <div class="container-site py-2 sm:py-3 flex items-center justify-between gap-3">
         <div class="flex items-center gap-3 min-w-0">
@@ -38,7 +38,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <button id="logout-btn" class="btn-ghost-admin text-xs py-1.5 px-2" type="button" aria-label="Sign out">Out</button>
         </div>
       </div>
-      <!-- CONTEXT STRIP — global date range (applies to every view) -->
+      <!-- CONTEXT STRIP - global date range (applies to every view) -->
       <div class="border-t border-line bg-surface/60">
         <div class="container-site py-1.5 flex flex-wrap items-center justify-between gap-2">
           <div class="flex flex-wrap items-center gap-2 overflow-x-auto" role="tablist" aria-label="Date range">
@@ -66,7 +66,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </div>
     </header>
 
-    <!-- WORKSPACE — left sidebar nav + content area (replaces the long scroll) -->
+    <!-- WORKSPACE - left sidebar nav + content area (replaces the long scroll) -->
     <div class="dash-layout container-site">
       <aside class="dash-sidebar">
         <nav class="dash-nav" aria-label="Dashboard sections">
@@ -80,7 +80,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
       <main id="dash-main" class="dash-main space-y-5">
 
-      <!-- AI INSIGHTS — structured visual rendering -->
+      <!-- AI INSIGHTS - structured visual rendering -->
       <section id="sec-insights" data-view="overview" class="card relative overflow-hidden fade-up" data-card="ai" style="background:linear-gradient(135deg, #fff 0%, #f0f7fa 100%); --i:0">
         <div class="absolute top-0 right-0 w-40 h-40 -mt-12 -mr-12 rounded-full pulse-soft" style="background:radial-gradient(circle, rgba(232,138,56,0.16), transparent 70%)"></div>
         <div class="flex items-start justify-between gap-3 relative">
@@ -88,11 +88,11 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <span class="section-icon bg-accent-500 text-white text-sm font-bold flex-shrink-0">AI</span>
             <div class="min-w-0">
               <h2 class="text-lg font-bold text-navy-700" id="ai-heading">This window, in plain English</h2>
-              <div id="ai-headline-summary" class="text-sm text-slate-700 mt-0.5 truncate">—</div>
+              <div id="ai-headline-summary" class="text-sm text-slate-700 mt-0.5 truncate">-</div>
             </div>
           </div>
           <div class="flex items-center gap-2 flex-shrink-0">
-            <span id="ai-meta" class="text-xs text-slate-500 hidden sm:inline">—</span>
+            <span id="ai-meta" class="text-xs text-slate-500 hidden sm:inline">-</span>
             <button id="ai-refresh" class="btn-ghost-admin text-xs py-1 px-2" type="button" aria-label="Refresh AI insights">↻</button>
           </div>
         </div>
@@ -126,7 +126,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             </div>
           </div>
 
-          <!-- Data-quality notes — only shown if AI flagged any -->
+          <!-- Data-quality notes - only shown if AI flagged any -->
           <div id="ai-data-quality-wrap" hidden>
             <h3 class="text-xs font-bold uppercase tracking-wide text-brand-800 mb-2 flex items-center gap-1">
               <span class="section-icon bg-brand-50 text-brand-800 w-5 h-5 text-xs">ⓘ</span>
@@ -135,7 +135,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <ul id="ai-data-quality" class="space-y-1.5 text-sm text-slate-800"></ul>
           </div>
 
-          <!-- Actions — numbered chips -->
+          <!-- Actions - numbered chips -->
           <div>
             <h3 class="text-xs font-bold uppercase tracking-wide text-navy-700 mb-2 flex items-center gap-1">
               <span class="section-icon bg-navy-700 text-white w-5 h-5 text-xs">▶</span>
@@ -153,25 +153,25 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       <section id="sec-kpis" data-view="overview" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <article class="card hover-lift fade-up" style="--i:1; border-left:3px solid var(--color-brand-500)">
           <div class="flex items-center justify-between"><div class="stat-label">Call Volume</div><div id="kv-bench" class="text-[10px]"></div></div>
-          <div id="kpi-volume" class="stat-value" data-count="0">—</div>
+          <div id="kpi-volume" class="stat-value" data-count="0">-</div>
           <div id="kpi-volume-sub" class="stat-sub">tune-ups · diagnostics · estimates</div>
           <div id="kpi-volume-spark" class="mt-2 h-10 -mx-1"></div>
         </article>
         <article class="card hover-lift fade-up" style="--i:2; border-left:3px solid #10b981">
           <div class="flex items-center justify-between"><div class="stat-label">Close Rate</div><div id="cr-bench" class="text-[10px]"></div></div>
-          <div id="kpi-close" class="stat-value" data-count="0">—</div>
+          <div id="kpi-close" class="stat-value" data-count="0">-</div>
           <div id="kpi-close-sub" class="stat-sub">overall (sold / completed)</div>
           <div id="kpi-close-spark" class="mt-2 h-10 -mx-1"></div>
         </article>
         <article class="card hover-lift fade-up" style="--i:3; border-left:3px solid var(--color-accent-500)">
           <div class="flex items-center justify-between"><div class="stat-label">Avg Ticket</div><div id="at-bench" class="text-[10px]"></div></div>
-          <div id="kpi-ticket" class="stat-value" data-count="0">—</div>
+          <div id="kpi-ticket" class="stat-value" data-count="0">-</div>
           <div id="kpi-ticket-sub" class="stat-sub">discounts applied</div>
           <div id="kpi-ticket-spark" class="mt-2 h-10 -mx-1"></div>
         </article>
         <article class="card hover-lift fade-up" style="--i:4; border-left:3px solid var(--color-navy-700)">
           <div class="flex items-center justify-between"><div class="stat-label">Revenue</div><div id="rev-bench" class="text-[10px]"></div></div>
-          <div id="kpi-revenue" class="stat-value" data-count="0">—</div>
+          <div id="kpi-revenue" class="stat-value" data-count="0">-</div>
           <div id="kpi-revenue-sub" class="stat-sub">total invoiced</div>
           <div id="kpi-revenue-spark" class="mt-2 h-10 -mx-1"></div>
         </article>
@@ -224,11 +224,11 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
                 <th class="text-right">Jobs</th>
                 <th class="text-right hidden sm:table-cell" title="Tune-ups · Diagnostics · Estimates">TU · Dx · Est</th>
                 <th class="text-right">Close %</th>
-                <th class="text-right" title="Money calls per day — tune-ups, diagnostics, estimates (not installs/admin/callbacks). Uses real days worked from uploaded hours when available.">Calls/day</th>
+                <th class="text-right" title="Money calls per day - tune-ups, diagnostics, estimates (not installs/admin/callbacks). Uses real days worked from uploaded hours when available.">Calls/day</th>
                 <th class="text-right hidden sm:table-cell">Avg Ticket</th>
                 <th class="text-right" title="Equal-split revenue across assigned techs (existing)">Revenue</th>
-                <th class="text-right hidden md:table-cell" title="Full value of every job this tech SOLD — the seller gets 100% (no split). Sums to shop revenue.">Sold $</th>
-                <th class="text-right hidden md:table-cell" title="Value + count of installs this tech turned a wrench on. Operational volume — NOT counted in sales totals (so it doesn't double-count).">Installed</th>
+                <th class="text-right hidden md:table-cell" title="Full value of every job this tech SOLD - the seller gets 100% (no split). Sums to shop revenue.">Sold $</th>
+                <th class="text-right hidden md:table-cell" title="Value + count of installs this tech turned a wrench on. Operational volume - NOT counted in sales totals (so it doesn't double-count).">Installed</th>
                 <th class="text-right hidden lg:table-cell" title="Care-plan memberships: new sign-ups / renewals won. From HCP tags.">Plans</th>
                 <th class="text-right hidden lg:table-cell" title="Hours worked in window (from HCP Time Tracking CSV upload)">Hours</th>
                 <th class="text-right hidden lg:table-cell" title="Revenue ÷ hours worked. 0 until a Time Tracking CSV is uploaded.">$/Hr</th>
@@ -243,7 +243,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         </div>
       </section>
 
-      <!-- HOURS UPLOAD (Tim's Path A — HCP Time Tracking CSV) -->
+      <!-- HOURS UPLOAD (Tim's Path A - HCP Time Tracking CSV) -->
       <section id="sec-hours" data-view="hours" class="card">
         <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
           <div>
@@ -268,7 +268,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         </details>
       </section>
 
-      <!-- GOAL PROGRESS (Phase 8) — per-tech progress vs shop goals -->
+      <!-- GOAL PROGRESS (Phase 8) - per-tech progress vs shop goals -->
       <section id="sec-goals" data-view="team" class="card">
         <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
           <div>
@@ -284,7 +284,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         <div id="goals-shop" class="mb-4"></div>
         <!-- Per-tech grid -->
         <div id="goals-tech" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-        <div id="goals-empty" hidden class="text-slate-400 text-sm py-4 text-center">No tech data — click Sync now.</div>
+        <div id="goals-empty" hidden class="text-slate-400 text-sm py-4 text-center">No tech data - click Sync now.</div>
       </section>
 
       <!-- SEGMENTS (3-col on desktop, stack on mobile) -->
@@ -292,7 +292,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         <article class="card">
           <div class="flex items-center justify-between mb-2">
             <h3 class="font-bold text-navy-700">Dormant 12+ months</h3>
-            <span id="seg-dormant-count" class="pill pill-warn">—</span>
+            <span id="seg-dormant-count" class="pill pill-warn">-</span>
           </div>
           <p class="text-xs text-slate-500 mb-3">Customers who haven't booked in 1+ year (still inside HCP's 3-yr cap). Sorted by lifetime value.</p>
           <div id="seg-dormant" class="space-y-1 text-sm"></div>
@@ -304,9 +304,9 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         <article class="card">
           <div class="flex items-center justify-between mb-2">
             <h3 class="font-bold text-navy-700">Members renewing soon</h3>
-            <span id="seg-renew-count" class="pill pill-info">—</span>
+            <span id="seg-renew-count" class="pill pill-info">-</span>
           </div>
-          <p class="text-xs text-slate-500 mb-3">Care-plan members whose last service was 11-13 months ago — reach out before they lapse.</p>
+          <p class="text-xs text-slate-500 mb-3">Care-plan members whose last service was 11-13 months ago - reach out before they lapse.</p>
           <div id="seg-renew" class="space-y-1 text-sm"></div>
           <div class="flex gap-2 mt-3">
             <button class="btn-ghost-admin text-xs flex-1" data-action="copy-emails" data-segment="members_renewing">Copy emails</button>
@@ -318,7 +318,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <h3 class="font-bold text-navy-700">VIPs (top lifetime value)</h3>
             <span class="pill pill-info">Top 50</span>
           </div>
-          <p class="text-xs text-slate-500 mb-3">Highest lifetime spend. Treat with care — these underwrite the business.</p>
+          <p class="text-xs text-slate-500 mb-3">Highest lifetime spend. Treat with care - these underwrite the business.</p>
           <div id="seg-vip" class="space-y-1 text-sm"></div>
           <div class="flex gap-2 mt-3">
             <button class="btn-admin text-xs flex-1 ml-auto" data-action="open-segment" data-segment="top_ltv">View all →</button>
@@ -327,7 +327,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       </section>
 
       <!-- (Manual review attribution moved to /admin/dashboard/reviews/
-           on 2026-05-15 — paginated, gamified, dedicated workspace. The
+           on 2026-05-15 - paginated, gamified, dedicated workspace. The
            link to it lives in the Google Reviews section header below.) -->
 
       <!-- GOOGLE REVIEWS -->
@@ -338,12 +338,12 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <button id="reviews-refresh" class="btn-ghost-admin text-xs py-1 px-2">↻</button>
           </div>
           <div class="flex items-baseline gap-3 mb-1">
-            <div class="stat-value" id="rev-avg">—</div>
+            <div class="stat-value" id="rev-avg">-</div>
             <div class="text-2xl text-amber-500" id="rev-stars">★★★★★</div>
           </div>
-          <div class="stat-sub" id="rev-count">— reviews · — recent · — 4★+</div>
+          <div class="stat-sub" id="rev-count">- reviews · - recent · - 4★+</div>
           <div id="rev-dist" class="mt-3 space-y-1 text-xs"></div>
-          <div class="text-[10px] text-slate-400 mt-3" id="rev-meta">—</div>
+          <div class="text-[10px] text-slate-400 mt-3" id="rev-meta">-</div>
         </article>
         <article class="card lg:col-span-2">
           <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
@@ -365,15 +365,15 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <h2 class="text-lg font-bold text-navy-700 mb-3">Customer mix</h2>
           <div class="space-y-3">
             <div>
-              <div class="flex justify-between text-sm mb-1"><span>New customers</span><span id="cust-new" class="num font-semibold">—</span></div>
+              <div class="flex justify-between text-sm mb-1"><span>New customers</span><span id="cust-new" class="num font-semibold">-</span></div>
               <div class="progress"><span id="cust-new-bar" style="width:0%"></span></div>
             </div>
             <div>
-              <div class="flex justify-between text-sm mb-1"><span>Existing customers</span><span id="cust-existing" class="num font-semibold">—</span></div>
+              <div class="flex justify-between text-sm mb-1"><span>Existing customers</span><span id="cust-existing" class="num font-semibold">-</span></div>
               <div class="progress"><span id="cust-existing-bar" style="width:0%"></span></div>
             </div>
             <div>
-              <div class="flex justify-between text-sm mb-1"><span>Care-plan members</span><span id="cust-member" class="num font-semibold">—</span></div>
+              <div class="flex justify-between text-sm mb-1"><span>Care-plan members</span><span id="cust-member" class="num font-semibold">-</span></div>
               <div class="progress"><span id="cust-member-bar" style="width:0%"></span></div>
             </div>
           </div>
@@ -381,14 +381,14 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         <article class="card">
           <div class="flex items-center justify-between mb-3"><h2 class="text-lg font-bold text-navy-700">Callbacks</h2><span id="cb-bench" class="text-[10px]"></span></div>
           <div class="flex items-baseline gap-3 mb-2">
-            <div class="stat-value" id="cb-total">—</div>
-            <div class="stat-sub">callbacks · <span id="cb-rate">—</span> rate</div>
+            <div class="stat-value" id="cb-total">-</div>
+            <div class="stat-sub">callbacks · <span id="cb-rate">-</span> rate</div>
           </div>
           <p class="text-xs text-slate-500 mb-3">Industry: under 3% target, top performers under 2%.</p>
           <div class="overflow-x-auto -mx-5 sm:mx-0">
             <table class="kpi-table">
               <thead><tr><th>Tech</th><th class="text-right">Jobs</th><th class="text-right">Callbacks</th><th class="text-right">Rate</th></tr></thead>
-              <tbody id="cb-rows"><tr><td colspan="4" class="text-center text-slate-400 py-4">—</td></tr></tbody>
+              <tbody id="cb-rows"><tr><td colspan="4" class="text-center text-slate-400 py-4">-</td></tr></tbody>
             </table>
           </div>
         </article>
@@ -397,7 +397,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       <!-- FOOTNOTES -->
       <section data-view="overview" class="card-quiet text-xs text-slate-500 leading-relaxed">
         <p class="mb-1"><strong>Source:</strong> Housecall Pro API. Tap "Sync now" to pull latest. Membership detection: HCP job tags ("Care plan member - YES").</p>
-        <p class="mb-1"><strong>Score:</strong> Formula A — 25% rev/day + 15% ticket + 15% close + 10% memberships + 10% callbacks(inv) + 10% reviews + 10% utilization + 5% volume. Tunable in Settings.</p>
+        <p class="mb-1"><strong>Score:</strong> Formula A - 25% rev/day + 15% ticket + 15% close + 10% memberships + 10% callbacks(inv) + 10% reviews + 10% utilization + 5% volume. Tunable in Settings.</p>
         <p class="mb-1"><strong>Phase 2:</strong> Hours/utilization (Timesheets CSV ingest) · Reviews per tech (Google Business Profile API) · Real-time webhooks.</p>
         <p><strong>Industry context:</strong> Top-quartile residential HVAC tech does $2,400+/day, 75-85% close rate, $450+ avg ticket. Sources: ServiceTitan, BaaDigi, MarginPlug 2026.</p>
       </section>
@@ -407,7 +407,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
     <!-- FLOATING CHAT PANEL (Phase 4) -->
     <!-- Visibility is controlled via the .is-open class (rule lives in AdminLayout). -->
-    <!-- Do NOT add `hidden` or inline display:none here — both override #chat-panel.is-open. -->
+    <!-- Do NOT add `hidden` or inline display:none here - both override #chat-panel.is-open. -->
     <div id="chat-panel" class="fixed z-40 bg-white shadow-2xl rounded-xl border border-line" style="right:1rem; bottom:5rem; width:min(420px,calc(100vw - 2rem)); height:min(560px,70vh);">
       <div class="flex items-center justify-between px-4 py-3 border-b border-line bg-gradient-to-r from-brand-500 to-brand-700 text-white rounded-t-xl">
         <div class="flex items-center gap-2 min-w-0">
@@ -422,7 +422,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       <div id="chat-messages" class="flex-1 overflow-y-auto px-4 py-3 space-y-3 text-sm bg-surface">
         <div class="chat-msg chat-bot">
           <div class="font-semibold text-navy-700 text-xs mb-1">Dashboard AI</div>
-          <div>Hi — ask me anything about the data on screen. Examples:</div>
+          <div>Hi - ask me anything about the data on screen. Examples:</div>
           <div class="mt-2 grid gap-1.5 text-xs">
             <button class="chat-suggest text-left" data-q="Who is my top revenue tech this month and why?">Who is my top revenue tech this month and why?</button>
             <button class="chat-suggest text-left" data-q="Which techs are below the close-rate goal?">Which techs are below the close-rate goal?</button>
@@ -549,11 +549,11 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
   <script is:inline>
     // ─────────────────────────────────────────────────────────────────
-    // I Care Air Care KPI Dashboard — Phase 2
+    // I Care Air Care KPI Dashboard - Phase 2
     // ─────────────────────────────────────────────────────────────────
     const STORAGE_KEY = 'icac_admin_key';
     let currentRange = 30;
-    let customWindow = null;   // {from, to, label} — when set, overrides currentRange-based rolling window
+    let customWindow = null;   // {from, to, label} - when set, overrides currentRange-based rolling window
     let configCache = null;
 
     function getKey() { return sessionStorage.getItem(STORAGE_KEY) || ''; }
@@ -573,10 +573,10 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       document.getElementById('login-gate').hidden = which !== 'login';
       document.getElementById('dashboard').hidden = which !== 'dash';
     }
-    function fmt$(n)  { if (n == null || isNaN(n)) return '—'; return '$' + Number(n).toLocaleString('en-US', { maximumFractionDigits: 0 }); }
-    function fmt$d(n) { if (n == null || isNaN(n)) return '—'; return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
-    function fmtP(n)  { if (n == null || isNaN(n)) return '—'; return Number(n).toFixed(1) + '%'; }
-    function fmtI(n)  { if (n == null || isNaN(n)) return '—'; return Number(n).toLocaleString('en-US'); }
+    function fmt$(n)  { if (n == null || isNaN(n)) return '-'; return '$' + Number(n).toLocaleString('en-US', { maximumFractionDigits: 0 }); }
+    function fmt$d(n) { if (n == null || isNaN(n)) return '-'; return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    function fmtP(n)  { if (n == null || isNaN(n)) return '-'; return Number(n).toFixed(1) + '%'; }
+    function fmtI(n)  { if (n == null || isNaN(n)) return '-'; return Number(n).toLocaleString('en-US'); }
     function esc(s)   { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
     function toast(msg, kind) {
       const t = document.getElementById('toast'), b = document.getElementById('toast-body');
@@ -588,23 +588,23 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
     // Industry benchmarks. Sources are listed and shown on hover so it's
     // clear what each comparison is against. We only call something
-    // "below avg" when we have apples-to-apples per-tech data — never
+    // "below avg" when we have apples-to-apples per-tech data - never
     // for shop-wide totals.
     const BENCHMARKS = {
       avg_ticket:        { p:250, a:450, t:600, dir:'up',
-        src:'FieldPulse / MarginPlug 2026 — residential service, $450-600 typical, $600+ premium.' },
+        src:'FieldPulse / MarginPlug 2026 - residential service, $450-600 typical, $600+ premium.' },
       close_rate:        { p:35, a:55, t:75, dir:'up',
-        src:'Industry composite — Mercurio "90s percentile" target; 50-75% typical for residential service techs.' },
+        src:'Industry composite - Mercurio "90s percentile" target; 50-75% typical for residential service techs.' },
       close_rate_tune_up:{ p:30, a:50, t:75, dir:'up',
-        src:'HVACR Business — 10% to repair + 70% to membership combined ≈ 50% avg, 75%+ top.' },
+        src:'HVACR Business - 10% to repair + 70% to membership combined ≈ 50% avg, 75%+ top.' },
       close_rate_diag:   { p:50, a:67, t:85, dir:'up',
-        src:'BaaDigi / Mercurio — diagnostic close: 60-75% avg, 80%+ top.' },
+        src:'BaaDigi / Mercurio - diagnostic close: 60-75% avg, 80%+ top.' },
       callback_rate:     { p:5, a:3, t:2, dir:'down',
-        src:'Contracting Business / Mar-Hy — under 3% acceptable, under 2% top performer.' },
+        src:'Contracting Business / Mar-Hy - under 3% acceptable, under 2% top performer.' },
       jobs_per_day:      { p:3, a:4, t:6, dir:'up',
-        src:'ServiceTitan / Oxmaint — 3-5 jobs/day standard, 5-8 top performers.' },
+        src:'ServiceTitan / Oxmaint - 3-5 jobs/day standard, 5-8 top performers.' },
       revenue_per_day:   { p:1200, a:2000, t:2400, dir:'up',
-        src:'BaaDigi / MarginPlug 2026 — per-tech-per-day, top-quartile $2,400+ (residential service).' },
+        src:'BaaDigi / MarginPlug 2026 - per-tech-per-day, top-quartile $2,400+ (residential service).' },
     };
     function bench(metric, value) {
       const b = BENCHMARKS[metric]; if (!b || value == null) return null;
@@ -661,7 +661,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     function startOfLocalDay(s) { const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d, 0, 0, 0, 0); }
     function endOfLocalDay(s)   { const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d, 23, 59, 59, 999); }
 
-    // Build presets relative to "now" — Sun-Sat last week, current month, prior month.
+    // Build presets relative to "now" - Sun-Sat last week, current month, prior month.
     function buildPreset(name) {
       const now = new Date();
       if (name === 'last_week') {
@@ -736,7 +736,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         renderSegments(segDormant, segRenew, segVip);
         // Pre-warm AI coaching cache for all field techs in the background
         // so clicking into a tech detail page is instant (cache TTL 6h).
-        // Will reported tech-detail AI taking ~2min on cold load — this
+        // Will reported tech-detail AI taking ~2min on cold load - this
         // bakes the bread before he asks for the sandwich.
         prewarmAICoaching(byTech);
       } catch (e) {
@@ -746,7 +746,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
     // Background AI cache pre-warming. We fire requests in series (one at a
     // time) so we don't slam MiniMax with 6 parallel reasoning calls.
-    // Each request is fire-and-forget — failures are silent. KV caches for
+    // Each request is fire-and-forget - failures are silent. KV caches for
     // 6 hours, so subsequent clicks into tech detail pages return instantly.
     let _prewarmInFlight = false;
     async function prewarmAICoaching(byTech) {
@@ -760,10 +760,10 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           .slice(0, 8);  // Top-8 by revenue covers Tim's likely click targets
         for (const t of candidates) {
           try {
-            // Don't use api() — we don't want errors here to throw or kick to login.
+            // Don't use api() - we don't want errors here to throw or kick to login.
             // Just GET and rely on the server-side KV cache write as the side effect.
             await fetch(withAuth(`/api/ai/tech-coaching?id=${encodeURIComponent(t.tech_id)}&days=${currentRange}`), { credentials: 'include' });
-          } catch { /* silent — best-effort */ }
+          } catch { /* silent - best-effort */ }
         }
       } finally {
         _prewarmInFlight = false;
@@ -778,7 +778,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       countUp(document.getElementById('kpi-volume'), s.call_volume.total, (v) => fmtI(Math.round(v)));
       document.getElementById('kpi-volume-sub').textContent =
         `${s.call_volume.tune_up} TU · ${s.call_volume.diagnostic} Dx · ${s.call_volume.estimate} Est`;
-      // Per-tech jobs/day — only count field techs that actually closed jobs in window.
+      // Per-tech jobs/day - only count field techs that actually closed jobs in window.
       const activeTechCount = ((data.summary.revenue.by_tech || []).filter(t => t.jobs > 0)).length || 1;
       const jpd = s.call_volume.total / days / activeTechCount;
       document.getElementById('kv-bench').innerHTML = benchPill('jobs_per_day', jpd) +
@@ -794,7 +794,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
       countUp(document.getElementById('kpi-revenue'), s.revenue.total, (v) => fmt$(v), 900);
       // Don't dot-rate shop-wide revenue against a per-tech industry benchmark
-      // — apples to oranges. Show the period total, the period rate, and
+      // - apples to oranges. Show the period total, the period rate, and
       // who topped the leaderboard. Per-tech benchmarks live in the tech detail page.
       const topTech = (data.summary.revenue.by_tech || [])[0];
       document.getElementById('kpi-revenue-sub').textContent =
@@ -866,7 +866,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         let pill, text;
         if (ls.success === 1) { pill = 'pill pill-ok'; text = 'Synced'; }
         else if (!ls.finished_at && ageMin < STALL_AFTER_MIN) { pill = 'pill pill-warn'; text = 'In progress'; }
-        else if (!ls.finished_at) { pill = 'pill pill-err'; text = 'Sync stalled — click Sync to retry'; }
+        else if (!ls.finished_at) { pill = 'pill pill-err'; text = 'Sync stalled - click Sync to retry'; }
         else { pill = 'pill pill-err'; text = 'Failed'; }
         const counts = ls.finished_at
           ? ` · ${fmtI(ls.jobs_synced)} jobs · ${fmtI(ls.customers_synced)} customers`
@@ -891,7 +891,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
     function renderTechs(data) {
       // Filter out tech rows that have no human name (HCP records we never
-      // synced — usually deleted/historical employees still attached to
+      // synced - usually deleted/historical employees still attached to
       // old jobs via all_tech_hcp_ids). They render as "pro_xxxx..." and
       // confuse the leaderboard; we can't action on them anyway.
       const looksLikeRawId = name => !name || /^pro_[a-f0-9]{20,}$/i.test(String(name).trim());
@@ -910,11 +910,11 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       // Paul) ride alongside install techs but are tracked separately.
       // Owner / office stay in their own band.
       //
-      //   serviceTechs   — Erick, Kleber, Gerald, James (or whoever Tim labels)
-      //   installTechs   — Cesar, Daniel
-      //   helpers        — Angel, Paul
-      //   non_field      — owner / office / CSR / dispatch
-      //   low            — under 5 jobs (data too thin in any band)
+      //   serviceTechs   - Erick, Kleber, Gerald, James (or whoever Tim labels)
+      //   installTechs   - Cesar, Daniel
+      //   helpers        - Angel, Paul
+      //   non_field      - owner / office / CSR / dispatch
+      //   low            - under 5 jobs (data too thin in any band)
       const MIN_JOBS = 5;
       const serviceTechs = all.filter(t => t.role_band === 'service' && t.jobs >= MIN_JOBS);
       const installTechs = all.filter(t => t.role_band === 'install' && t.jobs >= MIN_JOBS);
@@ -923,7 +923,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       const low      = all.filter(t => !['owner','office'].includes(t.role_band) && t.jobs < MIN_JOBS);
       const nonField = all.filter(t => t.role_band === 'owner' || t.role_band === 'office' || t.is_owner);
 
-      // Shop-relative percentile ranking — for each metric, where does this
+      // Shop-relative percentile ranking - for each metric, where does this
       // tech sit in the field-tech distribution? 100 = best in shop, 0 = worst.
       // Way more meaningful for Tim than "how do we compare to industry top
       // quartile" since his tune-up techs aren't expected to do install-tech
@@ -954,7 +954,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           avg_ticket: t.avg_ticket,
           close_rate: t.close_rate_pct,
           membership_conversion: 0,
-          // Callbacks: we INVERT — fewer callbacks = higher percentile
+          // Callbacks: we INVERT - fewer callbacks = higher percentile
           callback_rate_inverted: -t.callback_rate_pct,
           review_rate: t.review_rate_pct || 0,
           utilization: 0,
@@ -970,7 +970,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
       // Build per-band, per-metric distributions. Service techs compare
       // against service techs only; install techs against install techs.
-      // (Tim's 2026-05-09 feedback — service and install do different
+      // (Tim's 2026-05-09 feedback - service and install do different
       // work, peer ranking only works within band.)
       function buildDist(group) {
         const d = {};
@@ -992,7 +992,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       // every tech an F because nobody hits the 60-90 normalized range on
       // a peer-relative percentile (you'd need to be the best AND beat
       // industry top-quartile). New cuts: 80=A, 60=B, 40=C, 20=D, else F.
-      // A "C" now means roughly the middle of the shop AND mid-industry —
+      // A "C" now means roughly the middle of the shop AND mid-industry - 
       // which is genuinely "average," matching how people read grades.
       const grade = (n) => n>=80?'A':n>=60?'B':n>=40?'C':n>=20?'D':'F';
 
@@ -1015,10 +1015,10 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         return { score: Math.round(total * 10) / 10, breakdown };
       }
 
-      // INDUSTRY-ANCHORED scoring (Tim feedback 2026-05-14 — show alongside peer).
+      // INDUSTRY-ANCHORED scoring (Tim feedback 2026-05-14 - show alongside peer).
       // Normalizes each metric against industry top-quartile anchors from
       // configCache.targets. Each component is 0-100, weighted, summed.
-      // This is harsher than peer-relative — a 50% close rate scores lower
+      // This is harsher than peer-relative - a 50% close rate scores lower
       // against an 85% top-quartile anchor than it does against ICAC's median.
       function scoreIndustry(t) {
         const targets = (configCache && configCache.targets) || {
@@ -1054,7 +1054,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         const indGrade = grade(indScore);
         const indColor = gradeColor(indGrade);
         const formerBadge = (t.is_active === false)
-          ? ` <span class="pill" style="font-size:9px;background:#fee2e2;color:#991b1b" title="No longer active in Housecall Pro — drops off once they have no jobs in the window">former</span>`
+          ? ` <span class="pill" style="font-size:9px;background:#fee2e2;color:#991b1b" title="No longer active in Housecall Pro - drops off once they have no jobs in the window">former</span>`
           : '';
         // Inline reclassify dropdown (Tim 2026-06-01: move techs between bands
         // right from the board). Stops row-click navigation when used.
@@ -1067,7 +1067,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           : `<strong>${esc(t.tech_name)}</strong>${t.role ? ` <span class="text-[10px] text-slate-500">${esc(t.role)}</span>` : ''}${formerBadge}<div>${bandSelect}</div>`;
         const peerCell = peer
           ? `<span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:28px;height:28px;border-radius:8px;background:${color};color:#fff;font-weight:700;font-size:13px;line-height:28px;text-align:center">${g}</span><span class="num text-xs text-slate-500">${sc.score.toFixed(0)}</span></span>`
-          : `<span class="text-xs text-slate-400">—</span>`;
+          : `<span class="text-xs text-slate-400">-</span>`;
         const indCell = `<span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:28px;height:28px;border-radius:8px;background:${indColor};color:#fff;font-weight:700;font-size:13px;line-height:28px;text-align:center" title="vs HVAC industry top-quartile anchors">${indGrade}</span><span class="num text-xs text-slate-500">${indScore.toFixed(0)}</span></span>`;
         // Show "X jobs" with a quiet "+Y shared" indicator when the tech
         // got credit on multi-tech jobs (where they weren't primary).
@@ -1081,14 +1081,14 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <td class="text-right num">${fmtI(t.jobs)}${sharedHint}</td>
           <td class="text-right num hidden sm:table-cell">${t.tune_ups} · ${t.diagnostics} · ${t.estimates}</td>
           <td class="text-right num">${fmtP(t.close_rate_pct)}</td>
-          <td class="text-right num">${(t.money_calls || 0) > 0 ? (t.money_calls_per_day || 0).toFixed(1) : '<span class="text-slate-300">—</span>'}<div class="text-[10px] text-slate-400">${t.money_calls || 0} calls${t.days_worked ? ' / ' + t.days_worked + 'd' : ''}</div></td>
+          <td class="text-right num">${(t.money_calls || 0) > 0 ? (t.money_calls_per_day || 0).toFixed(1) : '<span class="text-slate-300">-</span>'}<div class="text-[10px] text-slate-400">${t.money_calls || 0} calls${t.days_worked ? ' / ' + t.days_worked + 'd' : ''}</div></td>
           <td class="text-right num hidden sm:table-cell">${fmt$(t.avg_ticket)}</td>
           <td class="text-right num"><strong>${fmt$(t.revenue)}</strong></td>
           <td class="text-right num hidden md:table-cell">${fmt$(t.sales_rev || 0)}</td>
-          <td class="text-right num hidden md:table-cell">${(t.installs_count || 0) > 0 ? fmt$(t.install_rev || 0) + `<div class="text-[10px] text-slate-400">${t.installs_count} install${t.installs_count===1?'':'s'}</div>` : '<span class="text-slate-300">—</span>'}</td>
-          <td class="text-right num hidden lg:table-cell">${(t.new_signups || t.renewals_won || t.renewals_lost) ? `<span class="text-emerald-700" title="${t.new_signups_new_cust||0} new cust + ${t.new_signups_existing||0} existing">${t.new_signups||0} new</span> / <span title="${t.renewals_won||0} won of ${(t.renewals_won||0)+(t.renewals_lost||0)} decided">${t.renewals_won||0} ren</span>` : '<span class="text-slate-300">—</span>'}</td>
-          <td class="text-right num hidden lg:table-cell">${(t.hours_total || 0) > 0 ? (t.hours_total).toFixed(1) + 'h' : '<span class="text-slate-300" title="No Time Tracking CSV uploaded yet">—</span>'}</td>
-          <td class="text-right num hidden lg:table-cell">${(t.rev_per_hour || 0) > 0 ? fmt$(t.rev_per_hour) : '<span class="text-slate-300">—</span>'}</td>
+          <td class="text-right num hidden md:table-cell">${(t.installs_count || 0) > 0 ? fmt$(t.install_rev || 0) + `<div class="text-[10px] text-slate-400">${t.installs_count} install${t.installs_count===1?'':'s'}</div>` : '<span class="text-slate-300">-</span>'}</td>
+          <td class="text-right num hidden lg:table-cell">${(t.new_signups || t.renewals_won || t.renewals_lost) ? `<span class="text-emerald-700" title="${t.new_signups_new_cust||0} new cust + ${t.new_signups_existing||0} existing">${t.new_signups||0} new</span> / <span title="${t.renewals_won||0} won of ${(t.renewals_won||0)+(t.renewals_lost||0)} decided">${t.renewals_won||0} ren</span>` : '<span class="text-slate-300">-</span>'}</td>
+          <td class="text-right num hidden lg:table-cell">${(t.hours_total || 0) > 0 ? (t.hours_total).toFixed(1) + 'h' : '<span class="text-slate-300" title="No Time Tracking CSV uploaded yet">-</span>'}</td>
+          <td class="text-right num hidden lg:table-cell">${(t.rev_per_hour || 0) > 0 ? fmt$(t.rev_per_hour) : '<span class="text-slate-300">-</span>'}</td>
           <td class="text-right num hidden lg:table-cell">${t.reviews_generated || 0} (${fmtP(t.review_rate_pct || 0)})</td>
           <td class="text-right num hidden lg:table-cell">${t.callbacks} (${fmtP(t.callback_rate_pct)})</td>
         </tr>`;
@@ -1096,15 +1096,15 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
       const sections = [];
       const bandHeader = (label, sublabel) =>
-        `<tr><td colspan="16" class="text-xs text-slate-600 bg-slate-50 py-2 px-3"><strong>${label}</strong> <span class="text-slate-400">— ${sublabel}</span></td></tr>`;
+        `<tr><td colspan="16" class="text-xs text-slate-600 bg-slate-50 py-2 px-3"><strong>${label}</strong> <span class="text-slate-400">- ${sublabel}</span></td></tr>`;
       const sortByScore = (arr) => arr.map(t => ({ t, score: scoreTech(t, true).score })).sort((a, b) => b.score - a.score).map(x => row(x.t, { isPeer: true })).join('');
 
       if (serviceTechs.length) {
-        sections.push(bandHeader('Service techs', 'tune-ups, diagnostics, repair — graded against each other'));
+        sections.push(bandHeader('Service techs', 'tune-ups, diagnostics, repair - graded against each other'));
         sections.push(sortByScore(serviceTechs));
       }
       if (installTechs.length) {
-        sections.push(bandHeader('Install techs', 'replacements, change-outs — different work, ranked separately'));
+        sections.push(bandHeader('Install techs', 'replacements, change-outs - different work, ranked separately'));
         sections.push(sortByScore(installTechs));
       }
       if (helpers.length) {
@@ -1136,7 +1136,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           location.href = `/admin/dashboard/tech/?id=${encodeURIComponent(id)}&days=${currentRange}`;
         });
       });
-      // Inline reclassify — change band right on the board, then re-render.
+      // Inline reclassify - change band right on the board, then re-render.
       tbody.querySelectorAll('.band-select').forEach(sel => {
         sel.addEventListener('click', e => e.stopPropagation());
         sel.addEventListener('change', async (e) => {
@@ -1149,7 +1149,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
               method: 'POST', headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ tech_hcp_id: techId, band }),
             });
-            toast(`Reclassified as ${band} — re-grouping`, 'ok');
+            toast(`Reclassified as ${band} - re-grouping`, 'ok');
             await loadAll();   // re-fetch so the tech moves to the right band + re-grades
           } catch (err) {
             toast(err.message || 'Reclassify failed', 'error');
@@ -1157,7 +1157,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           }
         });
       });
-      // Reapply industry-column visibility — every render recreates the
+      // Reapply industry-column visibility - every render recreates the
       // .industry-col cells with the default `hidden` class.
       const indCb = document.getElementById('show-industry');
       if (indCb && indCb.checked) {
@@ -1165,9 +1165,9 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       }
     }
 
-    // ─── PHASE 8 — GOAL PROGRESS ────────────────────────────────────
+    // ─── PHASE 8 - GOAL PROGRESS ────────────────────────────────────
     // Render shop-wide rollup + per-tech progress vs the goals stored in KV.
-    // Goals are monthly targets — we prorate to the active window so a 7-day
+    // Goals are monthly targets - we prorate to the active window so a 7-day
     // view shows progress to date for that 7-day slice of the month, not the
     // full monthly figure. This keeps "X is at 87% of his goal" honest.
     function renderGoals(byTech) {
@@ -1178,7 +1178,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       const note     = document.getElementById('goals-window-note');
 
       // Apply the same MIN_JOBS=5 filter the leaderboard uses. A tech with 1 job
-      // is "data too thin to grade fairly" — including them here drags the shop
+      // is "data too thin to grade fairly" - including them here drags the shop
       // rollup averages down AND lets them appear as "Most upside" leader, which
       // is misleading (low jobs ≠ underperformer).
       const MIN_JOBS_FOR_GOALS = 5;
@@ -1198,7 +1198,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       // Compute progress for one tech across all 5 goals.
       // Returns array of {key, label, value, valDisplay, goal, goalDisplay, pct, tone, inverted}
       // tone: 'good' >= 100% (90% for review_rate), 'warn' >= 70%, 'bad' otherwise.
-      // For inverted goals (callback_rate — lower is better), tone reverses: 'good' if at/under goal.
+      // For inverted goals (callback_rate - lower is better), tone reverses: 'good' if at/under goal.
       function progressFor(t) {
         const out = [];
         // Revenue (window-prorated)
@@ -1216,7 +1216,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         out.push({ key:'ticket', label:'Avg ticket', value:t.avg_ticket, valDisplay:fmt$(t.avg_ticket),
           goal:goals.avg_ticket, goalDisplay:fmt$(goals.avg_ticket), pct:atPct,
           tone: atPct >= 100 ? 'good' : atPct >= 75 ? 'warn' : 'bad', inverted:false });
-        // Callback rate (INVERTED — lower = better; pct shown as headroom)
+        // Callback rate (INVERTED - lower = better; pct shown as headroom)
         const cbVal = t.callback_rate_pct || 0;
         // Headroom: 100% if 0 callbacks, 0% if at/over goal cap.
         const cbPct = goals.callback_rate > 0 ? Math.max(0, 100 - (cbVal / goals.callback_rate) * 100) : 100;
@@ -1248,7 +1248,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         </div>`;
       }
 
-      // Shop rollup — average each metric across field techs, total revenue.
+      // Shop rollup - average each metric across field techs, total revenue.
       const shopMetrics = {
         revenue: techs.reduce((s, t) => s + (t.revenue || 0), 0),
         close_rate: avg(techs.map(t => t.close_rate_pct)),
@@ -1262,7 +1262,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           pct: shopGoalRev > 0 ? (shopMetrics.revenue / shopGoalRev) * 100 : 0,
           tone: shopMetrics.revenue >= shopGoalRev ? 'good' : shopMetrics.revenue >= shopGoalRev * 0.7 ? 'warn' : 'bad' },
         // NOTE: these are mean-of-per-tech-means (each tech weighted equally),
-        // NOT revenue-weighted. That's intentional — the goal is "every tech
+        // NOT revenue-weighted. That's intentional - the goal is "every tech
         // hits $400 ticket / 55% close", so a high-ticket tech shouldn't mask
         // low-ticket teammates. But this differs from the KPI tile up top
         // (which IS revenue-weighted), so the labels say "(per tech)" to make
@@ -1305,7 +1305,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         </div>
       </div>`;
 
-      // Per-tech cards — sorted by overall goal-progress score (avg pct across goals).
+      // Per-tech cards - sorted by overall goal-progress score (avg pct across goals).
       const scored = techs.map(t => {
         const ps = progressFor(t);
         const avgPct = ps.reduce((s, p) => s + p.pct, 0) / ps.length;
@@ -1363,13 +1363,13 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       const displayName = (r) => looksLikePhone(r.name) ? '(no name on file)' : r.name;
       const fmtRow = r => `<div class="flex items-center justify-between gap-2 py-1 border-b border-line last:border-0">
         <div class="min-w-0 flex-1"><div class="font-semibold truncate ${looksLikePhone(r.name) ? 'text-slate-500 italic' : ''}">${esc(displayName(r))}</div><div class="text-xs text-slate-500 truncate">${esc(r.email || r.phone || '')}</div></div>
-        <div class="text-right flex-shrink-0"><div class="font-semibold num">${fmt$(r.lifetime_value)}</div><div class="text-xs text-slate-500">${r.days_since_last_job != null ? r.days_since_last_job + 'd ago' : '—'}</div></div>
+        <div class="text-right flex-shrink-0"><div class="font-semibold num">${fmt$(r.lifetime_value)}</div><div class="text-xs text-slate-500">${r.days_since_last_job != null ? r.days_since_last_job + 'd ago' : '-'}</div></div>
       </div>`;
       document.getElementById('seg-dormant').innerHTML = (dormant.rows || []).slice(0,5).map(fmtRow).join('') || '<div class="text-slate-400 text-sm py-2">No dormant customers in pool 🎉</div>';
       document.getElementById('seg-dormant-count').textContent = `${dormant.count}`;
       document.getElementById('seg-renew').innerHTML   = (renew.rows || []).slice(0,5).map(fmtRow).join('')   || '<div class="text-slate-400 text-sm py-2">None renewing in window.</div>';
       document.getElementById('seg-renew-count').textContent = `${renew.count}`;
-      document.getElementById('seg-vip').innerHTML     = (vip.rows || []).slice(0,5).map(fmtRow).join('')     || '<div class="text-slate-400 text-sm py-2">—</div>';
+      document.getElementById('seg-vip').innerHTML     = (vip.rows || []).slice(0,5).map(fmtRow).join('')     || '<div class="text-slate-400 text-sm py-2">-</div>';
     }
 
     async function loadReviews(forceRefresh) {
@@ -1383,12 +1383,12 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         const r = await api('/api/reviews/summary');
         const s = r.snapshot;
         if (!s) {
-          document.getElementById('rev-avg').textContent = '—';
-          document.getElementById('rev-count').textContent = 'No reviews fetched yet — tap ↻';
+          document.getElementById('rev-avg').textContent = '-';
+          document.getElementById('rev-count').textContent = 'No reviews fetched yet - tap ↻';
           document.getElementById('rev-recent').innerHTML = '<div class="text-slate-400 text-sm py-2">Click ↻ above to pull from Google.</div>';
           return;
         }
-        const avg = s.rating_avg ? s.rating_avg.toFixed(1) : '—';
+        const avg = s.rating_avg ? s.rating_avg.toFixed(1) : '-';
         document.getElementById('rev-avg').textContent = avg;
         // Stars: filled portion based on avg
         const filled = Math.round((s.rating_avg || 0) * 2) / 2;
@@ -1415,7 +1415,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           `Synced ${fmtRel(s.fetched_at)} · ${s.business_name} · DataForSEO via Google`;
 
         const recent = r.recent || [];
-        const stars = (n) => n ? '★'.repeat(n) + '☆'.repeat(5 - n) : '—';
+        const stars = (n) => n ? '★'.repeat(n) + '☆'.repeat(5 - n) : '-';
         document.getElementById('rev-recent').innerHTML = recent.length ? recent.map(rev => `
           <div class="border-l-2 ${rev.rating >= 4 ? 'border-emerald-500' : rev.rating >= 3 ? 'border-amber-500' : 'border-red-500'} pl-3 py-1">
             <div class="flex flex-wrap justify-between items-baseline gap-2">
@@ -1584,7 +1584,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     }
 
     // ─── SETTINGS DRAWER (Phase 3 redesign) ─────────────────────────
-    // Score-formula presets — one-click weight sets.
+    // Score-formula presets - one-click weight sets.
     const PRESETS = {
       balanced: { revenue_per_day:0.20, avg_ticket:0.15, close_rate:0.25, membership_conversion:0.10, callback_rate_inverted:0.10, review_rate:0.05, utilization:0.10, volume:0.05 },
       service:  { revenue_per_day:0.15, avg_ticket:0.10, close_rate:0.30, membership_conversion:0.15, callback_rate_inverted:0.10, review_rate:0.05, utilization:0.10, volume:0.05 },
@@ -1596,7 +1596,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       avg_ticket: { name: 'Average ticket', why: 'Higher = rewards techs who close bigger jobs (good for install / sales).' },
       close_rate: { name: 'Close rate', why: 'Higher = rewards techs who actually convert work, not just spin wheels.' },
       membership_conversion: { name: 'Memberships sold', why: 'Higher = rewards techs who pitch and sell care plans.' },
-      callback_rate_inverted: { name: 'Low callbacks', why: 'Higher = rewards techs whose work HOLDS — quality signal.' },
+      callback_rate_inverted: { name: 'Low callbacks', why: 'Higher = rewards techs whose work HOLDS - quality signal.' },
       review_rate: { name: 'Reviews generated', why: 'Higher = rewards techs whose customers actually leave Google reviews. Currently lower-weighted because attribution is imperfect.' },
       utilization: { name: 'Billable hours %', why: 'Higher = rewards efficient techs (less drive, more on-site). Pending Timesheets ingest.' },
       volume: { name: 'Job volume', why: 'Higher = rewards techs who push more jobs. Keep low or quality drops.' },
@@ -1663,7 +1663,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         return Math.round(((below + 0.5 * equal) / values.length) * 100);
       };
 
-      // Field-tech peer group — same filter the leaderboard uses (MIN_JOBS=5, not owner).
+      // Field-tech peer group - same filter the leaderboard uses (MIN_JOBS=5, not owner).
       const MIN_JOBS = 5;
       const field = lastTechsForPreview.filter(t => !t.is_owner && t.jobs >= MIN_JOBS);
       if (!field.length) {
@@ -1774,7 +1774,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     }
 
     // ─── EVENT WIRING ───────────────────────────────────────────────
-    // Date-range tab handler — clears any active preset / custom window
+    // Date-range tab handler - clears any active preset / custom window
     // when a rolling range is picked, and vice-versa for the preset tabs.
     function clearAllRangeButtonsPressed() {
       document.querySelectorAll('.tab[data-range], .tab[data-preset], #custom-range-btn')
@@ -1841,7 +1841,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       u.searchParams.set('key', k);
       a.setAttribute('href', u.toString());
     });
-    // Industry-grade column toggle — persists across reloads in sessionStorage.
+    // Industry-grade column toggle - persists across reloads in sessionStorage.
     const SHOW_IND_KEY = 'icac_show_industry';
     function applyIndustryColumn(show) {
       document.querySelectorAll('.industry-col').forEach(el => el.classList.toggle('hidden', !show));
@@ -1893,7 +1893,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           const r = await api(`/api/kpis/segments?name=${encodeURIComponent(seg)}&limit=500`);
           const emails = (r.rows || []).map(x => x.email).filter(Boolean).join(', ');
           await navigator.clipboard.writeText(emails);
-          toast(`Copied ${(emails.match(/,/g) || []).length + 1} emails — paste into HCP Marketing Center`, 'ok');
+          toast(`Copied ${(emails.match(/,/g) || []).length + 1} emails - paste into HCP Marketing Center`, 'ok');
         } catch (e) { toast(e.message || 'Copy failed', 'error'); }
       });
     });
@@ -1957,7 +1957,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <div class="flex items-center gap-2 flex-wrap">
               <label class="text-[11px] text-slate-500 font-semibold">Attribute to:</label>
               <select class="ra-select px-2 py-1 border border-line rounded text-xs" data-review-id="${esc(rev.review_id)}">
-                <option value="">— Unattributed —</option>
+                <option value="">- Unattributed -</option>
                 ${techOptions.replace(`value="${esc(currentTech)}"`, `value="${esc(currentTech)}" selected`)}
               </select>
               ${rev.attributed_tech_name ? `<span class="text-[11px] text-slate-500">currently: <strong>${esc(rev.attributed_tech_name)}</strong></span>` : ''}
@@ -2021,22 +2021,22 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <div class="text-sm text-slate-700 mt-1">${esc(r.error || ('HTTP ' + res.status))}</div>
             ${r.header_seen && r.header_seen.length ? `<div class="text-[11px] text-slate-500 mt-2">Columns I saw: ${esc(r.header_seen.join(' · '))}</div>` : ''}
           </div>`;
-          toast('Upload failed — see the red box for what to fix', 'error');
+          toast('Upload failed - see the red box for what to fix', 'error');
           return;
         }
-        const range = r.date_range ? `${r.date_range.from} → ${r.date_range.to}` : '—';
+        const range = r.date_range ? `${r.date_range.from} → ${r.date_range.to}` : '-';
         const unmatchedNote = r.sample_unmatched && r.sample_unmatched.length
-          ? `<div class="text-[12px] text-amber-700 mt-2">⚠ ${fmtI(r.unmatched_rows)} rows couldn't be matched to a tech — names not found in HCP: <strong>${esc(r.sample_unmatched.join(', '))}</strong>. Fix the spelling in the CSV or check the employee exists in Housecall Pro, then re-upload.</div>`
+          ? `<div class="text-[12px] text-amber-700 mt-2">⚠ ${fmtI(r.unmatched_rows)} rows couldn't be matched to a tech - names not found in HCP: <strong>${esc(r.sample_unmatched.join(', '))}</strong>. Fix the spelling in the CSV or check the employee exists in Housecall Pro, then re-upload.</div>`
           : '';
         const mapping = r.column_mapping || {};
         const mappedCols = Object.entries(mapping).filter(([, v]) => v !== null).map(([k]) => k.replace(/_/g, ' ')).join(', ');
         // LOUD green success banner.
         result.innerHTML = `<div class="card-quiet" style="border-left:4px solid #15803d; background:#f0fdf4">
-          <div class="font-bold text-emerald-700 text-base">✓ Uploaded — hours are now on the leaderboard</div>
+          <div class="font-bold text-emerald-700 text-base">✓ Uploaded - hours are now on the leaderboard</div>
           <div class="text-sm text-slate-700 mt-1"><strong>${fmtI(r.matched_rows)}</strong> of ${fmtI(r.total_rows)} rows matched to a tech${r.unmatched_rows ? ` · ${fmtI(r.unmatched_rows)} unmatched` : ''}</div>
-          <div class="text-[12px] text-slate-500 mt-1">Date range: <strong>${range}</strong> · columns read: ${esc(mappedCols || '—')}</div>
+          <div class="text-[12px] text-slate-500 mt-1">Date range: <strong>${range}</strong> · columns read: ${esc(mappedCols || '-')}</div>
           ${unmatchedNote}
-          <div class="text-[11px] text-slate-500 mt-2">Scroll up to the tech leaderboard — the <strong>Hours</strong> and <strong>$/Hr</strong> columns now show real numbers for this date range.</div>
+          <div class="text-[11px] text-slate-500 mt-2">Scroll up to the tech leaderboard - the <strong>Hours</strong> and <strong>$/Hr</strong> columns now show real numbers for this date range.</div>
         </div>`;
         toast(`Hours uploaded: ${r.matched_rows} matched`, 'ok');
         await loadAll();
@@ -2067,7 +2067,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         wrap.innerHTML = `<table class="kpi-table"><thead><tr><th>When</th><th>File</th><th class="text-right">Matched</th><th class="text-right">Unmatched</th><th>Date range</th><th></th></tr></thead><tbody>
           ${runs.map(u => `<tr>
             <td>${fmtRel(u.uploaded_at)}</td>
-            <td class="truncate">${esc(u.filename || '—')}</td>
+            <td class="truncate">${esc(u.filename || '-')}</td>
             <td class="text-right num">${fmtI(u.matched_rows)}</td>
             <td class="text-right num">${fmtI(u.unmatched_rows)}</td>
             <td>${u.date_min || '?'} → ${u.date_max || '?'}</td>
@@ -2077,7 +2077,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         wrap.querySelectorAll('[data-del-batch]').forEach(b => {
           b.addEventListener('click', () => deleteHoursBatch(b.getAttribute('data-del-batch'), b.getAttribute('data-del-label')));
         });
-      } catch (e) { /* silent — section is optional */ }
+      } catch (e) { /* silent - section is optional */ }
     }
     function initHoursUpload() {
       const dz = document.getElementById('hours-dropzone');
@@ -2140,7 +2140,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       showView(initial);
     }
 
-    // ─── PHASE 4 — AI CHAT (ASK THE DASHBOARD) ──────────────────────
+    // ─── PHASE 4 - AI CHAT (ASK THE DASHBOARD) ──────────────────────
     // Floating chat panel. Calls /api/ai/chat with the conversation; the
     // server pre-loads HCP/D1 context (techs, goals, current window) and
     // hands it to MiniMax along with the question. Tool-use over D1 happens
@@ -2200,7 +2200,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         }
       } catch (e) {
         pending.remove();
-        chatAppend('assistant', `Sorry — chat failed: ${e.message || e}`);
+        chatAppend('assistant', `Sorry - chat failed: ${e.message || e}`);
       }
     }
 
