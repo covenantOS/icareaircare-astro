@@ -87,7 +87,6 @@ const otherServices = SITE.services.filter((s) => s.slug !== slug);
           <img src="/images/Tim%20Hawk%20(ICAC%20Owner).webp" alt={`${SITE.owner}, Owner`} title={`${SITE.owner}, Owner — I Care Air Care`} class="w-10 h-10 rounded-full ring-2 ring-brand-100 object-cover object-top shrink-0" width="40" height="40" loading="lazy" />
           <div class="text-[13px] text-slate-600 leading-snug">
             <span>Reviewed by <a href="/tim-hawk/" class="font-semibold text-navy-700 hover:text-brand-700">{SITE.owner}</a> · Florida License <strong class="text-navy-700">{SITE.license}</strong> · EPA 608 Universal</span>
-            <span class="block text-[11.5px] text-slate-500 mt-0.5">Updated {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
           </div>
         </div>
         <slot />
