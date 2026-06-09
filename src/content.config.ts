@@ -16,6 +16,7 @@ const blog = defineCollection({
     read: z.string(),
     image: z.string(),
     imageAlt: z.string().optional(),
+    noindex: z.boolean().optional(),
     location: z.string(),
     primaryService: link,
     related: z.array(link),

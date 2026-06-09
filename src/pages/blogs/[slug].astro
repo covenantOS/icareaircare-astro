@@ -97,7 +97,7 @@ const postFAQs = BLOG_FAQS[post.slug] || [
   },
 ];
 ---
-<BaseLayout title={`${post.title} | I Care Air Care`} description={post.description} breadcrumbs={breadcrumbs}>
+<BaseLayout title={`${post.title} | I Care Air Care`} description={post.description} breadcrumbs={breadcrumbs} noindex={post.noindex}>
   <Hero
     eyebrow={`${post.tag} · ${post.location}`}
     title={post.title}

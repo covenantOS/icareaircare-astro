@@ -16,7 +16,10 @@ export default defineConfig({
         // Internal admin / KPI dashboard — not for public indexing
         !page.includes('/admin/') &&
         !page.endsWith('/rss.xml') &&
-        // Legacy URLs that 301 to canonical versions — do not include in sitemap
+        // Newsroom posts are noindex (GEO/PR companions to the pillar articles)
+        !page.includes('/blogs/wesley-chapel-ac-installation-surges-beat-the-heat/') &&
+        !page.includes('/blogs/changing-incentives-energy-costs-ac-replacement-wesley-chapel/') &&
+        // Legacy URLs that 301 to canonical versions - do not include in sitemap
         !page.includes('/emergency-ac-repair-wesley-chapel-fl/') &&
         !page.includes('/air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know/') &&
         !page.includes('/ac-not-cooling-solutions/'),

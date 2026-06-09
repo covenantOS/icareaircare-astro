@@ -16,6 +16,7 @@ export interface BlogPost {
   read: string;
   image: string;
   imageAlt?: string;
+  noindex?: boolean;
   location: string;
   primaryService: BlogLink;
   related: BlogLink[];

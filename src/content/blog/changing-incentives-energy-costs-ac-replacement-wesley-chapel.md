@@ -7,6 +7,7 @@ read: "5 min"
 image: "/images/changing-incentives-ac-replacement-newsroom-hero.webp"
 imageAlt: "Before and after of an old rusty AC condenser replaced with a new high-efficiency unit serviced by an I Care Air Care technician in Wesley Chapel"
 location: "Wesley Chapel"
+noindex: true
 primaryService:
   href: "/services/ac-replacement-tampa/"
   label: "AC replacement"
