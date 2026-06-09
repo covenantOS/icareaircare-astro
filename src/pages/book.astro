@@ -2,12 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE } from '../lib/site';
 
-// Use the central external-scheduler URL from SITE — single source of truth
+// Use the central external-scheduler URL from SITE - single source of truth
 const hcpFallback = SITE.bookUrlExternal;
 ---
 <BaseLayout
   title="Book Service Online | I Care Air Care"
-  description="Book AC repair, maintenance, or HVAC installation online with I Care Air Care — Wesley Chapel's 4.9★ HVAC team serving Pasco, Hillsborough & Polk counties."
+  description="Book AC repair, maintenance, or HVAC installation online with I Care Air Care - Wesley Chapel's 4.9★ HVAC team serving Pasco, Hillsborough & Polk counties."
   breadcrumbs={[{name:'Home',url:'https://www.icareaircare.com/'},{name:'Book Online',url:'https://www.icareaircare.com/book/'}]}
 >
   <section class="py-10 md:py-14 pb-20 md:pb-24" style="background: var(--color-surface);">
@@ -47,7 +47,7 @@ const hcpFallback = SITE.bookUrlExternal;
           <!-- STEP 2: CATEGORY -->
           <div data-step="2" class="bk-step" hidden>
             <h2 class="bk-h2">What can we do for you?</h2>
-            <p class="bk-sub">Pick the closest match — we'll narrow it down next.</p>
+            <p class="bk-sub">Pick the closest match - we'll narrow it down next.</p>
             <div class="bk-card-grid bk-card-grid-2">
               <button type="button" class="bk-card" data-choice="category" data-value="hvac">
                 <span class="bk-card-icon" aria-hidden="true">
@@ -73,11 +73,11 @@ const hcpFallback = SITE.bookUrlExternal;
             <div class="bk-card-grid">
               <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="diagnostic">
                 <strong>Diagnostic</strong>
-                <span class="bk-card-hint">Something's off — it's not cooling, it's making noise, it's leaking, etc.</span>
+                <span class="bk-card-hint">Something's off - it's not cooling, it's making noise, it's leaking, etc.</span>
               </button>
               <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="care-plan-tuneup">
                 <strong>Care Plan Tune-Up</strong>
-                <span class="bk-card-hint">I'm a maintenance plan member — time for my scheduled visit.</span>
+                <span class="bk-card-hint">I'm a maintenance plan member - time for my scheduled visit.</span>
               </button>
               <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="tuneup">
                 <strong>Standard Tune-Up</strong>
@@ -85,7 +85,7 @@ const hcpFallback = SITE.bookUrlExternal;
               </button>
               <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="estimate">
                 <strong>Estimate / New System</strong>
-                <span class="bk-card-hint">Thinking about replacing — get a written quote.</span>
+                <span class="bk-card-hint">Thinking about replacing - get a written quote.</span>
               </button>
             </div>
           </div>
@@ -100,7 +100,7 @@ const hcpFallback = SITE.bookUrlExternal;
               </button>
               <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="thermostat">
                 <strong>Thermostat Installation</strong>
-                <span class="bk-card-hint">Ecobee, Nest, Honeywell — install + configure for your heat pump.</span>
+                <span class="bk-card-hint">Ecobee, Nest, Honeywell - install + configure for your heat pump.</span>
               </button>
               <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="iaq">
                 <strong>Indoor Air Quality</strong>
@@ -108,7 +108,7 @@ const hcpFallback = SITE.bookUrlExternal;
               </button>
               <button type="button" class="bk-card bk-card-wide" data-choice="service" data-value="other">
                 <strong>Other / Not Sure</strong>
-                <span class="bk-card-hint">Tell us what's going on — we'll figure it out.</span>
+                <span class="bk-card-hint">Tell us what's going on - we'll figure it out.</span>
               </button>
             </div>
           </div>
@@ -123,7 +123,7 @@ const hcpFallback = SITE.bookUrlExternal;
                 <span>What's happening with your system?</span>
                 <select name="q_issue" class="bk-input">
                   <option value="">Choose one</option>
-                  <option value="Not cooling — warm air">Not cooling (warm air)</option>
+                  <option value="Not cooling - warm air">Not cooling (warm air)</option>
                   <option value="Not heating">Not heating</option>
                   <option value="Weak airflow">Weak airflow</option>
                   <option value="Strange noises">Strange noises</option>
@@ -135,12 +135,12 @@ const hcpFallback = SITE.bookUrlExternal;
                 </select>
               </label>
               <label class="bk-label">
-                <span>How urgent? <span class="bk-small">(be honest — helps us prioritize)</span></span>
+                <span>How urgent? <span class="bk-small">(be honest - helps us prioritize)</span></span>
                 <select name="q_urgency" class="bk-input">
-                  <option value="Flexible — whenever" selected>Flexible — whenever</option>
+                  <option value="Flexible - whenever" selected>Flexible - whenever</option>
                   <option value="This week">This week</option>
                   <option value="Today if possible">Today if possible</option>
-                  <option value="Emergency — no cooling right now">Emergency — no cooling right now</option>
+                  <option value="Emergency - no cooling right now">Emergency - no cooling right now</option>
                 </select>
               </label>
             </div>
@@ -192,7 +192,7 @@ const hcpFallback = SITE.bookUrlExternal;
                   <option value="Heat pump">Heat pump</option>
                   <option value="Ductwork">Ductwork</option>
                   <option value="Mini-split / ductless">Mini-split / ductless</option>
-                  <option value="Not sure — help me decide">Not sure — help me decide</option>
+                  <option value="Not sure - help me decide">Not sure - help me decide</option>
                 </select>
               </label>
               <label class="bk-label">
@@ -267,7 +267,7 @@ const hcpFallback = SITE.bookUrlExternal;
                   <option value="Humidity control">Humidity control</option>
                   <option value="Germs / viruses (UV)">Germs / viruses (UV light)</option>
                   <option value="Odors">Odors</option>
-                  <option value="Overall air quality">Overall air quality — help me decide</option>
+                  <option value="Overall air quality">Overall air quality - help me decide</option>
                 </select>
               </label>
             </div>
@@ -849,7 +849,7 @@ const hcpFallback = SITE.bookUrlExternal;
 
       errorEl.hidden = true;
       errorEl.textContent = '';
-      // Intentionally no auto-scroll on step change — users find it jarring.
+      // Intentionally no auto-scroll on step change - users find it jarring.
       // The fade-in animation + progress bar is enough visual feedback.
     }
 
@@ -939,7 +939,7 @@ const hcpFallback = SITE.bookUrlExternal;
             zipOk.hidden = false; zipOk.textContent = '✓ We serve your area.';
             zipWarn.hidden = true;
           } else {
-            zipWarn.hidden = false; zipWarn.textContent = "We may be out of our usual range — we'll still try. Or call (813) 395-2324 to confirm.";
+            zipWarn.hidden = false; zipWarn.textContent = "We may be out of our usual range - we'll still try. Or call (813) 395-2324 to confirm.";
             zipOk.hidden = true;
           }
         } else {
@@ -1000,7 +1000,7 @@ const hcpFallback = SITE.bookUrlExternal;
       var addr = [state.address.street, state.address.unit, state.address.city + ', ' + state.address.state + ' ' + state.address.zip].filter(Boolean).join(', ');
       rows.push(['Address', addr]);
       dl.innerHTML = rows.map(function (r) {
-        return '<dt>' + escapeHtml(r[0]) + '</dt><dd>' + escapeHtml(r[1] || '—') + '</dd>';
+        return '<dt>' + escapeHtml(r[0]) + '</dt><dd>' + escapeHtml(r[1] || '-') + '</dd>';
       }).join('');
       wrap.hidden = !(state.window.date && state.window.slot);
     }
@@ -1111,7 +1111,7 @@ const hcpFallback = SITE.bookUrlExternal;
       if (!row) return;
       row.innerHTML = '';
       var now = new Date();
-      // Cutoff: if it is after 3pm local, same-day booking is probably unrealistic — offer from tomorrow.
+      // Cutoff: if it is after 3pm local, same-day booking is probably unrealistic - offer from tomorrow.
       var sameDayOk = now.getHours() < 15;
       var offset = sameDayOk ? 0 : 1;
       var count = 0;

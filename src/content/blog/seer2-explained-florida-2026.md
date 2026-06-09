@@ -19,17 +19,17 @@ related:
     label: "Wesley Chapel"
 checklist:
   - "Florida (Southeast region) requires SEER2 ≥ 15.2 on every new split-system AC and heat pump installed."
-  - "Higher SEER2 helps most when cooling runtime is high — and Tampa Bay logs 2,200+ cooling hours/year."
+  - "Higher SEER2 helps most when cooling runtime is high - and Tampa Bay logs 2,200+ cooling hours/year."
   - "Variable-speed equipment improves humidity control more than the SEER2 number suggests on the spec sheet."
-  - "IRA Section 25C and utility rebates kick in at 15.2+ SEER2 / 16+ SEER2 — get the equipment AHRI cert."
+  - "IRA Section 25C and utility rebates kick in at 15.2+ SEER2 / 16+ SEER2 - get the equipment AHRI cert."
 ---
 <h2>What SEER2 actually measures</h2>
 <p>SEER2 stands for Seasonal Energy Efficiency Ratio 2. It's the federally-mandated efficiency rating for residential split-system air conditioners and heat pumps in cooling mode. The number is a ratio: total cooling output (in BTUs) over a typical cooling season, divided by total electrical input (in watt-hours), measured under standardized lab conditions.</p>
-<p>A 15.2 SEER2 system delivers 15.2 BTUs of cooling for every watt-hour of electricity it consumes. A 20 SEER2 system delivers 20 BTUs per watt-hour — about 32% more efficient. In real Florida operation, those efficiency numbers don't translate 1:1 to electric bills (lab conditions and your house aren't the same), but the ratio between two SEER2 numbers is roughly the ratio you'll see on cooling-cost line items at the same usage.</p>
+<p>A 15.2 SEER2 system delivers 15.2 BTUs of cooling for every watt-hour of electricity it consumes. A 20 SEER2 system delivers 20 BTUs per watt-hour - about 32% more efficient. In real Florida operation, those efficiency numbers don't translate 1:1 to electric bills (lab conditions and your house aren't the same), but the ratio between two SEER2 numbers is roughly the ratio you'll see on cooling-cost line items at the same usage.</p>
 
 <h2>Why SEER became SEER2 in 2023</h2>
-<p>SEER2 replaced the older SEER rating starting January 1, 2023. The change is a tighter, more realistic test methodology — specifically, the static-pressure conditions in the lab test were updated from M1 (0.10 inches of water column external static pressure) to M3 (0.50 inches w.c.). That shift better reflects the duct-system resistance a real installed system has to push air through.</p>
-<p>The math result: a system rated 16 SEER under the old test rates roughly 15.2 SEER2 under the new test. Same equipment, same efficiency in the field, different number on the sticker. Rough conversion: <strong>SEER × 0.95 ≈ SEER2</strong>. That's why the federal minimum jumped from 14 SEER (Southeast pre-2023) to 15.2 SEER2 (Southeast post-2023) — same minimum standard, measured more honestly.</p>
+<p>SEER2 replaced the older SEER rating starting January 1, 2023. The change is a tighter, more realistic test methodology - specifically, the static-pressure conditions in the lab test were updated from M1 (0.10 inches of water column external static pressure) to M3 (0.50 inches w.c.). That shift better reflects the duct-system resistance a real installed system has to push air through.</p>
+<p>The math result: a system rated 16 SEER under the old test rates roughly 15.2 SEER2 under the new test. Same equipment, same efficiency in the field, different number on the sticker. Rough conversion: <strong>SEER × 0.95 ≈ SEER2</strong>. That's why the federal minimum jumped from 14 SEER (Southeast pre-2023) to 15.2 SEER2 (Southeast post-2023) - same minimum standard, measured more honestly.</p>
 <p>The other ratings updated alongside SEER:</p>
 <ul>
 <li><strong>EER → EER2:</strong> Energy Efficiency Ratio at peak conditions (95°F outdoor, 80°F indoor). Tells you how the system performs on the hottest days specifically. Florida minimum: EER2 ≥ 11.7 for IRA tax credit qualification.</li>
@@ -38,10 +38,10 @@ checklist:
 </ul>
 
 <h2>Florida's 15.2 SEER2 minimum</h2>
-<p>The federal Department of Energy splits the country into three regions for HVAC efficiency standards: North, Southeast, and Southwest. Florida is in the Southeast region. The current minimum for new split-system AC and heat pump installations in Florida (and Wesley Chapel, Tampa, Land O' Lakes, Lutz specifically) is <strong>15.2 SEER2</strong>. This is enforced at sale and at permit — a 14 SEER2 unit cannot legally be installed in Florida on a new system or as a replacement.</p>
-<p>This applies to ducted split systems, the dominant residential HVAC type in Tampa Bay. Different rules apply to packaged systems (16 SEER2 minimum), mini-splits (also 15.2 SEER2 minimum), and window units. What you can still do is install equipment <em>above</em> 15.2 SEER2 — 16, 17, 18, even 22 SEER2 systems are widely available. The question is whether the higher rating is worth the higher install price.</p>
+<p>The federal Department of Energy splits the country into three regions for HVAC efficiency standards: North, Southeast, and Southwest. Florida is in the Southeast region. The current minimum for new split-system AC and heat pump installations in Florida (and Wesley Chapel, Tampa, Land O' Lakes, Lutz specifically) is <strong>15.2 SEER2</strong>. This is enforced at sale and at permit - a 14 SEER2 unit cannot legally be installed in Florida on a new system or as a replacement.</p>
+<p>This applies to ducted split systems, the dominant residential HVAC type in Tampa Bay. Different rules apply to packaged systems (16 SEER2 minimum), mini-splits (also 15.2 SEER2 minimum), and window units. What you can still do is install equipment <em>above</em> 15.2 SEER2 - 16, 17, 18, even 22 SEER2 systems are widely available. The question is whether the higher rating is worth the higher install price.</p>
 
-<h2>Operating cost by SEER2 tier — real Tampa Bay numbers</h2>
+<h2>Operating cost by SEER2 tier - real Tampa Bay numbers</h2>
 <p>A 3-ton split-system AC on a typical 2,000 sq ft Wesley Chapel home running through a Tampa Bay cooling season (about 2,200 cooling hours/year), against TECO's 2026 residential rate of roughly $0.155/kWh:</p>
 <ul>
 <li><strong>14 SEER (pre-2023 minimum, no longer installable):</strong> ~$1,260/year cooling cost</li>
@@ -64,23 +64,23 @@ checklist:
 </ul>
 <p>Now do the payback math:</p>
 <ul>
-<li><strong>15.2 → 18 SEER2:</strong> Pay $4,000 more, save ~$185/year. Payback at year 22 — past the equipment's expected life. <strong>Doesn't pay back on operating cost alone.</strong></li>
+<li><strong>15.2 → 18 SEER2:</strong> Pay $4,000 more, save ~$185/year. Payback at year 22 - past the equipment's expected life. <strong>Doesn't pay back on operating cost alone.</strong></li>
 <li><strong>15.2 → 20 SEER2:</strong> Pay $6,000 more, save ~$280/year. Payback at year 21.</li>
 <li><strong>15.2 → 22 SEER2:</strong> Pay $7,500 more, save ~$360/year. Payback at year 21.</li>
 </ul>
 <p>The honest answer: <strong>high-SEER2 doesn't pay back on cooling cost savings alone in Tampa Bay.</strong> You don't run enough cooling hours, electricity isn't expensive enough, and the install premium is too steep.</p>
 <p>So why does anyone install 18+ SEER2? Three legitimate reasons:</p>
 <ol>
-<li><strong>IRA Section 25C federal tax credit ($2,000) and utility rebates kick in at 16+ SEER2.</strong> Net of credits, the 18 SEER2 system might only cost $1,500–$2,500 more than 15.2 SEER2 — payback at 12–14 years, within equipment life.</li>
+<li><strong>IRA Section 25C federal tax credit ($2,000) and utility rebates kick in at 16+ SEER2.</strong> Net of credits, the 18 SEER2 system might only cost $1,500–$2,500 more than 15.2 SEER2 - payback at 12–14 years, within equipment life.</li>
 <li><strong>Variable-speed equipment improves humidity control, comfort, and quietness</strong> in ways the SEER2 number doesn't capture.</li>
 <li><strong>You're staying in the home 15+ years and value lower lifetime utility cost.</strong> Cumulative savings continue past the payback point.</li>
 </ol>
 
 <h2>Why variable-speed matters more than the SEER2 number</h2>
-<p>Single-stage equipment (most 15.2 SEER2 systems) runs at 100% capacity or off — like a kitchen light switch. Two-stage runs at low (~67%) or high (100%). Variable-speed runs anywhere between 25% and 100%, ramping smoothly to match actual demand.</p>
-<p>In Florida, variable-speed equipment matters less for raw cooling efficiency and more for <strong>humidity control</strong>. A single-stage system runs hard for 8 minutes, shuts off for 12 minutes, runs hard for 8 minutes — you get cool, dehumidified air during the run cycle, then humidity creeps back during the off cycle. A variable-speed system runs continuously at 30–40% capacity for hours — constant low-grade airflow, much better humidity removal.</p>
+<p>Single-stage equipment (most 15.2 SEER2 systems) runs at 100% capacity or off - like a kitchen light switch. Two-stage runs at low (~67%) or high (100%). Variable-speed runs anywhere between 25% and 100%, ramping smoothly to match actual demand.</p>
+<p>In Florida, variable-speed equipment matters less for raw cooling efficiency and more for <strong>humidity control</strong>. A single-stage system runs hard for 8 minutes, shuts off for 12 minutes, runs hard for 8 minutes - you get cool, dehumidified air during the run cycle, then humidity creeps back during the off cycle. A variable-speed system runs continuously at 30–40% capacity for hours - constant low-grade airflow, much better humidity removal.</p>
 <p>Real-world impact in Tampa Bay: variable-speed systems hold indoor humidity at 45–55% RH year-round; single-stage systems often let humidity rise to 60–70% RH between cycles. The difference is the "feels muggy when the AC is off" sensation. For asthma, allergy, hardwood-floor, or comfort-sensitive households, this matters more than the SEER2 number on the spec sheet.</p>
-<p>Variable-speed also runs much quieter — 51–53 dB at low-stage versus 70–76 dB on a single-stage at full operation. If the outdoor unit will sit near a bedroom window or pool deck, the sound difference alone justifies variable-speed for many homeowners.</p>
+<p>Variable-speed also runs much quieter - 51–53 dB at low-stage versus 70–76 dB on a single-stage at full operation. If the outdoor unit will sit near a bedroom window or pool deck, the sound difference alone justifies variable-speed for many homeowners.</p>
 
 <h2>Tax credits and rebates by SEER2 tier (2026)</h2>
 <p>The Inflation Reduction Act's Section 25C credit and Florida utility rebates work in tiers. For the South region (Florida):</p>
@@ -104,9 +104,9 @@ checklist:
 
 <h2>Common mistakes we see homeowners make on SEER2</h2>
 <ol>
-<li><strong>Buying the highest SEER2 because "more is better."</strong> The payback math doesn't work in Tampa Bay's runtime profile. If you want premium equipment, buy variable-speed for humidity and sound — not for the SEER2 number.</li>
+<li><strong>Buying the highest SEER2 because "more is better."</strong> The payback math doesn't work in Tampa Bay's runtime profile. If you want premium equipment, buy variable-speed for humidity and sound - not for the SEER2 number.</li>
 <li><strong>Buying the cheapest 15.2 SEER2 to save money short-term.</strong> Skipping a heat pump and the $2,000 IRA credit is a real $2,000 mistake. If you have any choice, the heat pump tier is better-incentivized.</li>
-<li><strong>Comparing SEER (old rating) to SEER2 (new rating) directly.</strong> 16 SEER and 15.2 SEER2 are roughly the same equipment performance. Don't pay extra to "upgrade" from 16 SEER to 16 SEER2 — they're essentially the same.</li>
+<li><strong>Comparing SEER (old rating) to SEER2 (new rating) directly.</strong> 16 SEER and 15.2 SEER2 are roughly the same equipment performance. Don't pay extra to "upgrade" from 16 SEER to 16 SEER2 - they're essentially the same.</li>
 <li><strong>Ignoring the AHRI matched-system certificate.</strong> The SEER2 rating only applies when the indoor coil + outdoor condenser + air handler are matched per the AHRI directory. A mismatched pairing can drop a 16 SEER2 sticker rating to 14.5 SEER2 actual performance. Get the AHRI certificate from your installer.</li>
 <li><strong>Not registering the warranty.</strong> Skipping registration drops most manufacturers from 10-year to 5-year compressor warranty regardless of SEER2 tier. We register every system we install on your behalf within 60 days.</li>
 </ol>

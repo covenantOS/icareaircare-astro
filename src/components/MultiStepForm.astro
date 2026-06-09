@@ -18,14 +18,14 @@ const fieldClass = 'w-full rounded-lg border border-slate-200 bg-slate-50 focus:
 
   <!-- Dark header -->
   <div class="bg-navy-900 px-6 pt-5 pb-4">
-    {/* Use h2 to keep heading hierarchy sane — page h1 is in the Hero above this */}
+    {/* Use h2 to keep heading hierarchy sane - page h1 is in the Hero above this */}
     <h2 class="text-white font-bold text-xl leading-tight">Get Your Free Estimate</h2>
     <p class="text-slate-200 text-sm mt-0.5">Takes less than 60 seconds</p>
     <div class="mt-4 grid grid-cols-2 gap-2">
       <div class="msform-bar-1 h-1 rounded-full" style="background-color:var(--color-accent-500)"></div>
       <div class="msform-bar-2 h-1 rounded-full" style="background-color:rgba(255,255,255,0.18)"></div>
     </div>
-    <p class="msform-step-label text-[11px] text-slate-200 mt-1.5">Step 1 of 2 — Choose a service</p>
+    <p class="msform-step-label text-[11px] text-slate-200 mt-1.5">Step 1 of 2 - Choose a service</p>
   </div>
 
   <!-- Step 1: Service selection -->
@@ -102,7 +102,7 @@ const fieldClass = 'w-full rounded-lg border border-slate-200 bg-slate-50 focus:
           step1.classList.add('hidden');
           step2.classList.remove('hidden');
           if (bar2) bar2.style.backgroundColor = 'var(--color-accent-500)';
-          if (label) label.textContent = 'Step 2 of 2 — Your contact info';
+          if (label) label.textContent = 'Step 2 of 2 - Your contact info';
         });
       });
 
@@ -111,7 +111,7 @@ const fieldClass = 'w-full rounded-lg border border-slate-200 bg-slate-50 focus:
           step2.classList.add('hidden');
           step1.classList.remove('hidden');
           if (bar2) bar2.style.backgroundColor = 'rgba(255,255,255,0.18)';
-          if (label) label.textContent = 'Step 1 of 2 — Choose a service';
+          if (label) label.textContent = 'Step 1 of 2 - Choose a service';
         });
       }
     }

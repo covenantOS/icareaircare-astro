@@ -20,14 +20,14 @@ function toRFC822(dateStr: string) {
 
 export const GET: APIRoute = async () => {
   const BLOG_POSTS = await getAllPosts();
-  // Redirected / canonical-consolidated slugs — exclude from feed
+  // Redirected / canonical-consolidated slugs - exclude from feed
   const EXCLUDE = new Set([
     'emergency-ac-repair-wesley-chapel-fl',
     'air-duct-cleaning-in-wesley-chapel-fl-what-you-need-to-know',
     'ac-not-cooling-solutions',
   ]);
 
-  // Newest first — BLOG_POSTS may already be ordered, but sort defensively
+  // Newest first - BLOG_POSTS may already be ordered, but sort defensively
   const items = [...BLOG_POSTS]
     .filter(p => !EXCLUDE.has(p.slug))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -50,7 +50,7 @@ export const GET: APIRoute = async () => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>${esc(SITE.name)} — HVAC Library</title>
+    <title>${esc(SITE.name)} - HVAC Library</title>
     <link>${SITE.url}/blogs/</link>
     <description>HVAC tips, troubleshooting, and guides from Wesley Chapel's licensed family-run HVAC team. Real pricing, real neighborhoods, written by the people who actually show up.</description>
     <language>en-us</language>

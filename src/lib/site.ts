@@ -10,7 +10,7 @@ export const SITE = {
   email: 'tim@icareaircare.com',
   license: 'CAC1816515',
   // Cloudflare Turnstile public site key for the invisible CAPTCHA on lead
-  // forms. Safe to expose — it is meant for the browser. The matching secret
+  // forms. Safe to expose - it is meant for the browser. The matching secret
   // key lives only in the Pages env as TURNSTILE_SECRET_KEY. While this is
   // empty the widget is not rendered and the server-side check is skipped.
   turnstileSiteKey: '0x4AAAAAADSg0s9jX0xnBqaE',
@@ -40,7 +40,7 @@ export const SITE = {
     yelp: 'https://www.yelp.com/biz/i-care-air-care-zephyrhills',
   },
   // External profiles that corroborate the business identity. Anything in this
-  // list lands in the LocalBusiness schema's `sameAs` array — Google reads it
+  // list lands in the LocalBusiness schema's `sameAs` array - Google reads it
   // as third-party verification of the entity (E-E-A-T lever).
   // Yelp listing per Will (2026-04-29): the Zephyrhills URL is the canonical
   // one we want both UI links and schema sameAs to point at.
@@ -62,7 +62,7 @@ export const SITE = {
   // Florida DBPR public license verification. Stable deep-link to the
   // CAC1816515 license record so AI engines can verify Tim's credential.
   licenseVerificationUrl: 'https://www.myfloridalicense.com/wl11.asp?mode=0&SID=&brd=&typ=N',
-  // Each area's geo centroid — used by ServiceAreaLayout to recenter the map
+  // Each area's geo centroid - used by ServiceAreaLayout to recenter the map
   // iframe on the actual area instead of the HQ pin.
   serviceAreas: [
     { slug: 'wesley-chapel-ac-repair', name: 'Wesley Chapel', geo: { lat: 28.2426914, lng: -82.3726776 } },

@@ -33,7 +33,7 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
   <div id="trust-strip" class="bg-navy-800 text-white text-[12px] leading-none overflow-hidden will-change-[max-height,opacity]" style="transition:max-height 320ms cubic-bezier(.4,0,.2,1),opacity 220ms ease-out;max-height:36px;opacity:1;">
     <div class="container-site h-9 flex items-center justify-between gap-3">
 
-      <!-- Mobile trust signal (left) — hidden at md+ -->
+      <!-- Mobile trust signal (left) - hidden at md+ -->
       <span class="md:hidden inline-flex items-center gap-1.5 shrink-0 text-slate-200 text-[11px]">
         <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400 shrink-0" aria-hidden="true"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
         Licensed &amp; Insured · Wesley Chapel
@@ -57,12 +57,12 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
 
       <!-- Right: mobile tap-to-call + desktop license -->
       <div class="flex items-center gap-4 shrink-0">
-        <!-- Mobile tap-to-call (right) — hidden at md+ -->
+        <!-- Mobile tap-to-call (right) - hidden at md+ -->
         <a href={SITE.phoneHref} class="md:hidden inline-flex items-center gap-1.5 text-white font-semibold text-[11px] hover:text-accent-200 transition">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400 shrink-0" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
           {SITE.phone}
         </a>
-        <!-- Desktop license — hidden below lg -->
+        <!-- Desktop license - hidden below lg -->
         <div class="hidden lg:flex items-center gap-4 text-slate-300 text-[11.5px]">
           <span class="inline-flex items-center gap-1.5">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" class="text-accent-400" aria-hidden="true"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
@@ -162,7 +162,7 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
           <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 focus-within:visible focus-within:opacity-100 absolute right-0 top-full pt-2 w-64 z-50 transition-all">
             <div class="rounded-xl bg-white ring-1 ring-slate-200 shadow-[0_24px_60px_-16px_rgba(15,26,41,0.3)] p-2">
               <a href="/about-us/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-accent-500 hover:bg-surface transition-colors">About Us / Our Story</a>
-              <a href="/tim-hawk/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-accent-500 hover:bg-surface transition-colors">Tim Hawk — Owner & Master Tech</a>
+              <a href="/tim-hawk/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-accent-500 hover:bg-surface transition-colors">Tim Hawk - Owner & Master Tech</a>
               <a href="/about-us/#team" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-accent-500 hover:bg-surface transition-colors">Meet the Team</a>
               <a href="/reviews/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-accent-500 hover:bg-surface transition-colors">Reviews</a>
               <a href="/financing/" class="block rounded-md px-3 py-2.5 text-navy-700 hover:text-accent-500 hover:bg-surface transition-colors">Financing</a>
@@ -177,7 +177,7 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
 
       <!-- Right-side CTAs -->
       <div class="flex items-center gap-2 shrink-0">
-        <!-- Primary: Call phone (prominent rounded pill) — navy text on accent for AAA contrast -->
+        <!-- Primary: Call phone (prominent rounded pill) - navy text on accent for AAA contrast -->
         <a href={SITE.phoneHref} class="hidden md:inline-flex items-center gap-2 rounded-full bg-accent-500 hover:bg-accent-600 text-navy-900 font-bold px-5 py-2.5 shadow-sm transition text-[14px] leading-none">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
           <span class="hidden xl:inline">CALL WESLEY CHAPEL&nbsp;</span>{SITE.phone}
@@ -197,7 +197,7 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
 
 </header>
 
-<!-- Mobile drawer — outside <header> to avoid iOS backdrop-filter stacking context bug -->
+<!-- Mobile drawer - outside <header> to avoid iOS backdrop-filter stacking context bug -->
 <div id="mobile-drawer" class="fixed inset-0 z-[200] hidden" aria-hidden="true">
   <div id="mobile-backdrop" class="absolute inset-0 bg-navy-900/60"></div>
   <div class="absolute right-0 top-0 h-full w-[85%] max-w-sm bg-white shadow-2xl overflow-y-auto">
@@ -226,7 +226,7 @@ const moreAreas = SITE.serviceAreas.filter(a => !featuredAreas.find(f => f.slug 
         <summary class="flex items-center justify-between cursor-pointer px-3 py-3 list-none"><span>About Us</span><span class="text-brand-700">+</span></summary>
         <div class="px-3 pb-3 space-y-0.5 text-[14.5px] font-normal">
           <a href="/about-us/" class="block py-2 text-slate-600 hover:text-accent-500">About Us / Our Story</a>
-          <a href="/tim-hawk/" class="block py-2 text-slate-600 hover:text-accent-500">Tim Hawk — Owner</a>
+          <a href="/tim-hawk/" class="block py-2 text-slate-600 hover:text-accent-500">Tim Hawk - Owner</a>
           <a href="/about-us/#team" class="block py-2 text-slate-600 hover:text-accent-500">Meet the Team</a>
           <a href="/reviews/" class="block py-2 text-slate-600 hover:text-accent-500">Reviews</a>
           <a href="/financing/" class="block py-2 text-slate-600 hover:text-accent-500">Financing</a>

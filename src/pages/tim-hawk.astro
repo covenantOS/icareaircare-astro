@@ -14,12 +14,12 @@ const breadcrumbs = [
   { name: 'Tim Hawk', url: `${SITE.url}/tim-hawk/` },
 ];
 
-// Every blog post on the site is reviewed by Tim — surfaced here as proof
+// Every blog post on the site is reviewed by Tim - surfaced here as proof
 // of authorial expertise. The Article schema in [slug].astro already sets
 // reviewedBy → tim-hawk @id, so this list is the visible counterpart.
 const reviewedArticles = BLOG_POSTS.slice(0, 12);
 
-// Equipment brands Tim's team installs and services (factual — same list
+// Equipment brands Tim's team installs and services (factual - same list
 // surfaced on the HVAC installation page FAQ).
 const brands = [
   'Carrier', 'Trane', 'Lennox', 'Rheem', 'Goodman',
@@ -40,12 +40,12 @@ const profilePageSchema = {
 };
 ---
 <BaseLayout
-  title="Tim Hawk — Owner & Master HVAC Technician | I Care Air Care"
-  description="Meet Tim Hawk — Florida-licensed master HVAC technician (CAC1816515), EPA 608 Universal certified, and owner of I Care Air Care. 30+ years in the Tampa Bay HVAC trade. Founded the company in Wesley Chapel in 2010."
+  title="Tim Hawk | Owner & Master HVAC Technician | I Care Air Care"
+  description="Meet Tim Hawk - Florida-licensed master HVAC technician (CAC1816515), EPA 608 Universal certified, and owner of I Care Air Care. 30+ years in the Tampa Bay HVAC trade. Founded the company in Wesley Chapel in 2010."
   breadcrumbs={breadcrumbs}
   image={`${SITE.url}/images/Tim%20Hawk%20(ICAC%20Owner).webp`}
 >
-  <!-- Hero — solid navy, focused on Tim, no marketing distractions -->
+  <!-- Hero - solid navy, focused on Tim, no marketing distractions -->
   <section class="bg-gradient-to-br from-navy-900 via-navy-800 to-brand-800 text-white py-16 md:py-20">
     <div class="container-site grid lg:grid-cols-12 gap-10 items-center">
       <div class="lg:col-span-7">
@@ -58,9 +58,9 @@ const profilePageSchema = {
         </h1>
         <p class="mt-5 text-blue-50 text-[17px] leading-relaxed max-w-2xl">
           Master HVAC technician, EPA Section 608 Universal certified, and the founder
-          of I Care Air Care — the Wesley Chapel HVAC contractor with 700+ five-star
+          of I Care Air Care - the Wesley Chapel HVAC contractor with 700+ five-star
           Google reviews and a Florida CAC license verifiable on the state DBPR registry.
-          Call <a href={SITE.phoneHref} class="text-accent-300 font-semibold underline underline-offset-2 hover:text-accent-200">{SITE.phone}</a> —
+          Call <a href={SITE.phoneHref} class="text-accent-300 font-semibold underline underline-offset-2 hover:text-accent-200">{SITE.phone}</a> - 
           a real human answers, and it's often Tim.
         </p>
         <p class="mt-3 text-blue-100 text-[14px] leading-relaxed max-w-2xl">
@@ -120,7 +120,7 @@ const profilePageSchema = {
     </div>
   </section>
 
-  <!-- About Tim — long-form bio -->
+  <!-- About Tim - long-form bio -->
   <section class="py-16 md:py-20 bg-white">
     <div class="container-site grid lg:grid-cols-12 gap-10 items-start">
       <article class="lg:col-span-8 prose-icac">
@@ -139,8 +139,8 @@ const profilePageSchema = {
           <li><strong>Permits pulled and closed by us</strong> on every installation in Pasco, Hillsborough, and Polk counties.</li>
         </ul>
 
-        <h3>Repair vs. replace — the math we use</h3>
-        <p>The rule of thumb: multiply the system's age in years by the estimated repair cost. If that number is under $5,000, repair usually wins on a multi-year cost basis. Over $5,000 — and especially if the system is past 12 years or running on a refrigerant that's being phased out — replacement often makes sense. We show you both numbers in writing so you can decide. No pressure, no commission, no "just go ahead and replace it."</p>
+        <h3>Repair vs. replace - the math we use</h3>
+        <p>The rule of thumb: multiply the system's age in years by the estimated repair cost. If that number is under $5,000, repair usually wins on a multi-year cost basis. Over $5,000 - and especially if the system is past 12 years or running on a refrigerant that's being phased out - replacement often makes sense. We show you both numbers in writing so you can decide. No pressure, no commission, no "just go ahead and replace it."</p>
         <p>When replacement <em>is</em> the right call, modern Florida HVAC code requires a Manual-J load calculation before tonnage selection, ductwork evaluation as part of the install spec, refrigerant charged to manufacturer subcool spec, and a closed permit on file. Those are the standards we work to.</p>
 
         <h3>Equipment we install and service</h3>
@@ -150,9 +150,9 @@ const profilePageSchema = {
             <span class="inline-flex items-center gap-1.5 rounded-full bg-surface ring-1 ring-slate-200 text-navy-700 px-3 py-1 text-xs font-semibold">{b}</span>
           ))}
         </div>
-        <p class="mt-5">I Care Air Care is a factory-authorized <a href="https://icareaircare.rheempropartner.com/" target="_blank" rel="noopener">Rheem Pro Partner</a> — Rheem's manufacturer-certified status for contractors who meet training and install-quality standards. That gives ICAC customers Rheem's extended warranties registered correctly and same-day local parts access on Rheem equipment.</p>
+        <p class="mt-5">I Care Air Care is a factory-authorized <a href="https://icareaircare.rheempropartner.com/" target="_blank" rel="noopener">Rheem Pro Partner</a> - Rheem's manufacturer-certified status for contractors who meet training and install-quality standards. That gives ICAC customers Rheem's extended warranties registered correctly and same-day local parts access on Rheem equipment.</p>
 
-        <h3>2026 Florida HVAC — what's changing</h3>
+        <h3>2026 Florida HVAC - what's changing</h3>
         <p>The trade has shifted hard around lower-GWP refrigerants in 2025–2026. Here's what affects Tampa Bay homeowners:</p>
         <ul>
           <li><strong>R-454B and R-32 systems.</strong> Both are A2L-classified (mildly flammable) and require updated leak detection, tools, brazing procedures, and jobsite ventilation. Standard on every new install in 2026.</li>
@@ -168,15 +168,15 @@ const profilePageSchema = {
           <h3 class="mt-3 text-lg font-bold text-navy-700">Independent third-party profiles</h3>
           <p class="mt-2 text-sm text-slate-600">Click any of these to verify the license or read reviews directly with the source.</p>
           <ul class="mt-4 space-y-2 text-sm">
-            <li><a href={SITE.licenseVerificationUrl} target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Florida DBPR — License {SITE.license} ↗</a></li>
-            <li><a href="https://maps.app.goo.gl/2iCjuu1yf3GAbvSS8" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Google Business Profile — {SITE.rating.value}★ · {SITE.rating.count}+ reviews ↗</a></li>
-            <li><a href="https://www.bbb.org/us/fl/wesley-chapel/profile/air-conditioning-contractor/i-care-air-care-llc-0653-90109276" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Better Business Bureau — Wesley Chapel profile ↗</a></li>
-            <li><a href="https://icareaircare.rheempropartner.com/" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Rheem Pro Partner — manufacturer page ↗</a></li>
-            <li><a href="https://www.linkedin.com/in/tim-hawk-0bba6352" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">LinkedIn — Tim Hawk ↗</a></li>
-            <li><a href="https://www.facebook.com/icareaircare/" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Facebook — @icareaircare ↗</a></li>
-            <li><a href="https://www.yelp.com/biz/i-care-air-care-wesley-chapel-2" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Yelp — Wesley Chapel ↗</a></li>
-            <li><a href="https://www.angi.com/companylist/us/fl/wesley-chapel/i-care-air-care-reviews-6298982.htm" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Angi — reviews ↗</a></li>
-            <li><a href="https://www.homeadvisor.com/rated.ICareAirCareLLC.25490578.html" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">HomeAdvisor — rated profile ↗</a></li>
+            <li><a href={SITE.licenseVerificationUrl} target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Florida DBPR - License {SITE.license} ↗</a></li>
+            <li><a href="https://maps.app.goo.gl/2iCjuu1yf3GAbvSS8" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Google Business Profile - {SITE.rating.value}★ · {SITE.rating.count}+ reviews ↗</a></li>
+            <li><a href="https://www.bbb.org/us/fl/wesley-chapel/profile/air-conditioning-contractor/i-care-air-care-llc-0653-90109276" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Better Business Bureau - Wesley Chapel profile ↗</a></li>
+            <li><a href="https://icareaircare.rheempropartner.com/" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Rheem Pro Partner - manufacturer page ↗</a></li>
+            <li><a href="https://www.linkedin.com/in/tim-hawk-0bba6352" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">LinkedIn - Tim Hawk ↗</a></li>
+            <li><a href="https://www.facebook.com/icareaircare/" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Facebook - @icareaircare ↗</a></li>
+            <li><a href="https://www.yelp.com/biz/i-care-air-care-wesley-chapel-2" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Yelp - Wesley Chapel ↗</a></li>
+            <li><a href="https://www.angi.com/companylist/us/fl/wesley-chapel/i-care-air-care-reviews-6298982.htm" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">Angi - reviews ↗</a></li>
+            <li><a href="https://www.homeadvisor.com/rated.ICareAirCareLLC.25490578.html" target="_blank" rel="noopener" class="text-brand-700 hover:text-brand-800 underline underline-offset-2">HomeAdvisor - rated profile ↗</a></li>
           </ul>
         </div>
 
@@ -195,7 +195,7 @@ const profilePageSchema = {
     </div>
   </section>
 
-  <!-- Articles reviewed by Tim — auto-listed from BLOG_POSTS -->
+  <!-- Articles reviewed by Tim - auto-listed from BLOG_POSTS -->
   <section class="py-16 md:py-20 bg-surface">
     <div class="container-site">
       <div class="max-w-3xl">
@@ -228,7 +228,7 @@ const profilePageSchema = {
       <div class="rounded-2xl bg-surface ring-1 ring-slate-200 p-6">
         <div class="text-center mb-5">
           <span class="inline-flex items-center rounded-full bg-white text-brand-800 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] ring-1 ring-slate-200">Verified</span>
-          <p class="mt-2 text-sm text-slate-600">Tim's credentials, reviews, and manufacturer status — all clickable to the source.</p>
+          <p class="mt-2 text-sm text-slate-600">Tim's credentials, reviews, and manufacturer status - all clickable to the source.</p>
         </div>
         <TrustBadgeStrip variant="card" />
       </div>

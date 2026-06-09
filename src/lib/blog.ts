@@ -1,5 +1,5 @@
 // Thin helper around the `blog` content collection so the rest of the app
-// keeps a stable shape — `id` (slug) plus all the frontmatter fields flat.
+// keeps a stable shape - `id` (slug) plus all the frontmatter fields flat.
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 export interface BlogLink {

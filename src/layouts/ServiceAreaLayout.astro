@@ -78,8 +78,16 @@ const localGuides = BLOG_POSTS.filter((p) => {
 const areaGuides = localGuides.length ? localGuides : BLOG_POSTS.slice(0, 3);
 const areaType = isCounty ? 'AdministrativeArea' : 'City';
 
-// Verbatim local reviews → Review schema entries (E-E-A-T + rich snippet eligibility)
-const reviewSchemaItems = (reviews || []).slice(0, 5).map(r => ({
+// Verifiable 5-star Google reviews (provided by the owner, June 2026). Real, named
+// reviewers - replaces the prior illustrative copy (Google fake-review policy).
+const VERIFIED_REVIEWS = [
+  { name: 'Laura CB', rating: 5, body: 'I cannot recommend I Care Air Care enough. They have kept my 9-year-old AC unit running strong thanks to their skilled, experienced technicians. Kleber answered all my questions and taught me how to keep my system running smoothly.' },
+  { name: 'T Tiller', rating: 5, body: 'My home is only four years old and my AC compressor failed twice. The team at I Care Air Care made a hard situation easy: they responded promptly, explained the issue, and even provided a temporary AC unit while we waited for the replacement. Kleber was knowledgeable and professional, Cesar worked diligently, and Tim went above and beyond. I never felt like just another service call.' },
+  { name: 'Joyce Edwards', rating: 5, body: 'Kleber was my tech today and was fantastic: very professional and knowledgeable. I Care Air Care scheduled me right away when my AC shut off, and Tim the owner is responsive for weekend emergencies. Much appreciated!' },
+  { name: 'David Waite', rating: 5, body: 'Been with I Care Air Care now for 10 years. Solid company, and the technician today was great.' },
+  { name: 'Joe Macchiarella', rating: 5, body: 'George and team were the best!' },
+];
+const reviewSchemaItems = VERIFIED_REVIEWS.slice(0, 5).map(r => ({
   '@type': 'Review',
   author: { '@type': 'Person', name: r.name },
   reviewBody: r.body,
@@ -89,7 +97,7 @@ const reviewSchemaItems = (reviews || []).slice(0, 5).map(r => ({
     bestRating: 5,
     worstRating: 1,
   },
-  // itemReviewed intentionally omitted — a Review nested inside a Service can't
+  // itemReviewed intentionally omitted - a Review nested inside a Service can't
   // carry itemReviewed (GSC "invalid object type" / "nested object can't contain
   // itemReviewed"). The parent Service is the implied reviewed item.
   ...(r.neighborhood ? { locationCreated: { '@type': 'Place', name: `${r.neighborhood}, ${cityName}, FL` } } : {}),
@@ -110,7 +118,7 @@ const areaSchema: any = {
   description,
   url: `${SITE.url}/service-areas/${slug}/`,
   inLanguage: 'en-US',
-  // aggregateRating intentionally NOT set here — it lives only on the HVACBusiness
+  // aggregateRating intentionally NOT set here - it lives only on the HVACBusiness
   // @graph entity. Duplicating it on the Service block triggers GSC's "Review has
   // multiple aggregate ratings" error.
   ...(reviewSchemaItems.length > 0 ? { review: reviewSchemaItems } : {}),
@@ -182,10 +190,9 @@ const areaSchema: any = {
     <div class="container-site grid lg:grid-cols-12 gap-10">
       <article class="lg:col-span-8 prose-icac bg-white rounded-2xl ring-1 ring-slate-200 p-6 md:p-8 shadow-[var(--shadow-card)]">
         <div class="not-prose flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
-          <img src="/images/Tim%20Hawk%20(ICAC%20Owner).webp" alt={`${SITE.owner}, Owner`} title={`${SITE.owner}, Owner — I Care Air Care`} class="w-10 h-10 rounded-full ring-2 ring-brand-100 object-cover object-top shrink-0" width="40" height="40" loading="lazy" />
+          <img src="/images/Tim%20Hawk%20(ICAC%20Owner).webp" alt={`${SITE.owner}, Owner`} title={`${SITE.owner}, Owner - I Care Air Care`} class="w-10 h-10 rounded-full ring-2 ring-brand-100 object-cover object-top shrink-0" width="40" height="40" loading="lazy" />
           <div class="text-[13px] text-slate-600 leading-snug">
             <span>Reviewed by <a href="/tim-hawk/" class="font-semibold text-navy-700 hover:text-brand-700">{SITE.owner}</a> · Florida License <strong class="text-navy-700">{SITE.license}</strong> · EPA 608 Universal</span>
-            <span class="block text-[11.5px] text-slate-500 mt-0.5">Updated {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
           </div>
         </div>
         <slot />
@@ -247,7 +254,7 @@ const areaSchema: any = {
           <div class="lg:col-span-7">
             <span class="inline-flex items-center rounded-full bg-white ring-1 ring-slate-200 text-brand-700 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]">Around {cityName}</span>
             <h2 class="mt-3 text-3xl md:text-4xl">Local landmarks & communities we serve around {cityName}</h2>
-            <p class="mt-3 text-slate-600">We've worked on homes and businesses near every major {cityName} landmark — here are a few you might know.</p>
+            <p class="mt-3 text-slate-600">We've worked on homes and businesses near every major {cityName} landmark - here are a few you might know.</p>
             <ul class="mt-6 grid sm:grid-cols-2 gap-3">
               {landmarks.map(l => (
                 <li class="flex items-start gap-3 rounded-xl bg-white ring-1 ring-slate-200 p-4">
