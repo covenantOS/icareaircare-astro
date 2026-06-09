@@ -7,6 +7,7 @@ import Schema from '../../components/Schema.astro';
 import { getAllEntries, type BlogEntry, type BlogPost } from '../../lib/blog';
 import { render } from 'astro:content';
 import { SITE } from '../../lib/site';
+import { BLOG_FAQS } from '../../lib/blog-faqs';
 
 export async function getStaticPaths() {
   const entries = await getAllEntries();
@@ -73,7 +74,7 @@ const howToData = isHowTo ? {
 // surface, while also giving the reader a consistent Q&A block at the
 // bottom of every article. Questions are answered with canonical site
 // facts (hours, service area, license, warranty) so AI answers are correct.
-const postFAQs = [
+const postFAQs = BLOG_FAQS[post.slug] || [
   {
     q: `How much does ${post.primaryService.label.toLowerCase()} typically cost in Wesley Chapel?`,
     a: `Most residential ${post.primaryService.label.toLowerCase()} calls in Wesley Chapel and Tampa Bay range $150–$600 depending on the specific part or service. Diagnostic visits are quoted upfront before any work begins. Larger repairs (compressor replacement, coil leaks) are priced separately with written estimates.`,
