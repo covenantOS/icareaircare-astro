@@ -39,10 +39,10 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
     <main class="container-site py-4 sm:py-6 space-y-4">
       <section class="card-quiet">
         <div class="flex flex-wrap items-baseline gap-4">
-          <div><div class="stat-label">Customers</div><div id="seg-count" class="text-2xl font-bold text-navy-700">—</div></div>
-          <div><div class="stat-label">Total LTV</div><div id="seg-ltv" class="text-2xl font-bold text-navy-700">—</div></div>
-          <div><div class="stat-label">Avg LTV</div><div id="seg-avg-ltv" class="text-2xl font-bold text-navy-700">—</div></div>
-          <div><div class="stat-label">With email</div><div id="seg-with-email" class="text-2xl font-bold text-navy-700">—</div></div>
+          <div><div class="stat-label">Customers</div><div id="seg-count" class="text-2xl font-bold text-navy-700">-</div></div>
+          <div><div class="stat-label">Total LTV</div><div id="seg-ltv" class="text-2xl font-bold text-navy-700">-</div></div>
+          <div><div class="stat-label">Avg LTV</div><div id="seg-avg-ltv" class="text-2xl font-bold text-navy-700">-</div></div>
+          <div><div class="stat-label">With email</div><div id="seg-with-email" class="text-2xl font-bold text-navy-700">-</div></div>
           <div class="flex-1 min-w-[200px]">
             <input id="seg-search" type="search" placeholder="Filter…" class="w-full px-3 py-2 border border-line rounded text-sm" />
           </div>
@@ -68,7 +68,7 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
           </tbody>
         </table>
         <div id="seg-pagination" class="flex items-center justify-between gap-3 px-2 py-3 border-t border-line text-sm" hidden>
-          <div id="seg-page-info" class="text-slate-600">—</div>
+          <div id="seg-page-info" class="text-slate-600">-</div>
           <div class="flex items-center gap-2">
             <label class="text-slate-600 text-xs">Per page
               <select id="seg-page-size" class="ml-1 px-2 py-1 border border-line rounded">
@@ -85,7 +85,7 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
       </section>
 
       <section class="card-quiet text-xs text-slate-500">
-        <p><strong>How to use:</strong> Click "Copy emails" → paste into HCP Marketing Center → "New custom audience" → "From a list of contacts". Or "Export CSV" → upload the CSV as the audience source. Subject and body live in HCP — this dashboard supplies the targeting.</p>
+        <p><strong>How to use:</strong> Click "Copy emails" → paste into HCP Marketing Center → "New custom audience" → "From a list of contacts". Or "Export CSV" → upload the CSV as the audience source. Subject and body live in HCP - this dashboard supplies the targeting.</p>
       </section>
     </main>
   </div>
@@ -110,15 +110,15 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
       document.getElementById('login-gate').hidden = which !== 'login';
       document.getElementById('dashboard').hidden = which !== 'dash';
     }
-    function fmt$(n) { if (n == null || isNaN(n)) return '—'; return '$' + Number(n).toLocaleString('en-US', { maximumFractionDigits: 0 }); }
-    function fmtI(n) { if (n == null || isNaN(n)) return '—'; return Number(n).toLocaleString('en-US'); }
+    function fmt$(n) { if (n == null || isNaN(n)) return '-'; return '$' + Number(n).toLocaleString('en-US', { maximumFractionDigits: 0 }); }
+    function fmtI(n) { if (n == null || isNaN(n)) return '-'; return Number(n).toLocaleString('en-US'); }
     function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
     function toast(msg, kind) { const t=document.getElementById('toast'),b=document.getElementById('toast-body'); b.textContent=msg; b.className='text-sm px-4 py-2 rounded-lg shadow-soft '+(kind==='error'?'bg-red-600 text-white':kind==='ok'?'bg-emerald-600 text-white':'bg-navy-700 text-white'); t.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>t.hidden=true,3500); }
 
     const TITLES = {
       dormant_12mo:    { title: 'Dormant 12+ months', sub: "Customers who haven't booked in 1+ year (still inside HCP's 3-year mailing window). Sorted by lifetime value." },
       members_renewing:{ title: 'Members renewing soon', sub: 'Care-plan members whose last service was 11-13 months ago. Reach out before they lapse.' },
-      top_ltv:         { title: 'VIPs · top lifetime value', sub: 'Highest lifetime spend. Treat with care — these underwrite the business.' },
+      top_ltv:         { title: 'VIPs · top lifetime value', sub: 'Highest lifetime spend. Treat with care - these underwrite the business.' },
       new:             { title: 'New customers (30 days)', sub: 'Customers whose first invoiced job was in the last 30 days.' },
     };
 
@@ -152,13 +152,13 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
         tbody.innerHTML = slice.map(r => `
           <tr>
             <td><strong>${esc(r.name)}</strong></td>
-            <td class="hidden md:table-cell text-xs">${esc(r.email || '—')}</td>
-            <td class="hidden md:table-cell text-xs">${esc(r.phone || '—')}</td>
+            <td class="hidden md:table-cell text-xs">${esc(r.email || '-')}</td>
+            <td class="hidden md:table-cell text-xs">${esc(r.phone || '-')}</td>
             <td class="hidden lg:table-cell text-xs">${esc([r.city, r.zip].filter(Boolean).join(' '))}</td>
-            <td class="text-center hidden sm:table-cell">${r.is_member ? '<span class="pill pill-info">Member</span>' : '—'}</td>
+            <td class="text-center hidden sm:table-cell">${r.is_member ? '<span class="pill pill-info">Member</span>' : '-'}</td>
             <td class="text-right num">${fmtI(r.total_jobs)}</td>
             <td class="text-right num"><strong>${fmt$(r.lifetime_value)}</strong></td>
-            <td class="text-right num text-xs">${r.days_since_last_job != null ? r.days_since_last_job + 'd' : '—'}</td>
+            <td class="text-right num text-xs">${r.days_since_last_job != null ? r.days_since_last_job + 'd' : '-'}</td>
           </tr>
         `).join('');
       }

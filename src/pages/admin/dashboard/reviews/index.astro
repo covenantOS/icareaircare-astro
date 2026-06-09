@@ -34,26 +34,26 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
     </header>
 
     <main class="container-site py-5 space-y-5">
-      <!-- HERO STATS — progress + gamified counters -->
+      <!-- HERO STATS - progress + gamified counters -->
       <section class="card">
         <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 items-center">
           <div class="sm:col-span-2">
             <div class="stat-label">Attribution progress</div>
             <div class="flex items-baseline gap-2 mt-1">
-              <div id="progress-pct" class="stat-value">—</div>
-              <div id="progress-fraction" class="text-base text-slate-500">—</div>
+              <div id="progress-pct" class="stat-value">-</div>
+              <div id="progress-fraction" class="text-base text-slate-500">-</div>
             </div>
             <div class="progress mt-2 h-3"><span id="progress-bar" style="width:0%"></span></div>
-            <div id="progress-note" class="text-[11px] text-slate-500 mt-1">—</div>
+            <div id="progress-note" class="text-[11px] text-slate-500 mt-1">-</div>
           </div>
           <div class="text-center">
             <div class="stat-label">Set manually</div>
-            <div id="manual-count" class="text-3xl font-bold text-navy-700 mt-1">—</div>
+            <div id="manual-count" class="text-3xl font-bold text-navy-700 mt-1">-</div>
             <div class="text-[11px] text-slate-500 mt-0.5">all-time you've assigned</div>
           </div>
           <div class="text-center">
             <div class="stat-label">Today</div>
-            <div id="today-count" class="text-3xl font-bold text-accent-600 mt-1">—</div>
+            <div id="today-count" class="text-3xl font-bold text-accent-600 mt-1">-</div>
             <div class="text-[11px] text-slate-500 mt-0.5">attributions in this session</div>
           </div>
         </div>
@@ -83,7 +83,7 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
       <!-- PAGINATION -->
       <nav id="pager" class="flex items-center justify-between gap-2 mt-2" aria-label="Pagination">
         <button id="prev-page" class="btn-ghost-admin text-sm" disabled>← Previous</button>
-        <span id="page-info" class="text-xs text-slate-500">—</span>
+        <span id="page-info" class="text-xs text-slate-500">-</span>
         <button id="next-page" class="btn-ghost-admin text-sm" disabled>Next →</button>
       </nav>
     </main>
@@ -94,7 +94,7 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
   </div>
 
   <style is:global>
-    /* Page-specific styles — the AdminLayout has the base card / btn / pill styles. */
+    /* Page-specific styles - the AdminLayout has the base card / btn / pill styles. */
     .review-card {
       background: #fff;
       border: 1px solid var(--color-line);
@@ -140,7 +140,7 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
     }
     function show(which) { document.getElementById('login-gate').hidden = which !== 'login'; document.getElementById('page').hidden = which !== 'page'; }
     function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
-    function fmtI(n) { if (n == null || isNaN(n)) return '—'; return Number(n).toLocaleString('en-US'); }
+    function fmtI(n) { if (n == null || isNaN(n)) return '-'; return Number(n).toLocaleString('en-US'); }
     function toast(msg, kind) {
       const t = document.getElementById('toast'), b = document.getElementById('toast-body');
       b.textContent = msg;
@@ -168,7 +168,7 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
       document.getElementById('progress-note').textContent =
         c.unattributed === 0
           ? 'Every review is attributed to a tech. Nice.'
-          : `${fmtI(c.unattributed)} reviews still need a tech assigned${c.low_confidence ? ` · ${fmtI(c.low_confidence)} auto-attributed at low confidence — worth a glance` : ''}.`;
+          : `${fmtI(c.unattributed)} reviews still need a tech assigned${c.low_confidence ? ` · ${fmtI(c.low_confidence)} auto-attributed at low confidence - worth a glance` : ''}.`;
       document.getElementById('manual-count').textContent = fmtI(c.manual);
       document.getElementById('today-count').textContent = fmtI(state.todayCount);
       // Filter pill counters
@@ -182,7 +182,7 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
       if (!reviews.length) {
         list.innerHTML = `<div class="card text-center py-10">
           <div class="text-4xl mb-2">✨</div>
-          <div class="font-bold text-navy-700">${state.status === 'unattributed' ? 'No unattributed reviews — every one has a tech.' : 'No reviews match.'}</div>
+          <div class="font-bold text-navy-700">${state.status === 'unattributed' ? 'No unattributed reviews - every one has a tech.' : 'No reviews match.'}</div>
           <div class="text-sm text-slate-500 mt-1">${state.q ? 'Try clearing your search or switching filters.' : 'Switch filters above to see other reviews.'}</div>
         </div>`;
         return;
@@ -205,11 +205,11 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
             <div class="text-[11px] text-slate-500">${r.posted_at ? new Date(r.posted_at).toLocaleDateString() + ' · ' + timeAgo(r.posted_at) : ''}</div>
             ${methodChip}
           </header>
-          ${r.text ? `<p class="text-sm text-slate-700 mb-3 leading-relaxed">${esc(r.text)}</p>` : '<p class="text-xs text-slate-400 italic mb-3">No review text — star rating only.</p>'}
+          ${r.text ? `<p class="text-sm text-slate-700 mb-3 leading-relaxed">${esc(r.text)}</p>` : '<p class="text-xs text-slate-400 italic mb-3">No review text - star rating only.</p>'}
           <div class="flex items-center gap-2 flex-wrap pt-2 border-t border-line">
             <label class="text-xs text-slate-500 font-semibold">Tech credit:</label>
             <select class="attribute-select px-3 py-1.5 border border-line rounded text-sm flex-1 min-w-[180px]" data-review-id="${esc(r.review_id)}">
-              <option value="">— Unattributed —</option>
+              <option value="">- Unattributed -</option>
               ${opts.replace(`value="${esc(currentTech)}"`, `value="${esc(currentTech)}" selected`)}
             </select>
             <button class="btn-ghost-admin text-xs save-status" type="button">Saved automatically</button>
@@ -240,12 +240,12 @@ import AdminLayout from '../../../../layouts/AdminLayout.astro';
         if (statusBtn) statusBtn.textContent = techId ? '✓ Saved' : '✓ Cleared';
         if (techId) state.todayCount++;     // count only assignments, not clears
         toast(techId ? 'Attributed to ' + (sel.options[sel.selectedIndex] || {}).text : 'Cleared', 'ok');
-        // Reload the counts but don't refetch the whole list — keeps focus.
+        // Reload the counts but don't refetch the whole list - keeps focus.
         // On the next filter switch or page change the list naturally refetches.
         await refreshCountsOnly();
       } catch (e) {
         card.classList.remove('is-saving');
-        if (statusBtn) statusBtn.textContent = 'Save failed — try again';
+        if (statusBtn) statusBtn.textContent = 'Save failed - try again';
         toast(e.message || 'Save failed', 'error');
       }
     }

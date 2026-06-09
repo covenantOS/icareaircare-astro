@@ -101,7 +101,7 @@ const firstFeatured = featured[0];
         ))}
       </div>
       <div class="iac-featured__text iac-featured__fade" data-feat-text>{firstFeatured.t}</div>
-      <div class="iac-featured__author" data-feat-author>— {firstFeatured.a}</div>
+      <div class="iac-featured__author" data-feat-author>- {firstFeatured.a}</div>
     </div>
 
     <!-- Marquee review track. Cards render once in HTML; the duplicate set
@@ -115,7 +115,6 @@ const firstFeatured = featured[0];
               <div class="iac-card__avatar" aria-hidden="true">{initials(r.n)}</div>
               <div>
                 <div class="iac-card__name">{r.n}</div>
-                <div class="iac-card__date">{r.d}</div>
               </div>
             </div>
             <div class="iac-card__stars iac-stars" role="img" aria-label="5 stars">
@@ -172,7 +171,7 @@ const firstFeatured = featured[0];
 </section>
 
 <!-- JSON-LD: attaches the displayed Reviews to the #business entity. NO
-     aggregateRating here — that lives only on the HVACBusiness @graph in
+     aggregateRating here - that lives only on the HVACBusiness @graph in
      BaseLayout. A second aggregateRating on the same @id triggers GSC's
      "Review has multiple aggregate ratings" error sitewide. -->
 <script type="application/ld+json" set:html={JSON.stringify({
@@ -476,7 +475,7 @@ const firstFeatured = featured[0];
       // force reflow so the class re-animates
       void textEl.offsetWidth;
       textEl.textContent = f.t;
-      authorEl.textContent = '— ' + f.a;
+      authorEl.textContent = '- ' + f.a;
       textEl.classList.add('iac-featured__fade');
       i = (i + 1) % featured.length;
     }
@@ -492,7 +491,7 @@ const firstFeatured = featured[0];
 </script>
 
 <script is:inline>
-  /* Marquee clone — the seamless CSS scroll needs the cards visible twice in
+  /* Marquee clone - the seamless CSS scroll needs the cards visible twice in
      a row, but emitting them twice in HTML doubles the page weight and shows
      Google duplicate review text on every URL. Cards render once in source;
      we clone the set after first paint, marked aria-hidden so it's purely

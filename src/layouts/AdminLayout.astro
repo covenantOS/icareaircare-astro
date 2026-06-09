@@ -1,11 +1,11 @@
 ---
-// Minimal layout for /admin/* pages — no public Header/Footer, no SEO bloat.
+// Minimal layout for /admin/* pages - no public Header/Footer, no SEO bloat.
 // Brand tokens come from src/styles/global.css.
 interface Props {
   title: string;
   description?: string;
 }
-const { title, description = 'Internal — I Care Air Care KPI dashboard' } = Astro.props;
+const { title, description = 'Internal - I Care Air Care KPI dashboard' } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
@@ -19,7 +19,7 @@ const { title, description = 'Internal — I Care Air Care KPI dashboard' } = As
     <style is:global>
       @import "../styles/global.css";
 
-      /* Font-size bump (Tim feedback 2026-05-09 — easier reading without glasses). */
+      /* Font-size bump (Tim feedback 2026-05-09 - easier reading without glasses). */
       body { background: var(--color-surface); font-size: 16px; }
       .admin-shell { min-height: 100vh; }
 
@@ -182,7 +182,7 @@ const { title, description = 'Internal — I Care Air Care KPI dashboard' } = As
       .chip-warn { background: #fef3c7; color: #92400e; }
       .chip-bad  { background: #fee2e2; color: #991b1b; }
       .chip-info { background: var(--color-brand-50); color: var(--color-brand-800); }
-      /* Counter animation target — opacity comes up smoothly */
+      /* Counter animation target - opacity comes up smoothly */
       .stat-value, .num-anim { transition: opacity 200ms ease; }
       /* Rounded section badges with icon */
       .section-icon {
@@ -254,7 +254,7 @@ const { title, description = 'Internal — I Care Air Care KPI dashboard' } = As
         background: linear-gradient(135deg, #fffbeb, #fff);
         border-color: #fcd34d;
       }
-      /* Section anchors — leave room for the sticky control nav so the section
+      /* Section anchors - leave room for the sticky control nav so the section
          heading isn't hidden under it when a pill is clicked. */
       #sec-insights, #sec-kpis, #sec-leaderboard, #sec-goals,
       #sec-segments, #sec-reviews, #sec-callbacks { scroll-margin-top: 80px; }
