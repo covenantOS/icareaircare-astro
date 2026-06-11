@@ -1,15 +1,19 @@
 ---
 import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import InContentCTA from '../../components/InContentCTA.astro';
+import OwnerTip from '../../components/OwnerTip.astro';
+import ReviewQuote from '../../components/ReviewQuote.astro';
+import FinancingCTA from '../../components/FinancingCTA.astro';
 
 const faqs = [
-  { q: 'How much does indoor air quality improvement cost in Tampa?', a: 'IAQ investments scale with the problem. Basic upgrades run $150–$450 (high-efficiency filter conversion, UV lamp installation in the air handler). Mid-tier solutions run $700–$1,800 (whole-home air purifier, dedicated dehumidifier, ERV installation). Complete IAQ packages including duct sealing, purifier, dehumidifier, and annual testing run $2,400–$4,800. We start with free testing - actual numbers from your home, not a pressure pitch.' },
-  { q: 'My house is dusty and my family has allergies - what actually works?', a: 'In Tampa Bay, three things move the needle most: (1) upgrading the filter from a 1-inch MERV 8 to a 4-inch MERV 13 media cartridge (captures 98% of allergens vs. 42%), (2) sealing return-air leaks in the attic that pull dusty attic air into the system, and (3) adding UV-C in the air handler to kill mold and bacteria on the cold coil. Duct cleaning is a supporting tactic, not a standalone solution - if the filter and seal issues are not fixed, the ducts repopulate fast.' },
-  { q: 'Do I actually need a whole-home dehumidifier in Florida?', a: 'In some Tampa Bay homes yes, in others no. The test is simple: put a hygrometer in the middle of the house on a thunderstorm-heavy afternoon. If indoor humidity consistently runs above 58% RH while the AC is cycling normally, a dedicated dehumidifier (like an Aprilaire E070 or Santa Fe) is worth the investment. Homes with well-sealed ductwork, proper AC sizing, and variable-speed equipment usually stay under 55% RH on their own and do not need one.' },
-  { q: 'What is an ERV and do I need one?', a: 'An ERV (Energy Recovery Ventilator) brings in fresh outdoor air while exchanging heat and humidity with the outgoing stale air - basically, controlled ventilation without the energy penalty of just cracking a window. In tight-sealed modern Tampa homes (post-2015 construction to Florida Building Code), ERVs are often required. In older leaky homes, the building envelope already ventilates itself and an ERV is optional. We assess envelope tightness and ACH-50 before recommending one.' },
-  { q: 'Are UV lights in HVAC systems worth it?', a: 'For the right use case, yes. UV-C installed in the air handler near the cooling coil prevents biofilm and mold growth on the coil surface - a measurable improvement in coil efficiency and indoor air quality in humid Florida attics. UV-C in the return-air duct does not sterilize air passing through (contact time is too short) - that is marketing. We install the coil-mounted version and skip the return-duct version.' },
-  { q: 'How do I know if my ducts are leaking?', a: 'Three signs: (1) utility bills that feel too high for the equipment, (2) a dusty house even after filter upgrades, (3) uneven temperature room-to-room. Diagnostic: we run a duct-blaster test ($350) that pressurizes the duct system to 25 Pa and measures total leakage in CFM. Residential duct systems in Tampa typically leak 15–30% of their flow to the attic; code (and reality) says under 10% is healthy. Sealing is Aeroseal or mastic-and-mesh depending on access.' },
-  { q: 'Does air duct cleaning really help indoor air quality?', a: 'Duct cleaning helps in three specific scenarios: after a rodent infestation, after construction or renovation dust, or when visible mold is present at the registers. For general dust or allergy reduction, duct cleaning without filter and seal upgrades is largely theater - the ducts repopulate within 60 days. We will tell you honestly whether cleaning fits your situation or whether the money is better spent elsewhere.' },
-  { q: 'Can you test my indoor air quality before recommending anything?', a: 'Yes. We offer a free 60-minute IAQ assessment that includes particulate counts (PM2.5 and PM10), CO₂ levels, relative humidity across multiple rooms, VOC screening, and a visual inspection of the filter, coil, drain, and return-air seals. The written report shows what the actual problems are so any investment is aimed at the right fix, not a generic package.' },
+  { q: 'How much does indoor air quality improvement cost in Tampa?', a: 'IAQ investments scale with the problem. Basic upgrades run $150 to $450 (high-efficiency filter conversion, UV lamp). Mid-tier solutions run $700 to $1,800 (whole-home air purifier, dehumidifier, ERV). Complete packages including duct sealing, purifier, dehumidifier, and testing run $2,400 to $4,800. We start with free testing, actual numbers from your home, not a pressure pitch.' },
+  { q: 'My house is dusty and my family has allergies. What actually works?', a: 'In Tampa Bay, three things move the needle most: upgrading the filter from a 1-inch MERV 8 to a 4-inch MERV 13 cartridge (captures 98% of allergens vs. 42%), sealing return-air leaks in the attic that pull dusty air into the system, and adding UV-C in the air handler to kill mold on the coil. Duct cleaning is a supporting tactic, not a standalone fix.' },
+  { q: 'Do I actually need a whole-home dehumidifier in Florida?', a: 'In some Tampa homes yes, in others no. Put a hygrometer in the middle of the house on a stormy afternoon. If indoor humidity consistently runs above 58% RH while the AC cycles normally, a dedicated dehumidifier is worth it. Homes with sealed ducts, proper sizing, and variable-speed equipment usually stay under 55% RH on their own.' },
+  { q: 'What is an ERV and do I need one?', a: 'An ERV (Energy Recovery Ventilator) brings in fresh outdoor air while exchanging heat and humidity with the outgoing stale air, controlled ventilation without the energy penalty of cracking a window. In tight post-2015 Tampa homes, ERVs are often needed. In older leaky homes the envelope ventilates itself. We assess envelope tightness before recommending one.' },
+  { q: 'Are UV lights in HVAC systems worth it?', a: 'For the right use case, yes. UV-C installed near the cooling coil prevents biofilm and mold on the coil surface, a measurable improvement in humid Florida attics. UV-C in the return-air duct does not sterilize passing air; contact time is too short. We install the coil-mounted version and skip the return-duct version.' },
+  { q: 'Does air duct cleaning really help indoor air quality?', a: 'Duct cleaning helps in three specific cases: after a rodent infestation, after construction dust, or when visible mold is present at the registers. For general dust or allergy reduction, cleaning without filter and seal upgrades is largely theater, because ducts repopulate within 60 days. We will tell you honestly whether cleaning fits your situation.' },
+  { q: 'Can you test my indoor air quality before recommending anything?', a: 'Yes. We offer a free 60-minute IAQ assessment with particulate counts (PM2.5 and PM10), CO2 levels, relative humidity across rooms, VOC screening, and a visual inspection of the filter, coil, drain, and return-air seals. The written report shows the actual problems so any investment is aimed at the right fix.' },
 ];
 
 const related = [
@@ -30,75 +34,120 @@ const related = [
   serviceName="Indoor Air Quality in Tampa"
   faqs={faqs}
   related={related}
+  enhanced={true}
 >
-  <h2>Why Tampa Bay indoor air is different</h2>
-  <p>Florida indoor air quality is its own category of problem. A house in Colorado has cold dry winters, warm dry summers, and a building envelope built to keep heat in. A house in Wesley Chapel has 220 days a year of running cooling equipment, seasonal relative humidity in the 70–80% range on thunderstorm afternoons, a pine-pollen load from February through April that coats everything in yellow dust, and a building envelope designed to keep heat and humidity out. The problems we see most often across Pasco, Hillsborough, and Polk county homes come from that combination.</p>
+  <h2>Why Tampa Bay indoor air is its own problem</h2>
+  <p>Florida <strong>indoor air quality</strong> is a different category than the rest of the country. A house here deals with a unique mix that a Colorado home never sees:</p>
+  <ul>
+    <li><strong>220 days a year</strong> of running cooling equipment that recirculates the same air.</li>
+    <li><strong>70 to 80% humidity</strong> on stormy afternoons, feeding mold and dust mites.</li>
+    <li><strong>Pine pollen</strong> from February through April that coats everything in yellow.</li>
+    <li><strong>A tight envelope</strong> built to keep heat and humidity out, which also traps indoor pollutants.</li>
+  </ul>
+  <p>Because the causes are specific, the fixes have to be too. We test before we sell anything, which is why our approach pairs naturally with a regular <a href="/services/ac-maintenance-tampa/">AC maintenance</a> visit rather than a one-time product push.</p>
+
+  <TrustBar />
 
   <h2>The five IAQ problems we actually diagnose</h2>
-  <p>Before recommending any product, we test. These are the five most common findings across our IAQ assessments - and what actually fixes each one.</p>
+  <p>Before recommending a product, we measure. These five findings cover most of our assessments, and each has a real fix, not a generic bundle.</p>
 
   <h3>1. High humidity (55%+ RH indoors)</h3>
-  <p>Healthy indoor RH in Florida sits between 45% and 55%. Above 58%, you get the "everything feels clammy" effect, mold grows on grout and baseboards, and allergy symptoms worsen. Below 40%, static electricity, dry skin, and sinus issues take over - rare in Tampa but not impossible in winter. The fix depends on the cause. Oversized AC equipment short-cycles and does not run long enough to pull humidity; the answer is variable-speed equipment or a dedicated dehumidifier like the Aprilaire E070. Poorly sealed ductwork in the attic introduces humid outdoor air; the answer is duct sealing. A leaking evaporator pan or clogged drain adds humidity inside the air handler cabinet; the answer is a drain-line service and float-switch verification.</p>
+  <p>Healthy indoor humidity in Florida sits between 45 and 55%. Above 58%, everything feels clammy, mold grows on grout, and allergies worsen. The fix depends on the cause:</p>
+  <ul>
+    <li><strong>Oversized AC</strong> that short-cycles needs <a href="/services/ac-replacement-tampa/">variable-speed equipment</a> or a dedicated dehumidifier.</li>
+    <li><strong>Leaky attic ducts</strong> pulling in humid air need sealing.</li>
+    <li><strong>A clogged drain or leaking pan</strong> needs a drain-line service and float-switch check.</li>
+  </ul>
 
   <h3>2. High particulate count (PM2.5 and PM10)</h3>
-  <p>Measured particulates above 15 μg/m³ for PM2.5 or 50 μg/m³ for PM10 indicate a dust and allergen problem the current filtration cannot handle. The default 1-inch MERV 8 filter in most Tampa homes captures about 42% of particulates in that size range. A 4-inch MERV 13 media cartridge captures 98%. The upgrade costs $180–$450 installed (including a filter-housing modification if needed) and pays back in measurable improvement within 30 days. Homes with pets, smokers, or dust-sensitive residents should step up to MERV 13; homes with severe allergies can go to MERV 16 if the blower motor supports the static pressure.</p>
+  <p>The default 1-inch MERV 8 filter in most Tampa homes captures about 42% of fine particulates. A 4-inch MERV 13 media cartridge captures 98%, costs $180 to $450 installed, and shows measurable improvement within 30 days. Homes with pets or dust-sensitive residents should step up to MERV 13; severe allergies can go to MERV 16 if the blower supports the static pressure.</p>
 
   <h3>3. Mold and biological growth on the coil</h3>
-  <p>The indoor evaporator coil sits wet from condensation for six months a year in Florida. Without mitigation, biofilm, mold, and bacteria colonize the coil surface over time - measurable with a simple swab test. Symptoms: a musty smell when the system first cycles on, visible dark staining on the coil face, or a persistent "something is off" when the AC runs. Fix is a two-step process: a deep coil cleaning with a foaming evaporator coil cleaner ($180–$260), followed by installation of a UV-C lamp mounted near the coil ($280–$480 installed). The UV-C keeps the coil clean long-term; cleaning once without UV just kicks the can.</p>
+  <p>The indoor coil sits wet for six months a year, so biofilm and mold colonize it over time. The tell is a musty smell when the system first cycles on. The fix is a two-step process:</p>
+  <ul>
+    <li>A deep coil clean with a foaming cleaner ($180 to $260).</li>
+    <li>A UV-C lamp mounted near the coil ($280 to $480 installed) to keep it clean long-term.</li>
+  </ul>
+
+  <ReviewQuote
+    name="David Waite"
+    body="Been with I Care Air Care now for 10 years. Solid company, and the technician today was great."
+  />
 
   <h3>4. Return-air duct leaks pulling attic dust</h3>
-  <p>A return-air duct with even a small gap at the air handler cabinet seal or at a ceiling register boot will pull hot, dusty, sometimes-insulated-over attic air into the supply side of the system. That air then gets distributed throughout the house. Symptoms: a dusty house even after filter upgrades, utility bills that run high for the equipment size, and a musty smell when the system first kicks on in spring. Diagnosis is visual plus a duct-blaster test ($350). Repair is mastic-and-mesh at accessible joints or Aeroseal aerosol sealing at inaccessible ones ($450–$1,800 depending on scope).</p>
+  <p>A small gap at the air handler or a ceiling register boot pulls hot, dusty attic air into the system and spreads it through the house. Symptoms are a dusty home even after filter upgrades and high utility bills. Diagnosis is a duct-blaster test ($350); the repair is mastic-and-mesh or Aeroseal sealing, often paired with <a href="/services/air-duct-cleaning-tampa/">air duct cleaning</a> when the ducts are visibly fouled.</p>
 
-  <h3>5. Elevated CO₂ and VOCs in tight-sealed homes</h3>
-  <p>Post-2015 Florida construction meets tight envelope requirements - ACH50 under 5.0 in most counties. That is great for energy efficiency and terrible for indoor air if the home has no mechanical ventilation. CO₂ rises above 1,200 ppm with two or more occupants in a closed room (healthy is under 1,000). VOCs from cooking, cleaning products, off-gassing furniture, and attached garages accumulate without fresh-air exchange. Fix is an ERV (Energy Recovery Ventilator) - $1,800–$2,800 installed on the duct system. ERVs exchange indoor air with outdoor air while recovering 70–80% of the heating and humidity load, so the energy penalty is minimal.</p>
+  <h3>5. Elevated CO2 and VOCs in tight-sealed homes</h3>
+  <p>Post-2015 Florida construction is sealed tight, which is great for efficiency and bad for air if there is no ventilation. CO2 climbs above 1,200 ppm in a closed room with two people, and VOCs from cooking and off-gassing accumulate. The fix is an ERV ($1,800 to $2,800 installed) that exchanges indoor air with outdoor air while recovering most of the heat and humidity load.</p>
 
-  <h2>What we do on an IAQ assessment</h2>
-  <ol>
-    <li><strong>Particulate measurement</strong> (PM2.5 and PM10) in kitchen, main living area, and each bedroom with a handheld monitor</li>
-    <li><strong>CO₂ measurement</strong> in occupied spaces to gauge ventilation</li>
-    <li><strong>Relative humidity readings</strong> at the thermostat, away from supply registers, across the day</li>
-    <li><strong>VOC screening</strong> with a low-level photoionization detector</li>
-    <li><strong>Filter inspection</strong> - type, MERV rating, condition, bypass gaps</li>
-    <li><strong>Coil and drain inspection</strong> - visual plus temperature-split measurement</li>
-    <li><strong>Return-air system inspection</strong> - check for leaks, unbalanced returns, missing filters</li>
-    <li><strong>Written report</strong> with baseline readings, target readings, and prioritized recommendations</li>
-  </ol>
-  <p>The assessment itself is free. If you decide to move forward with any recommendation, it is your choice and no part of the assessment is credited or discounted - the assessment is on us whether or not you hire us for the work.</p>
+  <InContentCTA
+    heading="Dusty house or allergy flare-ups?"
+    text="Book a free IAQ assessment and we will measure particulates, humidity, and CO2 in your actual rooms, then show you the numbers before recommending a thing."
+    tone="navy"
+  />
 
-  <h2>Products we install (and products we skip)</h2>
-  <p><strong>We install:</strong></p>
+  <h2>What we do on a free IAQ assessment</h2>
+  <p>The 60-minute assessment is free whether or not you hire us for the work. It covers:</p>
   <ul>
-    <li><strong>4-inch MERV 13 media filtration</strong> (Aprilaire, Honeywell, Trion) - the single highest-ROI IAQ upgrade in most Tampa homes</li>
-    <li><strong>UV-C coil-surface lamps</strong> (Fresh-Aire UV, APCO) - mounted at the evaporator coil, proven to control biofilm</li>
-    <li><strong>Whole-home dehumidifiers</strong> (Aprilaire E-series, Santa Fe Ultra) - the right answer when AC alone cannot hit 55% RH</li>
-    <li><strong>ERV / HRV ventilators</strong> (Panasonic Intelli-Balance, Aprilaire, RenewAire) - for tight-sealed homes and new construction</li>
-    <li><strong>Aeroseal duct sealing</strong> - for homes with significant duct leakage where physical access is limited</li>
-    <li><strong>Whole-home humidifiers</strong> - rare in Florida but useful in homes that over-dry in winter</li>
-  </ul>
-  <p><strong>We do not install:</strong></p>
-  <ul>
-    <li><strong>In-duct "air purifier" PCO / ionizer devices</strong> - independent research does not support the marketing claims, some produce ozone as a byproduct</li>
-    <li><strong>UV-C in return-air ducts</strong> (contact time too short to sterilize passing air; the coil-surface version is what works)</li>
-    <li><strong>Electrostatic filters requiring monthly washing</strong> - compliance drops to near zero after the first month</li>
-    <li><strong>Hard-sell bundle packages</strong> that include products you do not need because the assessment did not support them</li>
+    <li><strong>Particulate measurement</strong> (PM2.5 and PM10) in the kitchen, living area, and each bedroom.</li>
+    <li><strong>CO2 measurement</strong> in occupied spaces to gauge ventilation.</li>
+    <li><strong>Relative humidity readings</strong> across the day, away from supply registers.</li>
+    <li><strong>VOC screening</strong> with a low-level detector.</li>
+    <li><strong>Filter, coil, drain, and return-air inspection</strong> for bypass gaps and leaks.</li>
+    <li><strong>A written report</strong> with baseline readings, targets, and prioritized recommendations.</li>
   </ul>
 
-  <h2>Pricing ranges for Tampa Bay IAQ work</h2>
+  <h2>Products we install (and the ones we skip)</h2>
+  <p>We only install what the readings support. What we recommend:</p>
   <ul>
-    <li><strong>Free IAQ assessment with written report:</strong> $0</li>
-    <li><strong>4-inch MERV 13 filter upgrade + housing modification:</strong> $180–$450</li>
-    <li><strong>UV-C coil lamp installation:</strong> $280–$480</li>
-    <li><strong>Coil deep clean (foaming cleaner):</strong> $180–$260</li>
-    <li><strong>Whole-home dehumidifier installation:</strong> $1,600–$2,800</li>
-    <li><strong>ERV installation (ducted):</strong> $1,800–$3,200</li>
-    <li><strong>Duct-blaster test and report:</strong> $350</li>
-    <li><strong>Mastic-and-mesh duct sealing (accessible joints):</strong> $450–$900</li>
-    <li><strong>Aeroseal duct sealing (whole system):</strong> $1,800–$3,400</li>
-    <li><strong>Complete IAQ package</strong> (filter + UV + dehumidifier + sealing): $3,600–$5,800</li>
+    <li><strong>4-inch MERV 13 media filtration</strong>, the single highest-ROI IAQ upgrade in most Tampa homes.</li>
+    <li><strong>UV-C coil-surface lamps</strong> mounted at the evaporator coil to control biofilm.</li>
+    <li><strong>Whole-home dehumidifiers</strong> when AC alone cannot hit 55% RH.</li>
+    <li><strong>ERV ventilators</strong> for tight-sealed homes and new construction.</li>
+    <li><strong>Aeroseal duct sealing</strong> for homes with significant, hard-to-reach leakage.</li>
   </ul>
+  <p>What we will not sell you:</p>
+  <ul>
+    <li><strong>In-duct ionizer / PCO "purifiers"</strong>, since research does not support the claims and some produce ozone.</li>
+    <li><strong>UV-C in return ducts</strong>, where contact time is too short to do anything.</li>
+    <li><strong>Hard-sell bundles</strong> with products your assessment did not call for.</li>
+  </ul>
+
+  <OwnerTip>
+    <p>"The biggest myth in this business is that <a href="/services/air-duct-cleaning-tampa/">duct cleaning</a> alone fixes a dusty house. If the filter is undersized and the returns leak, those ducts are dirty again in two months. Spend the money on the filter and the seal first. I would rather lose a duct-cleaning sale and actually solve your problem than sell you a service that does not last."</p>
+  </OwnerTip>
+
+  <FinancingCTA />
+
+  <h2>What better indoor air actually feels like</h2>
+  <p>The numbers on a report matter, but homeowners notice the difference in everyday ways within the first few weeks:</p>
+  <ul>
+    <li><strong>Less dusting,</strong> because a real filter is catching particles instead of the furniture.</li>
+    <li><strong>No musty smell</strong> when the system first kicks on in the morning.</li>
+    <li><strong>Fewer allergy mornings,</strong> especially during the spring pollen wave.</li>
+    <li><strong>A house that feels cool at a higher setting,</strong> because controlled humidity does half the comfort work.</li>
+  </ul>
+  <p>Those are the wins we aim for, and they are why we measure first rather than selling a box and hoping. Honest testing is the same principle behind every <a href="/services/ac-maintenance-tampa/">maintenance</a> visit we run.</p>
+
+  <h2>How each Tampa Bay season hits your indoor air</h2>
+  <p>Air quality here is not one problem year-round, it shifts with the season, and so does the right response:</p>
+  <ul>
+    <li><strong>Spring (Feb to Apr):</strong> pine and oak pollen peak. A MERV 13 filter and a clean coil matter most now, and homes in tree-heavy <a href="/service-areas/new-tampa-heating-and-cooling/">New Tampa</a> and <a href="/service-areas/lutz-home-air-conditioning-service/">Lutz</a> feel it first.</li>
+    <li><strong>Summer (May to Sep):</strong> humidity is the enemy. This is when oversized or struggling systems leave the house clammy, and where a quick <a href="/services/ac-repair-tampa/">AC repair</a> or dehumidifier pays off.</li>
+    <li><strong>Storm season:</strong> power flickers and clogged drains spike mold risk, so coil UV-C and drain service earn their keep.</li>
+    <li><strong>Winter:</strong> tight homes trap CO2 and VOCs with the windows closed, the season an ERV helps most. A <a href="/services/mini-split-installation-tampa/">mini-split</a> or <a href="/services/heat-pump-repair-tampa/">heat pump</a> running clean keeps circulation steady.</li>
+  </ul>
+  <p>Spreading small upgrades across the year, often financed with <a href="/financing/">0% terms</a>, keeps any single season from getting ahead of you.</p>
 
   <h2>Allergy and asthma households</h2>
-  <p>When a household has someone with diagnosed asthma, severe allergies, or immune compromise, we adjust our default recommendations: MERV 13 minimum (MERV 16 if the blower supports it), UV-C required, humidity control to 45–50% RH year-round, and a fresh-air ERV if the envelope is tight enough to support one. We coordinate with your family physician's recommendations when they have specific guidance. No one should be told "you just have Florida allergies" when the system can be meaningfully improved.</p>
+  <p>When someone in the home has asthma, severe allergies, or immune compromise, we raise the defaults:</p>
+  <ul>
+    <li>MERV 13 minimum, MERV 16 if the <a href="/services/hvac-installation-tampa/">system</a> supports it.</li>
+    <li>UV-C on the coil as standard.</li>
+    <li>Humidity held to 45 to 50% RH year-round, often with a <a href="/services/thermostat-installation-tampa/">humidity-aware thermostat</a>.</li>
+    <li>A fresh-air ERV when the envelope is tight enough to need one.</li>
+  </ul>
+  <p>No one should be told "you just have Florida allergies" when the system can be meaningfully improved.</p>
 
-  <p>Ready for better air inside your Wesley Chapel, Tampa, Land O' Lakes, Lutz, or Pasco County home? Call Tim and the team at <a href="tel:+18133952324">(813) 395-2324</a> or <a href="/contact/">book a free IAQ assessment</a>. We will measure what you have, show you the numbers, and only recommend the fixes the readings actually support.</p>
+  <p>Ready for better air inside your <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>, <a href="/service-areas/land-o-lakes-hvac-services/">Land O' Lakes</a>, or <a href="/service-areas/pasco-county-ac-repair/">Pasco County</a> home? Call <a href="tel:+18133952324">(813) 395-2324</a> or <a href="/contact/">book a free IAQ assessment</a>. We measure what you have, show you the written report, and only recommend the fixes the readings actually support, so every dollar goes to a problem you really have.</p>
 </ServiceLayout>
