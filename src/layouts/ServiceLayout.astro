@@ -56,13 +56,36 @@ const serviceSchema = {
     xpath: ['/html/head/title', '/html/body//h1', '/html/body//h2[1]', '/html/body//p[1]'],
   },
 };
-const relatedGuides = BLOG_POSTS
-  .filter((post) => {
-    const haystack = `${post.title} ${post.description} ${post.primaryService.label}`.toLowerCase();
-    return serviceName.toLowerCase().split(' ').some((word) => word.length > 4 && haystack.includes(word));
-  })
-  .slice(0, 3);
-const guides = relatedGuides.length ? relatedGuides : BLOG_POSTS.slice(0, 3);
+// Hand-curated, page-specific blog guides so every service page features a
+// DISTINCT, relevant set in the sidebar carousel + "Helpful guides" grid.
+const GUIDE_MAP = {
+  'ac-repair-tampa': ['10-most-common-ac-problems-wesley-chapel-homes', 'why-is-my-ac-running-but-not-cooling-in-florida-what-homeowners-need-to-know', 'ac-repair-near-me-wesley-chapel'],
+  'emergency-ac-repair-tampa': ['emergency-ac-repair-wesley-chapel', 'ac-blowing-warm-air-in-tampa-heres-how-to-fix-it-fast', 'ac-not-cooling-wesley-chapel'],
+  'ac-maintenance-tampa': ['regular-ac-maintenance-prevents-costly-repairs', 'ac-maintenance-wesley-chapel', 'ac-maintenance-tips'],
+  'heat-pump-repair-tampa': ['heat-pump-vs-ac-tampa', 'why-is-my-ac-running-but-not-cooling-in-florida-what-homeowners-need-to-know', 'evaluate-hvac-companies-tampa-bay-repair-warranty'],
+  'hvac-installation-tampa': ['hvac-installation-in-tampa-bay-complete-guide-for-homeowners', 'carrier-vs-trane-vs-rheem-tampa', 'seer2-explained-florida-2026'],
+  'ac-replacement-tampa': ['seer2-explained-florida-2026', 'carrier-vs-trane-vs-rheem-tampa', 'how-to-choose-the-right-hvac-team-for-your-home'],
+  'ac-installation-wesley-chapel': ['air-conditioning-installation-wesley-chapel', 'new-construction-hvac-guide-for-epperson-mirada-homeowners', 'best-local-air-conditioning-company-tampa'],
+  'mini-split-installation-tampa': ['heat-pump-vs-ac-tampa', 'hvac-installation-in-tampa-bay-complete-guide-for-homeowners', 'how-to-lower-cooling-bills-in-wesley-chapel-without-overworking-your-ac'],
+  'indoor-air-quality-tampa': ['air-duct-cleaning-wesley-chapel', 'air-filter-change-frequency', 'how-to-lower-cooling-bills-in-wesley-chapel-without-overworking-your-ac'],
+  'thermostat-installation-tampa': ['how-to-lower-cooling-bills-in-wesley-chapel-without-overworking-your-ac', 'seer2-explained-florida-2026', 'air-filter-change-frequency'],
+  'air-duct-cleaning-tampa': ['air-duct-cleaning-wesley-chapel', 'air-filter-change-frequency', '10-most-common-ac-problems-wesley-chapel-homes'],
+  'heating-services-tampa': ['heat-pump-vs-ac-tampa', 'how-to-find-reliable-heating-and-air-contractors-near-me', 'evaluate-hvac-companies-tampa-bay-repair-warranty'],
+  'refrigeration-repair-tampa': ['best-local-air-conditioning-company-tampa', 'evaluate-hvac-companies-tampa-bay-repair-warranty', 'how-to-choose-the-right-hvac-team-for-your-home'],
+};
+const bySlug = new Map(BLOG_POSTS.map((p) => [p.slug, p]));
+let guides = (GUIDE_MAP[slug] || []).map((s) => bySlug.get(s)).filter(Boolean);
+// Fallback fill (distinct, rotated by slug so different pages differ).
+if (guides.length < 3) {
+  let h = 0; for (const c of slug) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  const start = BLOG_POSTS.length ? h % BLOG_POSTS.length : 0;
+  const rotated = [...BLOG_POSTS.slice(start), ...BLOG_POSTS.slice(0, start)];
+  for (const p of rotated) {
+    if (!guides.find((g) => g.slug === p.slug)) guides.push(p);
+    if (guides.length >= 3) break;
+  }
+}
+guides = guides.slice(0, 3);
 ---
 <BaseLayout title={title} description={description} breadcrumbs={breadcrumbs}>
   <Hero
@@ -87,7 +110,7 @@ const guides = relatedGuides.length ? relatedGuides : BLOG_POSTS.slice(0, 3);
         <slot />
       </article>
       {enhanced ? (
-        <ServiceSidebar slug={slug} serviceName={serviceName} blog={guides[0]} />
+        <ServiceSidebar slug={slug} serviceName={serviceName} guides={guides} />
       ) : (
         <aside class="lg:col-span-4 space-y-6">
           <div class="rounded-xl bg-brand-500 text-white p-6 shadow-[var(--shadow-soft)]">
