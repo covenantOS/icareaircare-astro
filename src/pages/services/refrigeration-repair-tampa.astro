@@ -1,18 +1,25 @@
 ---
 import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import InContentCTA from '../../components/InContentCTA.astro';
+import OwnerTip from '../../components/OwnerTip.astro';
+import ReviewQuote from '../../components/ReviewQuote.astro';
+import FinancingCTA from '../../components/FinancingCTA.astro';
 
 const faqs = [
-  { q: 'What commercial refrigeration equipment do you service?', a: 'Walk-in coolers and freezers, reach-in refrigerators and freezers, undercounter units, prep tables, ice machines, beverage coolers, and light-commercial display cases. We service restaurants, cafés, convenience stores, small grocers, florists, and medical/lab facilities across Tampa Bay.' },
+  { q: 'What commercial refrigeration equipment do you service?', a: 'Walk-in coolers and freezers, reach-in refrigerators and freezers, undercounter units, prep tables, ice machines, beverage coolers, and light-commercial display cases. We service restaurants, cafes, convenience stores, small grocers, florists, and medical or lab facilities across Tampa Bay.' },
   { q: 'Do you handle urgent refrigeration calls?', a: 'Yes. Commercial refrigeration failures cost money every minute, so we prioritize urgent business calls and give a realistic ETA before dispatch.' },
   { q: 'Will you sign a preventive maintenance agreement?', a: 'Yes. Most of our commercial clients run on quarterly or monthly PM agreements that include coil cleaning, temperature calibration, door-gasket inspection, condensate management, and refrigerant leak checks.' },
-  { q: 'Do you work on ice machines?', a: 'We service Manitowoc, Hoshizaki, Scotsman, Ice-O-Matic, and other commercial ice machines - cleaning cycles, water filtration, refrigerant issues, control board replacements.' },
-  { q: 'What refrigerants do you handle?', a: 'R-404A, R-134a, R-407A, R-448A, R-449A, R-513A, and the newer lower-GWP replacements (R-454C, R-455A) being adopted under current EPA SNAP regulations. All our refrigeration techs are EPA 608 Universal certified.' },
-  { q: 'Can you retrofit an older R-404A system?', a: 'In many cases yes - either with a drop-in low-GWP replacement or with a planned compressor change. We\'ll inspect, recommend, and quote honestly.' },
+  { q: 'Do you work on ice machines?', a: 'We service Manitowoc, Hoshizaki, Scotsman, Ice-O-Matic, and other commercial ice machines: cleaning cycles, water filtration, refrigerant issues, and control board replacements.' },
+  { q: 'What refrigerants do you handle?', a: 'R-404A, R-134a, R-407A, R-448A, R-449A, R-513A, and the newer lower-GWP replacements (R-454C, R-455A) being adopted under current EPA regulations. All our refrigeration techs are EPA 608 Universal certified.' },
+  { q: 'Can you retrofit an older R-404A system?', a: 'In many cases yes, either with a drop-in low-GWP replacement or a planned compressor change. We inspect, recommend, and quote honestly.' },
 ];
 
 const related = [
   { href: '/services/ac-repair-tampa/', label: 'Commercial AC Repair' },
   { href: '/services/hvac-installation-tampa/', label: 'Light-Commercial HVAC' },
+  { href: '/services/ac-maintenance-tampa/', label: 'Maintenance Agreements' },
+  { href: '/services/emergency-ac-repair-tampa/', label: 'Emergency Service' },
 ];
 ---
 <ServiceLayout
@@ -21,43 +28,123 @@ const related = [
   description="Wesley Chapel commercial refrigeration repair - walk-ins, reach-ins, ice machines across Tampa Bay. EPA 608 certified, fast response. 4.9★ · 700+ reviews. (813) 395-2324."
   h1="Commercial Refrigeration Repair in Wesley Chapel & Tampa Bay"
   eyebrow="Commercial Refrigeration · Wesley Chapel"
-  subtitle={`When the walk-in goes down, revenue stops and product spoils. Our Wesley Chapel–based team services <span class="text-accent-400 font-semibold">commercial refrigeration across Tampa Bay</span> with fast emergency response and EPA-certified refrigerant work.`}
+  subtitle={`When the walk-in goes down, revenue stops and product spoils. Our Wesley Chapel team services <span class="text-accent-400 font-semibold">commercial refrigeration across Tampa Bay</span> with fast emergency response and EPA-certified refrigerant work.`}
   heroImage="/images/HVAC-Services-in-Tampa-FL-%E2%80%93-Commercial-AC-Condenser-Systems.webp"
   serviceName="Commercial Refrigeration Repair in Tampa"
   faqs={faqs}
   related={related}
+  enhanced={true}
 >
-  <h2>Commercial refrigeration isn't just a bigger household fridge</h2>
-  <p>Walk-in coolers, ice machines, and reach-ins run on different refrigerants, different control systems, and different duty cycles than residential equipment. A failed condenser fan on a restaurant walk-in isn't a $300 home repair - it's a $3,000 product loss if the wrong tech takes six hours diagnosing it. Our commercial techs are <strong>EPA 608 Universal certified</strong> and experienced on the equipment brands Tampa Bay businesses actually run.</p>
+  <h2>Commercial refrigeration is not just a bigger household fridge</h2>
+  <p>This is our <strong>commercial</strong> refrigeration service for Tampa Bay businesses. Walk-in coolers, ice machines, and reach-ins run on different refrigerants, controls, and duty cycles than home equipment, and the stakes are higher:</p>
+  <ul>
+    <li><strong>Revenue stops</strong> the moment a cooler climbs out of temperature.</li>
+    <li><strong>Product spoils fast,</strong> turning a $300 part into a $3,000 loss if the wrong tech takes six hours.</li>
+    <li><strong>Health code</strong> requires documented temperatures, so failures are a compliance problem too.</li>
+  </ul>
+  <p>Our commercial techs are <strong>EPA 608 Universal certified</strong> and experienced on the brands Tampa Bay businesses actually run. For the comfort-cooling side of your building, the same team handles <a href="/services/ac-repair-tampa/">commercial AC repair</a> and <a href="/services/hvac-installation-tampa/">light-commercial HVAC</a>.</p>
+
+  <TrustBar />
 
   <h2>Equipment we service</h2>
+  <p>If it keeps product cold in a Tampa Bay business, we likely service it:</p>
   <ul>
-    <li><strong>Walk-in coolers & freezers</strong> - Kolpak, Bally, Master-Bilt, Nor-Lake, Arctic, Kysor-Warren</li>
-    <li><strong>Reach-in refrigerators & freezers</strong> - True, Continental, Delfield, Beverage-Air, Traulsen, Turbo Air</li>
-    <li><strong>Prep tables</strong> - Sandwich, pizza, salad, and refrigerated sushi prep cases</li>
-    <li><strong>Ice machines</strong> - Manitowoc, Hoshizaki, Scotsman, Ice-O-Matic</li>
-    <li><strong>Display cases</strong> - Open-front deli, bakery, and beverage merchandisers</li>
-    <li><strong>Undercounters, back-bars, and beer coolers</strong></li>
+    <li><strong>Walk-in coolers and freezers:</strong> Kolpak, Bally, Master-Bilt, Nor-Lake, Arctic, Kysor-Warren.</li>
+    <li><strong>Reach-in refrigerators and freezers:</strong> True, Continental, Delfield, Beverage-Air, Traulsen, Turbo Air.</li>
+    <li><strong>Prep tables:</strong> sandwich, pizza, salad, and refrigerated sushi cases.</li>
+    <li><strong>Ice machines:</strong> Manitowoc, Hoshizaki, Scotsman, Ice-O-Matic.</li>
+    <li><strong>Display cases:</strong> open-front deli, bakery, and beverage merchandisers.</li>
+    <li><strong>Undercounters, back-bars, and beer coolers.</strong></li>
   </ul>
+
+  <h2>The businesses we keep running</h2>
+  <p>Different operations have different failure points, and we tailor service to each:</p>
+  <ul>
+    <li><strong>Restaurants and cafes:</strong> grease-loaded condensers and hard-working prep tables top the call list.</li>
+    <li><strong>Convenience stores and small grocers:</strong> reach-in door gaskets and display-case defrost issues.</li>
+    <li><strong>Bars and breweries:</strong> beer coolers and ice machines under heavy weekend load.</li>
+    <li><strong>Florists, medical, and lab facilities:</strong> tight temperature tolerances where a written log is not optional.</li>
+  </ul>
+
+  <ReviewQuote
+    name="T Tiller"
+    body="My compressor failed twice and the team made a hard situation easy. They responded promptly, explained the issue, and even provided a temporary unit while we waited. I never felt like just another service call."
+  />
 
   <h2>Preventive maintenance keeps the doors open</h2>
-  <p>Our commercial PM program includes quarterly or monthly visits depending on your equipment load:</p>
+  <p>The cheapest refrigeration failure is the one that never happens. Our commercial PM program runs quarterly or monthly by equipment load and covers:</p>
   <ul>
-    <li>Condenser coil cleaning (single biggest failure cause in Tampa humidity/kitchen grease environments)</li>
-    <li>Evaporator coil inspection and defrost cycle verification</li>
-    <li>Door gasket inspection and replacement (energy and food-safety critical)</li>
-    <li>Condensate drain flushing and pan treatment</li>
-    <li>Temperature calibration at rack controllers and individual cases</li>
-    <li>Compressor amp draw and oil level check</li>
-    <li>Refrigerant leak scan</li>
-    <li>Written report for health-inspector records</li>
+    <li><strong>Condenser coil cleaning,</strong> the single biggest failure cause in Tampa humidity and kitchen-grease environments.</li>
+    <li><strong>Evaporator coil inspection</strong> and defrost-cycle verification.</li>
+    <li><strong>Door-gasket inspection</strong> and replacement, critical for energy and food safety.</li>
+    <li><strong>Condensate drain flushing</strong> and pan treatment.</li>
+    <li><strong>Temperature calibration</strong> at rack controllers and individual cases.</li>
+    <li><strong>Compressor amp draw and oil check,</strong> plus a refrigerant leak scan.</li>
+    <li><strong>A written report</strong> for your health-inspector records.</li>
   </ul>
 
+  <InContentCTA
+    heading="Walk-in losing temperature?"
+    text="Tell us the equipment and what it is doing and we will give you a straight ETA and a clear repair path before product is at risk. Ask for the earliest refrigeration slot."
+    tone="brand"
+  />
+
   <h2>Emergency response that respects the clock</h2>
-  <p>A walk-in failure can turn into a product-loss problem quickly. We prioritize operating businesses ahead of routine work when urgent refrigeration calls come in, then quote the repair path clearly before work begins.</p>
+  <p>A walk-in failure becomes a product-loss problem in hours, so we prioritize operating businesses ahead of routine work when urgent calls come in, then quote the repair path clearly before any work begins. It is the same urgency our <a href="/services/emergency-ac-repair-tampa/">emergency service</a> team brings to a no-cool home, applied to your bottom line.</p>
 
-  <h2>2026 refrigerant regulations - what businesses need to know</h2>
-  <p>The EPA's continued phase-down of high-GWP refrigerants is hitting commercial refrigeration hard in 2026. R-404A is largely phased out in new equipment and its service refrigerant cost has climbed significantly. If you're running equipment over 10 years old on R-404A, it's worth a conversation about <strong>retrofit options or scheduled replacement</strong> before a major failure forces a rushed decision. We'll give you honest numbers and timeline recommendations.</p>
+  <OwnerTip>
+    <p>"For a restaurant, the condenser coil is everything. In a Tampa kitchen it loads up with grease and dust and the unit slowly loses capacity until one hot Saturday it gives up mid-service. A quarterly coil cleaning on a maintenance agreement costs a fraction of one night of spoiled product and a rush repair. We would much rather keep you out of trouble than bill you out of it, the same way a home <a href="/services/ac-maintenance-tampa/">maintenance plan</a> prevents the 4pm breakdown."</p>
+  </OwnerTip>
 
-  <p>Commercial refrigeration problem? <a href="tel:+18133952324">Call (813) 395-2324</a> and ask for the earliest available refrigeration appointment.</p>
+  <h2>Common walk-in failures and what they signal</h2>
+  <p>A walk-in rarely dies without warning. Knowing the early signs lets us fix it before product is at risk:</p>
+  <ul>
+    <li><strong>Temperature creeping up</strong> while the unit runs nonstop usually points to a dirty condenser coil or low refrigerant charge.</li>
+    <li><strong>Ice building on the evaporator</strong> signals a defrost-cycle or heater failure, not a colder box.</li>
+    <li><strong>Water on the floor</strong> is a clogged condensate drain or a failed pan heater, a slip and food-safety hazard both.</li>
+    <li><strong>A door that will not seal</strong> bleeds cold air and overworks the compressor, often a $40 gasket preventing a $2,000 failure.</li>
+    <li><strong>Short-cycling or a humming compressor</strong> that will not start is frequently a contactor or capacitor, the same parts that fail on our <a href="/services/ac-repair-tampa/">AC repair</a> calls.</li>
+  </ul>
+
+  <h2>Ice machines: the most neglected unit in the building</h2>
+  <p>Ice machines fail more than any other piece of commercial refrigeration because they are the easiest to ignore until the bin is empty on a busy night:</p>
+  <ul>
+    <li><strong>Scale and biofilm</strong> build up without a regular cleaning cycle, cutting production and failing health inspections.</li>
+    <li><strong>Water filtration</strong> protects the whole machine; a $60 filter change prevents most major repairs.</li>
+    <li><strong>Refrigerant and control-board issues</strong> on Manitowoc, Hoshizaki, and Scotsman units we carry common parts for.</li>
+    <li><strong>A maintenance agreement</strong> keeps cleaning on schedule, the same prevention-first logic behind a residential <a href="/services/ac-maintenance-tampa/">maintenance plan</a>.</li>
+  </ul>
+  <p>We keep these units running for businesses across <a href="/service-areas/new-tampa-heating-and-cooling/">New Tampa</a>, <a href="/service-areas/land-o-lakes-hvac-services/">Land O' Lakes</a>, and <a href="/service-areas/odessa-emergency-ac-repair/">Odessa</a>, and when a unit is beyond economical repair we lay out <a href="/services/ac-replacement-tampa/">replacement</a> options honestly.</p>
+
+  <h2>2026 refrigerant rules: what businesses need to know</h2>
+  <p>The EPA's phase-down of high-GWP refrigerants is hitting commercial refrigeration hard:</p>
+  <ul>
+    <li><strong>R-404A</strong> is largely out of new equipment, and its service cost has climbed sharply.</li>
+    <li><strong>Equipment over 10 years old</strong> on R-404A is worth a planned conversation about retrofit or replacement.</li>
+    <li><strong>Acting early</strong> beats a rushed decision after a major failure, and bigger projects qualify for <a href="/financing/">financing</a>.</li>
+  </ul>
+
+  <h2>Temperature logging, compliance, and your health inspection</h2>
+  <p>For a Tampa Bay food business, refrigeration is not just equipment, it is a compliance requirement. The health inspector wants to see that cold holding stays at or below 41 degrees and that you can prove it:</p>
+  <ul>
+    <li><strong>Calibrated thermometers</strong> at every unit, verified on our maintenance visits so your logs are defensible.</li>
+    <li><strong>Documented service records</strong> showing the equipment was professionally maintained, which inspectors and insurers both value.</li>
+    <li><strong>Fast response to drift,</strong> because a cooler trending warm is a violation waiting to happen, not just a comfort issue.</li>
+    <li><strong>Defrost and gasket checks</strong> that keep units holding temperature reliably between inspections.</li>
+  </ul>
+  <p>A failed cold-holding check can shut a kitchen down for the day. Keeping the equipment in spec is cheaper than a closure, a re-inspection, and the lost revenue that comes with both.</p>
+
+  <h2>Why a maintenance agreement pays for itself</h2>
+  <p>One spoiled-product event almost always costs more than a year of preventive visits. A PM agreement turns surprise failures into scheduled, low-cost maintenance:</p>
+  <ul>
+    <li><strong>Priority dispatch</strong> when something does go wrong, so you are not waiting behind routine calls.</li>
+    <li><strong>Coil cleaning on a schedule,</strong> which heads off the single most common Tampa failure before it strikes mid-service.</li>
+    <li><strong>Predictable budgeting</strong> instead of unplanned emergency repair bills.</li>
+    <li><strong>A documented history</strong> that protects warranties and supports insurance claims after a loss.</li>
+  </ul>
+
+  <FinancingCTA />
+
+  <h2>Serving Tampa Bay businesses</h2>
+  <p>We cover commercial refrigeration across <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>, <a href="/service-areas/hillsborough-county-hvac-company/">Hillsborough County</a>, <a href="/service-areas/pasco-county-ac-repair/">Pasco County</a>, <a href="/service-areas/polk-county-residential-ac-repair/">Polk County</a>, and <a href="/service-areas/air-conditioning-repair-zephyrhills-fl-i-care-air-care/">Zephyrhills</a>. From a single reach-in at a cafe to a full rack of walk-ins at a busy restaurant, the same EPA-certified team that keeps Tampa Bay homes comfortable keeps local businesses open and in compliance. Commercial refrigeration problem? <a href="/contact/">Request service</a> or call <a href="tel:+18133952324">(813) 395-2324</a> and ask for the earliest available refrigeration appointment.</p>
 </ServiceLayout>
