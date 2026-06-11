@@ -1,0 +1,141 @@
+---
+// Rich service-page sidebar (the "enhanced" template). Conversion-first:
+// big click-to-call, quick callback form, real Google review + license/E-E-A-T,
+// GBP map, internal links to every service + area, and one blog thumbnail.
+// Self-contained: computes its own map + service list from SITE.
+import { SITE } from '../lib/site';
+import type { BlogPost } from '../lib/blog';
+
+interface Props { slug: string; serviceName: string; blog?: BlogPost; }
+const { slug, serviceName, blog } = Astro.props;
+
+const gbpUrl = SITE.socials.google;
+const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(`${SITE.address.street} ${SITE.address.city} ${SITE.address.region} ${SITE.address.postalCode}`)}&z=11&output=embed`;
+const otherServices = SITE.services.filter((s) => s.slug !== slug);
+// Real, verifiable Google review (same source set as the schema reviews).
+const review = { body: 'Kleber was my tech today and was fantastic: very professional and knowledgeable. I Care Air Care scheduled me right away when my AC shut off, and Tim the owner is responsive for weekend emergencies.', name: 'Joyce Edwards' };
+const fieldClass = 'w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 text-navy-900 placeholder:text-slate-400 transition';
+---
+<aside class="lg:col-span-4 space-y-6">
+
+  <!-- 1. Big click-to-call card -->
+  <div class="rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 text-white p-6 shadow-[var(--shadow-soft)]">
+    <span class="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-wide text-blue-50">
+      <span class="relative flex h-2.5 w-2.5">
+        <span class="absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75 animate-ping"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent-500"></span>
+      </span>
+      Talk to a real person now
+    </span>
+    <a href={SITE.phoneHref} class="mt-2 block text-3xl font-extrabold tracking-tight text-white hover:text-accent-300 transition">{SITE.phone}</a>
+    <a href={SITE.phoneHref} class="mt-4 inline-flex w-full justify-center items-center gap-2 rounded-lg bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-3.5 transition">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+      Call now
+    </a>
+    <a href={SITE.bookUrl} target="_blank" rel="noopener" class="mt-2 inline-flex w-full justify-center items-center gap-2 rounded-lg bg-white/10 border border-white/30 hover:bg-white/20 text-white font-semibold px-4 py-3">Book online</a>
+    <div class="mt-4 border-t border-white/15 pt-3 space-y-1 text-[13px] text-blue-50">
+      {SITE.hoursStructured.map((h) => (
+        <div class="flex justify-between"><span>{h.days}</span><span class="font-semibold text-white">{h.open} - {h.close}</span></div>
+      ))}
+      <div class="pt-1 text-[12px] text-blue-50/80">Call anytime for urgent no-cool help.</div>
+    </div>
+    <ul class="mt-4 space-y-1.5 text-[13px] text-blue-50">
+      <li>✓ Licensed &amp; insured · {SITE.license}</li>
+      <li>✓ 1-year repair warranty</li>
+      <li>✓ Upfront flat-rate pricing</li>
+    </ul>
+  </div>
+
+  <!-- 2. Quick callback form -->
+  <div class="rounded-2xl bg-white ring-1 ring-slate-200 shadow-[var(--shadow-card)] p-6">
+    <h3 class="font-bold text-navy-700 text-lg">Request a callback</h3>
+    <p class="mt-1 text-[13.5px] text-slate-600">Drop your number and we will call you back the same business day.</p>
+    <form class="mt-4 space-y-3" action="/api/lead" method="POST">
+      <input type="hidden" name="_form_type" value="sidebar_callback" />
+      <input type="hidden" name="_next" value="/thank-you/" />
+      <input type="hidden" name="service" value={serviceName} />
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+      <label class="block"><span class="sr-only">Name</span><input name="name" type="text" placeholder="Your name*" required class={fieldClass} /></label>
+      <label class="block"><span class="sr-only">Phone</span><input name="phone" type="tel" placeholder="Phone number*" required class={fieldClass} /></label>
+      {SITE.turnstileSiteKey && (
+        <div class="cf-turnstile" data-sitekey={SITE.turnstileSiteKey} data-size="flexible"></div>
+      )}
+      <button type="submit" class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-3 transition">Get my callback</button>
+      <p class="text-[11px] text-center text-slate-500">No spam. Reply STOP anytime.</p>
+    </form>
+  </div>
+
+  <!-- 3. Reviews + license / E-E-A-T -->
+  <div class="rounded-2xl bg-white ring-1 ring-slate-200 shadow-[var(--shadow-card)] p-6">
+    <div class="flex items-center justify-between">
+      <div class="inline-flex gap-0.5" role="img" aria-label="5 out of 5 stars">
+        {[0, 1, 2, 3, 4].map(() => (
+          <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fbbc04" d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+        ))}
+      </div>
+      <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wide">{SITE.rating.value}★ · {SITE.rating.count}+ reviews</span>
+    </div>
+    <p class="mt-3 text-[14px] text-slate-700 leading-relaxed italic">“{review.body}”</p>
+    <div class="mt-2 text-[13px] font-bold text-navy-700">- {review.name}</div>
+    <a href={gbpUrl} target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-1 text-brand-700 font-semibold hover:text-brand-800 text-[14px]">Read all {SITE.rating.count}+ reviews on Google →</a>
+    <div class="mt-4 border-t border-slate-100 pt-3 flex flex-wrap gap-x-3 gap-y-1.5 text-[12px] font-semibold text-slate-600">
+      <span class="inline-flex items-center gap-1">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" class="text-brand-600" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-4z"/></svg>
+        Licensed {SITE.license}
+      </span>
+      <span>EPA 608 Universal</span>
+      <span>{SITE.yearsInBusiness} yrs · {SITE.customersServed} homes</span>
+    </div>
+  </div>
+
+  <!-- 4. GBP map -->
+  <div class="rounded-2xl bg-white ring-1 ring-slate-200 overflow-hidden shadow-[var(--shadow-card)]">
+    <div class="aspect-[4/3] bg-slate-100">
+      <iframe data-lazy-src={mapSrc} title={`${SITE.name} location - Wesley Chapel, FL`} class="w-full h-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="p-5">
+      <h3 class="font-bold text-navy-700 text-lg">Visit us on Google</h3>
+      <p class="mt-1 text-[14px] text-slate-600">{SITE.address.street}, {SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}</p>
+      <a href={gbpUrl} target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-1.5 rounded-md bg-white ring-1 ring-slate-200 hover:ring-brand-300 px-3 py-2 text-[14px] font-semibold text-navy-700">
+        <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09A6.6 6.6 0 015.49 12c0-.73.13-1.43.35-2.09V7.07H2.18A10.96 10.96 0 001 12c0 1.77.42 3.45 1.18 4.93z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        View our Google Business Profile →
+      </a>
+    </div>
+  </div>
+
+  <!-- 5. All services (internal links) -->
+  <div class="rounded-2xl bg-surface ring-1 ring-slate-200 p-6">
+    <h3 class="font-bold text-navy-700 text-lg">Our HVAC services</h3>
+    <ul class="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-[14.5px]">
+      {otherServices.map((s) => (
+        <li><a class="text-brand-700 hover:text-brand-800 underline underline-offset-2" href={`/services/${s.slug}/`}>{s.name}</a></li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- 6. Service areas (internal links) -->
+  <div class="rounded-2xl bg-surface ring-1 ring-slate-200 p-6">
+    <h3 class="font-bold text-navy-700 text-lg">Areas we serve</h3>
+    <ul class="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-[14.5px]">
+      {SITE.serviceAreas.map((a) => (
+        <li><a class="text-brand-700 hover:text-brand-800 underline underline-offset-2" href={`/service-areas/${a.slug}/`}>{a.name}</a></li>
+      ))}
+    </ul>
+    <a href="/service-areas/" class="mt-4 inline-flex items-center gap-1 text-brand-700 font-semibold hover:text-brand-800">See all areas →</a>
+  </div>
+
+  <!-- 7. Blog thumbnail -->
+  {blog && (
+    <a href={`/blogs/${blog.slug}/`} class="group block rounded-2xl bg-white ring-1 ring-slate-200 shadow-[var(--shadow-card)] overflow-hidden hover:shadow-[var(--shadow-soft)] transition">
+      <div class="aspect-[16/9] bg-slate-100 overflow-hidden">
+        <img src={blog.image} alt={blog.imageAlt || blog.title} width="400" height="225" loading="lazy" class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300" />
+      </div>
+      <div class="p-5">
+        <span class="text-[11px] font-bold uppercase tracking-wide text-brand-700">From our blog</span>
+        <h3 class="mt-1.5 font-bold text-navy-700 leading-snug group-hover:text-brand-700">{blog.title}</h3>
+        <span class="mt-3 inline-flex items-center gap-1 text-[13.5px] font-semibold text-accent-600">Read the guide →</span>
+      </div>
+    </a>
+  )}
+
+</aside>

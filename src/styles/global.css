@@ -77,13 +77,16 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23d7e3ea' stroke-width='.5' opacity='.35'%3E%3Cpath d='M0 60 Q60 30 120 60 T240 60'/%3E%3Cpath d='M0 120 Q60 90 120 120 T240 120'/%3E%3Cpath d='M0 180 Q60 150 120 180 T240 180'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-.prose-icac p { @apply text-slate-700 leading-relaxed; }
-.prose-icac h2 { @apply text-3xl md:text-4xl mt-12 mb-4; }
-.prose-icac h3 { @apply text-xl md:text-2xl mt-8 mb-3; font-weight: 600; }
-.prose-icac ul { @apply list-disc pl-5 space-y-2 text-slate-700; }
-/* brand-700 on white = ~4.7:1, brand-800 hover = ~7:1 - passes WCAG AA for normal text */
-.prose-icac a { @apply text-brand-700 underline underline-offset-2 hover:text-brand-800; }
-.prose-icac strong { @apply text-navy-700; }
+/* Every rule excludes .not-prose descendants so cards / CTAs / widgets keep
+   their own colors and spacing (e.g. white text on a dark band) instead of
+   inheriting the prose body styles. brand-700 on white = ~4.7:1, brand-800
+   hover = ~7:1 - passes WCAG AA for normal text. */
+.prose-icac p:not(.not-prose p) { @apply text-slate-700 leading-relaxed; }
+.prose-icac h2:not(.not-prose h2) { @apply text-3xl md:text-4xl mt-12 mb-4; }
+.prose-icac h3:not(.not-prose h3) { @apply text-xl md:text-2xl mt-8 mb-3; font-weight: 600; }
+.prose-icac ul:not(.not-prose ul) { @apply list-disc pl-5 space-y-2 text-slate-700; }
+.prose-icac a:not(.not-prose a) { @apply text-brand-700 underline underline-offset-2 hover:text-brand-800; }
+.prose-icac strong:not(.not-prose strong) { @apply text-navy-700; }
 
 /* accent-500 bg + navy-900 text = ~7:1 (AAA). Maintains vibrant brand orange while
    passing WCAG AA for normal text. Hover darkens the orange, not the text. */

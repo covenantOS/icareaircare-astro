@@ -1,0 +1,21 @@
+---
+// Reusable "tip from the owner" box. Adds a real human E-E-A-T voice (Tim
+// Hawk, named, licensed) inside long service copy. Content goes in the slot.
+import { SITE } from '../lib/site';
+interface Props { title?: string; }
+const { title = "Tim's tip" } = Astro.props;
+---
+<aside class="not-prose my-10 rounded-2xl bg-accent-50 ring-1 ring-accent-100 border-l-4 border-accent-500 p-6 md:p-7">
+  <div class="flex items-start gap-4">
+    <img src="/images/Tim%20Hawk%20(ICAC%20Owner).webp" alt={`${SITE.owner}, Owner of I Care Air Care`} title={`${SITE.owner}, Owner`} width="56" height="56" loading="lazy" class="w-14 h-14 rounded-full object-cover object-top ring-2 ring-white shadow shrink-0" />
+    <div>
+      <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+        <span class="text-[11px] font-bold uppercase tracking-[0.14em] text-accent-700">{title}</span>
+        <span class="text-[12px] text-slate-500">{SITE.owner}, Owner · Florida Lic. {SITE.license}</span>
+      </div>
+      <div class="mt-2 text-[15.5px] text-navy-700 leading-relaxed [&_a]:font-semibold [&_a]:text-brand-700 [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-brand-800">
+        <slot />
+      </div>
+    </div>
+  </div>
+</aside>
