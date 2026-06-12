@@ -4,8 +4,8 @@ description: "Residential AC installation is becoming a priority as heat warning
 tag: "Efficiency"
 date: "May 29, 2026"
 read: "11 min"
-image: "/images/rising-heat-residential-ac-installation-wesley-chapel-hero.webp"
-imageAlt: "Wesley Chapel homeowner and an I Care Air Care technician inspecting an outdoor AC condenser during a hot Florida evening"
+image: "/images/mini-split-cooling-wesley-chapel-living-room.webp"
+imageAlt: "Woman on a sofa using a remote to adjust a wall-mounted mini-split air conditioner in a cool Wesley Chapel living room"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/ac-installation-wesley-chapel/"

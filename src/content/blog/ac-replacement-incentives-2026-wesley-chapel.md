@@ -4,8 +4,8 @@ description: "Wesley Chapel homeowners are moving toward AC replacement as feder
 tag: "Buyer's Guide"
 date: "May 29, 2026"
 read: "12 min"
-image: "/images/ac-replacement-incentives-2026-wesley-chapel-hero.webp"
-imageAlt: "I Care Air Care technician servicing an outdoor AC condenser during a Wesley Chapel AC replacement"
+image: "/images/ac-service-technician-indoor-unit-wesley-chapel.webp"
+imageAlt: "Technician in protective gloves cleaning and servicing an indoor wall-mounted AC unit in a Wesley Chapel home"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/ac-replacement-tampa/"
