@@ -4,8 +4,8 @@ description: "Wesley Chapel homeowners are moving toward AC replacement as feder
 tag: "Buyer's Guide"
 date: "May 29, 2026"
 read: "12 min"
-image: "/images/ac-service-technician-indoor-unit-wesley-chapel.webp"
-imageAlt: "Technician in protective gloves cleaning and servicing an indoor wall-mounted AC unit in a Wesley Chapel home"
+image: "/images/hvac-technician-servicing-indoor-ac-wesley-chapel.webp"
+imageAlt: "HVAC technician in a blue cap using a screwdriver to service an indoor wall-mounted AC unit in a Wesley Chapel home"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/ac-replacement-tampa/"
