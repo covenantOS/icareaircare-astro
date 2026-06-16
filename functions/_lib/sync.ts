@@ -779,6 +779,32 @@ export async function runSync(env: SyncEnv, opts: SyncOptions): Promise<SyncResu
     errors.push(`membership flags: ${e instanceof Error ? e.message : String(e)}`);
   }
 
+  // Derived: estimate "sold" when it converted to an install (Tim 2026-06-04).
+  // An estimate carries $0 (the money lands on the install job), so the
+  // threshold-based is_sold leaves every estimate unsold — which made
+  // Kleber's 10 estimates show 0 sold even though 2 became installs.
+  // Mark an estimate sold when the SAME customer has an install completed
+  // on/after the estimate. (ICAC also tags the converted install with the
+  // seller's first name, e.g. "Kleber" — that's the sold-by signal we'll
+  // use to credit the sale dollars, planned next.)
+  try {
+    await env.DB
+      .prepare(
+        `UPDATE jobs SET is_sold = 1
+         WHERE job_type = 'estimate'
+           AND EXISTS (
+             SELECT 1 FROM jobs i
+             WHERE i.customer_hcp_id = jobs.customer_hcp_id
+               AND i.job_type = 'install'
+               AND COALESCE(i.completed_at, i.scheduled_start) >= COALESCE(jobs.completed_at, jobs.scheduled_start)
+           )`,
+      )
+      .run();
+    notes.push('estimate-converted flags updated');
+  } catch (e) {
+    errors.push(`estimate-converted flags: ${e instanceof Error ? e.message : String(e)}`);
+  }
+
   const finished_at = new Date().toISOString();
   const success = errors.length === 0;
   const duration_ms = Date.parse(finished_at) - Date.parse(started_at);
