@@ -23,7 +23,7 @@ checklist:
   - "Coil condition, filter condition, and airflow checks."
   - "A written summary with repair priorities."
 ---
-<p>If you've never had formal HVAC maintenance before - or you've had it but your last tech just swapped the filter and charged you $89 - it's worth knowing what a complete visit actually covers. A proper residential preventive HVAC maintenance visit in Wesley Chapel is roughly 60-90 minutes of hands-on work across 21 specific checkpoints. Here's the walkthrough, hour-by-hour, with what the tech is measuring, why it matters, and the failure modes each check catches.</p>
+<p>If you've never had formal HVAC maintenance before - or you've had it but your last tech just swapped the filter and charged you $89 - it's worth knowing what a complete visit actually covers. A proper <a href="/services/ac-maintenance-tampa/">residential preventive HVAC maintenance visit in Wesley Chapel</a> is roughly 60-90 minutes of hands-on work across 21 specific checkpoints. Here's the walkthrough, hour-by-hour, with what the tech is measuring, why it matters, and the failure modes each check catches.</p>
 
 <h2>First 10 minutes - system overview and homeowner conversation</h2>
 <p>Before anything gets opened, the tech asks how the system has been performing. Any hot rooms, noticeable humidity, short-cycling, unusual noises, higher bills? This is diagnostic - symptoms you've noticed often point to specific components that need closer attention. The tech also pulls the filter (if you haven't already changed it) and notes condition, size, and replacement schedule.</p>

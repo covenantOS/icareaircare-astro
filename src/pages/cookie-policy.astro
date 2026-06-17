@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+---
+<BaseLayout
+  title="Cookie Policy | I Care Air Care"
+  description="Cookie policy for icareaircare.com - how I Care Air Care uses cookies and how you can manage them."
+  breadcrumbs={[{name:'Home',url:'https://icareaircare.com/'},{name:'Cookie Policy',url:'https://icareaircare.com/cookie-policy/'}]}
+>
+  <section class="py-16 md:py-20 bg-white">
+    <div class="container-site max-w-3xl prose-icac">
+      <h1>Cookie Policy</h1>
+      <p class="text-slate-500 text-sm">Effective date: January 1, 2025 · Last updated: June 2026</p>
+
+      <p>This Cookie Policy explains how I Care Air Care LLC ("I Care Air Care," "we," "us," or "our") uses cookies and similar technologies on icareaircare.com. It should be read alongside our <a href="/privacy-policy/">Privacy Policy</a>.</p>
+
+      <h2>What Are Cookies?</h2>
+      <p>Cookies are small text files stored on your device when you visit a website. They help the site work properly, remember preferences, and understand how visitors use the site. Similar technologies such as pixels and local storage serve comparable purposes.</p>
+
+      <h2>Types of Cookies We Use</h2>
+      <ul>
+        <li><strong>Essential cookies.</strong> Required for the website to function, such as keeping the site secure and serving pages correctly. These cannot be switched off in our systems.</li>
+        <li><strong>Analytics cookies.</strong> We may use Google Analytics (GA4) to understand aggregate traffic patterns, such as which pages are most visited. This data is collected anonymously and is not used to identify individual visitors.</li>
+        <li><strong>Preference cookies.</strong> Used to remember basic choices so the site behaves the way you expect on return visits.</li>
+      </ul>
+      <p>We do not use cookies to sell your personal information or to serve third-party advertising.</p>
+
+      <h2>Third-Party Services</h2>
+      <p>Some pages load content from third parties that may set their own cookies, including Google Maps and our online booking system (Housecall Pro). Analytics tags are loaded in a way designed to limit performance impact. These providers handle any data they collect under their own privacy and cookie policies.</p>
+
+      <h2>How to Manage Cookies</h2>
+      <p>Most browsers let you refuse or delete cookies through their settings. Doing so will not prevent you from using the site, but some features may work differently. You can also opt out of Google Analytics by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics Opt-out Browser Add-on</a>.</p>
+      <p>For guidance on managing cookies in common browsers, check the help section of Chrome, Safari, Firefox, or Edge.</p>
+
+      <h2>Changes to This Policy</h2>
+      <p>We may update this Cookie Policy from time to time. The effective date at the top of this page reflects the most recent revision. Continued use of our website after changes constitutes acceptance of the updated policy.</p>
+
+      <h2>Contact Us</h2>
+      <p>Questions about this Cookie Policy? Contact us:</p>
+      <ul>
+        <li><strong>I Care Air Care LLC</strong></li>
+        <li>{SITE.address.street}, {SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}</li>
+        <li>Phone: <a href={SITE.phoneHref}>{SITE.phone}</a></li>
+        <li>Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
