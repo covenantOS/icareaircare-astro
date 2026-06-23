@@ -1,11 +1,16 @@
 ---
 import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import InContentCTA from '../../components/InContentCTA.astro';
+import OwnerTip from '../../components/OwnerTip.astro';
+import ReviewQuote from '../../components/ReviewQuote.astro';
+import FinancingCTA from '../../components/FinancingCTA.astro';
 
 const faqs = [
-  { q: 'How often should I service my AC in Tampa?', a: 'Twice a year for Tampa climates — once before the summer cooling load (March/April) and once before the winter heating season (October). Single-visit homes still see real benefits, but twice-a-year is the sweet spot in Florida humidity.' },
-  { q: 'What\'s included in your AC tune-up?', a: 'Our 21-point tune-up covers coil cleaning, refrigerant pressure & superheat/subcool verification, capacitor microfarad test, contactor inspection, blower amp draw and wheel balance, condensate drain flush, thermostat calibration, electrical tightening, ductwork static pressure, and a full written system report.' },
-  { q: 'How much does an AC tune-up cost in Tampa?', a: 'Single visits run $99–$149 for most residential systems. Our maintenance plan bundles two seasonal visits plus priority dispatch and a 15% parts discount — it pays for itself if you need even one minor repair.' },
-  { q: 'Will AC maintenance actually lower my electric bill?', a: 'Yes — measurably. A dirty coil and low refrigerant can drop cooling efficiency by 20–30%. We routinely see Tampa homeowners save $30–$60/month in summer after a tune-up, and catch $400+ repairs before they happen.' },
+  { q: 'How often should I service my AC in Tampa?', a: 'Twice a year for Tampa climates - once before the summer cooling load (March/April) and once before the winter heating season (October). Single-visit homes still see real benefits, but twice-a-year is the sweet spot in Florida humidity.' },
+  { q: 'What is included in your AC tune-up?', a: 'Our 21-point tune-up covers coil cleaning, refrigerant pressure and superheat/subcool verification, capacitor microfarad test, contactor inspection, blower amp draw and wheel balance, condensate drain flush, thermostat calibration, electrical tightening, ductwork static pressure, and a full written system report.' },
+  { q: 'How much does an AC tune-up cost in Tampa?', a: 'Single visits run $99 to $149 for most residential systems. Our maintenance plan bundles two seasonal visits plus priority dispatch and a 15% parts discount - it pays for itself if you need even one minor repair.' },
+  { q: 'Will AC maintenance actually lower my electric bill?', a: 'Yes, measurably. A dirty coil and low refrigerant can drop cooling efficiency by 20 to 30%. We routinely see Tampa homeowners save on summer cooling after a tune-up, and catch larger repairs before they happen.' },
   { q: 'Do you offer a maintenance plan?', a: 'Yes. Our plan includes two scheduled visits per year, priority service during heat waves, a 15% discount on any needed repair, and no after-hours dispatch fees for members.' },
   { q: 'Does maintenance cover warranty requirements?', a: 'Most manufacturer warranties (Carrier, Trane, Lennox, Goodman, Rheem) require documented annual maintenance to stay valid. We provide a dated written report you can file for warranty claims.' },
 ];
@@ -19,8 +24,8 @@ const related = [
 ---
 <ServiceLayout
   slug="ac-maintenance-tampa"
-  title="AC Maintenance & Tune-Ups in Wesley Chapel, FL"
-  description="21-point AC tune-ups & maintenance plans in Wesley Chapel, New Tampa, Land O' Lakes, Lutz & Tampa. Catch problems early, lower bills, keep your warranty valid. Call (813) 395-2324."
+  title="AC Tune-Up & Maintenance Plans Wesley Chapel · 4.9★"
+  description="21-point AC tune-ups & maintenance plans in Wesley Chapel & Tampa Bay. Lower bills, fewer breakdowns, 4.9★ · 700+ reviews. Call (813) 395-2324."
   h1="AC Maintenance & Tune-Ups in Wesley Chapel & Tampa, FL"
   eyebrow="Preventive Maintenance · Wesley Chapel"
   subtitle={`Tampa Bay humidity, salt-air corrosion, and near-year-round runtime wear Wesley Chapel and Tampa HVAC systems faster than anywhere else in the country. A proper <span class="text-accent-400 font-semibold">preventive tune-up twice a year</span> is the single best thing you can do for comfort and energy bills.`}
@@ -28,19 +33,38 @@ const related = [
   serviceName="AC Maintenance in Tampa"
   faqs={faqs}
   related={related}
+  enhanced={true}
 >
   <h2>Why Wesley Chapel AC systems need more maintenance than most</h2>
-  <p>A Minnesota AC runs maybe 600 hours a year. A Wesley Chapel or Tampa AC runs <strong>2,200+ hours a year</strong>. Combine that with constant 70–95% humidity, salt aerosol drifting inland from the Gulf, and the pollen loads of Pasco County's pine and oak canopy that clog coils twice as fast as drier climates, and you have a system working harder and dirtier than the industry average. Contractors who sell you an annual tune-up schedule built for Georgia are doing you a disservice.</p>
+  <p>Good <strong>AC maintenance</strong> in Florida is not the same product it is up north, and any contractor selling you a Georgia tune-up schedule is doing you a disservice. A Minnesota AC runs maybe 600 hours a year. A Wesley Chapel or Tampa system runs more than 2,200. Here is what makes our climate so hard on equipment:</p>
+  <ul>
+    <li><strong>Runtime:</strong> nearly four times the annual hours of a northern system, so every wear part ages faster.</li>
+    <li><strong>Humidity:</strong> a constant 70 to 95% feeds drain-line biofilm and corrosion year-round.</li>
+    <li><strong>Salt air:</strong> Gulf aerosol drifts inland and pits coil fins, copper lines, and the outdoor cabinet.</li>
+    <li><strong>Pollen:</strong> Pasco County's pine and oak canopy clogs condenser coils about twice as fast as drier regions.</li>
+  </ul>
+  <p>Our program is built for Wesley Chapel, New Tampa, Land O' Lakes and greater Tampa Bay homes: two full visits a year, timed for cooling season and heating season. A proper <strong>AC tune-up</strong> is the cheapest hour you will spend on your system all year, and the surest way to avoid an <a href="/services/emergency-ac-repair-tampa/">emergency AC repair</a> in the middle of July.</p>
 
-  <p>Our maintenance program is built specifically for Wesley Chapel, New Tampa, Land O' Lakes and greater Tampa Bay homes: <strong>two full visits per year</strong>, timed to prep for cooling season and heating season, with extra attention to the corrosion, drain-line biofilm, and coil fouling that dominate Florida HVAC failures.</p>
+  <TrustBar />
 
-  <h2>Our 21-point AC tune-up — what we actually do</h2>
-  <p>No vague "inspect the unit" bullet points. Here's exactly what happens when our technician pulls into your driveway:</p>
+  <h2>Signs your AC is overdue for a tune-up</h2>
+  <p>Your system usually warns you before it quits. If you notice any of these in your Wesley Chapel or Tampa home, it is time to book a visit rather than wait for a breakdown:</p>
+  <ul>
+    <li><strong>Climbing power bills</strong> with no change in how you use the AC, the classic sign of a dirty coil or low refrigerant.</li>
+    <li><strong>Weak or warm airflow</strong> from the vents even with the thermostat set low.</li>
+    <li><strong>Longer run times</strong> where the system struggles to reach the setpoint on hot afternoons.</li>
+    <li><strong>A musty or humid feel</strong> indoors, a sign the coil and drain need attention.</li>
+    <li><strong>Water or staining</strong> near the indoor air handler from a slow-clogging drain line.</li>
+    <li><strong>It has simply been over a year</strong> since the last professional service.</li>
+  </ul>
+
+  <h2>Our 21-point AC tune-up: exactly what we do</h2>
+  <p>No vague "inspect the unit" bullet points. Here is precisely what happens when our technician pulls into your driveway:</p>
   <ol class="list-decimal pl-5 space-y-2 text-slate-700 mt-4">
     <li>Visual inspection of outdoor unit, disconnect, and refrigerant line insulation</li>
     <li>Condenser coil wash with approved non-acid coil cleaner</li>
     <li>Evaporator coil inspection (and cleaning when accessible)</li>
-    <li>Refrigerant pressure check with manifold gauges — including superheat and subcool</li>
+    <li>Refrigerant pressure check with manifold gauges, including superheat and subcool</li>
     <li>Capacitor microfarad test against nameplate spec (weak caps fail early)</li>
     <li>Contactor inspection for pitting and burn marks</li>
     <li>Condenser fan motor amp draw and shaft bearing check</li>
@@ -49,32 +73,76 @@ const related = [
     <li>Electrical connection tightening at contactor, disconnect, and panel</li>
     <li>Thermostat calibration and program review</li>
     <li>Condensate drain line flush with wet-vac and biocide treatment</li>
-    <li>Float switch / safety switch test</li>
+    <li>Float switch and safety switch test</li>
     <li>Air filter inspection (replaced if you supply a spare)</li>
     <li>Static pressure test across the coil and filter</li>
-    <li>Return and supply temperature split (should be 15–22°F)</li>
+    <li>Return and supply temperature split (should be 15 to 22 degrees)</li>
     <li>Ductwork check for leaks and insulation at accessible runs</li>
     <li>Compressor amp draw and start-up test</li>
     <li>Outdoor fan start-up and run test</li>
     <li>Full photographic report emailed to you within 24 hours</li>
     <li>Written equipment-age estimate and recommended-action timeline</li>
   </ol>
+  <p>That static-pressure and ductwork check is also where we flag homes that would benefit from <a href="/services/air-duct-cleaning-tampa/">air duct cleaning</a> or an <a href="/services/indoor-air-quality-tampa/">indoor air quality</a> upgrade, since dirty ducts undo a clean coil within a season.</p>
 
-  <h2>Coastal vs. inland Tampa Bay maintenance cadence</h2>
-  <p>Distance from the Gulf changes how often your condenser coil needs attention. Salt aerosol carries inland on the sea breeze and pits aluminum coil fins, copper refrigerant lines, and the galvanized cabinet of the outdoor unit. The closer to the water, the shorter the maintenance interval that actually prevents premature corrosion failure:</p>
+  <ReviewQuote
+    name="David Waite"
+    body="Been with I Care Air Care now for 10 years. Solid company, and the technician today was great."
+  />
+
+  <h2>How often should you service it? Coastal vs. inland Tampa Bay</h2>
+  <p>Distance from the Gulf changes how fast salt eats your condenser, so the right cadence is not one-size-fits-all. Measure the straight-line distance to the nearest tidal water on a map, then match it:</p>
   <ul>
-    <li><strong>0–5 miles from the coast (Clearwater, St. Pete Beach, Apollo Beach):</strong> Professional coil cleaning every 4–6 months. Annual tune-ups miss the second salt-season wave and let coil corrosion get ahead of you. Coated coils (manufacturer option at install) buy back some margin.</li>
-    <li><strong>5–10 miles from the coast (west Tampa, parts of New Tampa):</strong> Every 6 months is the practical standard. Twice-a-year tune-ups catch salt-accelerated capacitor degradation before a mid-July no-cool call.</li>
-    <li><strong>10–20 miles from the coast (Wesley Chapel, Land O\' Lakes, Lutz, Zephyrhills):</strong> Standard twice-a-year tune-up cadence. Salt is a factor but not the dominant one — pine pollen, humidity biofilm, and runtime hours matter more.</li>
-    <li><strong>20+ miles inland (east Pasco, Polk County interior):</strong> Once-a-year can work for newer equipment in protected locations, but twice a year is still the safer choice given Florida runtime hours.</li>
+    <li><strong>0 to 5 miles (Clearwater, St. Pete Beach, Apollo Beach):</strong> professional coil cleaning every 4 to 6 months. Annual tune-ups let salt corrosion get ahead of you.</li>
+    <li><strong>5 to 10 miles (west Tampa, parts of New Tampa):</strong> every 6 months. Twice-a-year visits catch salt-accelerated capacitor wear before a mid-July no-cool call.</li>
+    <li><strong>10 to 20 miles (Wesley Chapel, Land O' Lakes, Lutz, Zephyrhills):</strong> standard twice-a-year cadence. Pine pollen, humidity biofilm, and runtime matter more than salt here.</li>
+    <li><strong>20+ miles inland (east Pasco, <a href="/service-areas/polk-county-residential-ac-repair/">Polk County</a> interior):</strong> once a year can work for newer, protected equipment, but twice is safer given Florida runtime.</li>
   </ul>
-  <p>If you\'re unsure where your home falls, measure the straight-line distance to the nearest tidal water on Google Maps. That\'s the number that matters for salt exposure, not the driving distance.</p>
+  <p>This is exactly why we tailor cadence by neighborhood across <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>, <a href="/service-areas/new-tampa-heating-and-cooling/">New Tampa</a>, and <a href="/service-areas/land-o-lakes-hvac-services/">Land O' Lakes</a> instead of selling one schedule to everyone.</p>
 
-  <h2>What maintenance catches (and saves you)</h2>
-  <p>Over the last 12 months our maintenance visits in Wesley Chapel and Tampa caught, on average: a 15% undercharge on refrigerant (dropping efficiency 22%); a capacitor reading 30% below spec (weeks from failure); a biofilm-clogged drain line that would have overflowed into ceiling drywall. Fixed at a maintenance visit for under $50 each. Fixed after failure? $400+, plus a night without cooling.</p>
+  <InContentCTA
+    heading="Due for a tune-up before the heat hits?"
+    text="Book a 21-point AC tune-up and we will hand you a written report on exactly where your system stands. No upsell games, just an honest picture."
+    tone="navy"
+  />
 
-  <h2>The I Care Air Care maintenance plan</h2>
-  <p>For homeowners who want it handled: our annual plan bundles both seasonal tune-ups, priority dispatch during heat waves, 15% off any parts/repairs you ever need, waived after-hours fees, and a documented service history for manufacturer warranties. Members also get first-in-line scheduling the week after a major storm — when we're otherwise booked 5 days out.</p>
+  <h2>What a tune-up catches before it becomes a breakdown</h2>
+  <p>Maintenance is not busywork, it is early detection. Over the last year our visits across Wesley Chapel and Tampa routinely caught problems weeks before failure:</p>
+  <ul>
+    <li><strong>A 15% refrigerant undercharge</strong> quietly dropping efficiency by more than 20% and spiking the power bill.</li>
+    <li><strong>A capacitor reading 30% below spec</strong>, weeks from leaving a family without cooling.</li>
+    <li><strong>A biofilm-clogged drain line</strong> about to overflow into ceiling drywall.</li>
+    <li><strong>A pitted contactor</strong> arcing toward the weld-shut failure that destroys compressors.</li>
+  </ul>
+  <p>Each of those is a small fix on a maintenance visit. Caught after failure, the same issues mean an after-hours <a href="/services/ac-repair-tampa/">AC repair</a> plus a night without cooling. Our guide on <a href="/blogs/regular-ac-maintenance-prevents-costly-repairs/">how regular maintenance prevents costly repairs</a> walks through the pattern in detail.</p>
 
-  <p>Ready to set it and forget it? <a href="/contact/">Enroll online</a> or call <a href="tel:+18133952324">(813) 395-2324</a> — we'll schedule your first visit this week.</p>
+  <OwnerTip>
+    <p>"The cheapest repair is the one you never need. Most of the no-cool calls we run in July could have been prevented by a 45-minute spring tune-up. If your system is over six years old and has not been serviced this year, get it on the calendar before the next heat wave. And if your thermostat is more than a few years old, ask about a <a href="/services/thermostat-installation-tampa/">smart thermostat</a> while we are out, it pays for itself in runtime."</p>
+  </OwnerTip>
+
+  <h2>What our maintenance plan includes</h2>
+  <p>For homeowners who want it handled, our annual <strong>AC maintenance plan</strong> bundles everything into one simple membership:</p>
+  <ul>
+    <li><strong>Two seasonal tune-ups</strong> a year, timed for cooling and heating season.</li>
+    <li><strong>Priority dispatch</strong> during heat waves, so members move to the front of the line.</li>
+    <li><strong>15% off</strong> any parts or repairs you ever need.</li>
+    <li><strong>No after-hours dispatch fees</strong> for members.</li>
+    <li><strong>First-in-line scheduling</strong> the week after a major storm, when we are otherwise booked days out.</li>
+    <li><strong>Documented service history</strong> that keeps your manufacturer warranty valid.</li>
+  </ul>
+  <p>Many local homeowners find us by searching for <a href="/blogs/ac-maintenance-wesley-chapel/">AC maintenance in Wesley Chapel</a> and stay on the plan for years because it quietly removes the summer-breakdown gamble.</p>
+
+  <FinancingCTA />
+
+  <h2>When maintenance turns into a replace conversation</h2>
+  <p>A good tune-up is honest about the end of a system's life, not a way to keep a dying unit on life support. We will show you the replacement math, not a sales pitch, when we find:</p>
+  <ul>
+    <li>A <strong>14-plus-year-old system</strong> with a corroded coil and weak compressor.</li>
+    <li><strong>R-410A refrigerant</strong> on the regulatory way out, making future repairs pricier.</li>
+    <li>Repair costs climbing past <strong>35% of a like-for-like replacement</strong> on an old unit.</li>
+  </ul>
+  <p>When that day comes, our <a href="/services/ac-replacement-tampa/">AC replacement</a>, <a href="/services/hvac-installation-tampa/">HVAC installation</a>, and <a href="/services/heat-pump-repair-tampa/">heat pump</a> pages lay out the options with 0% financing.</p>
+
+  <h2>Book your tune-up across Wesley Chapel and Tampa Bay</h2>
+  <p>We dispatch from Foamflower Blvd and keep the calendar open for tune-ups before each season. <a href="/contact/">Enroll online</a> or call <a href="tel:+18133952324">(813) 395-2324</a> and we will schedule your first visit this week.</p>
 </ServiceLayout>

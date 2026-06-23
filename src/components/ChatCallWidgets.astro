@@ -1,5 +1,5 @@
 ---
-// ChatCallWidgets — two floating widgets:
+// ChatCallWidgets - two floating widgets:
 //   • bottom-RIGHT: a chat-style lead capture (phone + message) that submits
 //     to /api/lead → LeadConnector webhook (same backend as the regular forms)
 //     and confirms with a "team will be in contact" message.
@@ -7,7 +7,7 @@
 // Both push GTM dataLayer events so the existing GTM container can route
 // them to GA4 / Ads / Clarity / wherever.
 //
-// Mobile: hidden — the StickyMobileCTA already covers this real estate.
+// Mobile: hidden - the StickyMobileCTA already covers this real estate.
 // Tablet+: both visible.
 import { SITE } from '../lib/site';
 ---
@@ -39,7 +39,7 @@ import { SITE } from '../lib/site';
     type="button"
     aria-expanded="false"
     aria-controls="cc-chat-panel"
-    aria-label="Open chat — request a callback"
+    aria-label="Open chat - request a callback"
     class="fixed right-5 bottom-5 z-[60] inline-flex items-center gap-2.5 rounded-full bg-brand-600 hover:bg-brand-700 active:bg-brand-800 text-white font-bold pl-3 pr-5 py-3 shadow-[0_10px_30px_-8px_rgba(0,0,0,0.45)] ring-2 ring-white/40 transition-transform hover:scale-105"
   >
     <span class="inline-flex w-9 h-9 items-center justify-center rounded-full bg-white/15">
@@ -85,7 +85,7 @@ import { SITE } from '../lib/site';
       <input type="hidden" name="_next" value="/thank-you/?ref=chat_widget" />
       <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
 
-      <!-- Faux conversation bubble — sets expectation, not a real chat -->
+      <!-- Faux conversation bubble - sets expectation, not a real chat -->
       <div class="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-3 text-[13.5px] text-slate-700 leading-relaxed">
         Hi! Drop your number and what you need help with. Our Wesley Chapel team will text/call back fast.
       </div>
@@ -146,12 +146,12 @@ import { SITE } from '../lib/site';
           </svg>
         </div>
         <div>
-          <div class="font-bold text-navy-700">Got it — we're on it.</div>
+          <div class="font-bold text-navy-700">Got it - we're on it.</div>
           <div class="text-[13px] text-slate-600">Tim's team will be in contact shortly.</div>
         </div>
       </div>
       <p class="mt-4 text-[13.5px] text-slate-700 leading-relaxed">
-        Need help right now? Tap below to call our Wesley Chapel team — same-day no-cool service often available.
+        Need help right now? Tap below to call our Wesley Chapel team - same-day no-cool service often available.
       </p>
       <a id="cc-chat-call-now" href={SITE.phoneHref} class="mt-3 w-full inline-flex items-center justify-center gap-2 rounded-md bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-3">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -194,7 +194,7 @@ import { SITE } from '../lib/site';
         var payload = { event: event, widget: 'cc_widgets' };
         if (extra) for (var k in extra) payload[k] = extra[k];
         window.dataLayer.push(payload);
-      } catch (e) { /* swallow — never block UX on analytics */ }
+      } catch (e) { /* swallow - never block UX on analytics */ }
     }
 
     function openPanel() {
@@ -247,7 +247,7 @@ import { SITE } from '../lib/site';
       }
     });
 
-    // Submit handler — POST to /api/lead via fetch so we keep the chat
+    // Submit handler - POST to /api/lead via fetch so we keep the chat
     // panel open and show inline success rather than navigating away.
     if (form) {
       form.addEventListener('submit', function (e) {

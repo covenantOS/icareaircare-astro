@@ -1,67 +1,139 @@
 ---
 import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import InContentCTA from '../../components/InContentCTA.astro';
+import OwnerTip from '../../components/OwnerTip.astro';
+import ReviewQuote from '../../components/ReviewQuote.astro';
+import FinancingCTA from '../../components/FinancingCTA.astro';
 
 const faqs = [
-  { q: 'How much does air duct cleaning cost in Tampa?', a: 'Most single-family Tampa homes run $350–$650 depending on home size, number of vents, and duct condition. We quote flat-rate by the home, not by the vent — so there\'s no runaway cost. A true 7-step NADCA-standard cleaning is worth far more than a $99 "special" that just vacuums a few inches into each register.' },
-  { q: 'How often should Tampa homes get duct cleaning?', a: 'Every 3–5 years for most Tampa homes. More often if you have pets, smokers, recent construction/remodeling, or a family member with asthma or allergies. After any water damage, mold event, or rodent intrusion — don\'t wait.' },
-  { q: 'Can dirty ducts make me sick?', a: 'Dirty ducts don\'t typically cause illness by themselves, but they can amplify existing conditions — asthma, allergies, sinus issues. More importantly, heavy duct contamination (mold, rodent droppings, biofilm) absolutely affects indoor air quality and should be cleaned.' },
-  { q: 'Will duct cleaning lower my energy bill?', a: 'Yes — modestly. A heavy buildup of dust and debris restricts airflow, making your blower work harder and reducing heat transfer at the coil. Most customers see a 5–15% efficiency improvement after a thorough cleaning combined with filter replacement.' },
-  { q: 'Do you sanitize the ducts too?', a: 'Our 7-step cleaning includes an EPA-registered antimicrobial fog as the final step — it kills mold spores and bacteria on the duct interior. We only use products rated safe for HVAC use and registered with the EPA.' },
-  { q: 'How long does duct cleaning take?', a: 'A typical 3-bedroom Tampa home takes 3–5 hours start to finish. Larger homes or badly contaminated systems can take a full day.' },
+  { q: 'How much does air duct cleaning cost in Tampa?', a: 'Most single-family Tampa homes run $350 to $650 depending on home size, number of vents, and duct condition. We quote flat-rate by the home, not by the vent, so there is no runaway cost. A true 7-step NADCA-standard cleaning is worth far more than a $99 special that just vacuums a few inches into each register.' },
+  { q: 'How often should Tampa homes get duct cleaning?', a: 'Every 3 to 5 years for most Tampa homes. More often with pets, smokers, recent construction, or a family member with asthma. After any water damage, mold event, or rodent intrusion, do not wait.' },
+  { q: 'Can dirty ducts make me sick?', a: 'Dirty ducts do not typically cause illness by themselves, but they can amplify existing asthma, allergies, and sinus issues. Heavy contamination (mold, rodent droppings, biofilm) absolutely affects indoor air quality and should be cleaned.' },
+  { q: 'Will duct cleaning lower my energy bill?', a: 'Yes, modestly. Heavy dust and debris restrict airflow, making the blower work harder and reducing heat transfer at the coil. Most customers see a 5 to 15% efficiency improvement after a thorough cleaning combined with a filter replacement.' },
+  { q: 'Do you sanitize the ducts too?', a: 'Our 7-step cleaning includes an EPA-registered antimicrobial fog as the final step to kill mold spores and bacteria on the duct interior. We only use products rated safe for HVAC use and registered with the EPA.' },
+  { q: 'How long does duct cleaning take?', a: 'A typical 3-bedroom Tampa home takes 3 to 5 hours start to finish. Larger homes or badly contaminated systems can take a full day.' },
 ];
 
 const related = [
+  { href: '/services/indoor-air-quality-tampa/', label: 'Indoor Air Quality (Testing & Purifiers)' },
   { href: '/services/ac-maintenance-tampa/', label: 'AC Maintenance' },
-  { href: '/services/thermostat-installation-tampa/', label: 'Smart Thermostat Upgrade' },
   { href: '/services/ac-repair-tampa/', label: 'AC Repair' },
   { href: '/financing/', label: 'HVAC Financing Options' },
 ];
 ---
 <ServiceLayout
   slug="air-duct-cleaning-tampa"
-  title="Air Duct Cleaning Wesley Chapel | 7-Step Process"
-  description="Wesley Chapel NADCA-standard air duct cleaning. 7-step HEPA filtration process, EPA antimicrobial sanitization. Serving Wesley Chapel, New Tampa, Land O' Lakes. Call (813) 395-2324."
+  title="Air Duct Cleaning Wesley Chapel | 7-Step NADCA · 4.9★"
+  description="Wesley Chapel & Tampa air duct cleaning: 7-step HEPA process with EPA antimicrobial sanitizing. 4.9★ · 700+ reviews. Call (813) 395-2324."
   h1="Professional Air Duct Cleaning in Wesley Chapel & Tampa, FL"
-  eyebrow="Indoor Air Quality · Wesley Chapel"
-  subtitle={`Florida humidity turns HVAC ducts into the dirtiest part of most Wesley Chapel and Tampa Bay homes. Our 7-step HEPA cleaning removes years of dust, allergens, mold spores, and biological contaminants — and leaves a measurable <span class="text-accent-400 font-semibold">indoor air quality</span> improvement.`}
+  eyebrow="Air Duct Cleaning · Wesley Chapel"
+  subtitle={`Florida humidity turns HVAC ducts into the dirtiest part of most Wesley Chapel and Tampa Bay homes. Our 7-step HEPA cleaning removes years of dust, allergens, mold spores, and biological contaminants - and leaves a measurable <span class="text-accent-400 font-semibold">cleaner-air</span> improvement.`}
   heroImage="/images/air-duct-cleaning-wesley-chapel-metal-ductwork-supply-vent-register.webp"
   serviceName="Air Duct Cleaning in Tampa"
   faqs={faqs}
   related={related}
+  enhanced={true}
 >
-  <h2>Why Wesley Chapel duct systems get dirtier than the national average</h2>
-  <p>Every time your AC runs, it pulls air through returns, across a damp evaporator coil, and back through supply runs that have been sweating condensation for years. In Wesley Chapel and Tampa Bay's high-humidity climate, that combination of cellulose dust, pet dander, pollen, and moisture creates <strong>ideal conditions for biofilm</strong> — the slick mold and bacterial layer that coats the inside of HVAC ductwork.</p>
+  <h2>Why Wesley Chapel duct systems get dirtier than average</h2>
+  <p>This page is about the <strong>duct cleaning service</strong> itself. If your real goal is measuring and improving the air you breathe, our <a href="/services/indoor-air-quality-tampa/">indoor air quality</a> page covers testing, filtration, and purifiers, and we will tell you honestly which one you actually need. Cleaning matters here because every time your AC runs, it pulls air across a damp coil and back through supply runs that have been sweating for years. In Tampa Bay's humidity that creates ideal conditions for biofilm, the slick mold and bacterial layer that coats the inside of ductwork:</p>
+  <ul>
+    <li><strong>Cellulose dust and pet dander</strong> settle and feed mold growth.</li>
+    <li><strong>Pollen</strong> from the spring tree bloom packs into returns.</li>
+    <li><strong>Condensation</strong> keeps it all damp enough to colonize.</li>
+  </ul>
+  <p>A NADCA field study found Florida residential duct systems carry 3 to 5 times more biological contamination than the national average. If you have never had your ducts cleaned, or not in 5+ years, odds are strong you are circulating visibly dirty air through every room.</p>
 
-  <p>A NADCA (National Air Duct Cleaners Association) field study found Florida residential duct systems carry <strong>3–5× more biological contamination</strong> than the national average. If you've never had your ducts cleaned, or haven't in 5+ years, odds are strong you're circulating visibly dirty air through every room, every day.</p>
+  <TrustBar />
+
+  <h2>Is air duct cleaning actually worth it?</h2>
+  <p>Honest answer: it depends on your home, which is why we inspect before we quote. Cleaning delivers clear value in specific situations, and little in others:</p>
+  <ul>
+    <li><strong>High value</strong> after a rodent intrusion, water damage, visible mold at the registers, or a recent <a href="/services/hvac-installation-tampa/">renovation or new install</a> that filled the system with drywall dust.</li>
+    <li><strong>High value</strong> for a home with heavy pet dander, a smoker, or a family member whose indoor allergies flare while outdoor air is fine.</li>
+    <li><strong>Real but modest value</strong> for a 10-year-old system that has simply never been cleaned, where dust and biofilm have slowly built up.</li>
+    <li><strong>Low value</strong> when the true complaint is humidity, uneven rooms, or high bills, since those are airflow and equipment problems, not dirt.</li>
+  </ul>
+  <p>We would rather talk you out of an unneeded cleaning and keep you as a long-term customer than sell you a service that does not move the needle in your home, the same honest approach we bring to every job across <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>, <a href="/service-areas/new-tampa-heating-and-cooling/">New Tampa</a>, and <a href="/service-areas/land-o-lakes-hvac-services/">Land O' Lakes</a>.</p>
 
   <h2>Our 7-step air duct cleaning process</h2>
+  <p>The difference between a real cleaning and a $99 "special" is whether the whole system is put under containment and scrubbed, or just vacuumed at the registers. Here is exactly what we do:</p>
   <ol class="list-decimal pl-5 space-y-2 text-slate-700 mt-4">
-    <li><strong>Pre-inspection with camera.</strong> We send a video camera through key supply and return runs and show you what you're starting with.</li>
-    <li><strong>HEPA negative-air containment.</strong> A truck-mounted or portable HEPA vacuum puts the entire duct system under negative pressure, so everything we loosen gets captured — nothing blown back into the home.</li>
-    <li><strong>Agitation.</strong> Rotating brushes and compressed-air whips scrub every reachable foot of duct — supply trunks, branches, returns, boots, and the air handler cabinet.</li>
-    <li><strong>Register and grille cleaning.</strong> Every supply register and return grille pulled, washed, and re-installed.</li>
-    <li><strong>Blower compartment & coil rinse.</strong> The blower wheel, motor housing, and the supply side of the evaporator coil are cleaned — usually the single dirtiest point in a Florida system.</li>
-    <li><strong>EPA-registered antimicrobial fog.</strong> Applied to all interior duct surfaces to kill remaining mold spores and bacteria.</li>
-    <li><strong>Post-inspection + photo report.</strong> Same camera, same runs. You see the before-and-after.</li>
+    <li><strong>Pre-inspection with camera.</strong> We run a video camera through key supply and return runs and show you what you are starting with.</li>
+    <li><strong>HEPA negative-air containment.</strong> A HEPA vacuum puts the entire duct system under negative pressure, so everything we loosen is captured, not blown back into the home.</li>
+    <li><strong>Agitation.</strong> Rotating brushes and compressed-air whips scrub every reachable foot of duct, including trunks, branches, returns, boots, and the air handler cabinet.</li>
+    <li><strong>Register and grille cleaning.</strong> Every supply register and return grille is pulled, washed, and reinstalled.</li>
+    <li><strong>Blower and coil rinse.</strong> The blower wheel, motor housing, and supply side of the coil are cleaned, usually the single dirtiest point in a Florida system.</li>
+    <li><strong>EPA-registered antimicrobial fog.</strong> Applied to interior duct surfaces to kill remaining mold spores and bacteria.</li>
+    <li><strong>Post-inspection and photo report.</strong> Same camera, same runs, so you see the before and after.</li>
   </ol>
 
-  <h2>Signs your Wesley Chapel home needs duct cleaning now</h2>
+  <ReviewQuote
+    name="David Waite"
+    body="Been with I Care Air Care now for 10 years. Solid company, and the technician today was great."
+  />
+
+  <h2>Signs your home needs duct cleaning now</h2>
+  <p>You usually do not need a test to know, the signs are visible and in the air:</p>
   <ul>
-    <li>Visible dust discharge from supply registers within hours of cleaning floors</li>
-    <li>Musty or stale odor when the AC first kicks on</li>
-    <li>Worsening allergies, asthma, or sinus issues indoors but not outdoors</li>
-    <li>Recent renovation, construction, or drywall work</li>
-    <li>Evidence of rodent activity (droppings, chewed insulation)</li>
-    <li>Water damage event or HVAC flooding</li>
-    <li>Pet dander buildup visible in return grilles</li>
-    <li>Air handler older than 10 years and never cleaned</li>
+    <li><strong>Dust returns fast,</strong> discharging from registers within hours of cleaning floors.</li>
+    <li><strong>A musty or stale odor</strong> when the AC first kicks on.</li>
+    <li><strong>Indoor-only allergies,</strong> worse inside than outdoors.</li>
+    <li><strong>Recent renovation, drywall, or construction dust.</strong></li>
+    <li><strong>Evidence of rodents,</strong> droppings or chewed insulation.</li>
+    <li><strong>A past water-damage or HVAC-flooding event.</strong></li>
+    <li><strong>Visible pet-dander buildup</strong> in the return grilles.</li>
+    <li><strong>An air handler over 10 years old</strong> that has never been cleaned.</li>
   </ul>
 
-  <h2>When duct cleaning is <em>not</em> the answer</h2>
-  <p>We'll tell you if duct cleaning isn't the right call — it's not a cure-all. If your main complaint is humidity problems, uneven room temperatures, or constant high bills, the fix is usually a <a href="/services/ac-maintenance-tampa/">proper system tune-up</a>, a duct sealing pass (not cleaning), or in some cases a right-sized <a href="/services/hvac-installation-tampa/">system replacement</a>. We come in, assess, and give you the honest recommendation.</p>
+  <InContentCTA
+    heading="Not sure if your ducts are the problem?"
+    text="We will camera-inspect before quoting and show you what is actually in there. If cleaning is not the right fix, we will tell you that too."
+    tone="brand"
+  />
 
-  <h2>What about filter changes?</h2>
-  <p>Ducts stay cleaner longer when you run the right filter and change it on schedule. For Tampa homes we generally recommend a MERV 8–11 pleated filter changed every 60–90 days — MERV 13 only if your system is designed for the extra static pressure. High-MERV filters in undersized return systems are one of the most common causes of coil freezing and blower failure we see.</p>
+  <h2>When duct cleaning is not the answer</h2>
+  <p>Cleaning is not a cure-all, and we lose sales saying so. If your main complaint is one of these, the money belongs elsewhere:</p>
+  <ul>
+    <li><strong>Humidity or clammy air:</strong> usually a sizing or equipment issue better solved by a <a href="/services/ac-maintenance-tampa/">tune-up</a> or <a href="/services/ac-replacement-tampa/">right-sized replacement</a>.</li>
+    <li><strong>Uneven room temperatures:</strong> typically a duct-sealing or airflow problem, not a dirt problem.</li>
+    <li><strong>High bills with weak cooling:</strong> often a charge or coil issue our <a href="/services/ac-repair-tampa/">AC repair</a> team diagnoses first.</li>
+    <li><strong>Allergy control as the real goal:</strong> filtration and purifiers under <a href="/services/indoor-air-quality-tampa/">indoor air quality</a> outperform cleaning alone.</li>
+  </ul>
 
-  <p>Ready for measurably cleaner air? <a href="/contact/">Book your cleaning</a> or call <a href="tel:+18133952324">(813) 395-2324</a>.</p>
+  <OwnerTip>
+    <p>"Be careful with the $99 duct-cleaning coupons. Nine times out of ten that crew vacuums the first few feet, sprays a deodorizer, and leaves the biofilm on the coil untouched, which is the part that actually smells. A real cleaning puts the system under containment and scrubs the whole run. Ask to see the before-and-after camera footage. If we clean your ducts, you get it, the same honesty we bring to a <a href="/services/heat-pump-repair-tampa/">heat pump</a> or AC call."</p>
+  </OwnerTip>
+
+  <h2>Keeping ducts clean after the service</h2>
+  <p>A cleaning resets the system, but the right habits keep it clean for years:</p>
+  <ul>
+    <li><strong>Run the right filter:</strong> a MERV 8 to 11 pleated filter for most Tampa homes, changed every 60 to 90 days.</li>
+    <li><strong>Do not over-MERV an undersized return,</strong> since a too-restrictive filter freezes coils and burns out blowers.</li>
+    <li><strong>Pair it with a coil and drain service</strong> on your regular <a href="/services/ac-maintenance-tampa/">maintenance</a> visit.</li>
+    <li><strong>Consider a controller</strong> with a filter reminder, easy to add during a <a href="/services/thermostat-installation-tampa/">thermostat install</a>.</li>
+  </ul>
+
+  <h2>Cleaning vs. sealing: they are not the same job</h2>
+  <p>Homeowners often ask for "duct cleaning" when the real fix is "duct sealing," and they solve different problems:</p>
+  <ul>
+    <li><strong>Duct cleaning</strong> removes dust, dander, mold, and debris from inside the ducts. It fixes dirty air and odors.</li>
+    <li><strong>Duct sealing</strong> closes leaks at joints and the air handler. It fixes high bills, uneven rooms, and humid air pulled in from the attic.</li>
+    <li><strong>Many homes need both,</strong> and we measure with a duct-blaster test before recommending either, so you do not pay for the wrong one.</li>
+  </ul>
+  <p>If your home has no ductwork at all, like many ductless setups, cleaning is moot, and a <a href="/services/mini-split-installation-tampa/">mini-split</a> sidesteps the issue entirely. Bigger sealing-plus-cleaning projects qualify for <a href="/financing/">0% financing</a> so the right fix is affordable.</p>
+
+  <h2>What we pull out of Tampa Bay ducts</h2>
+  <p>The before-and-after camera footage tells the story, but here is what is typically hiding in a 10-year-uncleaned Florida system:</p>
+  <ul>
+    <li><strong>Compacted dust and pet dander</strong> lining the supply trunks.</li>
+    <li><strong>Pollen packed into returns</strong> from years of spring blooms in <a href="/service-areas/lutz-home-air-conditioning-service/">Lutz</a> and the tree-heavy suburbs.</li>
+    <li><strong>Biofilm and mold</strong> on the coil and the first few feet of supply, the source of that musty smell.</li>
+    <li><strong>Construction debris</strong> in homes that were never cleaned after the build.</li>
+  </ul>
+
+  <FinancingCTA />
+
+  <h2>Cleaner air across Wesley Chapel and Tampa Bay</h2>
+  <p>We bring the full containment setup to homes across the wider <a href="/service-areas/pasco-county-ac-repair/">Pasco County</a> area, and a new system install always includes clean ductwork from day one. Ready for measurably cleaner air? <a href="/contact/">Book your cleaning</a> or call <a href="tel:+18133952324">(813) 395-2324</a>.</p>
 </ServiceLayout>

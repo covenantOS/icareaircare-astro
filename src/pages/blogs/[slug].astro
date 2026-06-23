@@ -7,6 +7,7 @@ import Schema from '../../components/Schema.astro';
 import { getAllEntries, type BlogEntry, type BlogPost } from '../../lib/blog';
 import { render } from 'astro:content';
 import { SITE } from '../../lib/site';
+import { BLOG_FAQS } from '../../lib/blog-faqs';
 
 export async function getStaticPaths() {
   const entries = await getAllEntries();
@@ -42,7 +43,7 @@ const articleSchema = {
   reviewedBy: { '@id': `${SITE.url}/#tim-hawk` },
   publisher: { '@id': `${SITE.url}/#business` },
   mainEntityOfPage: url,
-  // Speakable — Google Assistant / Alexa / Siri will read these xpaths aloud
+  // Speakable - Google Assistant / Alexa / Siri will read these xpaths aloud
   speakable: {
     '@type': 'SpeakableSpecification',
     xpath: ['/html/head/title', '/html/body//h1', '/html/body//h2[1]', '/html/body//p[1]'],
@@ -56,11 +57,11 @@ const articleSchema = {
 
 // HowTo schema for fix-it / troubleshooting / how-to posts. The checklist
 // becomes HowTo steps. We're conservative: only mark up posts whose body
-// content is genuinely step-by-step procedural — Google penalizes thin
+// content is genuinely step-by-step procedural - Google penalizes thin
 // procedural content, so we don't apply it broadly.
-const isHowTo =
-  /ac-not-cooling|warm-air|filter-change|how-to-lower|how-to-find|how-to-book|how-to-choose|fix-it-fast|emergency-ac-repair|running-but-not-cooling/.test(post.slug) &&
-  post.checklist && post.checklist.length > 0;
+// HowTo rich results were deprecated by Google (Sept 2023) - disabled to avoid
+// shipping inaccurate procedural markup (hardcoded totalTime) with zero SERP benefit.
+const isHowTo = false;
 const howToData = isHowTo ? {
   name: post.title,
   description: post.description,
@@ -68,12 +69,12 @@ const howToData = isHowTo ? {
   totalTime: 'PT30M',
 } : null;
 
-// FAQPage schema — we ship a curated HVAC FAQ set on every blog post so
+// FAQPage schema - we ship a curated HVAC FAQ set on every blog post so
 // every post gets the FAQ rich-result slot + voice-assistant citation
 // surface, while also giving the reader a consistent Q&A block at the
 // bottom of every article. Questions are answered with canonical site
 // facts (hours, service area, license, warranty) so AI answers are correct.
-const postFAQs = [
+const postFAQs = BLOG_FAQS[post.slug] || [
   {
     q: `How much does ${post.primaryService.label.toLowerCase()} typically cost in Wesley Chapel?`,
     a: `Most residential ${post.primaryService.label.toLowerCase()} calls in Wesley Chapel and Tampa Bay range $150–$600 depending on the specific part or service. Diagnostic visits are quoted upfront before any work begins. Larger repairs (compressor replacement, coil leaks) are priced separately with written estimates.`,
@@ -88,7 +89,7 @@ const postFAQs = [
   },
   {
     q: 'What areas do you serve?',
-    a: `We dispatch from 27022 Foamflower Blvd in Wesley Chapel and serve all of Pasco, Hillsborough, and Polk counties — including ${post.location}, Tampa, Land O' Lakes, Lutz, New Tampa, Odessa, Zephyrhills, Lakeland, and surrounding communities.`,
+    a: `We dispatch from 27022 Foamflower Blvd in Wesley Chapel and serve all of Pasco, Hillsborough, and Polk counties - including ${post.location}, Tampa, Land O' Lakes, Lutz, New Tampa, Odessa, Zephyrhills, Lakeland, and surrounding communities.`,
   },
   {
     q: 'Do you work on all HVAC brands?',
@@ -96,13 +97,13 @@ const postFAQs = [
   },
 ];
 ---
-<BaseLayout title={`${post.title} | I Care Air Care`} description={post.description} breadcrumbs={breadcrumbs}>
+<BaseLayout title={`${post.title} | I Care Air Care`} description={post.description} breadcrumbs={breadcrumbs} noindex={post.noindex}>
   <Hero
     eyebrow={`${post.tag} · ${post.location}`}
     title={post.title}
     subtitle={post.description}
     image={post.image}
-    imageAlt={post.imageAlt || `${post.title} — I Care Air Care Wesley Chapel, FL`}
+    imageAlt={post.imageAlt || `${post.title} - I Care Air Care Wesley Chapel, FL`}
     ctaLabel={`Schedule ${post.primaryService.label}`}
     ctaHref={post.primaryService.href}
   />
@@ -265,7 +266,7 @@ const postFAQs = [
     </div>
   </section>
 
-  {/* Curated FAQ block — reinforces voice/AI answer surface + gives every post
+  {/* Curated FAQ block - reinforces voice/AI answer surface + gives every post
       the FAQ rich-result eligibility */}
   <section class="py-12 md:py-14 bg-surface">
     <div class="container-site max-w-3xl">

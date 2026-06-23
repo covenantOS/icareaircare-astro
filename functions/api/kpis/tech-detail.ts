@@ -209,9 +209,22 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const reviewsGen = reviewRow?.n || 0;
   const reviewRatePct = summary.jobs > 0 ? round((reviewsGen / summary.jobs) * 100, 1) : 0;
   // Surface the resolved role band so the scorecard's reclassify dropdown
-  // can pre-select the tech's current band.
+  // can pre-select the tech's current band. Also splice money-calls and
+  // membership metrics (computed in computeByTech) onto the summary so the
+  // scorecard can show them without a duplicate query.
   const meRow = allTechs.find((t) => t.tech_id === techId);
-  (summary as TechSummary & { role_band?: string }).role_band = meRow?.role_band || 'other';
+  const extra = summary as TechSummary & Record<string, unknown>;
+  extra.role_band = meRow?.role_band || 'other';
+  extra.money_calls = meRow?.money_calls || 0;
+  extra.money_calls_per_day = meRow?.money_calls_per_day || 0;
+  extra.days_worked = meRow?.days_worked || 0;
+  extra.new_signups = meRow?.new_signups || 0;
+  extra.new_signups_new_cust = meRow?.new_signups_new_cust || 0;
+  extra.new_signups_existing = meRow?.new_signups_existing || 0;
+  extra.renewals_won = meRow?.renewals_won || 0;
+  extra.renewals_lost = meRow?.renewals_lost || 0;
+  extra.renewals_due = meRow?.renewals_due || 0;
+  extra.renew_rate_pct = meRow?.renew_rate_pct || 0;
   // Splice the review fields onto summary so the response includes them.
   (summary as TechSummary & { reviews_generated: number; review_rate_pct: number }).reviews_generated = reviewsGen;
   (summary as TechSummary & { reviews_generated: number; review_rate_pct: number }).review_rate_pct = reviewRatePct;

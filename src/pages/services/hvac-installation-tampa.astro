@@ -1,96 +1,142 @@
 ---
 import ServiceLayout from '../../layouts/ServiceLayout.astro';
 import RheemProPartner from '../../components/RheemProPartner.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import InContentCTA from '../../components/InContentCTA.astro';
+import OwnerTip from '../../components/OwnerTip.astro';
+import ReviewQuote from '../../components/ReviewQuote.astro';
+import FinancingCTA from '../../components/FinancingCTA.astro';
 
 const faqs = [
-  { q: 'How much does HVAC installation cost in Tampa?', a: 'A complete residential HVAC install in Tampa Bay typically ranges $6,500–$14,000 depending on tonnage, SEER2 rating, ductwork condition, and whether a heat pump, straight-cool + electric heat, or full variable-speed system is used. Financing brings that to monthly payments often lower than the efficiency savings.' },
-  { q: 'What\'s the best HVAC brand for Florida?', a: 'We install Carrier, Trane, Lennox, Rheem, Goodman, and American Standard — all reliable in the Florida climate when sized and installed correctly. "Best brand" matters less than correct Manual-J sizing, sealed ductwork, and proper refrigerant charge. A Carrier installed wrong will underperform a Goodman installed right.' },
-  { q: 'What SEER2 rating should I get?', a: 'The 2026 Florida minimum is 15.2 SEER2. The sweet spot for most Tampa homes is 16–18 SEER2 — the ROI beyond that gets diminishing. Variable-speed (20 SEER2+) systems make sense for larger homes, allergy-sensitive families, or anyone who\'ll live in the home 10+ years.' },
-  { q: 'Do you handle permits and inspections?', a: 'Yes — we pull every permit and schedule the county inspection. You never have to deal with Pasco, Hillsborough or Polk permitting directly.' },
-  { q: 'How long does a new HVAC install take?', a: 'A standard same-tonnage changeout is usually one day. Ductwork replacement, line-set upgrades, or new-construction work can add 1–2 days.' },
+  { q: 'What is included in a full HVAC installation?', a: 'A complete HVAC installation covers the outdoor condenser or heat pump, the indoor air handler or furnace, the line set, electrical disconnect and surge protection, thermostat, and any ductwork or air-quality add-ons. We size the whole system with a Manual-J load calculation, pull the county permit, and commission it with documented measurements.' },
+  { q: 'What is the best HVAC brand for Florida?', a: 'We install Carrier, Trane, Lennox, Rheem, Goodman, and American Standard, all reliable in the Florida climate when sized and installed correctly. "Best brand" matters less than correct Manual-J sizing, sealed ductwork, and proper refrigerant charge. A Carrier installed wrong will underperform a Goodman installed right.' },
+  { q: 'What SEER2 rating should I get?', a: 'The 2026 Florida minimum is 15.2 SEER2. The sweet spot for most Tampa homes is 16 to 18 SEER2; the ROI beyond that gets diminishing. Variable-speed (20 SEER2+) systems make sense for larger homes, allergy-sensitive families, or anyone who will live in the home 10+ years.' },
+  { q: 'Do you handle permits and inspections?', a: 'Yes. We pull every permit and schedule the county inspection. You never have to deal with Pasco, Hillsborough, or Polk permitting directly.' },
+  { q: 'How long does a new HVAC install take?', a: 'A standard same-tonnage changeout is usually one day. Ductwork replacement, line-set upgrades, or new-construction work can add 1 to 2 days.' },
   { q: 'What refrigerant comes in new systems in 2026?', a: 'Many current residential systems use lower-GWP refrigerants such as R-454B or R-32 instead of R-410A. These systems require updated tools, procedures, and safety practices, so we review the equipment details during your proposal.' },
-  { q: 'Do you offer financing for HVAC installation?', a: 'Yes — through our Synchrony partnership with approved credit. Many customers qualify for 0% introductory rates or 10+ year fixed-rate terms. See our financing page for current offers.' },
+  { q: 'Do you offer financing for HVAC installation?', a: 'Yes, through our Synchrony partnership with approved credit. Many customers qualify for 0% introductory rates or 10+ year fixed-rate terms. See our financing page for current offers.' },
 ];
 
 const related = [
-  { href: '/services/ac-repair-tampa/', label: 'AC Repair' },
+  { href: '/services/ac-replacement-tampa/', label: 'AC Replacement (Repair-vs-Replace Math)' },
+  { href: '/services/ac-installation-wesley-chapel/', label: 'AC Installation in Wesley Chapel' },
+  { href: '/services/mini-split-installation-tampa/', label: 'Ductless Mini-Split Installation' },
   { href: '/services/ac-maintenance-tampa/', label: 'Maintenance Plans for New Systems' },
-  { href: '/services/thermostat-installation-tampa/', label: 'Smart Thermostat Add-On' },
-  { href: '/services/air-duct-cleaning-tampa/', label: 'Duct Cleaning Before Install' },
   { href: '/financing/', label: 'HVAC Financing Options' },
 ];
 ---
 <ServiceLayout
   slug="hvac-installation-tampa"
-  title="HVAC Installation in Wesley Chapel & Tampa FL"
-  description="Wesley Chapel HVAC installation done right: Manual-J sized, permitted, guaranteed. Serving Wesley Chapel, New Tampa, Land O' Lakes, Lutz & Tampa. Financing available. Call (813) 395-2324."
-  h1="HVAC Installation in Wesley Chapel & Tampa Bay — High-Efficiency, Installed Right"
+  title="HVAC Installation Wesley Chapel | Free Estimate · Financing"
+  description="Wesley Chapel HVAC installation done right - Manual-J sized, permitted, guaranteed. Free estimate + 0% financing. 4.9★ · 700+ reviews. Call (813) 395-2324."
+  h1="HVAC Installation in Wesley Chapel & Tampa Bay - High-Efficiency, Installed Right"
   eyebrow="New System Installation · Wesley Chapel"
   subtitle={`A new HVAC system is one of the largest home investments you'll make in the Wesley Chapel climate. We size it right with a full Manual-J load calc, install it to <span class="text-accent-400 font-semibold">manufacturer spec</span>, and stand behind the work.`}
   heroImage="/images/HVAC-Installation-Tampa-Bay-%E2%80%93-New-Outdoor-Condenser-Installation.webp"
   serviceName="HVAC Installation in Tampa"
   faqs={faqs}
   related={related}
+  enhanced={true}
 >
-  <h2>AC installation costs in Wesley Chapel &amp; Tampa Bay — 2026 pricing</h2>
-  <p>Installation pricing varies with equipment tier, tonnage, ductwork condition, and electrical service, but these ranges cover what most Wesley Chapel and Tampa Bay homeowners pay for a clean, permitted, code-compliant install:</p>
-  <div class="not-prose my-6 overflow-x-auto">
-    <table class="min-w-full border border-slate-200 rounded-lg overflow-hidden text-[15px]">
-      <thead class="bg-brand-50 text-navy-700">
-        <tr>
-          <th class="text-left font-bold p-3 border-b border-slate-200">System type</th>
-          <th class="text-left font-bold p-3 border-b border-slate-200">Typical 2026 cost</th>
-          <th class="text-left font-bold p-3 border-b border-slate-200">Best for</th>
-        </tr>
-      </thead>
-      <tbody class="bg-white text-slate-700">
-        <tr class="border-b border-slate-100"><td class="p-3 font-semibold">Central AC replacement (like-for-like, 14.3–15.2 SEER2)</td><td class="p-3">$5,500 – $9,000</td><td class="p-3">Straightforward changeout with healthy existing ductwork</td></tr>
-        <tr class="border-b border-slate-100"><td class="p-3 font-semibold">Central AC + air handler replacement (16–18 SEER2)</td><td class="p-3">$7,500 – $12,000</td><td class="p-3">Full-system refresh with modest efficiency upgrade</td></tr>
-        <tr class="border-b border-slate-100"><td class="p-3 font-semibold">Variable-speed heat pump (18–20+ SEER2)</td><td class="p-3">$11,000 – $16,000</td><td class="p-3">Long-term owners, 2,500+ sq-ft, humidity-sensitive households</td></tr>
-        <tr class="border-b border-slate-100"><td class="p-3 font-semibold">Ductless mini-split, single zone</td><td class="p-3">$3,800 – $6,800</td><td class="p-3">Garages, additions, sunrooms, bonus rooms</td></tr>
-        <tr class="border-b border-slate-100"><td class="p-3 font-semibold">Ductless mini-split, multi-zone (whole home)</td><td class="p-3">$11,000 – $16,000</td><td class="p-3">Older Tampa homes with no existing ductwork</td></tr>
-        <tr class="border-b border-slate-100"><td class="p-3 font-semibold">Ductwork replacement (add-on)</td><td class="p-3">$2,500 – $6,000</td><td class="p-3">Attic ducts past 15 years or with R-4 insulation</td></tr>
-        <tr><td class="p-3 font-semibold">Electrical service upgrade (if panel is full)</td><td class="p-3">$1,200 – $2,400</td><td class="p-3">Older homes needing a dedicated 240V circuit</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p>Every quote includes Manual-J load calculation, Pasco or Hillsborough County permit, manufacturer warranty registration, and a first-year tune-up. <a href="/financing/">Financing</a> through Synchrony can break most installs into monthly payments often lower than the efficiency savings on your electric bill.</p>
+  <h2>Complete HVAC systems, installed right the first time</h2>
+  <p>This page is about installing a <strong>whole HVAC system</strong>, heating and cooling together, not just swapping one box. A full <strong>HVAC installation</strong> in Tampa Bay is a coordinated job, and getting every piece right is what separates a system that lasts 16 years from one that limps to 10. A complete install covers:</p>
+  <ul>
+    <li><strong>Outdoor unit:</strong> condenser or heat pump, pad or rooftop mounted and hurricane-rated.</li>
+    <li><strong>Indoor unit:</strong> air handler or furnace, matched to the outdoor unit for rated efficiency.</li>
+    <li><strong>Line set and electrical:</strong> new or flushed refrigerant lines, fresh disconnect, and surge protection.</li>
+    <li><strong>Ductwork and controls:</strong> sealing or replacement where needed, plus a properly configured thermostat.</li>
+  </ul>
+  <p>If you only need to swap a failing unit, the <a href="/services/ac-replacement-tampa/">AC replacement</a> page covers the repair-versus-replace math and pricing. If you are in Wesley Chapel specifically, our <a href="/services/ac-installation-wesley-chapel/">Wesley Chapel AC installation</a> page covers neighborhood-by-neighborhood detail. This page is the deep dive on the install itself.</p>
+
+  <TrustBar />
 
   <h2>Why installation quality matters more than brand</h2>
-  <p>Industry data is consistent: <strong>70% of new HVAC systems in the U.S. are installed incorrectly</strong> — wrong size, wrong refrigerant charge, or leaky ductwork. The result is a homeowner paying for a high-SEER2 system but running at closer to mid-teens efficiency, with shorter equipment life and bigger repair bills. The brand on the outside is the smallest part of the equation.</p>
+  <p>Industry data is consistent: roughly <strong>70% of new HVAC systems in the U.S. are installed incorrectly</strong>, with the wrong size, wrong refrigerant charge, or leaky ductwork. The result is a homeowner paying for a high-SEER2 system but running closer to mid-teens efficiency. The brand on the outside is the smallest part of the equation. What actually decides performance:</p>
+  <ul>
+    <li><strong>Correct sizing</strong> from a room-by-room Manual-J load calculation, not "that is what you had before."</li>
+    <li><strong>Sealed ductwork</strong>, since attic ducts commonly leak 15 to 30% of airflow.</li>
+    <li><strong>Precise refrigerant charge</strong>, weighed to manufacturer subcool spec, not topped off by feel.</li>
+    <li><strong>Verified static pressure</strong> so the blower is not fighting an undersized duct system.</li>
+  </ul>
+  <p>Many Wesley Chapel, New Tampa, and Land O' Lakes homes were originally oversized, and rightsizing the new system alone improves humidity control dramatically. When the system runs longer at lower speed, it wrings more moisture out of Florida air.</p>
 
-  <p>Every I Care Air Care installation starts with a <strong>Manual-J heat load calculation</strong> — room by room, accounting for Florida sun orientation, window area, ceiling height, insulation level, and infiltration rate. We don't sell you a 4-ton because "that's what you had before." Many Wesley Chapel, New Tampa and Land O' Lakes homes were originally oversized, and rightsizing the new system alone improves humidity control dramatically.</p>
-
-  <h2>Our installation process — 10 days from quote to comfort</h2>
+  <h2>Our HVAC installation process, step by step</h2>
+  <p>No surprises and no shortcuts. Here is exactly how an I Care Air Care install runs from quote to comfort:</p>
   <ol class="list-decimal pl-5 space-y-2 text-slate-700 mt-4">
-    <li><strong>In-home consultation and Manual-J load calculation</strong> (about 90 minutes, no obligation)</li>
-    <li><strong>Written proposal</strong> with 3 equipment tiers (good/better/best) — SEER2, warranty, monthly finance option all in one view</li>
-    <li><strong>Permitting</strong> with the correct county (Pasco, Hillsborough or Polk)</li>
-    <li><strong>Removal and disposal</strong> of your old system — refrigerant recovered per EPA rules</li>
-    <li><strong>Ductwork inspection</strong> and any necessary re-sealing (often the cheapest efficiency gain)</li>
-    <li><strong>New equipment installation</strong>: pad or rooftop mount, new line set or flush of existing, fresh disconnect, surge protector</li>
-    <li><strong>Refrigerant evacuation</strong> to 500 microns and precise charge to manufacturer subcool spec</li>
-    <li><strong>Electrical and thermostat commissioning</strong></li>
-    <li><strong>Start-up, static pressure verification, temperature split test</strong></li>
-    <li><strong>Homeowner walk-through</strong>, warranty registration, county inspection scheduled</li>
+    <li><strong>In-home consultation and Manual-J load calculation</strong>, about 90 minutes, no obligation.</li>
+    <li><strong>Written proposal</strong> with three equipment tiers (good, better, best), SEER2, warranty, and monthly finance option in one view.</li>
+    <li><strong>Permitting</strong> with the correct county (Pasco, Hillsborough, or Polk).</li>
+    <li><strong>Removal and disposal</strong> of the old system, with refrigerant recovered per EPA rules.</li>
+    <li><strong>Ductwork inspection</strong> and any necessary re-sealing, often the cheapest efficiency gain available.</li>
+    <li><strong>New equipment installation</strong>: pad or rooftop mount, new or flushed line set, fresh disconnect, surge protector.</li>
+    <li><strong>Refrigerant evacuation</strong> to 500 microns and precise charge to manufacturer subcool spec.</li>
+    <li><strong>Electrical and thermostat commissioning</strong>, configured for the Florida climate.</li>
+    <li><strong>Start-up testing</strong>: static pressure, temperature split, superheat, subcool, and amp draw.</li>
+    <li><strong>Homeowner walk-through</strong>, warranty registration, and county inspection scheduled.</li>
   </ol>
 
-  <h2>What's changing in 2026: lower-GWP refrigerants</h2>
-  <p>Newer residential AC and heat pump systems are moving away from R-410A and toward lower-GWP refrigerants such as R-454B and R-32. Two things for homeowners to know:</p>
+  <ReviewQuote
+    name="David Waite"
+    body="Been with I Care Air Care now for 10 years. Solid company, and the technician today was great."
+  />
+
+  <InContentCTA
+    heading="Planning a new system?"
+    text="Book a free in-home Manual-J assessment and we will hand you a written, three-tier proposal with financing options, no pressure to sign anything."
+    tone="navy"
+  />
+
+  <h2>New construction and whole-home system design</h2>
+  <p>Installing into a new build, a major addition, or a gut renovation is different from a changeout, and it is where system design earns its keep. We work from the plans, not from guesswork:</p>
   <ul>
-    <li>Some newer systems use mildly flammable A2L refrigerants and require updated tools, leak detection, manufacturer procedures, and jobsite safety steps.</li>
-    <li>R-410A isn't illegal to repair or recharge — but it is increasingly expensive. If your R-410A system needs a major repair past 12 years old, the replacement math almost always wins.</li>
+    <li><strong>Load-driven sizing</strong> for the finished envelope, including window package and insulation values.</li>
+    <li><strong>Duct design</strong> laid out for even room-to-room delivery instead of one struggling return.</li>
+    <li><strong>Zoning</strong> for two-story homes so the upstairs is not fighting the downstairs thermostat.</li>
+    <li><strong>Air-quality integration</strong> with <a href="/services/indoor-air-quality-tampa/">indoor air quality</a> equipment and fresh <a href="/services/air-duct-cleaning-tampa/">ductwork</a> planned in from the start.</li>
+  </ul>
+  <p>If your home has no existing ducts or a hard-to-reach addition, a <a href="/services/mini-split-installation-tampa/">ductless mini-split</a> is often the smarter design than forcing a ducted system where it does not fit.</p>
+
+  <h2>The heating side of your HVAC system</h2>
+  <p>"HVAC" means heating too, and in Tampa Bay that heating is almost always built into the same system that cools you. A complete install gets the heat right, not just the AC, which is the whole point of installing a system rather than a single box:</p>
+  <ul>
+    <li><strong>Heat pump:</strong> the most common Florida choice, it reverses the refrigerant cycle to heat efficiently on mild winter days. Our <a href="/services/heat-pump-repair-tampa/">heat pump repair</a> team services exactly what we install.</li>
+    <li><strong>Electric heat strips:</strong> backup resistance heat for the handful of genuinely cold mornings, sized and lockout-configured so they do not spike your January bill.</li>
+    <li><strong>Gas furnace:</strong> less common here, but we configure and vent it correctly where a home has one, coordinated with our <a href="/services/heating-services-tampa/">heating services</a>.</li>
+    <li><strong>Smart controls:</strong> staging, strip lockouts, and humidity settings dialed in for the Florida climate, plus a <a href="/services/thermostat-installation-tampa/">smart thermostat</a> rather than the factory default.</li>
   </ul>
 
-  <h2>Equipment we install in Tampa</h2>
-  <p>We install and service the major brands Florida homeowners recognize, including <strong>Carrier, Trane, Lennox, Rheem, Goodman, American Standard, Bryant, and Mitsubishi Electric</strong> ductless mini-splits. Every proposal explains the included manufacturer warranty, optional maintenance coverage, and the workmanship warranty in writing before you approve the job.</p>
+  <h2>Signs a past install was done wrong</h2>
+  <p>If a previous system never felt right, the installation is usually why. These are the tells we find most often when a homeowner calls us to fix someone else's work:</p>
+  <ul>
+    <li><strong>Cool but clammy:</strong> the house hits temperature but feels humid, the classic sign of an oversized system that short-cycles before it can dehumidify.</li>
+    <li><strong>Uneven comfort:</strong> one room or the whole upstairs never keeps up, pointing to duct design or sizing problems baked in at install.</li>
+    <li><strong>High bills:</strong> power costs run above neighbors with similar homes, usually from leaky ducts or a refrigerant charge that was never weighed in.</li>
+    <li><strong>No paper trail:</strong> the original invoice shows no commissioning numbers, meaning nobody verified the system actually performs to its rating.</li>
+  </ul>
 
-  <h2>Ductless mini-splits for additions and problem rooms</h2>
-  <p>Adding a room above the garage, converting a Florida room, or dealing with a bedroom that never gets cool? Ductless mini-splits are often the right answer — no ductwork, high efficiency (22+ SEER2), independent zoning, and quiet operation. We install and service Mitsubishi, LG, and Fujitsu ductless systems.</p>
-
-  <h2>Financing that makes sense</h2>
-  <p>Replacing a system is a big decision. We partner with Synchrony to offer <a href="/financing/">HVAC financing options</a> including 0% promotional rates, 10+ year fixed terms, and instant soft-credit pre-approval. Many customers find their monthly payment is less than the monthly savings on their electric bill from a high-efficiency system.</p>
-
-  <p>Ready for a free in-home estimate? <a href="/contact/">Book a consultation</a> or call <a href="tel:+18133952324">(813) 395-2324</a>.</p>
+  <h2>Brands we install in Tampa Bay</h2>
+  <p>We install and service the major brands Florida homeowners recognize, and we match the tier to your budget and duct condition rather than pushing one badge:</p>
+  <ul>
+    <li><strong>Premium:</strong> Carrier, Trane, Lennox, American Standard</li>
+    <li><strong>Value and reliability:</strong> Rheem, Goodman, Bryant, Amana</li>
+    <li><strong>Ductless:</strong> Mitsubishi Electric, LG, Fujitsu</li>
+  </ul>
+  <p>Not sure which to choose? Our honest <a href="/blogs/carrier-vs-trane-vs-rheem-tampa/">Carrier vs. Trane vs. Rheem comparison</a> is one of the most-read guides on our site, and our <a href="/blogs/seer2-explained-florida-2026/">SEER2 guide for Florida</a> explains what the efficiency ratings actually save you.</p>
   <RheemProPartner variant="compact" />
+
+  <OwnerTip>
+    <p>"Ask any installer for the commissioning numbers, the static pressure, the temperature split, the subcool. A good install has them written on the invoice. If a quote is hundreds cheaper but nobody will put those numbers in writing, that is the difference you are paying for later in <a href="/services/ac-repair-tampa/">repair</a> bills and a short equipment life. The install is the product, the box is just the part."</p>
+  </OwnerTip>
+
+  <h2>What is changing in 2026: lower-GWP refrigerants</h2>
+  <p>Newer residential systems are moving away from R-410A toward lower-GWP refrigerants such as R-454B and R-32. Two things for homeowners to know:</p>
+  <ul>
+    <li>Some newer systems use mildly flammable A2L refrigerants and require updated tools, leak detection, and manufacturer safety procedures, all of which our crews are equipped for.</li>
+    <li>R-410A is not illegal to repair or recharge, but it is increasingly expensive. If an R-410A system needs a major repair past 12 years old, the replacement math almost always wins.</li>
+  </ul>
+
+  <FinancingCTA />
+
+  <h2>Free in-home estimate across Tampa Bay</h2>
+  <p>Every install includes Manual-J sizing, the county permit, manufacturer warranty registration, and a first-year tune-up to keep that warranty valid. We serve <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>, <a href="/service-areas/land-o-lakes-hvac-services/">Land O' Lakes</a>, and the wider <a href="/service-areas/hillsborough-county-hvac-company/">Hillsborough County</a> area. Ready to start? <a href="/contact/">Book a consultation</a> or call <a href="tel:+18133952324">(813) 395-2324</a>.</p>
 </ServiceLayout>

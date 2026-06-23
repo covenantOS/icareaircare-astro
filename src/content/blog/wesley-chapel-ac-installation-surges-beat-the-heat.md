@@ -7,6 +7,7 @@ read: "5 min"
 image: "/images/wesley-chapel-ac-installation-surges-newsroom-hero.webp"
 imageAlt: "I Care Air Care technician installing a wall-mounted mini-split AC unit in a Wesley Chapel bedroom"
 location: "Wesley Chapel"
+noindex: true
 primaryService:
   href: "/services/ac-installation-wesley-chapel/"
   label: "AC installation"

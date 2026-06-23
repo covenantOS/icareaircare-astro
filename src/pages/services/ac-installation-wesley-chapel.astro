@@ -1,21 +1,25 @@
 ---
 import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import InContentCTA from '../../components/InContentCTA.astro';
+import OwnerTip from '../../components/OwnerTip.astro';
+import ReviewQuote from '../../components/ReviewQuote.astro';
+import FinancingCTA from '../../components/FinancingCTA.astro';
 
 const faqs = [
-  { q: 'How much does AC installation cost in Wesley Chapel?', a: 'A complete AC installation in Wesley Chapel typically runs $5,500–$12,000 for central systems (like-for-like changeout through mid-efficiency 16–18 SEER2), $11,000–$16,000 for high-efficiency variable-speed systems, and $3,800–$6,800 for a single-zone mini-split. Every quote includes Manual-J load calculation, Pasco County permitting, first-year tune-up, and manufacturer warranty registration.' },
-  { q: 'What SEER2 rating should I get for a Wesley Chapel home?', a: 'The 2026 Florida minimum is 15.2 SEER2. The sweet spot for most Wesley Chapel homes is 16–18 SEER2 — beyond that, ROI diminishes. Variable-speed 20+ SEER2 systems make sense for homes over 2,500 sq ft, allergy-sensitive families, or anyone planning to stay 10+ years. We do the efficiency math on your proposal so you can see the break-even.' },
-  { q: 'How long does AC installation take in Wesley Chapel?', a: 'A standard same-tonnage changeout is one day, usually 7–9 hours from arrival to walkthrough. Projects that include ductwork replacement, line-set upgrades, or electrical service changes can run 1–2 days. Permit and inspection handling is included; you don\'t deal with Pasco County directly.' },
-  { q: 'Do I need a new AC or can I repair the old one?', a: 'The $5,000 rule: multiply the age of the system by the estimated repair cost. If that number exceeds $5,000, replacement usually wins on a 5-year operating-cost basis. A 12-year-old system with a $500 compressor repair = $6,000 — replace. A 6-year-old system with the same $500 repair = $3,000 — fix it. We show you both numbers on the same invoice so you can decide.' },
-  { q: 'Do you install Carrier, Trane, Lennox, Rheem, and Goodman?', a: 'All five, plus American Standard, Bryant, Amana, Daikin, and Mitsubishi mini-splits. We match the brand tier to your budget, duct layout, comfort goals, and warranty priorities. A Carrier installed wrong will under-perform a Goodman installed right — installation quality matters more than brand.' },
-  { q: 'What\'s changing with refrigerants in 2026?', a: 'New residential systems are moving from R-410A to lower-GWP refrigerants (R-454B or R-32). These are mildly flammable A2L refrigerants requiring updated tools, leak detection, and installation procedures. All three of our install crews are A2L-certified and equipped. R-410A systems are still legal to install and repair, but replacement parts pricing is climbing every quarter.' },
-  { q: 'Do you handle Pasco County permits for Wesley Chapel installs?', a: 'Yes — every install includes the Pasco County mechanical permit, the final inspection, and any HOA approval coordination (Epperson, Mirada, Persimmon Park, Meadow Pointe, Seven Oaks). Florida license CAC1816515.' },
-  { q: 'Do you offer financing?', a: 'Yes. Synchrony financing with 0% introductory rates and terms up to 120 months on qualifying installs. Many Wesley Chapel homeowners find the monthly payment comes in below what they save on their electric bill after upgrading from a 10+ year-old system.' },
+  { q: 'How much does AC installation cost in Wesley Chapel?', a: 'A complete AC installation in Wesley Chapel typically runs $5,500 to $12,000 for central systems (like-for-like changeout through mid-efficiency 16 to 18 SEER2), $11,000 to $16,000 for high-efficiency variable-speed systems, and $3,800 to $6,800 for a single-zone mini-split. Every quote includes Manual-J load calculation, Pasco County permitting, first-year tune-up, and warranty registration. See our AC replacement page for the full pricing table.' },
+  { q: 'Which Wesley Chapel neighborhoods do you install in?', a: 'All of them, including Epperson, Mirada, Watergrass, Persimmon Park, Seven Oaks, Meadow Pointe, Lexington Oaks, Wiregrass Ranch, Estancia, Chapel Pines, Saddlebrook, Quail Hollow, Country Walk, and New River. We coordinate HOA equipment-placement approval where required.' },
+  { q: 'Do you handle Pasco County permits for Wesley Chapel installs?', a: 'Yes. Every install includes the Pasco County mechanical permit, the final inspection, and any HOA approval coordination. Florida license CAC1816515. You never deal with the county directly.' },
+  { q: 'What SEER2 rating should I get for a Wesley Chapel home?', a: 'The 2026 Florida minimum is 15.2 SEER2. The sweet spot for most Wesley Chapel homes is 16 to 18 SEER2. Variable-speed 20+ SEER2 systems make sense for homes over 2,500 sq ft, allergy-sensitive families, or anyone planning to stay 10+ years. We do the efficiency math on your proposal.' },
+  { q: 'How long does AC installation take in Wesley Chapel?', a: 'A standard same-tonnage changeout is one day, usually 7 to 9 hours. Projects with ductwork replacement, line-set upgrades, or electrical service changes can run 1 to 2 days. Permit and inspection handling is included.' },
+  { q: 'Do I need a new AC or can I repair the old one?', a: 'Apply the $5,000 rule: multiply the age of the system by the estimated repair cost. Over $5,000 means replacement usually wins. A 12-year-old system with a $500 compressor repair = $6,000, replace. A 6-year-old system with the same repair = $3,000, fix it. Our AC replacement page walks through the full math.' },
+  { q: 'Do you offer financing?', a: 'Yes. Synchrony financing with 0% introductory rates and terms up to 120 months on qualifying installs. Many Wesley Chapel homeowners find the monthly payment comes in below what they save on their electric bill after upgrading.' },
 ];
 
 const related = [
-  { href: '/services/hvac-installation-tampa/', label: 'HVAC Installation — Tampa Bay' },
+  { href: '/services/ac-replacement-tampa/', label: 'AC Replacement (Pricing & Repair-vs-Replace)' },
+  { href: '/services/hvac-installation-tampa/', label: 'HVAC Installation (The Install Process)' },
   { href: '/services/ac-repair-tampa/', label: 'AC Repair' },
-  { href: '/services/ac-maintenance-tampa/', label: 'AC Maintenance Plans' },
   { href: '/services/mini-split-installation-tampa/', label: 'Mini-Split Installation' },
   { href: '/service-areas/wesley-chapel-ac-repair/', label: 'Wesley Chapel Service Area' },
   { href: '/financing/', label: 'HVAC Financing' },
@@ -23,8 +27,8 @@ const related = [
 ---
 <ServiceLayout
   slug="ac-installation-wesley-chapel"
-  title="AC Installation in Wesley Chapel, FL | I Care Air Care"
-  description="Wesley Chapel AC installation — Manual-J sized, permitted, warrantied. Carrier, Trane, Lennox, Rheem. Licensed CAC1816515. Financing available. Call (813) 395-2324."
+  title="AC Installation Wesley Chapel | Free Quote · 0% Financing"
+  description="Wesley Chapel AC installation, Manual-J sized and permitted. Carrier, Trane, Rheem. Free quote + 0% financing, 4.9★ · 700+ reviews. (813) 395-2324."
   h1="AC Installation in Wesley Chapel & Tampa Bay, FL"
   eyebrow="AC Installation · Wesley Chapel"
   subtitle={`A new AC system is one of the biggest home investments you'll make in the Wesley Chapel climate. We size it right with a full <span class="text-accent-400 font-semibold">Manual-J load calculation</span>, install to manufacturer spec, and stand behind the work with a 2-year installation warranty.`}
@@ -32,64 +36,98 @@ const related = [
   serviceName="AC Installation in Wesley Chapel"
   faqs={faqs}
   related={related}
+  enhanced={true}
 >
-  <h2>Why Wesley Chapel AC installation quality matters more than brand</h2>
-  <p>Industry data is consistent: <strong>roughly 70% of new residential HVAC systems in the U.S. are installed incorrectly</strong> — wrong tonnage, poor refrigerant charge, or leaky ductwork. The result is a Wesley Chapel homeowner paying for a 17 SEER2 system but running at closer to 13 effective SEER2, with shorter equipment life and bigger repair bills. The brand nameplate is the smallest part of the efficiency equation.</p>
-  <p>Every I Care Air Care installation in Wesley Chapel, Epperson, Mirada, Seven Oaks, Meadow Pointe, and Wiregrass Ranch starts with a <strong>Manual-J heat load calculation</strong> — room by room, accounting for Florida sun orientation, window package, ceiling height, insulation level, duct condition, and air-infiltration rate. We don\'t sell you a 4-ton because the old one was a 4-ton. Many Wesley Chapel homes were originally oversized during the 2005–2012 build boom, and rightsizing the new system alone improves humidity control measurably.</p>
-
-  <h2>AC installation costs in Wesley Chapel — 2026 pricing</h2>
-  <p>Pricing varies with equipment tier, tonnage, ductwork condition, and electrical service, but these ranges cover what most Wesley Chapel homeowners pay for a clean, permitted, code-compliant install:</p>
-  <div class="not-prose my-6 overflow-x-auto">
-    <table class="min-w-full border border-slate-200 rounded-lg overflow-hidden text-[15px]">
-      <thead class="bg-brand-50 text-navy-700">
-        <tr>
-          <th class="text-left font-bold p-3 border-b border-slate-200">System type</th>
-          <th class="text-left font-bold p-3 border-b border-slate-200">Typical 2026 cost</th>
-          <th class="text-left font-bold p-3 border-b border-slate-200">Best for</th>
-        </tr>
-      </thead>
-      <tbody class="bg-white text-slate-700">
-        <tr class="border-b border-slate-100"><td class="p-3 font-semibold">Central AC changeout, 14.3–15.2 SEER2</td><td class="p-3">$5,500 – $8,500</td><td class="p-3">Like-for-like swap, healthy existing ducts</td></tr>
-        <tr class="border-b border-slate-100"><td class="p-3 font-semibold">Central AC + air handler, 16–18 SEER2</td><td class="p-3">$7,500 – $12,000</td><td class="p-3">Full-system refresh with efficiency upgrade</td></tr>
-        <tr class="border-b border-slate-100"><td class="p-3 font-semibold">Variable-speed heat pump, 18–20+ SEER2</td><td class="p-3">$11,000 – $16,000</td><td class="p-3">Long-term owners, 2,500+ sq ft, humidity-sensitive families</td></tr>
-        <tr class="border-b border-slate-100"><td class="p-3 font-semibold">Ductless mini-split, single zone</td><td class="p-3">$3,800 – $6,800</td><td class="p-3">Garages, additions, sunrooms, bonus rooms</td></tr>
-        <tr class="border-b border-slate-100"><td class="p-3 font-semibold">Ductless multi-zone (whole home)</td><td class="p-3">$11,000 – $16,000</td><td class="p-3">Older homes with no existing ducts</td></tr>
-        <tr class="border-b border-slate-100"><td class="p-3 font-semibold">Ductwork replacement (add-on)</td><td class="p-3">$2,500 – $6,000</td><td class="p-3">Attic ducts past 15 years or at R-4 insulation</td></tr>
-        <tr><td class="p-3 font-semibold">Electrical service upgrade</td><td class="p-3">$1,200 – $2,400</td><td class="p-3">Full panels needing dedicated circuit</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h2>Our Wesley Chapel install process — 10 days from quote to comfort</h2>
-  <ol class="list-decimal pl-5 space-y-2 text-slate-700 mt-4">
-    <li><strong>In-home consultation and Manual-J load calculation</strong> — about 90 minutes, no obligation. We measure, photograph ductwork, check electrical, and review sun orientation.</li>
-    <li><strong>Written proposal with 3 equipment tiers</strong> — good / better / best. SEER2, warranty length, monthly finance option, total-cost-of-ownership all visible on one page.</li>
-    <li><strong>Pasco County permit</strong> — we pull it, you don\'t.</li>
-    <li><strong>Removal and EPA-compliant refrigerant recovery</strong> of the old system.</li>
-    <li><strong>Ductwork inspection and seal</strong> — cheapest efficiency gain available on most Wesley Chapel homes. Mastic-and-mesh or Aeroseal depending on access.</li>
-    <li><strong>New equipment installation</strong> — pad or rooftop mount (hurricane-rated), new line set or nitrogen-purge flush of existing, fresh disconnect, surge protector, condensate safety switch.</li>
-    <li><strong>Deep evacuation to 500 microns</strong> and manufacturer-spec refrigerant charge (weighed, not guessed).</li>
-    <li><strong>Electrical and thermostat commissioning</strong> — stage count, strip lockouts, humidity control, fan mode set per manufacturer and Florida climate.</li>
-    <li><strong>Commissioning measurements</strong> — static pressure, temperature split, superheat, subcool, amp draw — documented on the invoice.</li>
-    <li><strong>Homeowner walkthrough</strong>, warranty registration, Pasco County inspection scheduled.</li>
-  </ol>
-
-  <h2>Neighborhood-specific install considerations in Wesley Chapel</h2>
-  <p><strong>Epperson, Mirada, Watergrass, Persimmon Park</strong> (newer lagoon communities): These homes were built 2018–2024, almost always with builder-grade 14 SEER single-stage systems sized to the minimum of the Manual-J curve. Many are now out of builder warranty and struggling on upstairs cooling or humidity control. A properly sized 16–18 SEER2 replacement — or a two-stage variable-speed upgrade — with duct sealing transforms comfort and cuts bills 20–30%.</p>
-  <p><strong>Seven Oaks, Meadow Pointe I–IV, Lexington Oaks</strong>: 2001–2010 construction, many original equipment systems approaching end of life. The refrigerant transition from R-22 to R-410A made many of these systems economically unserviceable on major failures. Good candidates for 16–18 SEER2 two-story-optimized replacements with zoning.</p>
-  <p><strong>Wiregrass Ranch, Estancia, Chapel Pines</strong>: Newer construction, often two-story with single-zone cooling. Zoning controls and a properly sized variable-speed system solve the upstairs-vs-downstairs temperature fight without replacing ductwork.</p>
-  <p><strong>Saddlebrook, Quail Hollow, Country Walk, New River</strong>: Older construction, often with ducts in 140°F attics running R-4 insulation. We inspect and seal before recommending equipment size — saves thousands in unnecessary upsizing.</p>
-
-  <h2>2026 refrigerant transition — what Wesley Chapel homeowners need to know</h2>
-  <p>New residential AC systems installed in 2026 and beyond are moving from R-410A to lower-GWP refrigerants: R-454B (Carrier, Trane, Lennox) and R-32 (Daikin, Mitsubishi). These are A2L-class mildly flammable refrigerants — handling requires updated tools, procedures, leak detection, and safety protocols. Two practical implications:</p>
+  <h2>AC installation built for your Wesley Chapel neighborhood</h2>
+  <p>This is the local page for <strong>AC installation in Wesley Chapel</strong>, written around the actual homes we install in here. For the step-by-step install method, see our <a href="/services/hvac-installation-tampa/">HVAC installation</a> page; for the repair-versus-replace math and the full pricing table, see <a href="/services/ac-replacement-tampa/">AC replacement</a>. What makes Wesley Chapel different is that the right system depends heavily on which community you live in:</p>
   <ul>
-    <li><strong>Existing R-410A systems</strong> are still legal to install, repair, and recharge. Parts and refrigerant are becoming more expensive as the phase-down continues, but there\'s no cliff coming.</li>
-    <li><strong>New installs</strong> should generally use A2L refrigerant equipment — longer expected service life, better efficiency, and manufacturer warranties are being tied to the newer platforms.</li>
+    <li><strong>Build era</strong> ranges from early-2000s to brand-new lagoon communities, each with different duct and sizing needs.</li>
+    <li><strong>HOA rules</strong> in many neighborhoods govern where outdoor equipment can sit and how it is screened.</li>
+    <li><strong>Two-story layouts</strong> are common and create upstairs-versus-downstairs comfort problems that sizing alone fixes.</li>
+    <li><strong>Pasco County permitting</strong> applies to every install, which we handle end to end.</li>
   </ul>
-  <p>All of our Wesley Chapel install crews are A2L-certified and carry the leak detection and evacuation tools required for R-454B and R-32 work.</p>
 
-  <h2>2-year installation warranty, lifetime compressor on variable-speed</h2>
-  <p>Every I Care Air Care install in Wesley Chapel comes with a 2-year workmanship warranty on the installation itself. Manufacturer parts warranties run 5–10 years on most major components, and many manufacturers offer lifetime compressor warranties on variable-speed equipment when registered by a factory-authorized installer at install. We register every system on install day — you don\'t have to remember to do it. Documented annual maintenance keeps the warranty active; we include the first year\'s tune-up with every install.</p>
+  <TrustBar />
 
-  <p>Ready for a free in-home estimate in Wesley Chapel? <a href="/contact/">Book a consultation</a> or call <a href="tel:+18133952324">(813) 395-2324</a>. We\'ll send a licensed tech out to measure, review your electrical, walk you through equipment options, and leave you with a written proposal — no pressure.</p>
+  <h2>Neighborhood-specific install considerations</h2>
+  <p>Twenty years of installs across Wesley Chapel means we know what each community needs before we pull into the driveway:</p>
+  <ul>
+    <li><strong>Epperson, Mirada, Watergrass, Persimmon Park</strong> (newer lagoon communities, 2018 to 2024): almost always builder-grade 14 SEER single-stage systems sized to the bare minimum. Many are now out of builder warranty and struggling on upstairs cooling. A properly sized 16 to 18 <a href="/blogs/seer2-explained-florida-2026/">SEER2</a> system with <a href="/services/air-duct-cleaning-tampa/">duct sealing</a> transforms comfort.</li>
+    <li><strong>Seven Oaks, Meadow Pointe I to IV, Lexington Oaks</strong> (2001 to 2010): many original systems are at end of life. The R-22 to R-410A transition made major repairs uneconomical, so these are strong candidates for two-story-optimized replacements with zoning.</li>
+    <li><strong>Wiregrass Ranch, Estancia, Chapel Pines</strong> (newer, often two-story): single-zone cooling fighting the upstairs heat. Zoning controls, a <a href="/services/thermostat-installation-tampa/">smart thermostat</a>, and a variable-speed system solve it without replacing ductwork.</li>
+    <li><strong>Saddlebrook, Quail Hollow, Country Walk, New River</strong> (older construction): ducts in 140-degree attics on R-4 insulation. We inspect and seal before recommending equipment size, which saves thousands in unnecessary upsizing.</li>
+  </ul>
+
+  <ReviewQuote
+    name="David Waite"
+    body="Been with I Care Air Care now for 10 years. Solid company, and the technician today was great."
+  />
+
+  <h2>Why sizing matters more than the brand badge</h2>
+  <p>Industry data is consistent: roughly <strong>70% of new residential HVAC systems are installed incorrectly</strong>, with the wrong tonnage, poor charge, or leaky ducts. A Wesley Chapel homeowner can pay for a 17 SEER2 system and run at an effective 13. The fix is a real <strong>Manual-J load calculation</strong> for your specific home:</p>
+  <ul>
+    <li>Room-by-room load based on sun orientation, window package, and ceiling height.</li>
+    <li>Duct condition measured, not assumed, since leaky returns waste a new system.</li>
+    <li>Rightsizing instead of matching the old tonnage, because many local homes were oversized in the 2005 to 2012 boom.</li>
+  </ul>
+  <p>Rightsizing alone improves humidity control and <a href="/services/indoor-air-quality-tampa/">indoor air quality</a> measurably, which is what makes a Florida home feel cool at a higher thermostat setting. The brand nameplate is the smallest part of the equation, though our <a href="/blogs/carrier-vs-trane-vs-rheem-tampa/">Carrier vs. Trane vs. Rheem guide</a> helps if you want to compare.</p>
+
+  <InContentCTA
+    heading="Getting quotes in Wesley Chapel?"
+    text="We will Manual-J your home, check your HOA placement rules, and leave a written three-tier proposal the same visit. Compare it line for line against any other quote."
+    tone="navy"
+  />
+
+  <h2>HOA approval and Pasco County permitting, handled</h2>
+  <p>Wesley Chapel installs come with paperwork that we manage so you do not have to:</p>
+  <ul>
+    <li><strong>HOA equipment approval</strong> for communities like Epperson, Mirada, Persimmon Park, Meadow Pointe, and Seven Oaks, where placement and screening rules apply.</li>
+    <li><strong>Pasco County mechanical permit</strong> pulled in your name and scheduled for final inspection.</li>
+    <li><strong>Warranty registration</strong> filed on install day with your manufacturer, under Florida license CAC1816515.</li>
+  </ul>
+
+  <OwnerTip>
+    <p>"In the lagoon communities especially, I see families suffering through a hot upstairs because the builder put in the smallest system that passed code. You do not always need a bigger unit, you need the right one and sealed ducts. We measure first. If a maintenance visit can buy you another season on the old system, our <a href="/services/ac-maintenance-tampa/">maintenance</a> team will tell you that honestly before we ever quote a new install."</p>
+  </OwnerTip>
+
+  <h2>Why Wesley Chapel's climate drives the right system choice</h2>
+  <p>Wesley Chapel sits inland enough to dodge the worst coastal salt corrosion, but the runtime and humidity here still shape what we recommend:</p>
+  <ul>
+    <li><strong>Long cooling season:</strong> systems run 2,200+ hours a year, so a half-step up in efficiency pays back faster than it would up north.</li>
+    <li><strong>High humidity:</strong> a rightsized, variable-speed system runs longer at low speed and pulls more moisture, which is what makes a home feel cool at 76 instead of 72.</li>
+    <li><strong>Afternoon storms:</strong> we install a surge protector and condensate safety switch as standard, because lightning and clogged drains are the two most common post-install callbacks here.</li>
+    <li><strong>Pine and oak pollen:</strong> coil placement and screening matter, so we site the outdoor unit for airflow and easy cleaning, not just HOA approval.</li>
+  </ul>
+
+  <h2>What to expect when you call us</h2>
+  <p>From first call to a cool house, a Wesley Chapel install follows a simple path:</p>
+  <ul>
+    <li><strong>Free in-home assessment:</strong> we measure, run the Manual-J, photograph your ductwork and electrical, and check your community's placement rules.</li>
+    <li><strong>Same-visit written proposal:</strong> three equipment tiers with SEER2, warranty, and monthly financing all on one page.</li>
+    <li><strong>Permit and HOA paperwork:</strong> we file it; you approve the design.</li>
+    <li><strong>Install day:</strong> usually one day for a changeout, with commissioning numbers documented before we leave.</li>
+  </ul>
+  <p>While you decide, our <a href="/services/ac-maintenance-tampa/">maintenance</a> team can keep your current system running across Wesley Chapel and nearby <a href="/service-areas/new-tampa-heating-and-cooling/">New Tampa</a>, and our guide to the <a href="/blogs/best-local-air-conditioning-company-tampa/">best local air conditioning company in Tampa</a> explains what to look for in any installer you compare us against.</p>
+
+  <h2>Buying or selling a Wesley Chapel home?</h2>
+  <p>An aging AC system shows up in nearly every Wesley Chapel home inspection, and it moves the negotiation more than almost any other item. We help on both sides of the closing table:</p>
+  <ul>
+    <li><strong>Sellers:</strong> a documented new install or a recent tune-up report removes a common buyer objection and protects your asking price.</li>
+    <li><strong>Buyers:</strong> we assess the system's real age and condition so a "works fine" line in the listing does not become a surprise after move-in.</li>
+    <li><strong>Investors and landlords:</strong> right-sized, efficient equipment keeps tenant comfort calls and emergency bills down across a portfolio.</li>
+  </ul>
+  <p>If the system just needs to make it through closing, our <a href="/services/ac-repair-tampa/">repair</a> team is honest about whether a fix or a fresh install is the smarter spend, and we can usually turn around a written quote within a day to keep your closing on schedule.</p>
+
+  <FinancingCTA />
+
+  <h2>Built to last in the Florida climate</h2>
+  <p>Every install in Wesley Chapel comes with a 2-year workmanship warranty on the installation itself, on top of the 5 to 10 year manufacturer parts warranties and the lifetime compressor warranty many makers offer on registered variable-speed equipment. To protect all of it:</p>
+  <ul>
+    <li>We register the system on install day so you do not have to remember.</li>
+    <li>We include the first year's tune-up to keep the manufacturer warranty active.</li>
+    <li>We document commissioning numbers on the invoice so performance is verifiable.</li>
+  </ul>
+  <p>If your existing system is limping along, our <a href="/services/ac-repair-tampa/">AC repair</a> and <a href="/services/heat-pump-repair-tampa/">heat pump repair</a> teams can keep you cool while you plan, and a <a href="/services/mini-split-installation-tampa/">mini-split</a> is an option for additions with no ductwork.</p>
+
+  <p>Ready for a free in-home estimate in <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>? <a href="/contact/">Book a consultation</a> or call <a href="tel:+18133952324">(813) 395-2324</a>. We send a licensed tech to measure, review your electrical, check HOA rules, and leave a written proposal, no pressure.</p>
 </ServiceLayout>

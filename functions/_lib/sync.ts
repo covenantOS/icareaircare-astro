@@ -168,34 +168,62 @@ function normalizeJobType(raw: string | undefined): string {
   return 'other';
 }
 
-// Job type derivation from a job object — checks tags first (Tim's primary
-// classification mechanism), then description text, then any structured
-// job_type / business_unit field.
+// When several signals match different types (e.g. a job tagged BOTH
+// "Estimate" and "Install - system" — a sold estimate that became an
+// install), pick by PRIORITY, not array order. Install wins: if the work
+// was installed, it's an install regardless of a leftover Estimate tag.
+// Estimate is near-lowest — it only wins when nothing else matched.
+// (Tim 2026-06-03: reclassified Lina's job to Install but it kept showing
+// Estimate because "Estimate" came first in the tags array.)
+const TYPE_PRIORITY = ['install', 'tune_up', 'diagnostic', 'iaq', 'estimate', 'admin'];
+function resolveByPriority(strings: string[]): string | undefined {
+  const found = new Set<string>();
+  for (const s of strings) {
+    const t = normalizeJobType(s);
+    if (t !== 'other') found.add(t);
+  }
+  for (const p of TYPE_PRIORITY) if (found.has(p)) return p;
+  return undefined;
+}
+
+// Job type derivation. Order of authority (Tim 2026-06-03):
+//   1. HCP's structured job type (job_fields.job_type.name) — this is what
+//      Tim sets when he "reclassifies according to how they say to do it".
+//   2. Tags — by priority (install beats a stale Estimate tag).
+//   3. Description.
+//   4. Business unit.
 function deriveJobType(job: Record<string, unknown>): { jobType: string; rawType: string | undefined } {
-  // 1. Tags — most reliable for ICAC. Real example tags:
-  //    ["Tune up", "New customer", "Care plan member - NO", "1 unit"]
-  const tags = (job.tags as unknown[]) || [];
-  const tagStrings = tags.filter((t): t is string => typeof t === 'string');
-  for (const tag of tagStrings) {
-    const t = normalizeJobType(tag);
-    if (t !== 'other') return { jobType: t, rawType: `tag:${tag}` };
+  // 1. Authoritative HCP job type. job_fields.job_type is an OBJECT {id,name},
+  //    so read .name (the old code passed the object to pickStr and got nothing).
+  const jf = (job.job_fields as Record<string, unknown>) || {};
+  const jfTypeRaw = jf.job_type;
+  const jfTypeName =
+    jfTypeRaw && typeof jfTypeRaw === 'object'
+      ? (jfTypeRaw as Record<string, unknown>).name as string | undefined
+      : (typeof jfTypeRaw === 'string' ? jfTypeRaw : undefined);
+  if (jfTypeName) {
+    const t = normalizeJobType(jfTypeName);
+    if (t !== 'other') return { jobType: t, rawType: `jobtype:${jfTypeName}` };
   }
 
-  // 2. Description — e.g. "Basic services - Tune up", "Diagnostic", "Estimate"
+  // 2. Tags — by priority (install > tune_up > diagnostic > iaq > estimate > admin).
+  const tags = (job.tags as unknown[]) || [];
+  const tagStrings = tags.filter((t): t is string => typeof t === 'string');
+  const tagType = resolveByPriority(tagStrings);
+  if (tagType) return { jobType: tagType, rawType: `tag:${tagStrings.join('|').slice(0, 120)}` };
+
+  // 3. Description — e.g. "Basic services - Tune up", "Diagnostic", "Estimate"
   const desc = pickStr(job, 'description');
   if (desc) {
     const t = normalizeJobType(desc);
     if (t !== 'other') return { jobType: t, rawType: `desc:${desc}` };
   }
 
-  // 3. Structured fields — fallback if HCP starts populating these
-  const structured =
-    pickStr(job, 'job_type', 'type') ||
-    pickStr((job.job_fields as Record<string, unknown>) || {}, 'job_type') ||
-    pickStr((job.business_unit as Record<string, unknown>) || {}, 'name');
-  if (structured) {
-    const t = normalizeJobType(structured);
-    if (t !== 'other') return { jobType: t, rawType: `field:${structured}` };
+  // 4. Business unit
+  const bu = pickStr((job.business_unit as Record<string, unknown>) || {}, 'name') || pickStr(job, 'type');
+  if (bu) {
+    const t = normalizeJobType(bu);
+    if (t !== 'other') return { jobType: t, rawType: `field:${bu}` };
   }
 
   return { jobType: 'other', rawType: tagStrings.join(',') || desc || undefined };
@@ -749,6 +777,32 @@ export async function runSync(env: SyncEnv, opts: SyncOptions): Promise<SyncResu
     notes.push('membership flags updated');
   } catch (e) {
     errors.push(`membership flags: ${e instanceof Error ? e.message : String(e)}`);
+  }
+
+  // Derived: estimate "sold" when it converted to an install (Tim 2026-06-04).
+  // An estimate carries $0 (the money lands on the install job), so the
+  // threshold-based is_sold leaves every estimate unsold — which made
+  // Kleber's 10 estimates show 0 sold even though 2 became installs.
+  // Mark an estimate sold when the SAME customer has an install completed
+  // on/after the estimate. (ICAC also tags the converted install with the
+  // seller's first name, e.g. "Kleber" — that's the sold-by signal we'll
+  // use to credit the sale dollars, planned next.)
+  try {
+    await env.DB
+      .prepare(
+        `UPDATE jobs SET is_sold = 1
+         WHERE job_type = 'estimate'
+           AND EXISTS (
+             SELECT 1 FROM jobs i
+             WHERE i.customer_hcp_id = jobs.customer_hcp_id
+               AND i.job_type = 'install'
+               AND COALESCE(i.completed_at, i.scheduled_start) >= COALESCE(jobs.completed_at, jobs.scheduled_start)
+           )`,
+      )
+      .run();
+    notes.push('estimate-converted flags updated');
+  } catch (e) {
+    errors.push(`estimate-converted flags: ${e instanceof Error ? e.message : String(e)}`);
   }
 
   const finished_at = new Date().toISOString();

@@ -4,9 +4,10 @@ description: "Wesley Chapel homeowners may face higher AC replacement costs afte
 tag: "Local Guide"
 date: "May 29, 2026"
 read: "5 min"
-image: "/images/changing-incentives-ac-replacement-newsroom-hero.webp"
-imageAlt: "Before and after of an old rusty AC condenser replaced with a new high-efficiency unit serviced by an I Care Air Care technician in Wesley Chapel"
+image: "/images/new-ac-condenser-wesley-chapel-energy-efficient.webp"
+imageAlt: "New high-efficiency outdoor AC condenser unit installed on a concrete pad at a Wesley Chapel home"
 location: "Wesley Chapel"
+noindex: true
 primaryService:
   href: "/services/ac-replacement-tampa/"
   label: "AC replacement"

@@ -1,0 +1,32 @@
+---
+// Reusable in-content conversion band. Breaks up long service copy with a
+// clear call-to-action. `tone` lets each page alternate colors so the page
+// does not read as one flat wall of text. Safe inside .prose-icac (not-prose).
+import { SITE } from '../lib/site';
+interface Props { heading?: string; text?: string; tone?: 'navy' | 'brand' | 'accent'; }
+const {
+  heading = "Questions about what you're seeing?",
+  text = 'A two-minute call usually tells you whether it is a quick fix or something bigger. No pressure, no hard sell, just an honest answer from a licensed tech.',
+  tone = 'navy',
+} = Astro.props;
+
+const bg = tone === 'brand'
+  ? 'from-brand-600 to-brand-800'
+  : tone === 'accent'
+  ? 'from-accent-500 to-accent-700'
+  : 'from-navy-700 to-navy-900';
+---
+<div class={`not-prose my-10 rounded-2xl bg-gradient-to-br ${bg} text-white p-6 md:p-8 shadow-[var(--shadow-soft)]`}>
+  <div class="md:flex md:items-center md:justify-between gap-6">
+    <div>
+      <h3 class="text-white text-xl md:text-2xl font-bold leading-snug">{heading}</h3>
+      <p class="mt-2 text-white/85 text-[15px] leading-relaxed max-w-xl">{text}</p>
+    </div>
+    <div class="mt-5 md:mt-0 shrink-0">
+      <a href={SITE.phoneHref} class="inline-flex items-center justify-center gap-2 rounded-lg bg-accent-500 hover:bg-accent-600 text-white font-bold px-7 py-4 text-lg transition whitespace-nowrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+        Call {SITE.phone}
+      </a>
+    </div>
+  </div>
+</div>

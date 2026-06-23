@@ -9,7 +9,7 @@ interface Props {
 }
 const { type = 'LocalBusiness', data = {}, faqs, breadcrumbs, steps } = Astro.props;
 
-// Named Person entity for Tim — powers E-E-A-T across the site.
+// Named Person entity for Tim - powers E-E-A-T across the site.
 // Referenced by @id from Article schema on blog posts and Person reference in LocalBusiness.
 const tim = {
   '@type': 'Person',
@@ -66,9 +66,12 @@ const localBusiness = {
   image: `${SITE.url}/images/ICAC%20Full%20Logo.webp`,
   logo: `${SITE.url}/images/ICAC%20Full%20Logo.webp`,
   url: SITE.url,
-  telephone: SITE.phone,
+  telephone: '+1-813-395-2324',
   email: SITE.email,
   priceRange: '$$',
+  paymentAccepted: 'Cash, Check, Credit Card, Financing',
+  currenciesAccepted: 'USD',
+  hasMap: SITE.socials.google,
   foundingDate: '2010',
   slogan: SITE.tagline,
   address: {
@@ -94,7 +97,7 @@ const localBusiness = {
   sameAs: SITE.externalProfiles,
   founder: { '@id': `${SITE.url}/#tim-hawk` },
   employee: { '@id': `${SITE.url}/#tim-hawk` },
-  // hasOfferCatalog wraps the service offers — Stryker-agency pattern observed
+  // hasOfferCatalog wraps the service offers - Stryker-agency pattern observed
   // on nealrfg.com. More idiomatic than makesOffer for surfacing a service menu
   // and gives Google a clean root for product-style rich results.
   hasOfferCatalog: {
@@ -134,7 +137,7 @@ const localBusiness = {
 
 let json: any = localBusiness;
 if (type === 'LocalBusiness') {
-  // WebSite entity — powers sitelinks, RSS discovery, and gives AI crawlers a
+  // WebSite entity - powers sitelinks, RSS discovery, and gives AI crawlers a
   // clean top-level description of the site (vs. just the business entity).
   const website = {
     '@type': 'WebSite',
@@ -143,7 +146,7 @@ if (type === 'LocalBusiness') {
     name: SITE.name,
     inLanguage: 'en-US',
     publisher: { '@id': `${SITE.url}/#business` },
-    description: `${SITE.name} — ${SITE.tagline}`,
+    description: `${SITE.name} - ${SITE.tagline}`,
   };
   // Emit LocalBusiness + Person + WebSite via @graph so all three are linked entities
   json = {

@@ -6,7 +6,7 @@ import ContactFormSection from '../components/ContactFormSection.astro';
 import { getCollection } from 'astro:content';
 
 const entries = (await getCollection('blog', ({ data }) => !data.draft));
-// Sort by date descending — same order the previous TS array used (newest first)
+// Sort by date descending - same order the previous TS array used (newest first)
 entries.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 const allPosts = entries.map((e) => ({ ...e.data, slug: e.id }));
 
