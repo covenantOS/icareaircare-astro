@@ -1,7 +1,7 @@
 ---
 import { SITE } from '../lib/site';
 interface Props { compact?: boolean; title?: string; variant?: 'hero' | 'section' | 'card'; }
-const { compact = false, title = 'Request your free quote', variant = 'hero' } = Astro.props;
+const { compact = false, title = 'Request your quote', variant = 'hero' } = Astro.props;
 
 const wrapClass = variant === 'hero'
   ? 'rounded-2xl bg-brand-500/90 backdrop-blur ring-1 ring-white/30 shadow-[0_20px_50px_-20px_rgba(15,26,41,0.6)] p-6 md:p-7'

@@ -53,4 +53,4 @@ checklist:
 <h2>Methodology note</h2>
 <p>We compiled this from 7+ credible sources including the IEA, DOE, Climate Central, and Intel Market Research. The data points to one conclusion: as AC demand explodes, efficient installs are your shield against costs and discomfort.</p>
 <p>Dive into the complete analysis with full methodology on our blog: <a href="/blogs/rising-heat-residential-ac-installation-wesley-chapel/">Rising Heat Is Driving Wesley Chapel Residential AC Installation</a>.</p>
-<p>Ready to make sure your home is prepared for Florida's heat? Get a free estimate on a reliable <a href="/services/ac-installation-wesley-chapel/">Wesley Chapel residential AC installation</a>, or call (813) 395-2324.</p>
+<p>Ready to make sure your home is prepared for Florida's heat? Request an estimate on a reliable <a href="/services/ac-installation-wesley-chapel/">Wesley Chapel residential AC installation</a>, or call (813) 395-2324.</p>
