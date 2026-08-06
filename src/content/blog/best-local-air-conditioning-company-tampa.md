@@ -1,6 +1,6 @@
 ---
 title: "How to Find the Best Local Air Conditioning Company in Tampa"
-description: "Searching for the best local air conditioning company in Tampa? This guide walks you through how to evaluate HVAC companies in Wesley Chapel and Tampa Bay using real signals, not just star ratings."
+description: "Vetting a Tampa AC company: read review patterns, not star counts. Check the date range, cross-check BBB, confirm a local address."
 tag: "Hiring Guide"
 date: "May 22, 2026"
 read: "9 min"

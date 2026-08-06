@@ -1,5 +1,5 @@
 ---
-title: "Wesley Chapel AC Replacement Services Surge as Incentives Fade"
+title: "AC Replacement Incentives Are Fading in Wesley Chapel"
 description: "Wesley Chapel homeowners are moving toward AC replacement as federal savings shrink and Florida cooling costs rise."
 tag: "Buyer's Guide"
 date: "May 29, 2026"

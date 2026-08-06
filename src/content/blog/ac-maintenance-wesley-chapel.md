@@ -5,6 +5,7 @@ tag: "Maintenance"
 date: "Apr 4, 2026"
 read: "8 min"
 image: "/images/ac-maintenance-wesley-chapel-indoor-unit-deep-cleaning-technician.webp"
+imageAlt: "Technician in yellow gloves wiping down the housing and coil of an indoor AC unit during a Wesley Chapel tune-up"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/ac-maintenance-tampa/"

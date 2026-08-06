@@ -5,6 +5,7 @@ tag: "Installation"
 date: "Mar 26, 2026"
 read: "12 min"
 image: "/images/HVAC-Installation-Tampa-Bay-%E2%80%93-New-Outdoor-Condenser-Installation.webp"
+imageAlt: "Newly installed outdoor AC condenser on a concrete pad next to the electrical meter and disconnect at a Tampa Bay home"
 location: "Tampa Bay"
 primaryService:
   href: "/services/hvac-installation-tampa/"

@@ -1,6 +1,6 @@
 ---
 title: "AC Contactor Failure Signs and Replacement Cost"
-description: "Bad ac contactor warning signs, why they fail in Florida heat, contactor vs capacitor, and ac contactor replacement cost from I Care Air Care."
+description: "Humming condenser that will not start? Bad AC contactor signs, contactor versus capacitor, and $150-$350 replacement cost in Florida."
 tag: "AC Repair"
 date: "Jul 22, 2026"
 read: "11 min"

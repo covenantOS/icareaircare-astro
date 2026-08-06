@@ -1,6 +1,6 @@
 ---
 title: "Rising Heat Is Driving Wesley Chapel Residential AC Installation"
-description: "Residential AC installation is becoming a priority as heat warnings and energy costs continue to rise across Wesley Chapel and Tampa Bay."
+description: "Why Wesley Chapel homeowners replace AC before it fails: rising Florida cooling loads and roughly $500 a year in heat-pump savings."
 tag: "Efficiency"
 date: "May 29, 2026"
 read: "11 min"

@@ -1,6 +1,6 @@
 ---
 title: "New Construction HVAC: Epperson & Mirada Guide"
-description: "Builder-grade systems in Epperson, Mirada, and nearby Wesley Chapel communities often need airflow, humidity, and thermostat adjustments after move-in."
+description: "Epperson and Mirada builder HVAC: crushed flex duct, undersized returns and humidity settings to fix before the warranty ends."
 tag: "New Construction"
 date: "Apr 10, 2026"
 read: "10 min"

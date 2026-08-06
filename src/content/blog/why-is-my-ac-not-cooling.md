@@ -1,6 +1,6 @@
 ---
 title: "Why Is My AC Not Cooling? A Ranked Florida Guide"
-description: "AC running but not cooling? Here are the 8 causes of an air conditioner not blowing cold air, ranked cheapest to costliest, with safe DIY checks."
+description: "AC running but not cooling? Eight Florida causes ranked cheapest to costliest, with the safe checks to make before you book a visit."
 tag: "AC Repair"
 date: "Jul 22, 2026"
 read: "12 min"

@@ -1,10 +1,11 @@
 ---
 title: "AC Blowing Warm Air in Tampa: Common Causes"
-description: "Warm supply air usually points to airflow, refrigerant, electrical, or outdoor condenser trouble. Here is how Tampa homeowners can narrow it down safely."
+description: "AC blowing warm air in Tampa? Check thermostat mode, look for a frozen coil, and confirm the outdoor unit is spinning."
 tag: "AC Repair"
 date: "Apr 13, 2026"
 read: "8 min"
 image: "/images/ac-blowing-warm-air-tampa-woman-relaxing-cool-comfort-mini-split-living-room.webp"
+imageAlt: "Woman relaxing on a gray sofa in a Tampa living room while a wall-mounted mini-split blows cool air overhead"
 location: "Tampa"
 primaryService:
   href: "/services/ac-repair-tampa/"

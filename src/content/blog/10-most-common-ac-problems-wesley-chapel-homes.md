@@ -1,6 +1,6 @@
 ---
 title: "10 Most Common AC Problems in Wesley Chapel Homes"
-description: "The ten failure modes Wesley Chapel AC systems hit most often, ranked by frequency, with 2026 repair pricing and when each one means call a tech."
+description: "The ten AC failures Wesley Chapel homes hit most, ranked by frequency, with 2026 repair pricing and when each one needs a tech."
 tag: "AC Repair"
 date: "Apr 23, 2026"
 read: "10 min"

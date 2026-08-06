@@ -1,6 +1,6 @@
 ---
 title: "How Regular AC Maintenance Saves You From Costly Repairs"
-description: "Regular AC maintenance can prevent expensive emergency repairs. Learn what a professional tune-up includes and why Wesley Chapel homeowners schedule them before summer arrives."
+description: "What a professional AC tune-up includes, and why Wesley Chapel homeowners schedule one before summer instead of during it."
 tag: "Maintenance"
 date: "May 22, 2026"
 read: "10 min"

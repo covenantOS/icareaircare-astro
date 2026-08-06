@@ -5,6 +5,7 @@ tag: "Urgent Repair"
 date: "Mar 28, 2026"
 read: "7 min"
 image: "/images/emergency-ac-repair-wesley-chapel-ac-filter-panel-deep-cleaning.webp"
+imageAlt: "Technician rinsing a removed AC filter panel with a hose during a deep cleaning in Wesley Chapel"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/emergency-ac-repair-tampa/"
