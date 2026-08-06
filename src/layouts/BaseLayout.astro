@@ -75,7 +75,12 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href;
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+    <!-- noindex, FOLLOW on purpose. The pages that opt into noindex here are the
+         four newsroom/PR posts, which deliberately duplicate the keyword of an
+         indexed twin. noindex is what stops them cannibalizing; nofollow adds
+         nothing to that and only blocks the link equity those posts pass to the
+         service pages they cite. Keep them crawlable-through. -->
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />

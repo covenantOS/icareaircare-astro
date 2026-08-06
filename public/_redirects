@@ -26,6 +26,9 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 /ac-maintenance-wesley-chapel/ /blogs/ac-maintenance-wesley-chapel/ 301
 /air-conditioning-installation-wesley-chapel/ /blogs/air-conditioning-installation-wesley-chapel/ 301
 /how-to-choose-the-right-hvac-team-for-your-home/ /blogs/how-to-choose-the-right-hvac-team-for-your-home/ 301
+# Same post under its dated WordPress path. The house emoji must be
+# percent-encoded (U+1F3E0 -> %F0%9F%8F%A0) or the rule never matches.
+/2026/01/01/%F0%9F%8F%A0-how-to-choose-the-right-hvac-team-for-your-home/ /blogs/how-to-choose-the-right-hvac-team-for-your-home/ 301
 /emergency-ac-repair-wesley-chapel/ /blogs/emergency-ac-repair-wesley-chapel/ 301
 /hvac-installation-in-tampa-bay-complete-guide-for-homeowners/ /blogs/hvac-installation-in-tampa-bay-complete-guide-for-homeowners/ 301
 /what-are-the-best-preventive-hvac-maintenance-plans-for-homeowners-in-tampa-bay-who-want-a-local-trusted-contractor/ /blogs/what-are-the-best-preventive-hvac-maintenance-plans-for-homeowners-in-tampa-bay-who-want-a-local-trusted-contractor/ 301
@@ -86,6 +89,8 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 /air-conditioning/ac-repair/ /services/ac-repair-tampa/ 301
 /air-conditioning/air-conditioner-maintenance/ /services/ac-maintenance-tampa/ 301
 /heating-services/ /services/heating-services-tampa/ 301
+# No-slash twin. CF treats /x and /x/ as distinct, and GSC reports this one 404.
+/heating-services /services/heating-services-tampa/ 301
 /ac-repair /services/ac-repair-tampa/ 301
 /ac-installation /services/hvac-installation-tampa/ 301
 /ac-maintenance /services/ac-maintenance-tampa/ 301
