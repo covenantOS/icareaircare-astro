@@ -1,5 +1,5 @@
 ---
-title: "The Refrigerant Phase-Out Is Making AC Repair in Wesley Chapel, FL More Expensive"
+title: "Refrigerant Phase-Out: AC Repair Costs in Wesley Chapel"
 description: "AC repair Wesley Chapel FL is getting costlier as refrigerants phase out. Learn what it means for repairs, replacement costs, and planning ahead."
 tag: "Buyer's Guide"
 date: "Jun 16, 2026"

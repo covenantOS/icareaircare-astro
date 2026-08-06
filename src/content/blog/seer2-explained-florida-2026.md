@@ -1,6 +1,6 @@
 ---
 title: "SEER2 Ratings Explained for Florida Homeowners (2026)"
-description: "What SEER2 actually means, why it replaced SEER in 2023, Florida's 15.2 minimum, and the honest answer to whether 18 SEER2 is worth $4,000 more than 15.2 SEER2 in Tampa Bay."
+description: "What SEER2 means, why it replaced SEER, Florida's 15.2 minimum, and whether 18 SEER2 is worth the premium in Tampa Bay."
 tag: "Buyer's Guide"
 date: "Apr 29, 2026"
 read: "10 min"

@@ -1,6 +1,6 @@
 ---
-title: "Carrier vs Trane vs Rheem in Tampa Bay (Honest 2026 Comparison)"
-description: "An HVAC contractor's honest brand comparison - compressor warranty fine print, 4,000-install reliability data, parts availability, sound levels, and our Rheem Pro Partner bias disclosed up front."
+title: "Carrier vs Trane vs Rheem: Tampa Bay 2026"
+description: "An HVAC contractor's honest brand comparison: warranty fine print, reliability from 4,000 installs, and our Rheem bias disclosed."
 tag: "Buyer's Guide"
 date: "Apr 29, 2026"
 read: "14 min"
