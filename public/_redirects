@@ -45,7 +45,7 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 /how-to-lower-cooling-bills-in-wesley-chapel-without-overworking-your-ac/ /blogs/how-to-lower-cooling-bills-in-wesley-chapel-without-overworking-your-ac/ 301
 /ac-replacement-wesley-chapel-fl/ /blogs/ac-replacement-wesley-chapel-fl/ 301
 /wesley-chapel-air-conditioning/ /blogs/wesley-chapel-air-conditioning/ 301
-/ac-repair-wesley-chapel-fl/ /blogs/ac-repair-wesley-chapel-fl/ 301
+/ac-repair-wesley-chapel-fl/ /service-areas/wesley-chapel-ac-repair/ 301
 /air-filter-change-frequency/ /blogs/air-filter-change-frequency/ 301
 /ac-maintenance-tips/ /blogs/ac-maintenance-tips/ 301
 /heat-pump-vs-ac-tampa/ /blogs/heat-pump-vs-ac-tampa/ 301
@@ -62,6 +62,12 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 /blogs/which-preventive-hvac-maintenance-plans-in-tampa-bay-offer-the-best-value/ /blogs/ac-tune-up-cost-tampa/ 301
 /blogs/what-are-the-best-preventive-hvac-maintenance-plans-for-homeowners-in-tampa-bay-who-want-a-local-trusted-contractor/ /blogs/ac-tune-up-cost-tampa/ 301
 /blogs/what-does-a-residential-preventive-hvac-maintenance-visit-include-in-wesley-chapel-fl/ /blogs/ac-tune-up-cost-tampa/ 301
+
+# 2c. The ac-repair-wesley-chapel-fl post went to the service-area page rather
+#     than to another blog. It sat at position 60.3 competing for the exact
+#     term that page exists to own, which is the priority-1 term for the whole
+#     account. Its local content was harvested for the area-page rebuild.
+/blogs/ac-repair-wesley-chapel-fl/ /service-areas/wesley-chapel-ac-repair/ 301
 
 # 3. WordPress dated permalinks -> /blogs/:slug/. Placeholder covers every
 #    /YEAR/MM/DD/slug/ post in one rule. Only 2025/2026 had posts.

@@ -48,6 +48,23 @@ checklist:
 <p>As part of a proper replacement quote we walk the attic, pressure-test the duct system to look for leaks (good ducts lose under 10% to leakage; builder-grade Wesley Chapel ducts often run 20-30%), and measure static pressure on the existing system. If the returns are undersized, we'll recommend adding one or upsizing the main - often a $400–$900 add that changes the whole system's performance. If the supply runs are crushed in the attic, we'll address that before the new equipment comes in.</p>
 <p>Related, if the old system has been running musty or the <a href="/services/air-duct-cleaning-tampa/">air duct cleaning</a> hasn't happened in 5+ years, the install is the moment to tackle it - the coil is coming off anyway and access is easy.</p>
 
+<h2>The five questions that separate a real proposal from a sales sheet</h2>
+<p>Most Wesley Chapel homeowners collect three quotes and compare the bottom-line numbers. That is the wrong comparison, because the number is the output of decisions the quote often does not show you. Ask these five and the quotes stop looking alike.</p>
+<ul>
+<li><strong>Was a Manual J run on my house, and can I see it?</strong> If the answer is "we matched what was there," the tonnage is a guess inherited from a builder.</li>
+<li><strong>Is this an AHRI-matched system?</strong> A mismatched condenser and coil will not hit the SEER2 rating on the sticker, and it can void the manufacturer warranty.</li>
+<li><strong>What is the measured static pressure on my current ductwork?</strong> A contractor who has not measured it cannot tell you whether the new equipment will perform.</li>
+<li><strong>Who pulls the Pasco County mechanical permit, and is the final inspection included?</strong> An unpermitted install is a problem at resale, not just a code issue.</li>
+<li><strong>What exactly does the labor warranty cover, and for how long?</strong> Manufacturer parts coverage and contractor labor coverage are two different things, and only one of them depends on the company still being in business.</li>
+</ul>
+<p>The answers tell you more than the price does. A quote that is $1,500 cheaper because it skipped the load calculation and the permit is not cheaper, it is unfinished.</p>
+
+<blockquote>"My home is only four years old and my AC compressor failed twice. They responded promptly, explained the issue, and even provided a temporary AC unit while we waited for the replacement. Kleber was knowledgeable and professional, Cesar worked diligently, and Tim went above and beyond. I never felt like just another service call." <strong>T Tiller</strong>, Google review</blockquote>
+
+<h2>Before you replace, rule out the cheap explanation</h2>
+<p>Not every system that is not keeping up needs replacing. We get called for replacement quotes several times a month and end up doing a repair instead, usually because the failure is a $200 part rather than a dying compressor. Before you commit to a five-figure decision, it is worth ruling out the ordinary causes: a failing capacitor, a pitted contactor, a choked filter, a clogged drain line, or a refrigerant leak that can be found and fixed.</p>
+<p>Our walkthrough on <a href="/blogs/why-is-my-ac-not-cooling/">why your AC is not cooling</a> covers those in order, and <a href="/blogs/ac-contactor-failure-signs/">AC contactor failure signs</a> covers the single most common one we replace in Pasco County. If the system is fundamentally healthy and just under-maintained, an <a href="/blogs/ac-tune-up-cost-tampa/">AC tune-up</a> is a far better use of a few hundred dollars. And if you want the wider Tampa Bay picture on pricing before you talk to anyone, our guide to <a href="/blogs/hvac-replacement-cost-tampa-bay/">HVAC replacement cost in Tampa Bay</a> lays out the published market ranges by tonnage and efficiency tier.</p>
+
 <h2>What a proper install day looks like and what it costs</h2>
 <p>A typical 3-ton single-story Wesley Chapel replacement is a one-day job for a two-person crew. Day runs roughly: pump-down and refrigerant recovery per EPA Section 608 (1 hour), remove old equipment (1 hour), set new pad and condenser (1 hour), set new air handler and plenum connections (2 hours), braze line set with nitrogen purge (1 hour), deep vacuum pull to 500 microns (1 hour, this is non-negotiable for new refrigerant systems), weigh in charge (30 minutes), commissioning and documentation (1 hour). Two-story homes or ductwork changes extend to 1.5-2 days.</p>
 <p>Installed pricing in Wesley Chapel for a standard replacement without major duct work:</p>
@@ -60,4 +77,16 @@ checklist:
 </ul>
 <p>All Pasco County installs require a mechanical permit; we handle the permit paperwork and the final inspection. Manufacturer warranty registration is usually a 10-year parts / 1-year labor program, and we register it on your behalf so it's actually in force when you need it.</p>
 
-<p>If you're weighing whether to repair or replace, <a href="/about-us/">Tim and the team</a> will walk your home, run a Manual J if you don't have one, and show you both paths in writing. Call (813) 395-2324 to set up a no-pressure in-home quote, and ask about <a href="/financing/">financing options</a> if you'd rather spread the investment over manageable monthly payments. Wesley Chapel installs usually schedule within 5-10 business days during peak summer; shoulder-season (October-March) is faster.</p>
+<blockquote><strong>Tim's tip:</strong> get the AHRI certificate number on the proposal before you sign, not after the install. It is a public reference number you can look up yourself, and it is the only way to confirm the condenser and coil you are being sold were actually tested together at the efficiency on the quote. Contractors who match properly hand it over without being asked. The ones who do not will tell you they will send it later.</blockquote>
+
+<h2>Who you are hiring, and what stands behind the work</h2>
+<ul>
+<li><strong>Florida license CAC1816515</strong>, verifiable through the DBPR license portal. Tim Hawk founded I Care Air Care in 2010 and still answers the phone.</li>
+<li><strong>EPA Section 608 Universal certified</strong>, which matters more than usual during the R-454B and R-32 transition.</li>
+<li><strong>4.9 stars across 700+ Google reviews</strong>, and a crew that does not rotate through franchise territories.</li>
+<li><strong>One-year parts-and-labor workmanship warranty</strong> on top of the manufacturer's 10-year parts coverage, which we register on your behalf so it is in force when you need it.</li>
+<li><strong>Rheem Pro Partner</strong>, and we install Carrier, Trane, Lennox, Rheem and Goodman rather than pushing one brand.</li>
+<li><strong>Permits pulled and final inspections handled</strong> on every Pasco County install.</li>
+</ul>
+
+<p>If you're weighing whether to repair or replace, <a href="/about-us/">Tim and the team</a> will walk your home, run a Manual J if you don't have one, and show you both paths in writing. Call <a href="tel:+18133952324">(813) 395-2324</a> to set up a no-pressure in-home quote, and ask about <a href="/financing/">financing options</a> if you'd rather spread the investment over manageable monthly payments. We dispatch from 27022 Foamflower Blvd, minutes from Seven Oaks, Meadow Pointe, Wiregrass, Epperson and Mirada, and cover <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>, Land O' Lakes, Lutz, New Tampa, Odessa and Zephyrhills. Wesley Chapel installs usually schedule within 5-10 business days during peak summer; shoulder-season (October-March) is faster.</p>
