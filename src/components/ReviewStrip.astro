@@ -170,21 +170,13 @@ const firstFeatured = featured[0];
   </div>
 </section>
 
-<!-- JSON-LD: attaches the displayed Reviews to the #business entity. NO
-     aggregateRating here - that lives only on the HVACBusiness @graph in
-     BaseLayout. A second aggregateRating on the same @id triggers GSC's
-     "Review has multiple aggregate ratings" error sitewide. -->
-<script type="application/ld+json" set:html={JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  '@id': `${SITE.url}/#business`,
-  review: reviews.slice(0, 10).map(r => ({
-    '@type': 'Review',
-    author: { '@type': 'Person', name: r.n },
-    reviewRating: { '@type': 'Rating', ratingValue: 5, bestRating: 5 },
-    reviewBody: r.t,
-  })),
-})} />
+<!-- No JSON-LD here on purpose. This component used to emit a second
+     LocalBusiness node carrying `review` but no `aggregateRating`, which is
+     exactly what Google rejects ("Multiple reviews without aggregateRating
+     object") and what invalidated 45 pages in Search Console. The reviews now
+     live on the single HVACBusiness node in Schema.astro, alongside the
+     aggregateRating, which is where Google requires them. Do not re-add a
+     schema block here - the reviews below are presentational only. -->
 
 <style is:global>
   .iac-reviews {

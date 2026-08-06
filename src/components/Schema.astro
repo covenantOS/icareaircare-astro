@@ -89,6 +89,24 @@ const localBusiness = {
     reviewCount: SITE.rating.count,
     bestRating: 5,
   },
+  // Individual reviews MUST sit on the same node as aggregateRating. Google
+  // rejects an item carrying multiple `review` entries without an
+  // `aggregateRating` alongside them ("Multiple reviews without aggregateRating
+  // object"). Previously these lived in a separate LocalBusiness script emitted
+  // by ReviewStrip.astro, which is what produced the 45 invalid pages in GSC.
+  review: [
+    { author: 'Brian Cutting',    body: 'Great service and excellent knowledge of my AC. Been a customer for over 15 years and will continue to use I Care Air Care. The best.' },
+    { author: 'John Shackelford', body: 'Look no further for reliable and reasonable pricing on AC equipment and repair. Tech Gerald Thompson was outstanding. Owner Tim is the real deal. Customer focused owner.' },
+    { author: 'Cindy Suy',        body: 'We have been with I Care Air Care for 5 years now. James and Eric are both very professional, extremely knowledgeable, and have great attention to detail.' },
+    { author: 'Bob Aloisio',      body: 'The I Care Air Care team are always helpful, professional and responsive. The first time we used them was many years ago on an emergency call after we returned from vacation to a home with no AC.' },
+    { author: 'Fanny Schoettlin', body: 'James was very thorough, clean, and professional. Shared pics of what he found and warned me of future problems. These guys are great, been working with them for years.' },
+    { author: 'Ty Willingham',    body: 'Fantastic vendor. I have used them now a couple of times, and they are timely, honest, and do quality work. If you need AC work or duct cleaning, they are a go-to.' },
+  ].map(r => ({
+    '@type': 'Review',
+    author: { '@type': 'Person', name: r.author },
+    reviewRating: { '@type': 'Rating', ratingValue: 5, bestRating: 5, worstRating: 1 },
+    reviewBody: r.body,
+  })),
   areaServed: SITE.serviceAreas.map(a => ({
     '@type': /county/i.test(a.name) ? 'AdministrativeArea' : 'City',
     name: a.name,

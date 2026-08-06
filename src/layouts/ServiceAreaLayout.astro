@@ -78,31 +78,6 @@ const localGuides = BLOG_POSTS.filter((p) => {
 const areaGuides = localGuides.length ? localGuides : BLOG_POSTS.slice(0, 3);
 const areaType = isCounty ? 'AdministrativeArea' : 'City';
 
-// Verifiable 5-star Google reviews (provided by the owner, June 2026). Real, named
-// reviewers - replaces the prior illustrative copy (Google fake-review policy).
-const VERIFIED_REVIEWS = [
-  { name: 'Laura CB', rating: 5, body: 'I cannot recommend I Care Air Care enough. They have kept my 9-year-old AC unit running strong thanks to their skilled, experienced technicians. Kleber answered all my questions and taught me how to keep my system running smoothly.' },
-  { name: 'T Tiller', rating: 5, body: 'My home is only four years old and my AC compressor failed twice. The team at I Care Air Care made a hard situation easy: they responded promptly, explained the issue, and even provided a temporary AC unit while we waited for the replacement. Kleber was knowledgeable and professional, Cesar worked diligently, and Tim went above and beyond. I never felt like just another service call.' },
-  { name: 'Joyce Edwards', rating: 5, body: 'Kleber was my tech today and was fantastic: very professional and knowledgeable. I Care Air Care scheduled me right away when my AC shut off, and Tim the owner is responsive for weekend emergencies. Much appreciated!' },
-  { name: 'David Waite', rating: 5, body: 'Been with I Care Air Care now for 10 years. Solid company, and the technician today was great.' },
-  { name: 'Joe Macchiarella', rating: 5, body: 'George and team were the best!' },
-];
-const reviewSchemaItems = VERIFIED_REVIEWS.slice(0, 5).map(r => ({
-  '@type': 'Review',
-  author: { '@type': 'Person', name: r.name },
-  reviewBody: r.body,
-  reviewRating: {
-    '@type': 'Rating',
-    ratingValue: r.rating ?? 5,
-    bestRating: 5,
-    worstRating: 1,
-  },
-  // itemReviewed intentionally omitted - a Review nested inside a Service can't
-  // carry itemReviewed (GSC "invalid object type" / "nested object can't contain
-  // itemReviewed"). The parent Service is the implied reviewed item.
-  ...(r.neighborhood ? { locationCreated: { '@type': 'Place', name: `${r.neighborhood}, ${cityName}, FL` } } : {}),
-}));
-
 const areaSchema: any = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -118,10 +93,11 @@ const areaSchema: any = {
   description,
   url: `${SITE.url}/service-areas/${slug}/`,
   inLanguage: 'en-US',
-  // aggregateRating intentionally NOT set here - it lives only on the HVACBusiness
-  // @graph entity. Duplicating it on the Service block triggers GSC's "Review has
-  // multiple aggregate ratings" error.
-  ...(reviewSchemaItems.length > 0 ? { review: reviewSchemaItems } : {}),
+  // No aggregateRating and no review here on purpose. A Review nested inside a
+  // Service is what produced GSC's "Invalid object type for field
+  // '<parent_node>'" error. Reviews belong to the HVACBusiness node in
+  // Schema.astro, which carries the aggregateRating they require. Do not
+  // re-attach them to this Service block.
   speakable: {
     '@type': 'SpeakableSpecification',
     xpath: ['/html/head/title', '/html/body//h1', '/html/body//h2[1]', '/html/body//p[1]'],
