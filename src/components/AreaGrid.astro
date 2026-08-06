@@ -1,14 +1,24 @@
 ---
 import { SITE } from '../lib/site';
 const mapEmbed = 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d113137.91!2d-82.45!3d28.22!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1713600000000';
+
+// See WhyChooseUs.astro for why `city` exists. Same reasoning: a Lutz page
+// headed "Proudly Serving Wesley Chapel" spends its most prominent heading on
+// the wrong town.
+interface Props { city?: string; }
+const { city } = Astro.props;
+const heading = city
+  ? `Proudly Serving ${city} & the Surrounding Area`
+  : 'Proudly Serving Wesley Chapel & Surrounding Areas';
+const blurb = city
+  ? `We dispatch to ${city} from our Wesley Chapel shop on 27022 Foamflower Blvd, and cover Pasco, Hillsborough and Polk counties.`
+  : 'Based in Wesley Chapel, we cover all of Pasco, Hillsborough & Polk counties - from New Tampa to Zephyrhills.';
 ---
 <section class="py-16 md:py-20 bg-surface">
   <div class="container-site">
     <div class="text-center max-w-2xl mx-auto">
-      <h2 class="text-3xl md:text-4xl title-accent">Proudly Serving Wesley Chapel &amp; Surrounding Areas</h2>
-      <p class="mt-4 text-slate-600 leading-relaxed">
-        Based in Wesley Chapel, we cover all of Pasco, Hillsborough &amp; Polk counties - from New Tampa to Zephyrhills.
-      </p>
+      <h2 class="text-3xl md:text-4xl title-accent">{heading}</h2>
+      <p class="mt-4 text-slate-600 leading-relaxed">{blurb}</p>
     </div>
 
     <!-- Pill area buttons -->
