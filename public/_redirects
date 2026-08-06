@@ -31,12 +31,12 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 /2026/01/01/%F0%9F%8F%A0-how-to-choose-the-right-hvac-team-for-your-home/ /blogs/how-to-choose-the-right-hvac-team-for-your-home/ 301
 /emergency-ac-repair-wesley-chapel/ /blogs/emergency-ac-repair-wesley-chapel/ 301
 /hvac-installation-in-tampa-bay-complete-guide-for-homeowners/ /blogs/hvac-installation-in-tampa-bay-complete-guide-for-homeowners/ 301
-/what-are-the-best-preventive-hvac-maintenance-plans-for-homeowners-in-tampa-bay-who-want-a-local-trusted-contractor/ /blogs/what-are-the-best-preventive-hvac-maintenance-plans-for-homeowners-in-tampa-bay-who-want-a-local-trusted-contractor/ 301
-/what-does-a-residential-preventive-hvac-maintenance-visit-include-in-wesley-chapel-fl/ /blogs/what-does-a-residential-preventive-hvac-maintenance-visit-include-in-wesley-chapel-fl/ 301
+/what-are-the-best-preventive-hvac-maintenance-plans-for-homeowners-in-tampa-bay-who-want-a-local-trusted-contractor/ /blogs/ac-tune-up-cost-tampa/ 301
+/what-does-a-residential-preventive-hvac-maintenance-visit-include-in-wesley-chapel-fl/ /blogs/ac-tune-up-cost-tampa/ 301
 /evaluate-hvac-companies-tampa-bay-repair-warranty/ /blogs/evaluate-hvac-companies-tampa-bay-repair-warranty/ 301
-/which-preventive-hvac-maintenance-plans-in-tampa-bay-offer-the-best-value/ /blogs/which-preventive-hvac-maintenance-plans-in-tampa-bay-offer-the-best-value/ 301
+/which-preventive-hvac-maintenance-plans-in-tampa-bay-offer-the-best-value/ /blogs/ac-tune-up-cost-tampa/ 301
 /why-is-my-ac-running-but-not-cooling-in-florida-what-homeowners-need-to-know/ /blogs/why-is-my-ac-running-but-not-cooling-in-florida-what-homeowners-need-to-know/ 301
-/how-to-book-preventive-hvac-maintenance-in-tampa-bay-with-financing-options/ /blogs/how-to-book-preventive-hvac-maintenance-in-tampa-bay-with-financing-options/ 301
+/how-to-book-preventive-hvac-maintenance-in-tampa-bay-with-financing-options/ /blogs/ac-tune-up-cost-tampa/ 301
 /ac-repair-seven-oaks-wesley-chapel/ /blogs/ac-repair-seven-oaks-wesley-chapel/ 301
 /ac-blowing-warm-air-in-wesley-chapel-7-common-causes-and-how-we-fix-them/ /blogs/ac-blowing-warm-air-in-wesley-chapel-7-common-causes-and-how-we-fix-them/ 301
 /ac-repair-in-epperson-fast-reliable-cooling-for-lagoon-community-homes/ /blogs/ac-repair-in-epperson-fast-reliable-cooling-for-lagoon-community-homes/ 301
@@ -51,6 +51,17 @@ https://icareaircare.com/* https://www.icareaircare.com/:splat 301
 /heat-pump-vs-ac-tampa/ /blogs/heat-pump-vs-ac-tampa/ 301
 /carrier-vs-trane-vs-rheem-tampa/ /blogs/carrier-vs-trane-vs-rheem-tampa/ 301
 /seer2-explained-florida-2026/ /blogs/seer2-explained-florida-2026/ 301
+
+# 2b. CONSOLIDATION 2026-08. Four thin maintenance-plan posts merged into
+#     /blogs/ac-tune-up-cost-tampa/. They answered variations of the same
+#     question, split the same keyword between them, and the whole cluster is
+#     worth about 10 searches/month locally. The merged post targets
+#     "ac tune up" (50/mo Tampa, $111.91 CPC). The legacy root-level rules in
+#     section 2 above already point at the new URL, so nothing chains.
+/blogs/how-to-book-preventive-hvac-maintenance-in-tampa-bay-with-financing-options/ /blogs/ac-tune-up-cost-tampa/ 301
+/blogs/which-preventive-hvac-maintenance-plans-in-tampa-bay-offer-the-best-value/ /blogs/ac-tune-up-cost-tampa/ 301
+/blogs/what-are-the-best-preventive-hvac-maintenance-plans-for-homeowners-in-tampa-bay-who-want-a-local-trusted-contractor/ /blogs/ac-tune-up-cost-tampa/ 301
+/blogs/what-does-a-residential-preventive-hvac-maintenance-visit-include-in-wesley-chapel-fl/ /blogs/ac-tune-up-cost-tampa/ 301
 
 # 3. WordPress dated permalinks -> /blogs/:slug/. Placeholder covers every
 #    /YEAR/MM/DD/slug/ post in one rule. Only 2025/2026 had posts.
