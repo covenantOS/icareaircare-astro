@@ -1,6 +1,6 @@
 ---
 title: "Heat Pump vs Traditional AC for Tampa Bay Homes (2026)"
-description: "Honest math on which system wins in Florida - install costs, 2026 IRA tax credits ($2,000), Duke + TECO rebates, and the three scenarios where a traditional AC + furnace still beats a heat pump."
+description: "Heat pump vs AC in Tampa Bay: install costs, the $2,000 IRA credit, Duke and TECO rebates, and when a gas furnace still wins."
 tag: "Buyer's Guide"
 date: "Apr 29, 2026"
 read: "12 min"

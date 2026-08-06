@@ -1,6 +1,6 @@
 ---
 title: "AC Not Cooling in Tampa? How to Fix It Fast"
-description: "A Tampa homeowner checklist for a system running without cold air, including thermostat, airflow, drain, and outdoor unit checks before calling for help."
+description: "AC running but not cooling in Tampa? Work the checklist: setpoint, dirty filter, thawing a frozen coil, and a blocked outdoor condenser."
 tag: "AC Repair"
 date: "Apr 15, 2026"
 read: "9 min"
