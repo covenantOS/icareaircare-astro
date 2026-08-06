@@ -67,14 +67,15 @@ checklist:
 
 <h2>What a proper install day looks like and what it costs</h2>
 <p>A typical 3-ton single-story Wesley Chapel replacement is a one-day job for a two-person crew. Day runs roughly: pump-down and refrigerant recovery per EPA Section 608 (1 hour), remove old equipment (1 hour), set new pad and condenser (1 hour), set new air handler and plenum connections (2 hours), braze line set with nitrogen purge (1 hour), deep vacuum pull to 500 microns (1 hour, this is non-negotiable for new refrigerant systems), weigh in charge (30 minutes), commissioning and documentation (1 hour). Two-story homes or ductwork changes extend to 1.5-2 days.</p>
-<p>Installed pricing in Wesley Chapel for a standard replacement without major duct work:</p>
+<p>Published market ranges for the Tampa Bay area, for a standard replacement without major duct work. These are industry figures compiled from <a href="https://www.angi.com/articles/how-much-does-installing-new-ac-cost/fl/tampa" target="_blank" rel="noopener nofollow">Angi's Tampa cost data</a> and <a href="https://www.thisoldhouse.com/heating-cooling/3-ton-air-conditioner-cost" target="_blank" rel="noopener nofollow">This Old House</a>, not a quote from us. What your house actually costs depends on tonnage, ductwork, electrical, and access, and the only honest number comes from a load calculation on site.</p>
 <ul>
-<li><strong>2-ton 15.2 SEER2 single-stage:</strong> $6,800–$9,200</li>
-<li><strong>3-ton 15.2 SEER2 single-stage:</strong> $7,800–$10,500</li>
-<li><strong>3-ton 17 SEER2 two-stage:</strong> $9,800–$12,800</li>
-<li><strong>4-ton 18 SEER2 variable-speed inverter:</strong> $12,500–$16,500</li>
-<li><strong>5-ton variable-speed with advanced humidity control:</strong> $14,500–$19,000</li>
+<li><strong>2-ton 15.2 SEER2 single-stage:</strong> $6,500 to $9,000</li>
+<li><strong>3-ton 15.2 SEER2 single-stage:</strong> $7,500 to $10,500</li>
+<li><strong>3-ton 16 SEER2 two-stage:</strong> $9,000 to $12,000</li>
+<li><strong>4-ton 18 SEER2 variable-speed inverter:</strong> $11,000 to $14,500</li>
+<li><strong>5-ton variable-speed with advanced humidity control:</strong> $14,000 to $18,000</li>
 </ul>
+<p>For the full picture by size and efficiency tier, with the same figures broken out, see our <a href="/blogs/hvac-replacement-cost-tampa-bay/">HVAC replacement cost guide for Tampa Bay</a>.</p>
 <p>All Pasco County installs require a mechanical permit; we handle the permit paperwork and the final inspection. Manufacturer warranty registration is usually a 10-year parts / 1-year labor program, and we register it on your behalf so it's actually in force when you need it.</p>
 
 <blockquote><strong>Tim's tip:</strong> get the AHRI certificate number on the proposal before you sign, not after the install. It is a public reference number you can look up yourself, and it is the only way to confirm the condenser and coil you are being sold were actually tested together at the efficiency on the quote. Contractors who match properly hand it over without being asked. The ones who do not will tell you they will send it later.</blockquote>
