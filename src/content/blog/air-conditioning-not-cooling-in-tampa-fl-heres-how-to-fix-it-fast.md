@@ -5,6 +5,7 @@ tag: "AC Repair"
 date: "Apr 15, 2026"
 read: "9 min"
 image: "/images/air-conditioning-not-cooling-tampa-fl-mini-split-outdoor-condenser-unit-wall-mounted.webp"
+imageAlt: "Wall-mounted mini-split outdoor condenser unit running on the exterior wall of a Tampa home"
 location: "Tampa"
 primaryService:
   href: "/services/ac-repair-tampa/"

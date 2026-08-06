@@ -5,6 +5,7 @@ tag: "AC Repair"
 date: "Apr 8, 2026"
 read: "9 min"
 image: "/images/ac-not-cooling-i-care-air-care-technician-refrigerant-diagnostics-wesley-chapel.webp"
+imageAlt: "I Care Air Care technician reading refrigerant gauges at a Rheem outdoor condenser beside a company van in Wesley Chapel"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/ac-repair-tampa/"

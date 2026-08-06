@@ -5,6 +5,7 @@ tag: "Maintenance"
 date: "Feb 16, 2026"
 read: "6 min"
 image: "/images/ac-maintenance-wesley-chapel-mini-split-cover-inspection-technician.webp"
+imageAlt: "Technician lifting the front cover off a wall-mounted indoor AC unit to reach the air filter behind it"
 location: "Florida"
 primaryService:
   href: "/services/ac-maintenance-tampa/"

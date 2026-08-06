@@ -5,6 +5,7 @@ tag: "Indoor Air Quality"
 date: "Apr 6, 2026"
 read: "8 min"
 image: "/images/air-duct-cleaning-wesley-chapel-rotary-brush-dirty-ceiling-duct.webp"
+imageAlt: "Technician feeding a rotary brush and vacuum hose into a dirty ceiling duct during air duct cleaning in Wesley Chapel"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/air-duct-cleaning-tampa/"

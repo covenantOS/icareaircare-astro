@@ -5,6 +5,7 @@ tag: "Local Guide"
 date: "Feb 22, 2026"
 read: "8 min"
 image: "/images/i-care-air-care-wesley-chapel-hvac-team.webp"
+imageAlt: "The I Care Air Care team standing together with their orange and blue service vans outside the Wesley Chapel shop"
 location: "Wesley Chapel"
 primaryService:
   href: "/services/ac-repair-tampa/"

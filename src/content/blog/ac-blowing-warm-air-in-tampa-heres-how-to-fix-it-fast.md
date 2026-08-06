@@ -5,6 +5,7 @@ tag: "AC Repair"
 date: "Apr 13, 2026"
 read: "8 min"
 image: "/images/ac-blowing-warm-air-tampa-woman-relaxing-cool-comfort-mini-split-living-room.webp"
+imageAlt: "Woman relaxing on a gray sofa in a Tampa living room while a wall-mounted mini-split blows cool air overhead"
 location: "Tampa"
 primaryService:
   href: "/services/ac-repair-tampa/"

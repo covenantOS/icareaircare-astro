@@ -5,6 +5,7 @@ tag: "Hiring Guide"
 date: "Mar 30, 2026"
 read: "7 min"
 image: "/images/Trusted-HVAC-Contractor-Near-Me-I-Care-Air-Care.webp"
+imageAlt: "Two I Care Air Care technicians testing an indoor air handler with a multimeter in a Tampa Bay home, service van parked outside"
 location: "Tampa Bay"
 primaryService:
   href: "/services/ac-repair-tampa/"
