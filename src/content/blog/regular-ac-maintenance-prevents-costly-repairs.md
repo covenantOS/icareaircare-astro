@@ -75,7 +75,7 @@ checklist:
 
 <p>For homeowners with systems that are seven to ten years old, this spring window is especially worth taking seriously. That is the age range where components start showing wear more consistently, and where a technician's inspection can catch things that are not yet obvious from the thermostat.</p>
 
-<p>We go deeper into what a preventive maintenance visit actually looks like in our guide on <a href="/blogs/what-does-a-residential-preventive-hvac-maintenance-visit-include-in-wesley-chapel-fl/">what a residential preventive HVAC maintenance visit includes in Wesley Chapel</a>.</p>
+<p>We go deeper into what a preventive maintenance visit actually looks like in our guide on <a href="/blogs/ac-tune-up-cost-tampa/">what an AC tune-up costs and what a full visit includes</a>.</p>
 
 <h2>What Homeowners Can Do Between Professional Visits</h2>
 

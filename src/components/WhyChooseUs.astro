@@ -1,5 +1,17 @@
 ---
 import { SITE } from '../lib/site';
+
+// `city` is passed only by ServiceAreaLayout. Without it the heading keeps its
+// Wesley Chapel wording, which is correct on service pages and the homepage
+// where Wesley Chapel is the business's own city. On a Lutz or Zephyrhills page
+// that same heading claims the wrong town recommends us, which works against
+// the exact city signal those pages are built to earn.
+interface Props { city?: string; }
+const { city } = Astro.props;
+const heading = city
+  ? `Three reasons ${city} homeowners keep calling us`
+  : 'Three reasons Wesley Chapel keeps recommending us';
+
 const cards = [
   {
     icon: 'truck',
@@ -21,7 +33,7 @@ const cards = [
 <section class="py-14 md:py-20">
   <div class="container-site">
     <div class="text-center max-w-2xl mx-auto mb-10 md:mb-14">
-      <h2 class="text-3xl md:text-4xl">Three reasons Wesley Chapel keeps recommending us</h2>
+      <h2 class="text-3xl md:text-4xl">{heading}</h2>
       <p class="mt-3 text-sm font-semibold uppercase tracking-[0.15em] text-brand-800">Local · Licensed · Family-run since 2010</p>
     </div>
     <div class="grid md:grid-cols-3 gap-6">
