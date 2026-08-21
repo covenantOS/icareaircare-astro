@@ -30,9 +30,6 @@ checklist:
 <h2>The big-three Tampa Bay reality</h2>
 <p>Carrier, Trane, and Rheem are roughly the top three residential split-system brands by Tampa Bay market share. Lennox is fourth (premium tier, higher install cost). Goodman/Daikin and Bryant round out the rest. American Standard is Trane's identical-equipment sibling brand sold through a different dealer network - same factory, same parts, different name and stickers, lower price tier.</p>
 <p>The brand on the outdoor cabinet sticker matters less than most homeowners think. The compressor inside is one of three or four manufacturers (Copeland, Bristol, GMCC, or Highly) that supply most of the industry. The control board, capacitor, contactor, and fan motor are the same three or four suppliers. What differs across brands is system integration, software, sound engineering, refrigerant choice, and dealer/parts ecosystem.</p>
-<figure class="not-prose my-8">
-  <img src="/images/carrier-vs-trane-rheem-two-outdoor-condensers.webp" alt="Two outdoor AC condensers of different cabinet styles on concrete pads in a Tampa Bay backyard" title="The cabinet style changes by brand. The parts inside often come from the same suppliers." width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
-</figure>
 
 <h2>Compressor warranty - the real fine print</h2>
 <p>All three brands advertise "10-year compressor warranty" on residential split systems. The fine print varies in three specific ways that matter at year 7 when your compressor fails:</p>
@@ -107,6 +104,9 @@ checklist:
 <li><strong>You want the deepest diagnostics in the app.</strong> Carrier Infinity Touch + Carrier Home is the most useful homeowner app of the three.</li>
 <li><strong>You're willing to pay the premium for engineering.</strong> Carrier holds the slight reliability edge on Infinity-tier products.</li>
 </ol>
+<figure class="not-prose my-8">
+  <img src="/images/carrier-outdoor-condenser-tampa-install.webp" alt="Carrier outdoor AC condenser on a concrete pad in a Tampa Bay backyard" title="Carrier: quietest variable-speed outdoor unit in this comparison" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+</figure>
 
 <h2>When to pick Trane (or American Standard)</h2>
 <ol>
@@ -114,6 +114,9 @@ checklist:
 <li><strong>You want third-party home automation.</strong> Trane Nexia integrates better with Apple Home, SmartThings, and Z-Wave than the other two.</li>
 <li><strong>You're considering American Standard at a 5–10% lower install cost than Trane proper.</strong> Same factory, same equipment, slightly different sticker. Often the best Trane-quality value play.</li>
 </ol>
+<figure class="not-prose my-8">
+  <img src="/images/trane-outdoor-condenser-tampa-install.webp" alt="Trane outdoor heat pump condenser in a Florida suburban backyard" title="Trane: the coastal coil choice in this comparison" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+</figure>
 
 <h2>When to pick Rheem</h2>
 <ol>
@@ -122,6 +125,9 @@ checklist:
 <li><strong>You want a Rheem Pro Partner installer who specifically trains and stocks for the brand.</strong> That's us - disclosed bias.</li>
 <li><strong>You're picking a heat pump and want R-32 refrigerant</strong> (slightly more efficient than R-454B at peak cooling load, no consumer-visible difference otherwise).</li>
 </ol>
+<figure class="not-prose my-8">
+  <img src="/images/rheem-outdoor-condenser-tampa-install.webp" alt="Rheem outdoor AC condenser on a pad in a Tampa Bay backyard" title="Rheem: the Pro Partner we stock parts for same-day" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+</figure>
 
 <h2>What we actually recommend, by use case</h2>
 <ul>

@@ -31,10 +31,6 @@ checklist:
 
 <p>On our trucks, a well-maintained system in inland Pasco or northern Hillsborough typically lands at <strong>12 to 15 years</strong> before replacement is the honest conversation. Skip the <a href="/services/ac-maintenance-tampa/">tune-ups</a> and we see 10 to 12. Closer to the Gulf, salt air can pull that lower even when the homeowner did everything else right. Those are field ranges from the homes we service, not a warranty promise.</p>
 
-<figure class="not-prose my-8">
-  <img src="/images/ac-lifespan-florida-aged-outdoor-condenser.webp" alt="Weathered outdoor AC condenser with faded paint and dirty fins in a Florida suburban backyard" title="This is what year 15 looks like on a Tampa Bay condenser that never got a coil rinse" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
-</figure>
-
 <h2>Runtime and humidity wear the parts, not a weak brand</h2>
 
 <p>A 3-ton system in Minnesota might log about 600 cooling hours a year. The same size in Tampa Bay logs more than 2,200. That is why a capacitor, a contactor, and a condenser fan motor fail on a schedule that looks early if you grew up somewhere with a real winter.</p>
@@ -95,5 +91,9 @@ checklist:
 <h2>What actually adds years to the unit you have</h2>
 
 <p>Change the 1-inch filter every 30 to 60 days in this climate, closer to 30 with pets or nearby construction. Rinse the outdoor coil from the top with a garden hose at household pressure, never a pressure washer. Keep 2 feet of clearance around the condenser, including the hedge that looked fine when it was planted. Book two professional visits a year, spring and fall, so a weak capacitor is a Tuesday part instead of a Saturday compressor.</p>
+
+<figure class="not-prose my-8">
+  <img src="/images/ac-lifespan-florida-rusty-disconnect.webp" alt="Rusty outdoor AC disconnect box on a Florida house wall next to an aging condenser" title="Year-15 electrical is part of why Florida systems do not see the national 20-year life" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+</figure>
 
 <p>If the system is already past year 12 and you are staring at a large repair, skip the folklore and get both numbers in writing. Call (813) 395-2324 or book from the <a href="/services/hvac-installation-tampa/">HVAC installation</a> page. We will tell you if the unit has another summer in it, and we will tell you if it does not.</p>
