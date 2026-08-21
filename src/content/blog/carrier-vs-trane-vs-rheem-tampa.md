@@ -30,6 +30,9 @@ checklist:
 <h2>The big-three Tampa Bay reality</h2>
 <p>Carrier, Trane, and Rheem are roughly the top three residential split-system brands by Tampa Bay market share. Lennox is fourth (premium tier, higher install cost). Goodman/Daikin and Bryant round out the rest. American Standard is Trane's identical-equipment sibling brand sold through a different dealer network - same factory, same parts, different name and stickers, lower price tier.</p>
 <p>The brand on the outdoor cabinet sticker matters less than most homeowners think. The compressor inside is one of three or four manufacturers (Copeland, Bristol, GMCC, or Highly) that supply most of the industry. The control board, capacitor, contactor, and fan motor are the same three or four suppliers. What differs across brands is system integration, software, sound engineering, refrigerant choice, and dealer/parts ecosystem.</p>
+<figure class="not-prose my-8">
+  <img src="/images/carrier-vs-trane-rheem-two-outdoor-condensers.webp" alt="Two outdoor AC condensers of different cabinet styles on concrete pads in a Tampa Bay backyard" title="The cabinet style changes by brand. The parts inside often come from the same suppliers." width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+</figure>
 
 <h2>Compressor warranty - the real fine print</h2>
 <p>All three brands advertise "10-year compressor warranty" on residential split systems. The fine print varies in three specific ways that matter at year 7 when your compressor fails:</p>
@@ -59,6 +62,9 @@ checklist:
 <li><strong>Trane:</strong> 1–2 day from Trane/American Standard regional warehouse in Orlando or Atlanta. Same-day for the most-common parts only. Trane-specific parts (their proprietary CleanEffects whole-house filtration, their integrated communicating boards) can take 3–5 days if they're not stocked locally.</li>
 </ul>
 <p>Real-world impact: on a 95° August Wednesday with a failed contactor, we can get you cooling again the same day on any of the three brands. On a less-common part (variable-speed inverter board, specific TXV valve), the Rheem job is more often a same-day fix while the Trane or Carrier job is a 24–48 hour lead time. That's the moat. It doesn't make Rheem better equipment; it makes Rheem-equipped homes faster to bring back online.</p>
+<figure class="not-prose my-8">
+  <img src="/images/carrier-vs-trane-rheem-service-parts.webp" alt="Run capacitor, contactor, and fan motor parts next to an outdoor condenser during a Tampa Bay service call" title="Same-day parts beat a brand badge when the system is down in August" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+</figure>
 
 <h2>Sound levels at the outdoor unit</h2>
 <p>If you have a bedroom near the outdoor condenser, this matters. Manufacturer spec sheets give you sound ratings at low-stage and high-stage operation; here's what those numbers actually mean for a homeowner standing 10 feet from the unit:</p>
