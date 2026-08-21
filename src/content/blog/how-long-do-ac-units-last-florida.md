@@ -5,7 +5,7 @@ tag: "Buyer's Guide"
 date: "Aug 21, 2026"
 read: "12 min"
 image: "/images/ac-lifespan-florida-aged-outdoor-condenser.webp"
-imageAlt: "Fifteen-year-old outdoor AC condenser in a Florida backyard, faded cabinet and dirty fins"
+imageAlt: "Aging outdoor AC condenser in Florida, typical of how long AC units last in Tampa Bay"
 location: "Tampa Bay"
 primaryService:
   href: "/services/ac-replacement-tampa/"
@@ -46,7 +46,7 @@ checklist:
 <p>Inland <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>, <a href="/service-areas/land-o-lakes-hvac-services/">Land O' Lakes</a>, and most of <a href="/service-areas/new-tampa-heating-and-cooling/">New Tampa</a> trade salt for pollen, grass clippings, and nine months of runtime. That is still harder than a national average, but it is a different failure pattern: dirty filters, packed condenser fins, and electrical parts cooked by cabinet heat above 140 degrees. Distance to the Gulf is why we change the maintenance cadence on the <a href="/services/ac-maintenance-tampa/">AC maintenance</a> page instead of selling one schedule to every ZIP.</p>
 
 <figure class="not-prose my-8">
-  <img src="/images/ac-maintenance-tampa-dirty-condenser-rinse.webp" alt="Dirty outdoor condenser fins being rinsed with a garden hose in a Florida backyard" title="A quarterly rinse is the cheapest lifespan extender we can show you" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+  <img src="/images/ac-maintenance-tampa-dirty-condenser-rinse.webp" alt="Outdoor AC condenser rinsed with a hose, maintenance that helps an AC last longer in Florida" title="How long an AC lasts in Florida: condenser coil rinse" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
 </figure>
 
 <h2>How often you should replace an AC in Florida</h2>
@@ -93,7 +93,7 @@ checklist:
 <p>Change the 1-inch filter every 30 to 60 days in this climate, closer to 30 with pets or nearby construction. Rinse the outdoor coil from the top with a garden hose at household pressure, never a pressure washer. Keep 2 feet of clearance around the condenser, including the hedge that looked fine when it was planted. Book two professional visits a year, spring and fall, so a weak capacitor is a Tuesday part instead of a Saturday compressor.</p>
 
 <figure class="not-prose my-8">
-  <img src="/images/ac-lifespan-florida-rusty-disconnect.webp" alt="Rusty outdoor AC disconnect box on a Florida house wall next to an aging condenser" title="Year-15 electrical is part of why Florida systems do not see the national 20-year life" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+  <img src="/images/ac-lifespan-florida-rusty-disconnect.webp" alt="Rusty AC disconnect beside an old condenser, typical wear after 15 years in Florida" title="How long an AC lasts in Florida: rusted outdoor disconnect" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
 </figure>
 
 <p>If the system is already past year 12 and you are staring at a large repair, skip the folklore and get both numbers in writing. Call (813) 395-2324 or book from the <a href="/services/hvac-installation-tampa/">HVAC installation</a> page. We will tell you if the unit has another summer in it, and we will tell you if it does not.</p>

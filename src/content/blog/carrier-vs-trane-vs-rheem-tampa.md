@@ -5,7 +5,7 @@ tag: "Buyer's Guide"
 date: "Apr 29, 2026"
 read: "14 min"
 image: "/images/carrier-outdoor-ac-condenser-unit-tampa-bay-brand-comparison.webp"
-imageAlt: "Carrier outdoor AC condenser installed at a Tampa Bay home, compared with Trane and Rheem"
+imageAlt: "Carrier outdoor AC condenser in Tampa Bay, compared with Trane and Rheem"
 location: "Tampa Bay"
 primaryService:
   href: "/services/hvac-installation-tampa/"
@@ -60,7 +60,7 @@ checklist:
 </ul>
 <p>Real-world impact: on a 95° August Wednesday with a failed contactor, we can get you cooling again the same day on any of the three brands. On a less-common part (variable-speed inverter board, specific TXV valve), the Rheem job is more often a same-day fix while the Trane or Carrier job is a 24–48 hour lead time. That's the moat. It doesn't make Rheem better equipment; it makes Rheem-equipped homes faster to bring back online.</p>
 <figure class="not-prose my-8">
-  <img src="/images/carrier-vs-trane-rheem-service-parts.webp" alt="Run capacitor, contactor, and fan motor parts next to an outdoor condenser during a Tampa Bay service call" title="Same-day parts beat a brand badge when the system is down in August" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+  <img src="/images/carrier-vs-trane-rheem-service-parts.webp" alt="HVAC capacitor, contactor, and fan motor next to an outdoor condenser in Tampa Bay" title="Carrier vs Trane vs Rheem in Tampa: same-day service parts" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
 </figure>
 
 <h2>Sound levels at the outdoor unit</h2>
@@ -105,7 +105,7 @@ checklist:
 <li><strong>You're willing to pay the premium for engineering.</strong> Carrier holds the slight reliability edge on Infinity-tier products.</li>
 </ol>
 <figure class="not-prose my-8">
-  <img src="/images/carrier-outdoor-condenser-tampa-install.webp" alt="Carrier outdoor AC condenser on a concrete pad in a Tampa Bay backyard" title="Carrier: quietest variable-speed outdoor unit in this comparison" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+  <img src="/images/carrier-outdoor-condenser-tampa-install.webp" alt="Carrier outdoor AC condenser installed in a Tampa Bay backyard" title="Carrier AC condenser in Tampa Bay" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
 </figure>
 
 <h2>When to pick Trane (or American Standard)</h2>
@@ -115,7 +115,7 @@ checklist:
 <li><strong>You're considering American Standard at a 5–10% lower install cost than Trane proper.</strong> Same factory, same equipment, slightly different sticker. Often the best Trane-quality value play.</li>
 </ol>
 <figure class="not-prose my-8">
-  <img src="/images/trane-outdoor-condenser-tampa-install.webp" alt="Trane outdoor heat pump condenser in a Florida suburban backyard" title="Trane: the coastal coil choice in this comparison" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+  <img src="/images/trane-outdoor-condenser-tampa-install.webp" alt="Trane outdoor heat pump condenser installed in a Tampa Bay backyard" title="Trane heat pump condenser in Tampa Bay" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
 </figure>
 
 <h2>When to pick Rheem</h2>
@@ -126,7 +126,7 @@ checklist:
 <li><strong>You're picking a heat pump and want R-32 refrigerant</strong> (slightly more efficient than R-454B at peak cooling load, no consumer-visible difference otherwise).</li>
 </ol>
 <figure class="not-prose my-8">
-  <img src="/images/rheem-outdoor-condenser-tampa-install.webp" alt="Rheem outdoor AC condenser on a pad in a Tampa Bay backyard" title="Rheem: the Pro Partner we stock parts for same-day" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+  <img src="/images/rheem-outdoor-condenser-tampa-install.webp" alt="Rheem outdoor AC condenser installed in a Tampa Bay backyard" title="Rheem AC condenser in Tampa Bay" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
 </figure>
 
 <h2>What we actually recommend, by use case</h2>
