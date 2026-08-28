@@ -46,6 +46,10 @@ checklist:
 </ul>
 <p>If any of these match what your system is doing, that is a call, not a wait-and-see. We cover this exact fault daily on our <a href="/services/ac-repair-tampa/">AC repair</a> routes, and catching a failing contactor before it welds shut is the difference between a $200 part and a compressor replacement several times that price.</p>
 
+<figure class="not-prose my-8">
+  <img src="/images/ac-contactor-pitted-contacts.webp" alt="Pitted and burnt contacts on an AC contactor inside an outdoor condenser electrical panel" title="Burnt AC contactor contacts" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+</figure>
+
 <h2>Contactor vs capacitor: how to tell them apart</h2>
 <p>These are the two cheap electrical parts that homeowners constantly confuse, and for good reason. Both live in the same condenser cabinet, both are inexpensive, both cause the exact same headline symptom: the outdoor unit hums but won't start. If you have read our rundown of the <a href="/blogs/why-is-my-ac-not-cooling/">reasons an AC won't cool</a>, you already know these two parts sit at the top of the list. But they are different components doing different jobs, and telling them apart matters.</p>
 <p>The <strong>capacitor</strong> is a cylindrical or oval metal can, usually silver, with a rounded top. Its job is to store and release an electrical charge that gives the compressor and fan motor the jolt of extra torque they need to overcome inertia and start spinning. Think of it as a battery-like kick-starter. When a capacitor weakens, the motors lack the muscle to break free, so the unit hums and strains but the fan or compressor can't get moving.</p>
@@ -70,6 +74,10 @@ checklist:
 <p>Second, and less obvious, is the capacitor sitting right next to the contactor. A capacitor stores an electrical charge even after all power is cut. A charged capacitor can hold enough energy to deliver a serious, injuring shock to anyone who brushes its terminals with a screwdriver or a knuckle, sometimes hours after the breaker is off. Professionals discharge the capacitor deliberately with an insulated tool before touching anything in that cabinet. Homeowners routinely do not know this step exists, and that is where the emergency-room stories come from.</p>
 <p>Third, correct diagnosis and correct part. Landing the wires on the wrong terminals, installing an under-rated contactor, or replacing a contactor when the real fault was the capacitor or the compressor all lead to a callback and sometimes a bigger failure. A licensed technician confirms the fault with a meter, installs the exact-spec part, and tests the unit under load before leaving. Tim Hawk holds Florida license CAC1816515 and is EPA Section 608 Universal certified, and every contactor we install is backed by our <strong>1-year parts-and-labor workmanship warranty</strong>. That warranty is meaningless on a DIY swap, and the risk is entirely yours.</p>
 <p>When a stuck-closed contactor has your compressor running nonstop in the middle of a July night, that is exactly the situation our <a href="/services/emergency-ac-repair-tampa/">emergency AC repair</a> line exists for. Same-day service is often available when the route schedule allows.</p>
+
+<figure class="not-prose my-8">
+  <img src="/images/ac-contactor-vs-capacitor.webp" alt="Round run capacitor next to a rectangular black AC contactor in an outdoor condenser electrical bay" title="AC contactor versus run capacitor" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+</figure>
 
 <h2>How maintenance extends contactor life</h2>
 <p>You cannot stop a contactor from arcing, that is physics. But you can dramatically slow its decline and, more importantly, catch it before it welds shut and takes the compressor with it. This is where a maintenance visit earns its keep.</p>

@@ -11,10 +11,10 @@ primaryService:
   href: "/services/ac-repair-tampa/"
   label: "AC repair"
 related:
-  - href: "/services/ac-maintenance-tampa/"
-    label: "AC maintenance"
-  - href: "/services/emergency-ac-repair-tampa/"
-    label: "Emergency AC repair"
+  - href: "/blogs/dirty-evaporator-coil-tampa/"
+    label: "Dirty evaporator coil"
+  - href: "/blogs/evaporator-coil-leak-tampa/"
+    label: "Evaporator coil leak"
   - href: "/blogs/why-is-my-ac-not-cooling/"
     label: "Why your AC is not cooling"
 checklist:
@@ -61,7 +61,7 @@ checklist:
 <p>Furniture pushed against a return grille, a rug over a floor vent, or half the supply registers closed off in unused bedrooms all reduce the air volume crossing the coil. Homeowners close vents to save money and get a frozen coil instead. Open them.</p>
 
 <h3>3. A dirty evaporator coil</h3>
-<p>Even with a good filter, <a href="/services/air-duct-cleaning-tampa/">fine dust bypasses around the filter rack</a> over the years and cakes onto the wet fins, where it turns into a felted mat. A dirty coil restricts airflow the same way a dirty filter does and it also insulates the metal from the air it is supposed to cool. This one needs a panel pulled, the right coil chemistry, and a technician who knows which fins bend.</p>
+<p>Even with a good filter, <a href="/services/air-duct-cleaning-tampa/">fine dust bypasses around the filter rack</a> over the years and cakes onto the wet fins, where it turns into a felted mat. A dirty coil restricts airflow the same way a dirty filter does and it also insulates the metal from the air it is supposed to cool. This one needs a panel pulled, the right coil chemistry, and a technician who knows which fins bend. Full write-up: <a href="/blogs/dirty-evaporator-coil-tampa/">dirty evaporator coil</a>.</p>
 
 <h3>4. Low refrigerant from a leak</h3>
 <p>An air conditioner does not consume refrigerant. If the charge is low, there is a leak somewhere. Low charge drops the pressure inside the coil, and lower pressure means a lower boiling temperature, so the coil runs colder than designed and ices over even with perfect airflow. This is the second most common cause we confirm, and it is licensed-technician work under EPA Section 608.</p>
@@ -120,7 +120,7 @@ checklist:
 
 <p>Evaporator coils leak for specific reasons in Florida. Formicary corrosion, sometimes called ant-nest corrosion, eats microscopic tunnels through aluminum tubing from the inside out. It is driven by <a href="/services/indoor-air-quality-tampa/">volatile organic compounds off new cabinetry, paint, cleaning products, and adhesives</a>, combined with the constant condensation a Florida coil lives in. Newer homes in Epperson, Mirada, and Wiregrass are prime candidates for exactly that reason. Vibration wear at brazed joints and factory-defect coils account for most of the rest.</p>
 
-<p>A technician confirms it rather than assuming it. Electronic leak detection, nitrogen pressure testing, or UV dye through the system will locate the leak, and the refrigerant charge gets weighed in against the nameplate rather than eyeballed off a gauge. If the leak is in the coil body itself, spot repairs on a corroded aluminum coil rarely hold, and coil replacement becomes the durable answer. Once it is replaced, a <a href="/services/ac-maintenance-tampa/">maintenance visit</a> twice a year is what keeps the next one from getting there.</p>
+<p>A technician confirms it rather than assuming it. Electronic leak detection, nitrogen pressure testing, or UV dye through the system will locate the leak, and the refrigerant charge gets weighed in against the nameplate rather than eyeballed off a gauge. If the leak is in the coil body itself, spot repairs on a corroded aluminum coil rarely hold, and coil replacement becomes the durable answer. Once it is replaced, a <a href="/services/ac-maintenance-tampa/">maintenance visit</a> twice a year is what keeps the next one from getting there. Dedicated post: <a href="/blogs/evaporator-coil-leak-tampa/">evaporator coil leak</a>.</p>
 
 <h2>Florida humidity makes a marginal system freeze sooner</h2>
 

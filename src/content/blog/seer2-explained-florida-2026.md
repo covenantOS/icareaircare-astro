@@ -41,6 +41,10 @@ checklist:
 <p>The federal Department of Energy splits the country into three regions for HVAC efficiency standards: North, Southeast, and Southwest. Florida is in the Southeast region. The current minimum for new split-system AC and heat pump installations in Florida (and Wesley Chapel, Tampa, Land O' Lakes, Lutz specifically) is <strong>15.2 SEER2</strong>. This is enforced at sale and at permit - a 14 SEER2 unit cannot legally be installed in Florida on a new system or as a replacement.</p>
 <p>This applies to ducted split systems, the dominant residential HVAC type in Tampa Bay. Different rules apply to packaged systems (16 SEER2 minimum), mini-splits (also 15.2 SEER2 minimum), and window units. What you can still do is install equipment <em>above</em> 15.2 SEER2 - 16, 17, 18, even 22 SEER2 systems are widely available. The question is whether the higher rating is worth the higher install price.</p>
 
+<figure class="not-prose my-8">
+  <img src="/images/seer2-nameplate-florida.webp" alt="Outdoor AC condenser data plate where the SEER2 rating is printed" title="SEER2 rating on a Florida condenser nameplate" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+</figure>
+
 <h2>Operating cost by SEER2 tier - real Tampa Bay numbers</h2>
 <p>A 3-ton split-system AC on a typical 2,000 sq ft Wesley Chapel home running through a Tampa Bay cooling season (about 2,200 cooling hours/year), against TECO's 2026 residential rate of roughly $0.155/kWh:</p>
 <ul>
@@ -81,6 +85,10 @@ checklist:
 <p>In Florida, variable-speed equipment matters less for raw cooling efficiency and more for <strong>humidity control</strong>. A single-stage system runs hard for 8 minutes, shuts off for 12 minutes, runs hard for 8 minutes - you get cool, dehumidified air during the run cycle, then humidity creeps back during the off cycle. A variable-speed system runs continuously at 30–40% capacity for hours - constant low-grade airflow, much better humidity removal.</p>
 <p>Real-world impact in Tampa Bay: variable-speed systems hold indoor humidity at 45–55% RH year-round; single-stage systems often let humidity rise to 60–70% RH between cycles. The difference is the "feels muggy when the AC is off" sensation. For asthma, allergy, hardwood-floor, or comfort-sensitive households, this matters more than the SEER2 number on the spec sheet.</p>
 <p>Variable-speed also runs much quieter - 51–53 dB at low-stage versus 70–76 dB on a single-stage at full operation. If the outdoor unit will sit near a bedroom window or pool deck, the sound difference alone justifies variable-speed for many homeowners.</p>
+
+<figure class="not-prose my-8">
+  <img src="/images/seer2-old-vs-new-condenser.webp" alt="Older outdoor condenser next to a newer replacement unit on adjacent pads at a Florida house" title="Older condenser versus a newer SEER2 system" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+</figure>
 
 <h2>Tax credits and rebates by SEER2 tier (2026)</h2>
 <p>The Inflation Reduction Act's Section 25C credit and Florida utility rebates work in tiers. For the South region (Florida):</p>
