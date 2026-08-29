@@ -38,12 +38,14 @@ interface Props {
   mapEmbed?: string;
   schoolsOrHoas?: string[];
   relatedAreas?: { slug: string; name: string; note?: string }[];
+  serviceType?: string;
 }
 const {
   slug, title, description, h1, eyebrow, subtitle, cityName, heroImage,
   faqs, neighborhoods = [], landmarks = [], climateNote, stats = [],
   reviews = [], responseWindow = 'Call for current ETA', driveTime,
   zipCodes = [], geo, mapEmbed, schoolsOrHoas = [], relatedAreas = [],
+  serviceType = 'HVAC Services',
 } = Astro.props;
 
 const breadcrumbs = [
@@ -81,7 +83,7 @@ const areaType = isCounty ? 'AdministrativeArea' : 'City';
 const areaSchema: any = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  serviceType: 'HVAC Services',
+  serviceType,
   provider: { '@id': `${SITE.url}/#business` },
   areaServed: {
     '@type': areaType,
@@ -89,7 +91,7 @@ const areaSchema: any = {
     containedInPlace: { '@type': 'State', name: 'Florida' },
     ...(effectiveGeo ? { geo: { '@type': 'GeoCoordinates', latitude: effectiveGeo.lat, longitude: effectiveGeo.lng } } : {}),
   },
-  name: `HVAC Services in ${cityName}, FL`,
+  name: `${serviceType} in ${cityName}, FL`,
   description,
   url: `${SITE.url}/service-areas/${slug}/`,
   inLanguage: 'en-US',
