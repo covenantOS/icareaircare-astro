@@ -102,7 +102,7 @@ checklist:
 
 <p>Refrigerant work legally requires EPA Section 608 certification, and a topped-off system with an unrepaired leak is right back where it started in a couple of months. <a href="/tim-hawk/">Tim Hawk</a> holds Florida license CAC1816515 and the EPA Section 608 Universal certification, and he has run this company as a family business out of Wesley Chapel since 2010.</p>
 
-<p>Our diagnostic is a flat $89 and we credit it toward the repair if you have us do the work on the same visit. Book <a href="/services/ac-repair-tampa/">AC repair in Tampa</a> and we will measure superheat, subcooling, static pressure, and temperature split rather than guessing which of the five causes you have. Same-day when available, depending on the route schedule. If the house is already unbearable, our <a href="/services/emergency-ac-repair-tampa/">emergency AC repair</a> line is the faster path.</p>
+<p>Ask for the current diagnostic fee when you book. We credit it toward the repair if you have us do the work on the same visit. Book <a href="/services/ac-repair-tampa/">AC repair in Tampa</a> and we will measure superheat, subcooling, static pressure, and temperature split rather than guessing which of the five causes you have. Same-day when available, depending on the route schedule. If the house is already unbearable, our <a href="/services/emergency-ac-repair-tampa/">emergency AC repair</a> line is the faster path.</p>
 
 <h2>What a frozen coil repair costs in Tampa Bay</h2>
 
@@ -132,4 +132,4 @@ checklist:
 
 <p>So put filter changes on a calendar reminder, keep every supply register open, and get the coil and charge checked before cooling season instead of during it. Our <a href="/blogs/ac-tune-up-cost-tampa/">guide to AC tune-up cost in Tampa Bay</a> covers what a real maintenance visit includes and what the readings should look like.</p>
 
-<p>If your coil is frozen right now, set the thermostat to OFF and the fan to ON, put a clean filter in, and call Tim and the team at <a href="tel:+18133952324">(813) 395-2324</a>. We dispatch from 27022 Foamflower Blvd in Wesley Chapel and cover <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>, Land O' Lakes, Lutz, New Tampa, Odessa, Zephyrhills, and Tampa, with a 4.9-star rating across more than 700 Google reviews and a flat $89 diagnostic credited toward the repair.</p>
+<p>If your coil is frozen right now, set the thermostat to OFF and the fan to ON, put a clean filter in, and call Tim and the team at <a href="tel:+18133952324">(813) 395-2324</a>. We dispatch from 27022 Foamflower Blvd in Wesley Chapel and cover <a href="/service-areas/wesley-chapel-ac-repair/">Wesley Chapel</a>, Land O' Lakes, Lutz, New Tampa, Odessa, Zephyrhills, and Tampa, with a 4.9-star rating across more than 700 Google reviews. Ask for the current diagnostic fee when you book. If we do the repair on the same visit, that fee is credited.</p>

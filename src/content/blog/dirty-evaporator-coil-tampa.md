@@ -68,7 +68,7 @@ checklist:
 
 <h2>What the visit looks like and what it costs</h2>
 
-<p>Our diagnostic is a flat <strong>$89</strong>, credited toward the work if we do the repair on the same call. On a dirty-coil job we pull the panel, photograph the face of the coil, measure static pressure and temperature split, and only then decide cleaner versus replacement. Same-day is often available when the route allows. Every repair carries a one-year parts-and-labor workmanship warranty under Florida license CAC1816515.</p>
+<p>On a dirty-coil job we pull the panel, photograph the face of the coil, measure static pressure and temperature split, and only then decide cleaner versus replacement. Ask for the current diagnostic fee when you book. If we do the repair on the same call, that fee is credited toward the work. Same-day is often available when the route allows. Every repair carries a one-year parts-and-labor workmanship warranty under Florida license CAC1816515.</p>
 
 <p>Twice-a-year <a href="/services/ac-maintenance-tampa/">AC maintenance</a> is how you keep the next coil from getting there. Spring before pollen, fall after the long runtime. The indoor coil is on that list, not only the outdoor rinse you can do yourself.</p>
 

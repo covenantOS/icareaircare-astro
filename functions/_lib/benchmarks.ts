@@ -32,7 +32,7 @@ export const BENCHMARKS: Record<string, Band> = {
   avg_ticket_diagnostic: {
     poor: 200, average: 350, top: 500,
     unit: 'dollars', direction: 'up',
-    source: 'Industry — $89 dispatch + repair averages $350-500',
+    source: 'Industry — dispatch fee plus repair averages $350-500',
   },
   close_rate_tune_up: {
     poor: 30, average: 50, top: 75,

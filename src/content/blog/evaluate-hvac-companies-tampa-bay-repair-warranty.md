@@ -40,7 +40,7 @@ checklist:
 <li><strong>"90-day" workmanship warranty on a repair</strong> - industry standard in Tampa Bay is 1 year. A 90-day window means the contractor isn't confident the repair will hold.</li>
 <li><strong>"Parts only, no labor"</strong> on a new install warranty - expect to pay labor out of pocket for every warranty claim over the 10-year part life.</li>
 <li><strong>"Warranty void if serviced by another contractor"</strong> - legally unenforceable in most cases but a signal the installer wants to lock you in for overpriced follow-up work.</li>
-<li><strong>"Warranty subject to diagnostic fee"</strong> on every call back - a warranty that charges $89–$129 per revisit isn't really a warranty.</li>
+<li><strong>"Warranty subject to diagnostic fee"</strong> on every call back - a warranty that charges a diagnostic fee on every revisit isn't really a warranty.</li>
 <li><strong>No written warranty provided</strong> - verbal warranties in Florida are difficult to enforce. If it's not on the invoice or proposal, it doesn't exist.</li>
 <li><strong>Parts-only warranty with "negotiable labor"</strong> on old equipment repairs - a slow-roll toward paying full price on every follow-up.</li>
 <li><strong>"Lifetime" anything</strong> - nearly always marketing language, not legal warranty. Read the fine print; "lifetime" typically means "the life of the equipment under specific conditions," which can be voided easily.</li>
