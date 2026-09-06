@@ -1,6 +1,6 @@
 ---
-title: "AC Tune-Up Cost in Tampa Bay: What You Should Pay"
-description: "What an AC tune-up costs in Tampa Bay, what a real 90-minute visit includes, and how to spot the $49 tune-up that is just a sales call."
+title: "AC Tune-Up Cost and AC Maintenance in Tampa Bay"
+description: "AC tune-up cost and AC maintenance in Tampa Bay. Published 2026 ranges, what a 60 to 90 minute visit includes, and how to spot a $49 sales call."
 tag: "Maintenance"
 date: "Aug 6, 2026"
 read: "9 min"

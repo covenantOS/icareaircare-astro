@@ -1,6 +1,6 @@
 ---
-title: "AC Contactor Failure Signs and Replacement Cost"
-description: "Humming condenser that will not start? Bad AC contactor signs, contactor versus capacitor, and $150-$350 replacement cost in Florida."
+title: "AC Contactor Failure Symptoms and Replacement Cost"
+description: "AC contactor failure symptoms: humming outdoor unit, chatter, or a click with no start. Contactor vs capacitor, and published $150 to $350 replacement ranges."
 tag: "AC Repair"
 date: "Jul 22, 2026"
 read: "11 min"

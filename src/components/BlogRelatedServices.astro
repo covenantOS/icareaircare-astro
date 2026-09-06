@@ -1,0 +1,36 @@
+---
+import { SITE } from '../lib/site';
+import type { RelatedServicesBlock } from '../lib/blog-related-services';
+
+interface Props {
+  block: RelatedServicesBlock;
+}
+
+const { block } = Astro.props;
+---
+<aside class="not-prose my-10 rounded-2xl bg-surface ring-1 ring-slate-200 p-5 md:p-7">
+  <h3 class="text-xl md:text-2xl font-bold text-navy-700 leading-snug m-0">{block.heading}</h3>
+  <p class="mt-2 text-[15px] text-slate-600 leading-relaxed max-w-2xl">{block.intro}</p>
+  <div class="mt-5 grid sm:grid-cols-3 gap-4">
+    {block.cards.map((card) => (
+      <a href={card.href} class="group flex flex-col rounded-xl bg-white ring-1 ring-slate-200 overflow-hidden hover:ring-brand-400 hover:shadow-[var(--shadow-card)] transition">
+        <img src={card.image} alt={card.imageAlt} width="420" height="280" loading="lazy" class="w-full h-36 object-cover" />
+        <div class="p-4">
+          <p class="font-bold text-navy-700 group-hover:text-brand-700">{card.label}</p>
+          <p class="mt-1 text-sm text-slate-600 leading-relaxed">{card.blurb}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+  <div class="mt-5 flex flex-wrap gap-3">
+    <a href={SITE.phoneHref} class="inline-flex items-center justify-center rounded-lg bg-accent-500 hover:bg-accent-600 text-white font-bold px-5 py-3 text-sm">
+      Call {SITE.phone}
+    </a>
+    <a href={SITE.bookUrl} class="inline-flex items-center justify-center rounded-lg bg-navy-700 hover:bg-navy-800 text-white font-bold px-5 py-3 text-sm">
+      Book online
+    </a>
+    <a href={block.areaHref} class="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white hover:border-brand-400 text-navy-700 font-bold px-5 py-3 text-sm">
+      {block.areaLabel}
+    </a>
+  </div>
+</aside>

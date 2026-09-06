@@ -8,6 +8,8 @@ import { getAllEntries, type BlogEntry, type BlogPost } from '../../lib/blog';
 import { render } from 'astro:content';
 import { SITE } from '../../lib/site';
 import { BLOG_FAQS } from '../../lib/blog-faqs';
+import BlogRelatedServices from '../../components/BlogRelatedServices.astro';
+import { BLOG_RELATED_SERVICES } from '../../lib/blog-related-services';
 
 export async function getStaticPaths() {
   const entries = await getAllEntries();
@@ -74,6 +76,12 @@ const howToData = isHowTo ? {
 // surface, while also giving the reader a consistent Q&A block at the
 // bottom of every article. Questions are answered with canonical site
 // facts (hours, service area, license, warranty) so AI answers are correct.
+const relatedServices = BLOG_RELATED_SERVICES[post.slug];
+const rawBody = relatedServices ? entry.body : '';
+const firstH2Close = rawBody.indexOf('</h2>');
+const bodyBeforeH2 = firstH2Close !== -1 ? rawBody.slice(0, firstH2Close + 5) : '';
+const bodyAfterH2 = firstH2Close !== -1 ? rawBody.slice(firstH2Close + 5) : rawBody;
+
 const postFAQs = BLOG_FAQS[post.slug] || [
   {
     q: `How much does ${post.primaryService.label.toLowerCase()} typically cost in Wesley Chapel?`,
@@ -141,7 +149,15 @@ const postFAQs = BLOG_FAQS[post.slug] || [
           <a href="tel:+18133952324" class="shrink-0 rounded-md bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-2.5 text-sm">(813) 395-2324</a>
         </div>
 
-        {Content
+        {(relatedServices && bodyBeforeH2)
+          ? (
+            <>
+              <Fragment set:html={bodyBeforeH2} />
+              <BlogRelatedServices block={relatedServices} />
+              <Fragment set:html={bodyAfterH2} />
+            </>
+          )
+          : (Content
           ? <Content />
           : (
             <>
@@ -151,7 +167,7 @@ const postFAQs = BLOG_FAQS[post.slug] || [
               <h2>When to call I Care Air Care</h2>
               <p>Call when the system is not keeping up, the air feels warm, water is near the air handler, the outdoor unit is not running, the breaker trips repeatedly, or the repair decision is no longer obvious. We will explain the next step, give you the earliest available appointment window, and quote work before it begins.</p>
             </>
-          )
+          ))
         }
 
         <!-- Author bio -->
