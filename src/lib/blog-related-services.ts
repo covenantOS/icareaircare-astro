@@ -102,4 +102,62 @@ export const BLOG_RELATED_SERVICES: Record<string, RelatedServicesBlock> = {
     areaHref: '/service-areas/wesley-chapel-ac-repair/',
     areaLabel: 'Wesley Chapel service area',
   },
+  'ac-capacitor-replacement-cost-tampa': {
+    heading: 'Book the repair this cost guide is about',
+    intro: 'The ranges above are published market numbers. These pages are where we schedule the actual capacitor job, an urgent no-cool, or the tune-up that catches the next one.',
+    cards: [
+      {
+        href: '/services/ac-repair-tampa/',
+        label: 'AC repair',
+        blurb: 'Humming outdoor unit, no spin. We stock common microfarad sizes on the truck.',
+        image: '/images/ac-repair-tampa-failed-capacitor-contactor.webp',
+        imageAlt: 'Failed capacitor and contactor inside an outdoor condenser',
+      },
+      {
+        href: '/services/emergency-ac-repair-tampa/',
+        label: 'Urgent AC repair',
+        blurb: 'House already dangerous-hot. We prioritize no-cool homes on the route.',
+        image: '/images/emergency-ac-repair-tampa-failed-capacitor-hand.webp',
+        imageAlt: 'Failed capacitor in hand during urgent AC repair',
+      },
+      {
+        href: '/services/ac-maintenance-tampa/',
+        label: 'AC maintenance',
+        blurb: 'We read microfarads on every tune-up so the can gets swapped before July.',
+        image: '/images/ac-maintenance-tampa-dirty-air-filter.webp',
+        imageAlt: 'Dirty air filter pulled during AC maintenance',
+      },
+    ],
+    areaHref: '/service-areas/wesley-chapel-ac-repair/',
+    areaLabel: 'Wesley Chapel service area',
+  },
+  'rheem-vs-trane-tampa': {
+    heading: 'Need an install quote, not another comparison?',
+    intro: 'This post is Rheem vs Trane. The pages below are the jobs that follow a brand decision.',
+    cards: [
+      {
+        href: '/services/hvac-installation-tampa/',
+        label: 'HVAC installation',
+        blurb: 'Manual-J, permit, and warranty registration on the brand you pick.',
+        image: '/images/rheem-vs-trane-tampa-two-condensers.webp',
+        imageAlt: 'Two outdoor condensers compared for a Tampa install',
+      },
+      {
+        href: '/services/ac-replacement-tampa/',
+        label: 'AC replacement',
+        blurb: 'Changeout when age times repair cost clears $5,000.',
+        image: '/images/rheem-vs-trane-tampa-gauges-install.webp',
+        imageAlt: 'Gauges on an outdoor condenser during a replacement',
+      },
+      {
+        href: '/services/ac-repair-tampa/',
+        label: 'AC repair',
+        blurb: 'We service both brands. Parts speed is the Rheem Pro Partner edge.',
+        image: '/images/carrier-vs-trane-rheem-service-parts.webp',
+        imageAlt: 'HVAC service parts next to an outdoor condenser',
+      },
+    ],
+    areaHref: '/service-areas/wesley-chapel-ac-repair/',
+    areaLabel: 'Wesley Chapel service area',
+  },
 };

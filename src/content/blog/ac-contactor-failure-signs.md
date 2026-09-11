@@ -63,9 +63,23 @@ checklist:
 </ul>
 <p>We deliberately went deeper here than our broader <a href="/blogs/how-to-tell-if-ac-fuse-is-blown/">guide to a blown AC fuse</a>, because the contactor-versus-capacitor mix-up is the number-one reason people buy the wrong $20 part online and end up frustrated. Both are cheap. Neither is worth risking your life to guess at, for reasons we will get to.</p>
 
-<h2>AC contactor replacement cost and lifespan</h2>
-<p>The good news about a contactor is that it is one of the least expensive repairs in HVAC. On a standard residential system, <strong>ac contactor replacement cost</strong> runs <strong>$150 to $350</strong> for parts and labor. That range covers the contactor itself, the labor to safely discharge the system, swap the part, land the wiring correctly, and test the unit under load. The wide-ish band accounts for single-pole versus double-pole contactors, amperage ratings, and how the specific unit is built.</p>
-<p>For comparison, a <strong>run capacitor</strong> replacement in published Tampa Bay ranges often lands near <strong>$180 to $320</strong>, right in the same neighborhood, which is another reason the two get lumped together in homeowners' minds. Those are market bands, not an I Care Air Care quote. Ask for the current diagnostic fee when you book. If we fix the problem on the same call, that fee is credited toward the repair.</p>
+<h2>AC contactor replacement cost</h2>
+<p>The good news about a contactor is that it is one of the least expensive repairs in HVAC. Published contractor-market ranges put <strong>ac contactor replacement cost</strong> at <strong>$150 to $350</strong> for parts and labor. That band covers the part, the labor to de-energize and discharge the cabinet, land the wiring, and test the unit under load. Single-pole versus double-pole contactors and amperage ratings are what stretch the range. Those are market bands, not an I Care Air Care price list.</p>
+<div class="not-prose my-6 overflow-x-auto">
+  <table class="min-w-full border border-slate-200 rounded-lg overflow-hidden text-[15px]">
+    <thead class="bg-brand-50 text-navy-700">
+      <tr>
+        <th class="text-left font-bold p-3 border-b border-slate-200">Published repair</th>
+        <th class="text-left font-bold p-3 border-b border-slate-200">Typical market range</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white text-slate-700">
+      <tr class="border-b border-slate-100"><td class="p-3 font-semibold">AC contactor replacement</td><td class="p-3">$150 to $350</td></tr>
+      <tr class="border-b border-slate-100"><td class="p-3 font-semibold">Run capacitor replacement</td><td class="p-3">$180 to $320</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Ask for the current diagnostic fee when you book. If we complete the repair on the same call, that fee is credited toward the work.</p>
 <p>As for lifespan, a contactor is a wear item with no fixed expiration date. In Florida's heat and runtime, we commonly see them start failing anywhere from year five to year ten, sometimes sooner on builder-grade equipment where the cheapest compliant part was specified. Compared against the cost of the compressor it protects, replacing a $200 contactor at the first sign of trouble is one of the best-value moves a homeowner can make. Letting a welded-closed contactor run the compressor into the ground is one of the worst.</p>
 
 <h2>Why replacing an AC contactor is not a safe DIY job</h2>
