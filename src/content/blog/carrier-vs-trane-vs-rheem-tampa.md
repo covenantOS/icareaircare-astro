@@ -93,7 +93,7 @@ checklist:
 <li><strong>Trane XV20i (premium):</strong> $15,500–$18,000</li>
 <li><strong>Lennox SL28XCV (top-tier):</strong> $17,500–$22,000</li>
 </ul>
-<p>The premium between mid-tier and high-tier is roughly $3,500–$4,500 across all three brands.</p>
+<p>The premium between mid-tier and high-tier is roughly $3,500–$4,500 across all three brands. A new condenser still needs a 240V circuit and a breaker the panel can support. If the panel is short, schedule an <a href="https://www.titanplumbingandelectric.com/">electrical panel upgrade in Tampa</a> before the install.</p>
 
 <h2>R-454B vs R-32 refrigerant in 2026</h2>
 <p>Carrier, Trane, Lennox, Bryant, Goodman, and American Standard all moved to R-454B. Rheem and Daikin use R-32. Both are A2L-classified replacements for the phased-out R-410A; both have ~75% lower global-warming-potential. From a homeowner's standpoint they're functionally identical. From a service standpoint, your contractor needs different gauges, recovery machines, and certifications for each.</p>
