@@ -160,4 +160,62 @@ export const BLOG_RELATED_SERVICES: Record<string, RelatedServicesBlock> = {
     areaHref: '/service-areas/wesley-chapel-ac-repair/',
     areaLabel: 'Wesley Chapel service area',
   },
+  'ac-contactor-failure-signs': {
+    heading: 'If the outdoor unit clicks and will not start',
+    intro: 'A pitted contactor is an AC repair call. These pages get a tech on the driveway or keep the next failure from landing on a Saturday.',
+    cards: [
+      {
+        href: '/services/ac-repair-tampa/',
+        label: 'AC repair',
+        blurb: 'Contactor and capacitor swaps from the Wesley Chapel trucks, same-day when the part is on the van.',
+        image: '/images/ac-contactor-pitted-contacts.webp',
+        imageAlt: 'Pitted AC contactor contacts inside an outdoor condenser',
+      },
+      {
+        href: '/services/emergency-ac-repair-tampa/',
+        label: 'Urgent AC repair',
+        blurb: 'House already hot and the outdoor unit dead. We prioritize no-cool homes during office hours.',
+        image: '/images/emergency-ac-repair-tampa-failed-capacitor-hand.webp',
+        imageAlt: 'Failed capacitor pulled during an urgent AC repair',
+      },
+      {
+        href: '/service-areas/wesley-chapel-ac-repair/',
+        label: 'Wesley Chapel AC repair',
+        blurb: 'Seven Oaks, Meadow Pointe, Wiregrass, Epperson, and Mirada from Foamflower Blvd.',
+        image: '/images/wesley-chapel-front-yard-condenser.webp',
+        imageAlt: 'Outdoor AC condenser in a Wesley Chapel front yard',
+      },
+    ],
+    areaHref: '/service-areas/wesley-chapel-ac-repair/',
+    areaLabel: 'Wesley Chapel service area',
+  },
+  'ac-leaking-water-tampa': {
+    heading: 'Water on the floor is usually a drain, not a new system',
+    intro: 'A clogged condensate line is an AC repair. A twice-a-year flush is maintenance. Use the page that matches how wet the closet is.',
+    cards: [
+      {
+        href: '/services/ac-repair-tampa/',
+        label: 'AC repair',
+        blurb: 'Wet-vac the line, reset the float switch, and check the pan. Most drain clears land $150 to $275.',
+        image: '/images/ac-leaking-water-drain-clear-tampa.webp',
+        imageAlt: 'Technician clearing an outdoor condensate drain with a wet-dry vacuum',
+      },
+      {
+        href: '/services/ac-maintenance-tampa/',
+        label: 'AC maintenance',
+        blurb: 'The spring visit flushes the PVC before algae shuts the system off in June.',
+        image: '/images/ac-maintenance-tampa-clogged-drain-line.webp',
+        imageAlt: 'Clogged PVC condensate drain with algae',
+      },
+      {
+        href: '/service-areas/wesley-chapel-ac-repair/',
+        label: 'Wesley Chapel AC repair',
+        blurb: 'Attic air handlers in 33543, 33544, and 33545 overflow onto drywall first.',
+        image: '/images/emergency-ac-repair-tampa-float-switch-drain.webp',
+        imageAlt: 'Technician checking a condensate float switch',
+      },
+    ],
+    areaHref: '/service-areas/wesley-chapel-ac-repair/',
+    areaLabel: 'Wesley Chapel service area',
+  },
 };
