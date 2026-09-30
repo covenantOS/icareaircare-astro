@@ -30,6 +30,7 @@ checklist:
 <h2>Water by the air handler</h2>
 <p>Open the closet or pull the attic hatch and look before you call it a new system. Standing water in the primary pan, a wet ring on the concrete, or a stain on the ceiling below an attic unit all point at overflow. The coil is doing its job. The pipe is not.</p>
 <p>In Seven Oaks and Meadow Pointe the air handler often sits in a garage closet, so you see the puddle first. In Epperson and Mirada a lot of handlers sit in the attic. Those overflow into the secondary pan, then onto the ceiling if the pan drain is also blocked. That is why a quiet leak on a Tuesday becomes a drywall claim on Thursday.</p>
+<p>Water that soaks the ceiling does not stop at the drywall. By the time the stain shows, the kitchen under that attic handler can have <a href="https://true-builders.com/kitchen-cabinet-installation/">swollen cabinet boxes</a>.</p>
 
 <figure class="not-prose my-8">
   <img src="/images/ac-leaking-water-clogged-drain-tampa.webp" alt="Green algae at the outdoor PVC condensate drain stub of a Florida home" title="Clogged condensate drain in Tampa Bay" width="1400" height="788" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
