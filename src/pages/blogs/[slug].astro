@@ -9,6 +9,7 @@ import { render } from 'astro:content';
 import { SITE } from '../../lib/site';
 import { BLOG_FAQS } from '../../lib/blog-faqs';
 import BlogRelatedServices from '../../components/BlogRelatedServices.astro';
+import MultiStepForm from '../../components/MultiStepForm.astro';
 import { BLOG_RELATED_SERVICES } from '../../lib/blog-related-services';
 
 export async function getStaticPaths() {
@@ -77,10 +78,21 @@ const howToData = isHowTo ? {
 // bottom of every article. Questions are answered with canonical site
 // facts (hours, service area, license, warranty) so AI answers are correct.
 const relatedServices = BLOG_RELATED_SERVICES[post.slug];
+const INLINE_FORM_SLUGS = new Set([
+  'carrier-vs-trane-vs-rheem-tampa',
+  'ac-contactor-failure-signs',
+  'seer2-explained-florida-2026',
+]);
+const showInlineForm = INLINE_FORM_SLUGS.has(post.slug);
 const rawBody = relatedServices ? entry.body : '';
 const firstH2Close = rawBody.indexOf('</h2>');
 const bodyBeforeH2 = firstH2Close !== -1 ? rawBody.slice(0, firstH2Close + 5) : '';
 const bodyAfterH2 = firstH2Close !== -1 ? rawBody.slice(firstH2Close + 5) : rawBody;
+// Form sits after the second section, immediately before the third h2.
+const secondH2Start = bodyAfterH2.indexOf('<h2');
+const thirdH2Start = secondH2Start === -1 ? -1 : bodyAfterH2.indexOf('<h2', secondH2Start + 3);
+const bodyThroughSecondH2 = showInlineForm && thirdH2Start !== -1 ? bodyAfterH2.slice(0, thirdH2Start) : bodyAfterH2;
+const bodyAfterSecondH2 = showInlineForm && thirdH2Start !== -1 ? bodyAfterH2.slice(thirdH2Start) : '';
 
 const postFAQs = BLOG_FAQS[post.slug] || [
   {
@@ -154,7 +166,17 @@ const postFAQs = BLOG_FAQS[post.slug] || [
             <>
               <Fragment set:html={bodyBeforeH2} />
               <BlogRelatedServices block={relatedServices} />
-              <Fragment set:html={bodyAfterH2} />
+              {showInlineForm && thirdH2Start !== -1 ? (
+                <>
+                  <Fragment set:html={bodyThroughSecondH2} />
+                  <div id="in-article-quote" class="not-prose my-10 max-w-lg">
+                    <MultiStepForm />
+                  </div>
+                  <Fragment set:html={bodyAfterSecondH2} />
+                </>
+              ) : (
+                <Fragment set:html={bodyAfterH2} />
+              )}
             </>
           )
           : (Content
