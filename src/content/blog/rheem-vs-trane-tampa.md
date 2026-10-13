@@ -54,7 +54,7 @@ checklist:
 </figure>
 
 <h2>What a 3-ton install costs in this market</h2>
-<p>Published 2026 contractor ranges we already use on the site put a 3-ton 15.2 SEER2 Rheem Classic changeout around $10,500 to $12,500 installed, and a Trane XR in the same size around $11,500 to $14,000. Those are market bands from our <a href="/blogs/carrier-vs-trane-vs-rheem-tampa/">three-brand comparison</a>, not a locked I Care Air Care quote. A 3-ton 15.2 SEER2 full changeout across Tampa Bay more broadly sits near $7,500 to $10,500 on the low-spec end of <a href="/blogs/hvac-replacement-cost-tampa-bay/">HVAC replacement cost</a> when the equipment is not a mid-tier nameplate. The spread is brand, staging, duct work, and permit jurisdiction, Pasco versus Hillsborough.</p>
+<p>The ranges we already use on the site put a 3-ton 15.2 SEER2 Rheem Classic changeout around $10,500 to $12,500 installed, and a Trane XR in the same size around $11,500 to $14,000. Those are market bands from our <a href="/blogs/carrier-vs-trane-vs-rheem-tampa/">three-brand comparison</a>, not a locked I Care Air Care quote. A 3-ton 15.2 SEER2 full changeout across Tampa Bay more broadly sits near $7,500 to $10,500 on the low-spec end of <a href="/blogs/hvac-replacement-cost-tampa-bay/">HVAC replacement cost</a> when the equipment is not a mid-tier nameplate. The spread is brand, staging, duct work, and permit jurisdiction, Pasco versus Hillsborough.</p>
 <p>The federal 25C credit expired for equipment placed in service after December 31, 2025. Do not budget a 2026 tax credit unless Congress revives it.</p>
 
 <h2>Sound, apps, and when we pick Trane anyway</h2>

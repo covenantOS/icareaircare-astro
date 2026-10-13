@@ -80,7 +80,7 @@ checklist:
 
 <h2>What a Tampa Bay replacement actually costs</h2>
 
-<p>Published 2026 ranges for this market, not an I Care Air Care quote, put a typical 3-ton 15.2 SEER2 changeout around <strong>$7,500 to $10,500</strong> installed, with 2-ton closer to $6,500 to $9,000 and 5-ton at $10,000 to $14,000. Those bands match Angi Tampa and This Old House figures we already cite on the <a href="/blogs/hvac-replacement-cost-tampa-bay/">HVAC replacement cost</a> guide. Higher SEER2 tiers buy humidity control and quieter operation more than they buy a fast energy payback here.</p>
+<p>A typical 3-ton 15.2 SEER2 changeout in this market runs about <strong>$7,500 to $10,500</strong> installed, with 2-ton closer to $6,500 to $9,000 and 5-ton at $10,000 to $14,000. That is not an I Care Air Care quote. Those bands match Angi Tampa and This Old House figures we already cite on the <a href="/blogs/hvac-replacement-cost-tampa-bay/">HVAC replacement cost</a> guide. Higher SEER2 tiers buy humidity control and quieter operation more than they buy a fast energy payback here.</p>
 
 <p>The federal 25C credit that paid up to $2,000 toward a qualifying heat pump expired for equipment placed in service after December 31, 2025. A system installed this year does not get it. <a href="https://www.duke-energy.com/home/products/home-energy-improvement">Duke Energy Florida's Home Energy Improvement program</a> still advertises up to $1,000 on a qualifying single-family HVAC replacement, with a Home Energy Check required before the work. Confirm the current terms on Duke's page, and check which utility is on your bill. Synchrony 0% promotional financing is on our <a href="/financing/">financing</a> page for approved credit.</p>
 

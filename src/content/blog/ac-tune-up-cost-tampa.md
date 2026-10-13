@@ -1,6 +1,6 @@
 ---
 title: "AC Tune-Up Cost and AC Maintenance in Tampa Bay"
-description: "AC tune-up cost and AC maintenance in Tampa Bay. Published 2026 ranges, what a 60 to 90 minute visit includes, and how to spot a $49 sales call."
+description: "AC tune-up cost and AC maintenance in Tampa Bay. What a 60 to 90 minute visit includes, and how to spot a $49 sales call."
 tag: "Maintenance"
 date: "Aug 6, 2026"
 read: "9 min"
@@ -19,7 +19,7 @@ related:
     label: "Wesley Chapel"
 checklist:
   - "A real tune-up runs 60 to 90 minutes. Anything under 30 is a sales call."
-  - "Published 2026 ranges: $75 to $200 for a basic visit, $175 to $350 for comprehensive service."
+  - "A basic visit runs $75 to $200. A fuller service runs $175 to $350."
   - "Ask for static pressure and amp draw readings in writing. Most homeowners never do, and most cheap visits never take them."
   - "Book in March or April. By June every contractor in Pasco County is on emergency calls."
   - "A plan pays for itself around two visits a year, not one."
@@ -27,25 +27,35 @@ checklist:
 
 <h2>What an AC tune-up costs in Tampa Bay</h2>
 
-<p>Published national data for 2026 puts a basic AC tune-up between <strong>$75 and $200</strong>, with an average near $100 (<a href="https://www.angi.com/articles/ac-service-cost.htm" target="_blank" rel="noopener nofollow">Angi</a>, <a href="https://www.homeadvisor.com/cost/heating-and-cooling/service-maintain-ac-unit/" target="_blank" rel="noopener nofollow">HomeAdvisor</a>). Comprehensive maintenance, the kind that includes coil cleaning and full electrical testing rather than a filter swap and a gauge reading, runs <strong>$175 to $350</strong>, averaging around $250.</p>
+<p><a href="https://www.angi.com/articles/ac-service-cost.htm" target="_blank" rel="noopener nofollow">Angi</a> and <a href="https://www.homeadvisor.com/cost/heating-and-cooling/service-maintain-ac-unit/" target="_blank" rel="noopener nofollow">HomeAdvisor</a> put a basic AC tune-up between <strong>$75 and $200</strong>, with most jobs near $100. A fuller visit, coil cleaning and electrical testing instead of a filter swap and a gauge reading, runs <strong>$175 to $350</strong>, and most of those land near $250.</p>
 
 <p>Annual plans sit in a different bracket. Service agreements run <strong>$150 to $500 per year</strong>, with most basic plans covering two visits landing near $250 and premium tiers with priority scheduling and parts discounts reaching $350 to $500.</p>
 
-<table>
-  <thead>
-    <tr><th>What you are buying</th><th>2026 published range</th><th>Typical average</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>Basic tune-up, single visit</td><td>$75 to $200</td><td>~$100</td></tr>
-    <tr><td>Comprehensive maintenance, single visit</td><td>$175 to $350</td><td>~$250</td></tr>
-    <tr><td>Annual plan, basic (2 visits)</td><td>$150 to $300</td><td>~$250</td></tr>
-    <tr><td>Annual plan, premium</td><td>$350 to $500</td><td>-</td></tr>
-  </tbody>
-</table>
+<div class="not-prose my-6 overflow-x-auto">
+  <table class="min-w-full border border-slate-200 rounded-lg overflow-hidden text-[15px]">
+    <thead class="bg-brand-50 text-navy-700">
+      <tr>
+        <th class="text-left font-bold p-3 border-b border-slate-200">What you are buying</th>
+        <th class="text-left font-bold p-3 border-b border-slate-200">Typical range</th>
+        <th class="text-left font-bold p-3 border-b border-slate-200">Average</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white text-slate-700">
+      <tr class="border-b border-slate-100"><td class="p-3">Basic tune-up, single visit</td><td class="p-3">$75 to $200</td><td class="p-3">~$100</td></tr>
+      <tr class="border-b border-slate-100"><td class="p-3">Comprehensive maintenance, single visit</td><td class="p-3">$175 to $350</td><td class="p-3">~$250</td></tr>
+      <tr class="border-b border-slate-100"><td class="p-3">Annual plan, basic (2 visits)</td><td class="p-3">$150 to $300</td><td class="p-3">~$250</td></tr>
+      <tr><td class="p-3">Annual plan, premium</td><td class="p-3">$350 to $500</td><td class="p-3">-</td></tr>
+    </tbody>
+  </table>
+</div>
 
-<p>Those are national figures, and they are the honest starting point rather than a quote. Tampa Bay skews toward the upper half of every one of those ranges, for a reason worth understanding before you shop on price.</p>
+<p>Those numbers are national, not a quote from us. In Tampa Bay the bill usually lands in the upper half of each range, and it is worth knowing why before you shop on price.</p>
 
 <p>Florida runs more than 2,200 cooling hours a year. A system in Wesley Chapel does roughly double the annual work of the same system in Ohio, and it does that work in salt air, afternoon thunderstorms, and pollen. The maintenance interval that keeps a northern system healthy is simply not enough here, and a technician who is thorough about it needs more time on site. You are paying for the hour, not for the checklist.</p>
+
+<figure class="not-prose my-8">
+  <img src="/images/ac-tune-up-cost-tampa-manifold-gauges.webp" alt="Manifold gauges on an outdoor condenser during an AC tune-up in Tampa Bay" title="AC tune-up cost Tampa: refrigerant gauges" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+</figure>
 
 <h2>What actually happens in a 90-minute tune-up</h2>
 
@@ -66,6 +76,12 @@ checklist:
   <li><strong>Filter.</strong> Replaced, and the tech should tell you the actual MERV rating and whether your system can breathe through it. A too-restrictive filter costs more in airflow than it buys in filtration.</li>
   <li><strong>Static pressure.</strong> Measured across the air handler. This is the reading almost nobody takes and almost everybody needs, because high static pressure is the quiet cause behind burned-out blower motors and rooms that never cool.</li>
 </ul>
+
+<figure class="not-prose my-8">
+  <img src="/images/ac-tune-up-cost-tampa-drain-pan.webp" alt="Condensate drain pan inside an air handler during an AC tune-up in Tampa" title="AC tune-up Tampa: drain pan check" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-xl ring-1 ring-slate-200" />
+</figure>
+
+<p>A clogged drain leaves a stain on the ceiling under the air handler. Once that drywall is dry and the board is still sound, the mark is <a href="https://westchasepainting.com/services/interior-painting/" target="_blank" rel="noopener">interior painting in Tampa</a>.</p>
 
 <h3>Minutes forty to sixty: outside at the condenser</h3>
 
