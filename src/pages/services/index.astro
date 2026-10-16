@@ -8,6 +8,7 @@ import AreaGrid from '../../components/AreaGrid.astro';
 import FinalCTA from '../../components/FinalCTA.astro';
 import ContactFormSection from '../../components/ContactFormSection.astro';
 import FAQ from '../../components/FAQ.astro';
+import { SITE } from '../../lib/site';
 
 const faqs = [
   { q: 'What HVAC services do you provide in Tampa?', a: 'AC repair, emergency AC repair, AC maintenance & tune-ups, new HVAC installation, air duct cleaning, heating services (heat pumps, heat strips, furnaces), thermostat installation, and commercial refrigeration repair.' },
@@ -24,12 +25,29 @@ const faqs = [
   <Hero
     eyebrow="Our Services · Wesley Chapel"
     title="Full-Service HVAC for Wesley Chapel & Tampa Bay"
-    subtitle={`Eight core services, one licensed local team based in Wesley Chapel. From same-day AC repair to complete system replacements, air duct cleaning to commercial refrigeration - we do it all, and we do it right.`}
+    subtitle="Licensed HVAC from Foamflower Blvd. Repair, installation, maintenance, ducts, and heat pumps for homes in Wesley Chapel, Pasco, and north Hillsborough."
     image="/images/I-Care-Air-Care-HVAC-Installation-%E2%80%93-Local-Team-and-Service-Vans.webp"
-    ctaLabel="Request a Quote"
-    ctaHref="/contact/"
+    ctaLabel="Book a visit"
+    ctaHref={SITE.bookUrl}
   />
   <ServiceGrid />
+  <section class="py-14 bg-white">
+    <div class="container-site grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+      <div class="prose-icac max-w-none">
+        <h2>What each visit covers</h2>
+        <p>The shop is at 27022 Foamflower Blvd. License CAC1816515. A visit names the failed part and the readings on the paper you keep.</p>
+        <p><strong>AC repair.</strong> One warm room, a dead outdoor unit, or a system that short-cycles. The first readings are at the register and at the equipment, before anyone adds refrigerant.</p>
+        <p><strong>Emergency no-cool.</strong> Urgent calls during office hours move ahead of routine maintenance. You get an arrival window before the truck rolls. Same-day when the schedule allows.</p>
+        <p><strong>Maintenance.</strong> Coil, drain, capacitor, and a written temperature split. In October the same visit includes a heat test.</p>
+        <p><strong>Installation and replacement.</strong> Manual J, a line set that matches the new equipment, and a charge written down against the line length.</p>
+        <p><strong>Heat pumps and heating.</strong> Reversing valve, outdoor sensor, and heat strips. October afternoons in Wesley Chapel still need cooling. December is when heating degree days pass cooling degree days at the Tampa station.</p>
+        <p><strong>Ducts and indoor air.</strong> The blower wheel and the coil get looked at before anyone sells a whole-house duct cleaning. A puff of dust on the first heat cycle is often the wheel, not every flex run.</p>
+        <p><strong>Thermostats and mini-splits.</strong> A thermostat has to call the heat pump and the strips correctly. A mini-split is for a room the main ducts do not reach.</p>
+        <p><strong>Commercial refrigeration.</strong> Walk-in and reach-in work, with EPA 608 on the tech when gauges go on the system.</p>
+      </div>
+      <img src="/images/ac-repair-wesley-chapel-fl-technician-refrigerant-gauges-condenser.webp" alt="Refrigerant gauges on an outdoor condenser during an HVAC visit in Wesley Chapel" title="Wesley Chapel HVAC services: gauge check on a visit" width="1400" height="933" loading="lazy" class="w-full h-auto rounded-2xl ring-1 ring-slate-200 lg:sticky lg:top-24" />
+    </div>
+  </section>
   <WhyChooseUs />
   <ReviewStrip />
   <AreaGrid />

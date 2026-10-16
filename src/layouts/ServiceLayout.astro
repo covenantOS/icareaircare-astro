@@ -33,6 +33,22 @@ const {
   serviceName, serviceType = 'HVAC Service', faqs, related = [], enhanced = false,
 } = Astro.props;
 
+const SEASON_SLUGS = new Set([
+  'ac-repair-tampa',
+  'heating-services-tampa',
+  'heat-pump-repair-tampa',
+  'ac-maintenance-tampa',
+  'hvac-installation-tampa',
+  'ac-replacement-tampa',
+  'ac-installation-wesley-chapel',
+  'thermostat-installation-tampa',
+  'mini-split-installation-tampa',
+  'air-duct-cleaning-tampa',
+  'indoor-air-quality-tampa',
+  'emergency-ac-repair-tampa',
+  'refrigeration-repair-tampa',
+]);
+
 const breadcrumbs = [
   { name: 'Home', url: `${SITE.url}/` },
   { name: 'Services', url: `${SITE.url}/services/` },
@@ -108,6 +124,13 @@ guides = guides.slice(0, 3);
           </div>
         </div>
         <slot />
+        {SEASON_SLUGS.has(slug) && (
+          <div class="not-prose mt-10 rounded-2xl bg-surface ring-1 ring-slate-200 p-6 md:p-8">
+            <h2 class="text-2xl text-navy-700">October in Wesley Chapel is still a cooling month</h2>
+            <p class="mt-4 text-[17px] leading-relaxed text-slate-700">Tampa International's 1991 to 2020 normals put October at a high of 85.6°F and a low of 69.2°F. The month has about 388 cooling degree days and 3 heating degree days. November is the turn: a high of 78.9°F, a low of 60.7°F, 178 cooling degree days, and 34 heating degree days. December is the first month where heating degree days (105) edge past cooling degree days (102), with a high of 73.9°F and a low of 55.9°F. Those figures are the Florida Climate Center normals for the Tampa station. Wesley Chapel nights run a little cooler than the airport. That part is an inference from inland Pasco, not a separate station file.</p>
+            <p class="mt-4 text-[17px] leading-relaxed text-slate-700">A homeowner who sets the thermostat to heat on a 60-degree morning and gets cool air needs the reversing valve, the outdoor sensor, and the heat strips checked. That visit uses gauges and a written temperature split, the same standard as a July no-cool call. The filter and the drain still decide whether the system can move air when the mode changes. Homes in Seven Oaks, Meadow Pointe, and along Curley Road see this every fall. The work is a diagnosis, written down, for a house in Pasco or north Hillsborough.</p>
+          </div>
+        )}
       </article>
       {enhanced ? (
         <ServiceSidebar slug={slug} serviceName={serviceName} guides={guides} />
