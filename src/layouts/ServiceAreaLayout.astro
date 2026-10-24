@@ -213,12 +213,13 @@ const areaSchema: any = {
         </div>
         <slot />
         {seasonCopy && (
-          <div class="not-prose mt-10 rounded-2xl bg-surface ring-1 ring-slate-200 p-6 md:p-8">
-            <h2 class="text-2xl text-navy-700">When the mornings turn cool in {cityName}</h2>
-            <p class="mt-4 text-[17px] leading-relaxed text-slate-700" set:html={seasonCopy.nov}></p>
-            <p class="mt-4 text-[17px] leading-relaxed text-slate-700" set:html={seasonCopy.dec}></p>
-          </div>
+          <>
+            <h2>When the mornings turn cool in {cityName}</h2>
+            <p set:html={seasonCopy.nov}></p>
+            <p set:html={seasonCopy.dec}></p>
+          </>
         )}
+        <slot name="closing" />
       </article>
       <aside class="lg:col-span-4 space-y-6">
         <div class="rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 text-white p-6 shadow-[var(--shadow-soft)]">
