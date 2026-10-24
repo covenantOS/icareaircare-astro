@@ -46,6 +46,46 @@ const {
   zipCodes = [], geo, mapEmbed, schoolsOrHoas = [], relatedAreas = [],
 } = Astro.props;
 
+const seasonBySlug: Record<string, { nov: string; dec: string }> = {
+  'wesley-chapel-ac-repair': {
+    nov: 'A Wesley Chapel afternoon in Seven Oaks or Meadow Pointe still needs cooling. The Tampa station normal for these cooler weeks is a high of 78.9°F and a low of 60.7°F, with 178 cooling degree days and 34 heating degree days (Florida Climate Center, 1991-2020). A 60-degree morning is the first real heat test. "AC repair Wesley Chapel" was about 110 searches in that month last year. "Heating repair Wesley Chapel" sits at the Google Ads floor of 10.',
+    dec: 'The colder weeks are the turn. The Tampa normals are 73.9°F by day and 55.9°F at night, and heating degree days (105) edge past cooling degree days (102). Inland Wesley Chapel nights run a little cooler than the airport. That part is an inference, not a separate station file. The visit checks the reversing valve, the outdoor sensor, and the heat strips, then writes the supply temperature. If the house never warms, see <a href="/blogs/heat-pump-not-heating-wesley-chapel/">heat pump not heating</a>. If the thermostat says AUX, see <a href="/blogs/auxiliary-heat-wesley-chapel/">auxiliary heat</a>. Call (813) 395-2324.',
+  },
+  'land-o-lakes-hvac-services': {
+    nov: 'These weeks still cool a Land O\' Lakes house. Tampa\'s normal is 78.9°F by day and 60.7°F at night, with far more cooling degree days than heating (Florida Climate Center, 1991-2020). Lakefront lots in Bexley and Connerton hold moisture after the air conditioner runs less. Leave the fan on Auto so the coil can dry.',
+    dec: 'The colder mornings are when a heat pump along Lake Padgett gets its first long heat call. The Tampa station is the first stretch of the year when heating degree days pass cooling. A sticky house in the morning and cool air on heat are two different faults. One is runtime. The other is the reversing valve or the strips.',
+  },
+  'lutz-home-air-conditioning-service': {
+    nov: 'Lutz sits on the Pasco and Hillsborough line, and the afternoons in this stretch still call for cooling. The Tampa normals are 78.9°F and 60.7°F (Florida Climate Center, 1991-2020). Older unincorporated houses with original flex duct lose more air on a heat call than a new Cheval or Avila house does.',
+    dec: 'Nights near 56°F at the airport are colder in the older Lutz blocks away from the lake. A heat test should include the supply temperature and a look at the duct boots in the attic. A cool room on a cold morning is often a torn boot, not a dead compressor.',
+  },
+  'new-tampa-heating-and-cooling': {
+    nov: 'New Tampa still cools by afternoon in this stretch. Tampa Palms, Heritage Isles, and Hunter\'s Green see the same Tampa normals: 78.9°F by day, 60.7°F at night, 178 cooling degree days (Florida Climate Center, 1991-2020). HOA condensers tucked in a side yard pack with leaves. Clear the grille before the first heat test.',
+    dec: 'Test the heat in Tampa Palms and K-Bar Ranch before a 40-degree night. The heat pump and the strips both need a call. A system that cooled all summer can sit in cool mode until that test. The note should show supply temperature in heat and in cool.',
+  },
+  'odessa-emergency-ac-repair': {
+    nov: 'Odessa and the Keystone side of northwest Hillsborough still need cooling on a warm afternoon. The Tampa station normal for these weeks is 78.9°F and 60.7°F (Florida Climate Center, 1991-2020). Rural lots with a long line set lose more capacity on the first heat call than a short suburban run does.',
+    dec: 'The colder nights are when a Starkey Ranch or Eagle Ridge heat pump shows a valve that never left cool mode. Urgent no-cool calls still come first during office hours. A no-heat morning gets the same written readings: supply temperature, strips, and whether the outdoor fan ran.',
+  },
+  'air-conditioning-repair-zephyrhills-fl-i-care-air-care': {
+    nov: 'Zephyrhills is east of the airport, and the mornings here run cooler than a Tampa Palms afternoon. The station file is still Tampa: 78.9°F by day, 60.7°F at night (Florida Climate Center, 1991-2020). A house in Silverado or Colony Hills can ask for heat at breakfast and cooling after lunch.',
+    dec: 'East Pasco feels the heating degree days first. Betmar and the other 55+ streets need a heat test before a hard night, because a failed strip is not a comfort issue in those homes. The visit names the part. It does not leave the thermostat on emergency heat.',
+  },
+  'pasco-county-ac-repair': {
+    nov: 'Pasco is still a cooling county in this stretch. The Tampa normals show 178 cooling degree days and 34 heating degree days (Florida Climate Center, 1991-2020). Wesley Chapel, Land O\' Lakes, and Zephyrhills do not switch to heat-only. The useful visit is a cooling check plus a 10-minute heat test.',
+    dec: 'This is the first stretch of the year when heating degree days at Tampa (105) pass cooling degree days (102). A Pasco heat call is a heat pump and electric strips, not a furnace. "Furnace repair Wesley Chapel" has no measurable Google Ads volume. The repair note covers the valve, the sensor, and the strips.',
+  },
+  'hillsborough-county-hvac-company': {
+    nov: 'Hillsborough still runs the air conditioner through these weeks. Tampa\'s normal high is 78.9°F and the low is 60.7°F, with 178 cooling degree days (Florida Climate Center, 1991-2020). New Tampa and the northwest county get the same pattern: cool morning, warm afternoon.',
+    dec: 'A Hillsborough heat pump earns a real test once the nights settle in the 50s. Heating degree days pass cooling degree days at the Tampa station. The call is for the reversing valve and the strips. Same-day when the schedule allows. Office hours are Monday through Friday 8 a.m. to 6 p.m., Saturday 10 a.m. to 4 p.m.',
+  },
+  'polk-county-residential-ac-repair': {
+    nov: 'Polk is inland of Tampa, and nights on the Lake Wales Ridge run cooler than the airport. The published normals we can cite are still Tampa: 78.9°F and 60.7°F, 178 cooling degree days (Florida Climate Center, 1991-2020). Lakeland and Winter Haven afternoons still need cooling.',
+    dec: 'The first hard nights are freeze-watch for a Polk heat pump. The Tampa station is the first stretch of the year when heating degree days pass cooling. A ridge night colder than that is an inference from the inland location, not a second station file. Protect the outdoor unit from a hard freeze and test the strips before that night.',
+  },
+};
+const seasonCopy = seasonBySlug[slug];
+
 const breadcrumbs = [
   { name: 'Home', url: `${SITE.url}/` },
   { name: 'Service Areas', url: `${SITE.url}/service-areas/` },
@@ -172,6 +212,13 @@ const areaSchema: any = {
           </div>
         </div>
         <slot />
+        {seasonCopy && (
+          <div class="not-prose mt-10 rounded-2xl bg-surface ring-1 ring-slate-200 p-6 md:p-8">
+            <h2 class="text-2xl text-navy-700">When the mornings turn cool in {cityName}</h2>
+            <p class="mt-4 text-[17px] leading-relaxed text-slate-700" set:html={seasonCopy.nov}></p>
+            <p class="mt-4 text-[17px] leading-relaxed text-slate-700" set:html={seasonCopy.dec}></p>
+          </div>
+        )}
       </article>
       <aside class="lg:col-span-4 space-y-6">
         <div class="rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 text-white p-6 shadow-[var(--shadow-soft)]">

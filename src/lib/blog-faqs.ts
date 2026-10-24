@@ -321,6 +321,16 @@ export const BLOG_FAQS: Record<string, FaqItem[]> = {
     { q: "Why is my AC blowing cold air on heat?", a: "On a straight-cool system, heat comes from the electric strips. Cool air means the strips, the sequencer, or the thermostat call. On a heat pump, the outdoor fan should run on Heat. Cool supply air after a 10-minute wait is a repair." },
     { q: "What if the heat pump stays in defrost?", a: "A normal defrost lasts a few minutes and the supply can feel cool while the outdoor coil clears. Air that stays cool, or ice that returns after the grille is clear, points at the defrost sensor or the board." }
   ],
+  "heat-pump-not-heating-wesley-chapel": [
+    { q: "Why is my heat pump not heating in Wesley Chapel?", a: "The outdoor fan may never start because the thermostat is on emergency heat or the strips did not pull in. Or the fan runs and the supply stays cool, which points at the reversing valve or a defrost cycle. Wait 10 minutes on Heat with the fan on Auto. Call (813) 395-2324." },
+    { q: "Does Wesley Chapel need heat in November?", a: "Mornings can. Afternoons usually still need cooling. Tampa's November normal is 78.9°F by day and 60.7°F at night, with 178 cooling degree days and 34 heating degree days (Florida Climate Center, 1991-2020)." },
+    { q: "Is heat pump not heating a local search?", a: "The phrase is about 880 searches a month in the United States, and about 1,300 in November 2025. Heating repair Wesley Chapel sits at the Google Ads floor of 10. Those are different searches." }
+  ],
+  "auxiliary-heat-wesley-chapel": [
+    { q: "What does auxiliary heat mean on my thermostat?", a: "AUX means the electric strips in the air handler are on. A few minutes at the start of a cold morning can be normal if the outdoor fan is also running. AUX all day on a mild afternoon is a repair." },
+    { q: "Is emergency heat the same as auxiliary heat?", a: "No. Emergency heat runs the strips and skips the outdoor unit. Auxiliary heat can run with the heat pump. Put the mode back to Heat after any test. Leaving emergency heat on is a high electric bill." },
+    { q: "When does December need the strips in Wesley Chapel?", a: "Below about 35°F the strips are backup. Tampa's December normal is 73.9°F by day and 55.9°F at night, and heating degree days pass cooling degree days that month (Florida Climate Center, 1991-2020). A 70-degree afternoon should not stay on AUX." }
+  ],
   "when-to-switch-ac-to-heat-wesley-chapel": [
     { q: "When should I switch from AC to heat in Wesley Chapel?", a: "When the house is uncomfortable in the morning, not on a fixed date. Test heat for 15 minutes on a mild afternoon. Put the system back on cool when the afternoon returns to the 80s. Auto works if heat is near 68 and cool is near 76. Tampa International's October normal is 85.6°F by day and 69.2°F at night (National Weather Service, 1991-2020). Wesley Chapel nights run cooler than the airport." },
     { q: "Why does my Wesley Chapel house feel humid in October?", a: "The air conditioner runs less, so it removes less moisture, while outdoor dew points stay high. Leave the fan on Auto. Fan On blows water off the coil back into the rooms. Humidity that stays above 60 percent is worth a repair visit, often a packed filter or a slow condensate drain." },
