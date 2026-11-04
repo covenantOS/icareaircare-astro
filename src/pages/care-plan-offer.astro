@@ -1,0 +1,322 @@
+---
+// Landing page for the November 2026 Care Plan re-touch email campaign.
+// Colors, copy and pricing mirror the campaign emails in
+// ICAC/Email Campaigns/Retouch 2026. noindex: it is an offer page with an
+// end date, not an organic page (also kept out of the sitemap).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+
+const OFFER_ENDS = 'December 15, 2026';
+
+const perks = [
+  { stat: '2', title: 'Visits a year', body: 'Spring and fall tune-ups, on the calendar.' },
+  { stat: '1st', title: 'Front of the line', body: 'Priority service when you need us.' },
+  { stat: '15%', title: 'Off repairs', body: 'On parts and labor, every time.' },
+];
+
+const plans = [
+  {
+    id: 'bronze', name: 'Bronze', price: '$169', term: 'per year', color: '#a3653a', best: false,
+    items: ['2 visits a year, spring and fall', '15% off parts and labor', '5% off a new system', 'Priority service in 48 to 72 hours', 'Drain cleaning at every tune-up'],
+  },
+  {
+    id: 'silver', name: 'Silver', price: '$259', term: 'per year', color: '#6b7a8a', best: false,
+    items: ['Everything in Bronze', 'Worry-free drain line cleaning during your plan', 'Priority service in 24 to 48 hours'],
+  },
+  {
+    id: 'gold', name: 'Gold', price: '$529', term: 'for 3 years ($176.33 a year)', color: '#b8892a', best: true,
+    items: ['Everything in Silver', 'Three years of coverage', 'Priority service in 24 to 48 hours'],
+  },
+];
+
+const steps = [
+  { n: '1', title: 'Pick a plan', body: 'Choose Bronze, Silver or Gold below, or ask us which fits your system.' },
+  { n: '2', title: 'We call to schedule', body: 'Our office calls you back to set a time that works, usually the same business day.' },
+  { n: '3', title: 'Your $59 tune-up', body: 'A technician cleans and checks the whole system and tells you what they found.' },
+];
+
+const faqs = [
+  { q: 'Who gets the $59 tune-up?', a: 'Anyone who joins a Bronze, Silver or Gold Care Plan. The regular tune-up price is $169.' },
+  { q: 'Is the $59 included in the plan price?', a: 'No. The $59 tune-up is in addition to the Care Plan membership price. A weekend diagnostic fee may apply.' },
+  { q: 'When does the offer end?', a: `The offer runs through ${OFFER_ENDS}.` },
+  { q: 'I used to be a member. Can I rejoin?', a: 'Yes. Past members can pick any plan and get the same $59 tune-up.' },
+  { q: 'What areas do you serve?', a: 'We dispatch from Wesley Chapel across Pasco, Hillsborough and Polk counties.' },
+];
+
+const field = 'w-full rounded-md border border-slate-200 bg-slate-50 focus:bg-white px-3.5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#2a5e6d] text-ink placeholder:text-slate-500';
+---
+<BaseLayout
+  title="$59 Fall Tune-Up with a Care Plan | I Care Air Care"
+  description="Join an I Care Air Care Care Plan and your fall tune-up is $59 (regular $169). Plans from $169 a year. Wesley Chapel, 4.9 stars from 700+ reviews."
+  image={`${SITE.url}/images/care-plan-fall-tune-up-technician-condenser-wesley-chapel.webp`}
+  noindex={true}
+>
+  {/* HERO */}
+  <section class="cp-hero text-white">
+    <div class="container-site py-12 md:py-16 lg:py-20 grid lg:grid-cols-[1.05fr_.95fr] gap-10 lg:gap-12 items-center">
+      <div>
+        <p class="cp-eyebrow text-[#f3a35a]">Fall tune-up season</p>
+        <h1 class="mt-3 text-4xl md:text-5xl lg:text-[3.4rem] leading-[1.08] font-bold text-white">Your fall tune-up is due.</h1>
+        <p class="mt-5 text-lg text-white/85 max-w-xl leading-relaxed">
+          Join a Care Plan and today's tune-up is <strong class="text-white">$59</strong> (regular $169). It's the best time to catch a small problem before it turns into a breakdown.
+        </p>
+
+        <div class="mt-7 flex flex-col sm:flex-row gap-3">
+          <a href="#claim" class="cp-btn">Claim my $59 tune-up</a>
+          <a href={SITE.phoneHref} class="cp-btn-ghost">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.21 1.11l-2.2 2.1z"/></svg>
+            Call {SITE.phone}
+          </a>
+        </div>
+
+        <div class="mt-7 flex items-center gap-3 text-sm text-white/80">
+          <span class="text-[#f3a35a] text-lg tracking-[2px]" aria-hidden="true">★★★★★</span>
+          <span><strong class="text-white">4.9 stars</strong> from 700+ Google reviews · Family-run since 2010</span>
+        </div>
+      </div>
+
+      <div class="relative">
+        <img
+          src="/images/care-plan-fall-tune-up-technician-condenser-wesley-chapel.webp"
+          alt="I Care Air Care technician checking refrigerant pressure on an outdoor AC unit during a fall tune-up"
+          width="1200" height="720"
+          fetchpriority="high"
+          class="w-full rounded-2xl ring-1 ring-white/20 shadow-[0_30px_60px_-25px_rgba(0,0,0,0.6)] object-cover aspect-[5/3]"
+        />
+        <div class="cp-price-tag">
+          <span class="block text-[11px] font-bold uppercase tracking-[0.16em] text-[#8dbccb]">Care Plan offer</span>
+          <span class="block text-4xl font-extrabold text-[#f3a35a] leading-none mt-1">$59</span>
+          <span class="block text-xs text-white/80 mt-1">tune-up · reg. <s>$169</s></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* PERKS */}
+  <section class="bg-white py-12 md:py-16">
+    <div class="container-site max-w-5xl">
+      <h2 class="text-center text-2xl md:text-3xl font-bold text-navy-700">The easiest way to stay on schedule is a Care Plan</h2>
+      <div class="mt-9 grid sm:grid-cols-3 gap-5">
+        {perks.map((p) => (
+          <div class="text-center rounded-xl bg-[#eef5f8] px-5 py-7">
+            <div class="mx-auto w-14 h-14 rounded-full bg-white ring-1 ring-[#d7e3ea] grid place-items-center text-lg font-extrabold text-[#2a5e6d]">{p.stat}</div>
+            <h3 class="mt-4 font-bold text-navy-700 text-lg">{p.title}</h3>
+            <p class="mt-1 text-slate-600 text-sm">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* PLANS */}
+  <section id="plans" class="py-14 md:py-20" style="background: var(--color-surface);">
+    <div class="container-site max-w-6xl">
+      <div class="text-center">
+        <p class="cp-eyebrow text-accent-600">Care Plans</p>
+        <h2 class="mt-2 text-3xl md:text-4xl font-bold text-navy-700">Pick the plan that fits your home</h2>
+        <p class="mt-2 text-slate-600">Simple, fixed pricing. No surprises.</p>
+      </div>
+
+      <div class="mt-10 grid md:grid-cols-3 gap-6 items-start">
+        {plans.map((p) => (
+          <div
+            class={`relative rounded-2xl bg-white p-7 shadow-[var(--shadow-soft)] ${p.best ? 'ring-2 md:-mt-3' : 'ring-1 ring-[#d7e3ea]'}`}
+            style={`border-top: 5px solid ${p.color};${p.best ? ` --tw-ring-color: ${p.color};` : ''}`}
+          >
+            {p.best && (
+              <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-white" style="background:#d0761f;">Best value</span>
+            )}
+            <p class="text-center text-sm font-bold uppercase tracking-[0.2em]" style={`color:${p.color}`}>{p.name}</p>
+            <p class="mt-2 text-center text-5xl font-extrabold text-navy-700">{p.price}</p>
+            <p class="mt-1 text-center text-sm text-slate-500">{p.term}</p>
+            <ul class="mt-6 pt-6 border-t border-[#d7e3ea] space-y-3">
+              {p.items.map((i) => (
+                <li class="flex gap-2.5 text-[15px] text-slate-700">
+                  <svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={p.color} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  {i}
+                </li>
+              ))}
+            </ul>
+            <a href="#claim" data-plan={p.id} class={`mt-7 w-full ${p.best ? 'cp-btn' : 'cp-btn-outline'}`}>Choose {p.name}</a>
+          </div>
+        ))}
+      </div>
+      <p class="mt-6 text-center text-xs text-slate-500">The $59 tune-up is in addition to the Care Plan membership price. Weekend diagnostic fee may apply. Offer ends {OFFER_ENDS}.</p>
+    </div>
+  </section>
+
+  {/* CLAIM: offer box + form */}
+  <section id="claim" class="bg-white py-14 md:py-20 scroll-mt-20">
+    <div class="container-site max-w-6xl grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+      <div class="cp-offer rounded-2xl p-8 md:p-10 text-white flex flex-col justify-center text-center">
+        <p class="cp-eyebrow text-[#8dbccb]">Care Plan member offer</p>
+        <p class="mt-4 text-lg">Today's tune-up</p>
+        <p class="text-7xl md:text-8xl font-extrabold text-[#f3a35a] leading-none mt-1">$59</p>
+        <p class="mt-3 text-white/85">with any Care Plan · regular <s>$169</s></p>
+
+        <ol class="mt-8 space-y-4 text-left max-w-sm mx-auto">
+          {steps.map((s) => (
+            <li class="flex gap-3">
+              <span class="shrink-0 w-8 h-8 rounded-full bg-white/10 ring-1 ring-white/25 grid place-items-center font-bold text-sm">{s.n}</span>
+              <span><strong class="block text-white">{s.title}</strong><span class="text-sm text-white/75">{s.body}</span></span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <form class="rounded-2xl bg-white ring-1 ring-[#d7e3ea] shadow-[var(--shadow-soft)] p-7 md:p-9" action="/api/lead" method="POST">
+        <input type="hidden" name="_form_type" value="care_plan_offer" />
+        <input type="hidden" name="_next" value="/thank-you/?ref=care_plan_offer" />
+        <input type="hidden" name="service" value="Care Plan + $59 tune-up (Nov 2026 offer)" />
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+        <h2 class="text-2xl font-bold text-navy-700">Claim my $59 tune-up</h2>
+        <p class="mt-1 text-sm text-slate-600">Tell us how to reach you and we'll call to schedule. Prefer to talk? <a href={SITE.phoneHref} class="font-semibold text-[#2a5e6d] hover:underline">{SITE.phone}</a></p>
+
+        <fieldset class="mt-6">
+          <legend class="text-sm font-semibold text-navy-700 mb-2">Which plan?</legend>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {[...plans.map((p) => ({ id: p.id, label: `${p.name} ${p.price}` })), { id: 'not-sure', label: 'Not sure yet' }].map((o, i) => (
+              <label class="cp-choice">
+                <input type="radio" name="plan" value={o.id} checked={i === 0} class="sr-only peer" />
+                <span>{o.label}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div class="mt-5 space-y-3">
+          <label class="block">
+            <span class="sr-only">Name</span>
+            <input name="name" type="text" placeholder="Name*" required autocomplete="name" class={field} />
+          </label>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <label class="block">
+              <span class="sr-only">Phone</span>
+              <input name="phone" type="tel" placeholder="Phone*" required autocomplete="tel" class={field} />
+            </label>
+            <label class="block">
+              <span class="sr-only">Email</span>
+              <input name="email" type="email" placeholder="Email" autocomplete="email" class={field} />
+            </label>
+          </div>
+          <label class="block">
+            <span class="sr-only">Street address</span>
+            <input name="address" type="text" placeholder="Street address (optional)" autocomplete="street-address" class={field} />
+          </label>
+          <label class="block">
+            <span class="sr-only">Notes</span>
+            <textarea name="message" rows="3" placeholder="Anything we should know about your system? (optional)" class={field}></textarea>
+          </label>
+        </div>
+
+        {SITE.turnstileSiteKey && (
+          <div class="cf-turnstile mt-4" data-sitekey={SITE.turnstileSiteKey} data-size="flexible"></div>
+        )}
+
+        <button type="submit" class="cp-btn mt-5 w-full">Claim my $59 tune-up</button>
+        <p class="mt-3 text-[11px] text-center text-slate-500">We'll never sell your info. Offer ends {OFFER_ENDS}.</p>
+      </form>
+    </div>
+  </section>
+
+  {/* TEAM + TIM */}
+  <section class="py-14 md:py-20" style="background: var(--color-surface);">
+    <div class="container-site max-w-5xl">
+      <img
+        src="/images/care-plan-i-care-air-care-team-and-vans.webp"
+        alt="The I Care Air Care team standing with their service vans in Wesley Chapel"
+        width="1200" height="672" loading="lazy"
+        class="w-full rounded-2xl object-cover shadow-[var(--shadow-soft)]"
+      />
+      <div class="mt-8 flex flex-col sm:flex-row gap-5 items-center sm:items-start bg-white rounded-2xl ring-1 ring-[#d7e3ea] p-7 md:p-8">
+        <img src="/images/care-plan-tim-hawk-owner.webp" alt="Tim Hawk, owner of I Care Air Care" width="96" height="96" loading="lazy" class="w-24 h-24 rounded-full ring-4 ring-[#eef5f8] shrink-0" />
+        <div class="text-center sm:text-left">
+          <p class="text-lg text-slate-700 leading-relaxed">"Thank you for trusting us with your home. If anything with your system feels off this season, give us a call. We'd love to see you again."</p>
+          <p class="mt-3 font-bold text-navy-700">Tim Hawk</p>
+          <p class="text-sm text-slate-500">Owner, I Care Air Care · FL Lic. {SITE.license}</p>
+        </div>
+      </div>
+      <div class="mt-6 rounded-2xl bg-accent-50 text-center py-6 px-5">
+        <span class="text-accent-600 text-2xl tracking-[3px]" aria-hidden="true">★★★★★</span>
+        <p class="mt-1 font-bold text-navy-700">4.9 stars from 700+ Google reviews</p>
+        <p class="text-sm text-slate-600">Family-run in Wesley Chapel since 2010</p>
+      </div>
+    </div>
+  </section>
+
+  {/* FAQ */}
+  <section class="bg-white py-14 md:py-20">
+    <div class="container-site max-w-3xl">
+      <h2 class="text-center text-2xl md:text-3xl font-bold text-navy-700">Questions about the offer</h2>
+      <div class="mt-8 divide-y divide-[#d7e3ea] border-y border-[#d7e3ea]">
+        {faqs.map((f) => (
+          <details class="group py-4">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-navy-700">
+              {f.q}
+              <span class="text-[#2a5e6d] text-xl transition group-open:rotate-45" aria-hidden="true">+</span>
+            </summary>
+            <p class="mt-2 text-slate-600">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* FINAL CTA */}
+  <section class="cp-offer text-white">
+    <div class="container-site max-w-3xl py-14 md:py-16 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white">Get on the schedule before the cold nights.</h2>
+      <p class="mt-3 text-white/80">$59 tune-up with any Care Plan. Offer ends {OFFER_ENDS}.</p>
+      <div class="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="#claim" class="cp-btn">Claim my $59 tune-up</a>
+        <a href={SITE.phoneHref} class="cp-btn-ghost">Call {SITE.phone}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // "Choose Bronze/Silver/Gold" buttons preselect that plan in the claim form.
+  document.querySelectorAll<HTMLAnchorElement>('a[data-plan]').forEach((a) => {
+    a.addEventListener('click', () => {
+      const radio = document.querySelector<HTMLInputElement>(`input[name="plan"][value="${a.dataset.plan}"]`);
+      if (radio) radio.checked = true;
+    });
+  });
+</script>
+
+<style>
+  /* Campaign palette, matched to the Retouch 2026 emails:
+     navy #1a2e45, deep teal #2a5e6d, orange #d0761f / #f3a35a, surface #eef5f8. */
+  .cp-hero {
+    background:
+      radial-gradient(60rem 30rem at 85% -10%, rgb(93 165 184 / 0.28), transparent 60%),
+      linear-gradient(135deg, #1a2e45 0%, #213a56 45%, #2a5e6d 100%);
+  }
+  .cp-offer { background: linear-gradient(135deg, #1a2e45 0%, #2a5e6d 100%); }
+  .cp-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; }
+  .cp-price-tag {
+    position: absolute; left: -0.75rem; bottom: -1.25rem;
+    background: #1a2e45; border: 1px solid rgb(255 255 255 / 0.15);
+    border-radius: 1rem; padding: 0.9rem 1.2rem;
+    box-shadow: 0 20px 40px -18px rgb(0 0 0 / 0.6);
+  }
+  @media (min-width: 1024px) { .cp-price-tag { left: -1.5rem; } }
+  .cp-btn, .cp-btn-ghost, .cp-btn-outline {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    border-radius: 9999px; font-weight: 700; padding: 0.9rem 1.75rem; transition: background-color .15s, color .15s, border-color .15s;
+  }
+  .cp-btn { background: #d0761f; color: #fff; }
+  .cp-btn:hover { background: #a65c18; }
+  .cp-btn-ghost { color: #fff; border: 2px solid rgb(255 255 255 / 0.45); }
+  .cp-btn-ghost:hover { background: rgb(255 255 255 / 0.1); border-color: #fff; }
+  .cp-btn-outline { color: #1a2e45; border: 2px solid #1a2e45; }
+  .cp-btn-outline:hover { background: #1a2e45; color: #fff; }
+  .cp-choice span {
+    display: block; text-align: center; cursor: pointer; border-radius: 0.5rem;
+    border: 1.5px solid #d7e3ea; padding: 0.6rem 0.4rem; font-size: 0.85rem; font-weight: 600; color: #1a2e45;
+  }
+  .cp-choice input:checked + span { border-color: #2a5e6d; background: #eef5f8; color: #2a5e6d; box-shadow: inset 0 0 0 1px #2a5e6d; }
+  .cp-choice input:focus-visible + span { outline: 2px solid #d0761f; outline-offset: 2px; }
+</style>

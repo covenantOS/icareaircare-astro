@@ -12,6 +12,8 @@ export default defineConfig({
         !page.includes('/terms-of-use/') &&
         !page.includes('/thank-you/') &&
         !page.includes('/book/') &&
+        // Care Plan email-campaign offer page (noindex, has an end date)
+        !page.includes('/care-plan-offer/') &&
         // Internal admin / KPI dashboard — not for public indexing
         !page.includes('/admin/') &&
         !page.endsWith('/rss.xml') &&
