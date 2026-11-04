@@ -1,0 +1,23 @@
+---
+// Website call tracking. Every visitor and Google see the real number (813) 395-2324 in the
+// text, the tel: links and the schema, so the NAP never changes. Only a tap on that number
+// dials the Twilio tracking line "ICAC Website", which forwards to (813) 395-2324 with a recording
+// notice, a whisper, recording and a transcript. Links already swapped by another tracker
+// (Spectrum) are left alone. SOP: wiki/tools/Tracking Number Setup SOP.md in the vault.
+---
+<script is:inline>
+  (function (w, d) {
+    var lines = {
+      '8133952324': ['+1813', '538', '1893'].join('')
+    };
+    d.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest && e.target.closest('a[href^="tel:"]');
+      if (!a) return;
+      var href = a.getAttribute('href');
+      var track = lines[href.replace(/\D/g, '').slice(-10)];
+      if (!track) return;
+      a.setAttribute('href', 'tel:' + track);
+      setTimeout(function () { a.setAttribute('href', href); }, 1500);
+    }, true);
+  })(window, document);
+</script>
